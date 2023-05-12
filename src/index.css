@@ -1,8 +1,18 @@
+html, body {
+  box-sizing: content-box;
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
+  height: 100%;
   font-family: 'poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3 {
+  margin: 0;
 }
 
 code {
@@ -32,3 +42,80 @@ header {
   background: white;
   margin: 0 .5em 0 0; 
 }
+
+main {
+  height: 100%;
+  margin: 3em 0;
+}
+
+.cardSectionHeading {
+  margin: 1em 2em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.scrollArrowContainer {
+  width: 100%;
+  height: 100%;
+  margin: 0 0 0 1em;
+  display: flex;
+}
+
+.scrollProgressContainer{
+  height: 15px;
+}
+
+.scrollArrowTail {
+  background: black;
+  width: 100%;
+  height: 3px;
+  margin: auto auto auto 0;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* .arrowHead {
+  background: red;
+  width: 5px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 0 0 0 auto;
+  display: inline-block;
+  transform: translateY(-100%);
+} */
+
+.arrowHead {
+  height: 20px;
+  margin: 0;
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0 0 0 auto;
+}
+
+
+.cardsScrollContainer {
+  overflow-x: auto;
+}
+
+.cardsContainer {
+  display: inline-flex;
+  width: auto;
+  margin: 0 2em 0 0;
+  padding: 0 0 2em 0;
+}
+
+.card {
+  display: inline-block;
+  height: 40vw;
+  width: 30vw;
+  border: 3px solid black;
+  box-shadow: -4px 5px 4px rgb(0 0 0 / 0.25);
+  border-radius: 15%;
+  margin: 0 0 0 2em;
+  cursor: pointer;
+}
+
+
+
+
