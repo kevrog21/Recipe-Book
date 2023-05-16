@@ -4,7 +4,9 @@ import Suggested from './Suggested'
 export default function Homescreen() {
     return (
             <main>
-                <Suggested />
+                <Suggested 
+                    title="Suggested"
+                />
                 <div className="cardSecionContainer">
                     <div className="cardSectionHeading">
                         <h3>Requests</h3>

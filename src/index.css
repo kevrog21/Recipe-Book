@@ -114,6 +114,15 @@ main {
   border-radius: 15%;
   margin: 0 0 0 2em;
   cursor: pointer;
+  background-size: cover;
+  background-position: center;
+}
+
+.card::after {
+  content: '';
+  width: 100px;
+  height: 100px;
+  background: red;
 }
 
 

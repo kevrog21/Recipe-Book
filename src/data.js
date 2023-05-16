@@ -55,13 +55,13 @@ export default [{
             totalTimesCooked: 0,
             lastCooked: '5/21/23'
         }],
-        tags: ['vegetarian', 'cozy meal', 'Dairy Free', "Healthy"]
+        tags: ['Summer Meal', 'cozy meal', 'Dairy Free', "Healthy"]
     },
 
     {
-        id: '02',
-        recipeName: 'Steak Kabobs',
-        recipeImage: './assets/steak-kabobs-img.jpg',
+        id: '03',
+        recipeName: 'Shrimp Orzo',
+        recipeImage: './assets/tucci-meal-img.jpg',
         cookTimeMins: 60,
         isFavorited: true,
         isRequested: false,

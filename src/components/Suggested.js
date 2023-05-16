@@ -1,19 +1,16 @@
 import Card from './Card'
 import React, {useState} from 'react'
 import arrow from '../assets/arrow.svg'
+import Data from '../data.js'
 
-export default function Suggested() {
+export default function Suggested(props) {
 
     const scrollArrow = document.getElementsByClassName('scrollArrow')
     const cardsScrollContainer = document.getElementsByClassName('cardsScrollContainer')
 
- 
-    
-
     const [scrollArrowWidth, setScrollArrowWidth] = useState(15)
 
     function getScrollPercentage() {
-
         const totalElementWidth = cardsScrollContainer[0].scrollWidth
         const distanceScrolled = cardsScrollContainer[0].scrollLeft
         const visibleWidth = cardsScrollContainer[0].clientWidth
@@ -32,10 +29,22 @@ export default function Suggested() {
         display: 'grid'
     }
 
+    const cardElements = Data.map(card => {
+        return (
+            <Card 
+                title={card.recipeName}
+                img={card.recipeImage}
+                key={card.id}
+            />
+        )
+    })
+
+
+
     return (
         <div className="cardSecionContainer">
             <div className="cardSectionHeading">
-                <h3>Suggested</h3>
+                <h3>{props.title}</h3>
                 <div className="scrollArrowContainer">
                     <div className='scrollProgressContainer' style={styles}>
                         <div className="scrollArrowTail"></div>
@@ -45,11 +54,7 @@ export default function Suggested() {
             </div>
             <div className="cardsScrollContainer" onScroll={getScrollPercentage}>
                 <div className="cardsContainer">
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card /> 
+                    {cardElements}
                 </div>
             </div>
         </div>
