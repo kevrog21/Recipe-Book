@@ -14,11 +14,7 @@ export default function Homescreen() {
                     </div>
                     <div className="cardsScrollContainer">
                         <div className="cardsContainer">
-                            <Card />
-                            <Card />
-                            <Card />
-                            <Card />
-                            <Card />
+                            
                         </div>
                     </div>
                 </div>

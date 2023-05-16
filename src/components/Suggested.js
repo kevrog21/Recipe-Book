@@ -1,5 +1,5 @@
 import Card from './Card'
-import React, {useState} from 'react'
+import {useState} from 'react'
 import arrow from '../assets/arrow.svg'
 import Data from '../data.js'
 

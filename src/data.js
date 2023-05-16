@@ -1,7 +1,7 @@
 export default [{
         id: '01',
         recipeName: 'Tucci Meal',
-        recipeImage: './assets/tucci-meal-img.jpg',
+        recipeImage: 'tucci-meal-img.jpg',
         cookTimeMins: 90,
         isFavorited: true,
         isRequested: false,
@@ -31,7 +31,7 @@ export default [{
     {
         id: '02',
         recipeName: 'Steak Kabobs',
-        recipeImage: './assets/steak-kabobs-img.jpg',
+        recipeImage: 'steak-kabobs-img.jpg',
         cookTimeMins: 60,
         isFavorited: true,
         isRequested: false,
@@ -61,7 +61,7 @@ export default [{
     {
         id: '03',
         recipeName: 'Shrimp Orzo',
-        recipeImage: './assets/tucci-meal-img.jpg',
+        recipeImage: 'shrimp-orzo.jpg',
         cookTimeMins: 60,
         isFavorited: true,
         isRequested: false,
