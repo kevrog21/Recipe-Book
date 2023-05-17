@@ -54,6 +54,7 @@ export default function AllRecipes(props) {
             <div className="cardsScrollContainer" onScroll={getScrollPercentage}>
                 <div className="cardsContainer">
                     {cardElements}
+                    <div className='end-line'></div>
                 </div>
             </div>
         </div>

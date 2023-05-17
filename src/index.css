@@ -54,7 +54,7 @@ main {
 }
 
 .cardSectionHeading {
-  margin: 1em 2em;
+  margin: 1em 2em 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -111,7 +111,7 @@ main {
   display: inline-flex;
   width: auto;
   margin: 0 2em 0 0;
-  padding: 0 0 2em 0;
+  padding: 2em 0;
 }
 
 .card {
@@ -162,3 +162,10 @@ main {
   width: 100%;
 }
 
+.end-line {
+  content: '';
+  width: 3px;
+  height: 42vw;
+  background: black;
+  margin: 0 0 0 2em;
+}

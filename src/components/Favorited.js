@@ -57,6 +57,7 @@ export default function Requested(props) {
             <div className="cardsScrollContainer" onScroll={getScrollPercentage}>
                 <div className="cardsContainer">
                     {allRequestedRecipes}
+                    <div className='end-line'></div>
                 </div>
             </div>
         </div>
