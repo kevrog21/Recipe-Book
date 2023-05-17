@@ -1,13 +1,8 @@
-import Card from './Card'
 import AllRecipes from './AllRecipes'
 import Requested from './Requested'
 import Favorited from './Favorited'
-import Data from '../data.js'
 
 export default function Homescreen() {
-
-
-
 
     return (
             <main>
