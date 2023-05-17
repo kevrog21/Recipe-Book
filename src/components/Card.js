@@ -1,5 +1,7 @@
 import background from '../assets/grilled-cheese-tomato-soup.jpg'
 import { useState, useEffect } from 'react'
+import star from '../assets/star.svg'
+import bell from '../assets/bell.svg'
 
 export default function Card(props) {
 
@@ -20,12 +22,16 @@ useEffect(() => {
 
 const styles = {
 //     backgroundImage: `url(${require('./assets/${props.img}').default})`
-       backgroundImage: `url(${backgroundImageURL})`
+        backgroundImage: `linear-gradient(25deg, rgba(0, 0, 0, .95), rgba(0, 0, 0, 0) 45%), url(${backgroundImageURL})`
+       
  }
  
     return (
         <div className='card' style={styles}>
-            <h3>{props.title}</h3>
+            <img className='star-icon' src={star} alt='favorite icon'/>
+            <img className='bell-icon-above-text' src={bell} alt='request icon'/>
+            <h3 className='recipe-card-name'>{props.title}</h3>
+            <img className='bell-icon' src={bell} alt='request icon'/>
         </div>
     )
 }
