@@ -27,6 +27,11 @@ header {
   justify-content: space-between;
   padding: 1em;
   box-shadow: 0 0 .5em 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .app_title {
@@ -45,7 +50,7 @@ header {
 
 main {
   height: 100%;
-  margin: 3em 0;
+  margin: 9em 0;
 }
 
 .cardSectionHeading {
@@ -53,6 +58,10 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.homescreen-section-title {
+  white-space: nowrap;
 }
 
 .scrollArrowContainer {
@@ -124,7 +133,4 @@ main {
   height: 100px;
   background: red;
 }
-
-
-
 

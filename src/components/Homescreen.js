@@ -1,23 +1,28 @@
 import Card from './Card'
-import Suggested from './Suggested'
+import AllRecipes from './AllRecipes'
+import Requested from './Requested'
+import Favorited from './Favorited'
+import Data from '../data.js'
 
 export default function Homescreen() {
+
+
+
+
     return (
             <main>
-                <Suggested 
-                    title="Suggested"
+                <AllRecipes 
+                    title="All Recipes"
+                    index={0}
                 />
-                <div className="cardSecionContainer">
-                    <div className="cardSectionHeading">
-                        <h3>Requests</h3>
-                        <div className="scrollArrow"></div>
-                    </div>
-                    <div className="cardsScrollContainer">
-                        <div className="cardsContainer">
-                            
-                        </div>
-                    </div>
-                </div>
+                <Requested
+                    title="Requested"
+                    index={1}
+                />
+                <Favorited 
+                    title="Favorites"
+                    index={2}
+                />
             </main>
     )
 }
