@@ -31,9 +31,13 @@ export default function AllRecipes(props) {
     const cardElements = Data.map(card => {
         return (
             <Card 
-                title={card.recipeName}
+                title={card.recipeHeader}
+                subTitle={card.recipeSubHeader}
                 img={card.recipeImage}
+                favorited={card.isFavorited}
+                requested={card.isRequested}
                 key={card.id}
+                uniqueID={card.uniqueIdentifier}
             />
         )
     })

@@ -32,9 +32,13 @@ export default function Requested(props) {
         (
             recipe.isRequested ? 
             <Card 
-                title={recipe.recipeName} 
+                title={recipe.recipeHeader}
+                subTitle={recipe.recipeSubHeader}
                 img={recipe.recipeImage}
+                favorited={recipe.isFavorited}
+                requested={recipe.isRequested}
                 key={recipe.id}
+                uniqueID={recipe.uniqueIdentifier}
             /> : 
             null
         )

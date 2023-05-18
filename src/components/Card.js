@@ -2,12 +2,10 @@ import background from '../assets/grilled-cheese-tomato-soup.jpg'
 import { useState, useEffect } from 'react'
 import star from '../assets/star.svg'
 import bell from '../assets/bell.svg'
+import filledStar from '../assets/filled-star.svg'
+import filledBell from '../assets/filled-bell.svg'
 
 export default function Card(props) {
-
-//the correct file path is '../assets/tucci-meal-img.jpg'
-//it works when importing the hard coded path, but need to figure out how to 
-//import it dynamically... look into require or useEffect().
 
 const [backgroundImageURL, setBackgroundImageURL] = useState(background)
 
@@ -20,6 +18,17 @@ useEffect(() => {
     importImage()
 }, [])
 
+const [favoritedState, setFavoritedState] = useState(props.favorited)
+
+function toggleFavorite() {
+    setFavoritedState(prevState => !prevState)
+    console.log(props.uniqueID)
+}
+
+function  showRecipe() {
+    console.log(props.uniqueID)
+}
+
 const styles = {
 //     backgroundImage: `url(${require('./assets/${props.img}').default})`
         backgroundImage: `linear-gradient(25deg, rgba(0, 0, 0, .95), rgba(0, 0, 0, 0) 45%), url(${backgroundImageURL})`
@@ -27,11 +36,14 @@ const styles = {
  }
  
     return (
-        <div className='card' style={styles}>
-            <img className='star-icon' src={star} alt='favorite icon'/>
-            <img className='bell-icon-above-text' src={bell} alt='request icon'/>
-            <h3 className='recipe-card-name'>{props.title}</h3>
-            <img className='bell-icon' src={bell} alt='request icon'/>
+        <div className='card' style={styles} onClick={showRecipe}>
+            <img className='star-icon icon-drop-shadow' src={favoritedState ? filledStar : star} onClick={toggleFavorite} alt='favorite icon'/>
+            <div className='card-text-container'>
+                <img className='bell-icon-above-text' src={bell} alt='request icon'/>
+                <h3 className='recipe-card-name icon-drop-shadow' >{props.title}</h3>
+                {props.subTitle && <h4 className='recipe-subheader'>{props.subTitle}</h4>}
+            </div>
+            <img className='bell-icon' src={props.requested ? filledBell : bell} alt='request icon'/>
         </div>
     )
 }

@@ -1,5 +1,5 @@
 import Card from './Card'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import arrow from '../assets/arrow.svg'
 import Data from '../data.js'
 
@@ -28,17 +28,55 @@ export default function Requested(props) {
         display: 'grid'
     }
 
-    const allRequestedRecipes = Data.map(recipe => 
-        (
+    const [allRequestedRecipes, setRequestedRecipes] = useState(Data.map(recipe => (
             recipe.isFavorited ? 
             <Card 
-                title={recipe.recipeName} 
+                title={recipe.recipeHeader}
+                subTitle={recipe.recipeSubHeader}
                 img={recipe.recipeImage}
+                favorited={recipe.isFavorited}
+                requested={recipe.isRequested}
                 key={recipe.id}
+                uniqueID={recipe.uniqueIdentifier}
             /> : 
             null
-        )
+        ))
     )
+
+    const [currentData, setData] = useState(Data)
+
+    useEffect(() => {
+        setRequestedRecipes(Data.map(recipe => (
+            recipe.isFavorited ? 
+            <Card 
+                title={recipe.recipeHeader}
+                subTitle={recipe.recipeSubHeader}
+                img={recipe.recipeImage}
+                favorited={recipe.isFavorited}
+                requested={recipe.isRequested}
+                key={recipe.id}
+                uniqueID={recipe.uniqueIdentifier}
+            /> : 
+            null
+        )))
+        console.log('rendered favorites')
+    }, [Data])
+
+
+    // const allRequestedRecipes = Data.map(recipe => 
+    //     (
+    //         recipe.isFavorited ? 
+    //         <Card 
+    //             title={recipe.recipeHeader}
+    //             subTitle={recipe.recipeSubHeader}
+    //             img={recipe.recipeImage}
+    //             favorited={recipe.isFavorited}
+    //             requested={recipe.isRequested}
+    //             key={recipe.id}
+    //         /> : 
+    //         null
+    //     )
+    // )
 
 
     
