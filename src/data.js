@@ -163,7 +163,7 @@ export default [{
         recipeImage: 'grilled-cheese-tomato-soup2.jpg',
         cookTimeMins: 90,
         isFavorited: true,
-        isRequested: true,
+        isRequested: false,
         ingredients: [{
             measurement: '2 tablespoons',
             ingredientName: 'butter',

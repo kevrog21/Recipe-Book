@@ -20,9 +20,11 @@ useEffect(() => {
 
 const [favoritedState, setFavoritedState] = useState(props.favorited)
 
-function toggleFavorite() {
+function toggleFavorite(e) {
     setFavoritedState(prevState => !prevState)
     console.log(props.uniqueID)
+    e.stopPropagation()
+    //trigger a re-render of the data
 }
 
 function  showRecipe() {
