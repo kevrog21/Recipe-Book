@@ -1,5 +1,5 @@
 import Card from './Card'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import arrow from '../assets/arrow.svg'
 import Data from '../data.js'
 
@@ -28,23 +28,39 @@ export default function Requested(props) {
         display: 'grid'
     }
 
-    const allRequestedRecipes = Data.map(recipe => 
-        (
+    const [allRequestedRecipes, setRequestedRecipes] = useState(Data.map(recipe => (
             recipe.isRequested ? 
             <Card 
-                title={recipe.recipeHeader}
-                subTitle={recipe.recipeSubHeader}
-                img={recipe.recipeImage}
-                favorited={recipe.isFavorited}
-                requested={recipe.isRequested}
                 key={recipe.id}
-                uniqueID={recipe.uniqueIdentifier}
+                recipeData={recipe}
+                // title={card.recipeHeader}
+                // subTitle={card.recipeSubHeader}
+                // img={card.recipeImage}
+                // favorited={card.isFavorited}
+                // requested={card.isRequested}
+                // uniqueID={card.uniqueIdentifier}
             /> : 
             null
-        )
+        ))
     )
 
-
+    useEffect(() => {
+        setRequestedRecipes(Data.map(recipe => (
+            recipe.isRequested ? 
+            <Card 
+                key={recipe.id}
+                recipeData={recipe}
+                // title={card.recipeHeader}
+                // subTitle={card.recipeSubHeader}
+                // img={card.recipeImage}
+                // favorited={card.isFavorited}
+                // requested={card.isRequested}
+                // uniqueID={card.uniqueIdentifier}
+            /> : 
+            null
+        )))
+        console.log('rendered all Requested')
+    }, [Data])
     
 
     return (

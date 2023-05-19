@@ -6,29 +6,30 @@ import filledStar from '../assets/filled-star.svg'
 import filledBell from '../assets/filled-bell.svg'
 
 export default function Card(props) {
+    console.log(`rendered ${props.recipeData.uniqueIdentifier}`)
 
 const [backgroundImageURL, setBackgroundImageURL] = useState(background)
 
 useEffect(() => {
     const importImage = async () => {
-        const imageModule = await import(`../assets/${props.img}`)
+        const imageModule = await import(`../assets/${props.recipeData.recipeImage}`)
         setBackgroundImageURL(imageModule.default)
     }
 
     importImage()
 }, [])
 
-const [favoritedState, setFavoritedState] = useState(props.favorited)
+const [favoritedState, setFavoritedState] = useState(props.recipeData.isFavorited)
 
 function toggleFavorite(e) {
     setFavoritedState(prevState => !prevState)
-    console.log(props.uniqueID)
+    console.log(props.recipeData.uniqueIdentifier)
     e.stopPropagation()
-    //trigger a re-render of the data
+    //map over all sections and trigger a re-render if uniqueID matches
 }
 
 function  showRecipe() {
-    console.log(props.uniqueID)
+    console.log(props.recipeData.uniqueIdentifier)
 }
 
 const styles = {
@@ -42,10 +43,10 @@ const styles = {
             <img className='star-icon icon-drop-shadow' src={favoritedState ? filledStar : star} onClick={toggleFavorite} alt='favorite icon'/>
             <div className='card-text-container'>
                 <img className='bell-icon-above-text' src={bell} alt='request icon'/>
-                <h3 className='recipe-card-name icon-drop-shadow' >{props.title}</h3>
-                {props.subTitle && <h4 className='recipe-subheader'>{props.subTitle}</h4>}
+                <h3 className='recipe-card-name icon-drop-shadow' >{props.recipeData.recipeHeader}</h3>
+                {props.recipeData.recipeSubheader && <h4 className='recipe-subheader'>{props.recipeData.recipeSubheader}</h4>}
             </div>
-            <img className='bell-icon' src={props.requested ? filledBell : bell} alt='request icon'/>
+            <img className='bell-icon' src={props.recipeData.isRequested ? filledBell : bell} alt='request icon'/>
         </div>
     )
 }

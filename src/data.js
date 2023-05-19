@@ -1,8 +1,12 @@
+import axios from 'axios'
+
+// export default data = axios.get()
+
 export default [{
         id: '01',
         uniqueIdentifier: 1,
         recipeHeader: 'Tucci Meal',
-        recipeSubHeader: '',
+        recipeSubheader: '',
         recipeImage: 'tucci-meal-img.jpg',
         cookTimeMins: 90,
         isFavorited: false,
@@ -34,7 +38,7 @@ export default [{
         id: '02',
         uniqueIdentifier: 2,
         recipeHeader: 'Steak Kabobs',
-        recipeSubHeader: '',
+        recipeSubheader: '',
         recipeImage: 'steak-kabobs-img.jpg',
         cookTimeMins: 60,
         isFavorited: false,
@@ -97,7 +101,7 @@ export default [{
         id: '04',
         uniqueIdentifier: 4,
         recipeHeader: 'Chicken',
-        recipeSubHeader: 'w/ rice and veggies',
+        recipeSubheader: 'w/ rice and veggies',
         recipeImage: 'BBQ-chicken_breast-with-veggies.jpg',
         cookTimeMins: 60,
         isFavorited: true,
@@ -128,7 +132,7 @@ export default [{
         id: '05',
         uniqueIdentifier: 5,
         recipeHeader: 'Grilled Cheese',
-        recipeSubHeader: 'w/ Tomato Soup',
+        recipeSubheader: 'w/ Tomato Soup',
         recipeImage: 'grilled-cheese-tomato-soup.jpg',
         cookTimeMins: 90,
         isFavorited: true,
@@ -159,7 +163,7 @@ export default [{
         id: '06',
         uniqueIdentifier: 6,
         recipeHeader: 'Grilled Cheese',
-        recipeSubHeader: 'w/ Tomato Soup',
+        recipeSubheader: 'w/ Tomato Soup',
         recipeImage: 'grilled-cheese-tomato-soup2.jpg',
         cookTimeMins: 90,
         isFavorited: true,

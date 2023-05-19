@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react'
 import arrow from '../assets/arrow.svg'
 import Data from '../data.js'
 
-export default function Requested(props) {
+export default function Favorited(props) {
 
     const cardsScrollContainer = document.getElementsByClassName('cardsScrollContainer')
 
@@ -28,16 +28,17 @@ export default function Requested(props) {
         display: 'grid'
     }
 
-    const [allRequestedRecipes, setRequestedRecipes] = useState(Data.map(recipe => (
+    const [allFavoritededRecipes, setFavoritedRecipes] = useState(Data.map(recipe => (
             recipe.isFavorited ? 
             <Card 
-                title={recipe.recipeHeader}
-                subTitle={recipe.recipeSubHeader}
-                img={recipe.recipeImage}
-                favorited={recipe.isFavorited}
-                requested={recipe.isRequested}
                 key={recipe.id}
-                uniqueID={recipe.uniqueIdentifier}
+                recipeData={recipe}
+                // title={card.recipeHeader}
+                // subTitle={card.recipeSubHeader}
+                // img={card.recipeImage}
+                // favorited={card.isFavorited}
+                // requested={card.isRequested}
+                // uniqueID={card.uniqueIdentifier}
             /> : 
             null
         ))
@@ -46,16 +47,17 @@ export default function Requested(props) {
     const [currentData, setData] = useState(Data)
 
     useEffect(() => {
-        setRequestedRecipes(Data.map(recipe => (
+        setFavoritedRecipes(Data.map(recipe => (
             recipe.isFavorited ? 
             <Card 
-                title={recipe.recipeHeader}
-                subTitle={recipe.recipeSubHeader}
-                img={recipe.recipeImage}
-                favorited={recipe.isFavorited}
-                requested={recipe.isRequested}
                 key={recipe.id}
-                uniqueID={recipe.uniqueIdentifier}
+                recipeData={recipe}
+                // title={card.recipeHeader}
+                // subTitle={card.recipeSubHeader}
+                // img={card.recipeImage}
+                // favorited={card.isFavorited}
+                // requested={card.isRequested}
+                // uniqueID={card.uniqueIdentifier}
             /> : 
             null
         )))
@@ -94,7 +96,7 @@ export default function Requested(props) {
             </div>
             <div className="cardsScrollContainer" onScroll={getScrollPercentage}>
                 <div className="cardsContainer">
-                    {allRequestedRecipes}
+                    {allFavoritededRecipes}
                     <div className='end-line'></div>
                 </div>
             </div>

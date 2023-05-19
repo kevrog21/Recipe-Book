@@ -1,5 +1,5 @@
 import Card from './Card'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import arrow from '../assets/arrow.svg'
 import Data from '../data.js'
 
@@ -28,19 +28,36 @@ export default function AllRecipes(props) {
         display: 'grid'
     }
 
-    const cardElements = Data.map(card => {
-        return (
+    const [allRecipes, setallRecipes] = useState(Data.map(recipe => (
             <Card 
-                title={card.recipeHeader}
-                subTitle={card.recipeSubHeader}
-                img={card.recipeImage}
-                favorited={card.isFavorited}
-                requested={card.isRequested}
-                key={card.id}
-                uniqueID={card.uniqueIdentifier}
-            />
-        )
-    })
+                key={recipe.id}
+                recipeData={recipe}
+                // title={card.recipeHeader}
+                // subTitle={card.recipeSubHeader}
+                // img={card.recipeImage}
+                // favorited={card.isFavorited}
+                // requested={card.isRequested}
+                // uniqueID={card.uniqueIdentifier}
+            /> 
+        ))
+    )
+
+    useEffect(() => {
+        setallRecipes(Data.map(recipe => (
+            <Card 
+                key={recipe.id}
+                recipeData={recipe}
+                // title={card.recipeHeader}
+                // subTitle={card.recipeSubHeader}
+                // img={card.recipeImage}
+                // favorited={card.isFavorited}
+                // requested={card.isRequested}
+                // uniqueID={card.uniqueIdentifier}
+            /> 
+        )))
+        console.log('rendered All Recipes')
+    }, [Data])
+
 
 
 
@@ -57,7 +74,7 @@ export default function AllRecipes(props) {
             </div>
             <div className="cardsScrollContainer" onScroll={getScrollPercentage}>
                 <div className="cardsContainer">
-                    {cardElements}
+                    {allRecipes}
                     <div className='end-line'></div>
                 </div>
             </div>
