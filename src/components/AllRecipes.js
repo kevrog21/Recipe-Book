@@ -1,7 +1,6 @@
 import Card from './Card'
 import {useEffect, useState} from 'react'
 import arrow from '../assets/arrow.svg'
-import Data from '../data.js'
 
 export default function AllRecipes(props) {
 
@@ -28,7 +27,9 @@ export default function AllRecipes(props) {
         display: 'grid'
     }
 
-    const [allRecipes, setallRecipes] = useState(Data.map(recipe => (
+    const data = props.data
+
+    const [allRecipes, setallRecipes] = useState(data.map(recipe => (
             <Card 
                 key={recipe.id}
                 recipeData={recipe}
@@ -42,21 +43,21 @@ export default function AllRecipes(props) {
         ))
     )
 
-    useEffect(() => {
-        setallRecipes(Data.map(recipe => (
-            <Card 
-                key={recipe.id}
-                recipeData={recipe}
-                // title={card.recipeHeader}
-                // subTitle={card.recipeSubHeader}
-                // img={card.recipeImage}
-                // favorited={card.isFavorited}
-                // requested={card.isRequested}
-                // uniqueID={card.uniqueIdentifier}
-            /> 
-        )))
-        console.log('rendered All Recipes')
-    }, [Data])
+    // useEffect(() => {
+    //     setallRecipes(data.map(recipe => (
+    //         <Card 
+    //             key={recipe.id}
+    //             recipeData={recipe}
+    //             // title={card.recipeHeader}
+    //             // subTitle={card.recipeSubHeader}
+    //             // img={card.recipeImage}
+    //             // favorited={card.isFavorited}
+    //             // requested={card.isRequested}
+    //             // uniqueID={card.uniqueIdentifier}
+    //         /> 
+    //     )))
+    //     console.log('rendered All Recipes section')
+    // }, [data])
 
 
 

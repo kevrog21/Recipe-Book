@@ -6,9 +6,8 @@ import filledStar from '../assets/filled-star.svg'
 import filledBell from '../assets/filled-bell.svg'
 
 export default function Card(props) {
-    console.log(`rendered ${props.recipeData.uniqueIdentifier}`)
 
-const [backgroundImageURL, setBackgroundImageURL] = useState(background)
+const [backgroundImageURL, setBackgroundImageURL] = useState()
 
 useEffect(() => {
     const importImage = async () => {

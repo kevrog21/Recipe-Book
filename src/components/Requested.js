@@ -1,7 +1,6 @@
 import Card from './Card'
 import {useEffect, useState} from 'react'
 import arrow from '../assets/arrow.svg'
-import Data from '../data.js'
 
 export default function Requested(props) {
 
@@ -28,25 +27,12 @@ export default function Requested(props) {
         display: 'grid'
     }
 
-    const [allRequestedRecipes, setRequestedRecipes] = useState(Data.map(recipe => (
-            recipe.isRequested ? 
-            <Card 
-                key={recipe.id}
-                recipeData={recipe}
-                // title={card.recipeHeader}
-                // subTitle={card.recipeSubHeader}
-                // img={card.recipeImage}
-                // favorited={card.isFavorited}
-                // requested={card.isRequested}
-                // uniqueID={card.uniqueIdentifier}
-            /> : 
-            null
-        ))
-    )
+    const data = props.data
 
-    useEffect(() => {
-        setRequestedRecipes(Data.map(recipe => (
-            recipe.isRequested ? 
+    const allRequestedRecipes = data.filter(recipe => recipe.isRequested)
+
+    const requestedRecipElements = allRequestedRecipes.map(recipe =>{
+        return (
             <Card 
                 key={recipe.id}
                 recipeData={recipe}
@@ -56,12 +42,9 @@ export default function Requested(props) {
                 // favorited={card.isFavorited}
                 // requested={card.isRequested}
                 // uniqueID={card.uniqueIdentifier}
-            /> : 
-            null
-        )))
-        console.log('rendered all Requested')
-    }, [Data])
-    
+            />
+        )
+    })
 
     return (
         <div className="cardSecionContainer">
@@ -76,10 +59,28 @@ export default function Requested(props) {
             </div>
             <div className="cardsScrollContainer" onScroll={getScrollPercentage}>
                 <div className="cardsContainer">
-                    {allRequestedRecipes}
+                    {requestedRecipElements}
                     <div className='end-line'></div>
                 </div>
             </div>
         </div>
     )
 }
+
+    // useEffect(() => {
+    //     setRequestedRecipes(props.data.map(recipe => (
+    //         recipe.isRequested ? 
+    //         <Card 
+    //             key={recipe.id}
+    //             recipeData={recipe}
+    //             // title={card.recipeHeader}
+    //             // subTitle={card.recipeSubHeader}
+    //             // img={card.recipeImage}
+    //             // favorited={card.isFavorited}
+    //             // requested={card.isRequested}
+    //             // uniqueID={card.uniqueIdentifier}
+    //         /> : 
+    //         null
+    //     )))
+    //     console.log('rendered all Requested section')
+    // }, [data])
