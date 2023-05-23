@@ -33,6 +33,10 @@ export default function AllRecipes(props) {
             <Card 
                 key={recipe.id}
                 recipeData={recipe}
+                isFavorited={recipe.isFavorited}
+                isRequested={recipe.isRequested}
+                handleStarClick={props.handleStarClick}
+                handleBellClick={props.handleBellClick}
                 // title={card.recipeHeader}
                 // subTitle={card.recipeSubHeader}
                 // img={card.recipeImage}
@@ -43,21 +47,25 @@ export default function AllRecipes(props) {
         ))
     )
 
-    // useEffect(() => {
-    //     setallRecipes(data.map(recipe => (
-    //         <Card 
-    //             key={recipe.id}
-    //             recipeData={recipe}
-    //             // title={card.recipeHeader}
-    //             // subTitle={card.recipeSubHeader}
-    //             // img={card.recipeImage}
-    //             // favorited={card.isFavorited}
-    //             // requested={card.isRequested}
-    //             // uniqueID={card.uniqueIdentifier}
-    //         /> 
-    //     )))
-    //     console.log('rendered All Recipes section')
-    // }, [data])
+    useEffect(() => {
+        setallRecipes(data.map(recipe => (
+            <Card 
+                key={recipe.id}
+                recipeData={recipe}
+                isFavorited={recipe.isFavorited}
+                isRequested={recipe.isRequested}
+                handleStarClick={props.handleStarClick}
+                handleBellClick={props.handleBellClick}
+                // title={card.recipeHeader}
+                // subTitle={card.recipeSubHeader}
+                // img={card.recipeImage}
+                // favorited={card.isFavorited}
+                // requested={card.isRequested}
+                // uniqueID={card.uniqueIdentifier}
+            /> 
+        )))
+        console.log('rendered All Recipes section')
+    }, [data])
 
 
 

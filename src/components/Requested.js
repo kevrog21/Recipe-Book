@@ -31,20 +31,47 @@ export default function Requested(props) {
 
     const allRequestedRecipes = data.filter(recipe => recipe.isRequested)
 
-    const requestedRecipElements = allRequestedRecipes.map(recipe =>{
-        return (
-            <Card 
-                key={recipe.id}
-                recipeData={recipe}
-                // title={card.recipeHeader}
-                // subTitle={card.recipeSubHeader}
-                // img={card.recipeImage}
-                // favorited={card.isFavorited}
-                // requested={card.isRequested}
-                // uniqueID={card.uniqueIdentifier}
-            />
+    const [requestedRecipElements, setRequestedRecipes] = useState(allRequestedRecipes.map(recipe => {
+            return (
+                <Card 
+                    key={recipe.id}
+                    recipeData={recipe}
+                    isFavorited={recipe.isFavorited}
+                    isRequested={recipe.isRequested}
+                    handleStarClick={props.handleStarClick}
+                    handleBellClick={props.handleBellClick}
+                    // title={card.recipeHeader}
+                    // subTitle={card.recipeSubHeader}
+                    // img={card.recipeImage}
+                    // favorited={card.isFavorited}
+                    // requested={card.isRequested}
+                    // uniqueID={card.uniqueIdentifier}
+                />
+            )
+        })
+    )
+
+    useEffect(() => {
+        setRequestedRecipes(data.filter(recipe => recipe.isRequested).map(recipe => (
+                <Card 
+                    key={recipe.id}
+                    recipeData={recipe}
+                    isFavorited={recipe.isFavorited}
+                    isRequested={recipe.isRequested}
+                    handleStarClick={props.handleStarClick}
+                    handleBellClick={props.handleBellClick}
+                    // title={card.recipeHeader}
+                    // subTitle={card.recipeSubHeader}
+                    // img={card.recipeImage}
+                    // favorited={card.isFavorited}
+                    // requested={card.isRequested}
+                    // uniqueID={card.uniqueIdentifier}
+                />
+            ))
         )
-    })
+    }, [data])
+
+
 
     return (
         <div className="cardSecionContainer">
@@ -66,21 +93,3 @@ export default function Requested(props) {
         </div>
     )
 }
-
-    // useEffect(() => {
-    //     setRequestedRecipes(props.data.map(recipe => (
-    //         recipe.isRequested ? 
-    //         <Card 
-    //             key={recipe.id}
-    //             recipeData={recipe}
-    //             // title={card.recipeHeader}
-    //             // subTitle={card.recipeSubHeader}
-    //             // img={card.recipeImage}
-    //             // favorited={card.isFavorited}
-    //             // requested={card.isRequested}
-    //             // uniqueID={card.uniqueIdentifier}
-    //         /> : 
-    //         null
-    //     )))
-    //     console.log('rendered all Requested section')
-    // }, [data])

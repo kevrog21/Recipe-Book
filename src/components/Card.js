@@ -18,34 +18,33 @@ useEffect(() => {
     importImage()
 }, [])
 
-const [favoritedState, setFavoritedState] = useState(props.recipeData.isFavorited)
-
-function toggleFavorite(e) {
-    setFavoritedState(prevState => !prevState)
-    console.log(props.recipeData.uniqueIdentifier)
-    e.stopPropagation()
-    //map over all sections and trigger a re-render if uniqueID matches
-}
 
 function  showRecipe() {
     console.log(props.recipeData.uniqueIdentifier)
 }
 
 const styles = {
-//     backgroundImage: `url(${require('./assets/${props.img}').default})`
         backgroundImage: `linear-gradient(25deg, rgba(0, 0, 0, .95), rgba(0, 0, 0, 0) 45%), url(${backgroundImageURL})`
        
  }
  
+const handleStarClick = () => {
+    props.handleStarClick(props.recipeData.id)
+}
+
+const handleBellClick = () => {
+    props.handleBellClick(props.recipeData.id)
+}
+
     return (
         <div className='card' style={styles} onClick={showRecipe}>
-            <img className='star-icon icon-drop-shadow' src={favoritedState ? filledStar : star} onClick={toggleFavorite} alt='favorite icon'/>
+            <img className='star-icon icon-drop-shadow' src={props.isFavorited ? filledStar : star} onClick={handleStarClick} alt='favorite icon'/>
             <div className='card-text-container'>
                 <img className='bell-icon-above-text' src={bell} alt='request icon'/>
                 <h3 className='recipe-card-name icon-drop-shadow' >{props.recipeData.recipeHeader}</h3>
                 {props.recipeData.recipeSubheader && <h4 className='recipe-subheader'>{props.recipeData.recipeSubheader}</h4>}
             </div>
-            <img className='bell-icon' src={props.recipeData.isRequested ? filledBell : bell} alt='request icon'/>
+            <img className='bell-icon' src={props.recipeData.isRequested ? filledBell : bell} alt='request icon' onClick={handleBellClick} />
         </div>
     )
 }
