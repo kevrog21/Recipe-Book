@@ -42,6 +42,7 @@ export default function Favorited(props) {
                 isRequested={recipe.isRequested}
                 handleStarClick={props.handleStarClick}
                 handleBellClick={props.handleBellClick}
+                handleCardClick={props.handleCardClick}
                 // favoritedState={favoritedState}
                 // handleClick={toggleFavorite}
                 // title={card.recipeHeader}
@@ -64,6 +65,7 @@ export default function Favorited(props) {
                 isRequested={recipe.isRequested}
                 handleStarClick={props.handleStarClick}
                 handleBellClick={props.handleBellClick}
+                handleCardClick={props.handleCardClick}
                 // title={card.recipeHeader}
                 // subTitle={card.recipeSubHeader}
                 // img={card.recipeImage}

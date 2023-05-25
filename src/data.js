@@ -2,6 +2,8 @@ import axios from 'axios'
 
 // export default data = axios.get()
 
+//get rid of this file after connecting to database. (will import data in Homescreen component)
+
 export default [{
         id: '01',
         uniqueIdentifier: 1,

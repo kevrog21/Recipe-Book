@@ -2,43 +2,46 @@ import { useState } from 'react'
 import AllRecipes from './AllRecipes'
 import Requested from './Requested'
 import Favorited from './Favorited'
+import FullRecipe from './FullRecipe'
 import data from '../data'
 
 export default function Homescreen() {
 
     const [recipes, setRecipes] = useState(data)
 
+    const [selectedRecipe, setSelectedRecipe] = useState()
+
+    const handleSelectedRecipe = (clickedRecipe) => {
+        setSelectedRecipe(clickedRecipe)
+    }
+
     const handleFavoriteToggle = (recipeID) => {
+        // update database with new value and send an error if unsuccessful
         console.log(recipeID)
         setRecipes(prevRecipes => {
-            console.log('I ran')
             return prevRecipes.map(recipe => {
                 if (recipe.id === recipeID) {
-                    console.log('and then I ran!!')
                     return {
                         ...recipe,
                         isFavorited: !recipe.isFavorited
                     }
                 }
-                console.log(recipe.id)
                 return recipe
             })
         })
+        // or you can update database with new value if you want the UI to update quicker
     }
 
     const handleRequestToggle = (recipeID) => {
         console.log(recipeID)
         setRecipes(prevRecipes => {
-            console.log('hello')
             return prevRecipes.map(recipe => {
                 if (recipe.id === recipeID) {
-                    console.log('and then I ran!!')
                     return {
                         ...recipe,
                         isRequested: !recipe.isRequested
                     }
                 }
-                console.log(recipe.id)
                 return recipe
             })
         })
@@ -55,6 +58,7 @@ export default function Homescreen() {
                     data={recipes}
                     handleStarClick={handleFavoriteToggle}
                     handleBellClick={handleRequestToggle}
+                    handleCardClick={handleSelectedRecipe}
                 />
                  <Requested
                     title="Requested"
@@ -62,6 +66,7 @@ export default function Homescreen() {
                     data={recipes}
                     handleStarClick={handleFavoriteToggle}
                     handleBellClick={handleRequestToggle}
+                    handleCardClick={handleSelectedRecipe}
                 />
                 <Favorited 
                     title="Favorites"
@@ -69,7 +74,16 @@ export default function Homescreen() {
                     data={recipes}
                     handleStarClick={handleFavoriteToggle}
                     handleBellClick={handleRequestToggle}
+                    handleCardClick={handleSelectedRecipe}
                 />
+                {selectedRecipe && <FullRecipe
+                    index={3}
+                    data={recipes}
+                    handleStarClick={handleFavoriteToggle}
+                    handleBellClick={handleRequestToggle}
+                    handleCardClick={handleSelectedRecipe}
+                    currentRecipe={selectedRecipe}
+                />}
                 {/* Suggested */}
                 {/* top-rated - and add the rating in top left of card*/}
                 {/* most cooked  - and add the number in top left of card*/}

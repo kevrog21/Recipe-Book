@@ -19,25 +19,27 @@ useEffect(() => {
 }, [])
 
 
-function  showRecipe() {
-    console.log(props.recipeData.uniqueIdentifier)
-}
-
 const styles = {
         backgroundImage: `linear-gradient(25deg, rgba(0, 0, 0, .95), rgba(0, 0, 0, 0) 45%), url(${backgroundImageURL})`
        
  }
  
-const handleStarClick = () => {
+const handleStarClick = (e) => {
+    e.stopPropagation()
     props.handleStarClick(props.recipeData.id)
 }
 
-const handleBellClick = () => {
+const handleBellClick = (e) => {
+    e.stopPropagation()
     props.handleBellClick(props.recipeData.id)
 }
 
+const toggleDisplayFullRecipe = (e) => {
+    props.handleCardClick(props.recipeData)
+}
+
     return (
-        <div className='card' style={styles} onClick={showRecipe}>
+        <div className='card' style={styles} onClick={toggleDisplayFullRecipe}>
             <img className='star-icon icon-drop-shadow' src={props.isFavorited ? filledStar : star} onClick={handleStarClick} alt='favorite icon'/>
             <div className='card-text-container'>
                 <img className='bell-icon-above-text' src={bell} alt='request icon'/>

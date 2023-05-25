@@ -37,6 +37,7 @@ export default function AllRecipes(props) {
                 isRequested={recipe.isRequested}
                 handleStarClick={props.handleStarClick}
                 handleBellClick={props.handleBellClick}
+                handleCardClick={props.handleCardClick}
                 // title={card.recipeHeader}
                 // subTitle={card.recipeSubHeader}
                 // img={card.recipeImage}
@@ -56,6 +57,7 @@ export default function AllRecipes(props) {
                 isRequested={recipe.isRequested}
                 handleStarClick={props.handleStarClick}
                 handleBellClick={props.handleBellClick}
+                handleCardClick={props.handleCardClick}
                 // title={card.recipeHeader}
                 // subTitle={card.recipeSubHeader}
                 // img={card.recipeImage}
