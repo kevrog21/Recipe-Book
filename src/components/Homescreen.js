@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Routes, Route, useParams} from 'react-router-dom'
 import AllRecipes from './AllRecipes'
 import Requested from './Requested'
@@ -6,86 +5,46 @@ import Favorited from './Favorited'
 import RecipePage from './RecipePage'
 import TempRecipeComponent from './TempRecipeComponent'
 import AddRecipe from './AddRecipe'
-import data from '../data'
 
-export default function Homescreen() {
-
-    const [recipes, setRecipes] = useState(data)
-
-    const [selectedRecipe, setSelectedRecipe] = useState()
-
-    const handleSelectedRecipe = (clickedRecipe) => {
-        setSelectedRecipe(clickedRecipe)
-    }
-
-    const handleFavoriteToggle = (recipeID) => {
-        // update database with new value and send an error if unsuccessful
-        console.log(recipeID)
-        setRecipes(prevRecipes => {
-            return prevRecipes.map(recipe => {
-                if (recipe.id === recipeID) {
-                    return {
-                        ...recipe,
-                        isFavorited: !recipe.isFavorited
-                    }
-                }
-                return recipe
-            })
-        })
-        // or you can update database with new value if you want the UI to update quicker
-    }
-
-    const handleRequestToggle = (recipeID) => {
-        console.log(recipeID)
-        setRecipes(prevRecipes => {
-            return prevRecipes.map(recipe => {
-                if (recipe.id === recipeID) {
-                    return {
-                        ...recipe,
-                        isRequested: !recipe.isRequested
-                    }
-                }
-                return recipe
-            })
-        })
-    }
+export default function Homescreen(props) {
+    const { data, handleFavoriteToggle, handleRequestToggle, handleSelectedRecipe } = props
 
     return (
         <main>
             {/* nav menu */}
             {/* Howdy, Kevin || welcome stranger */}
-                        <AllRecipes 
-                            title="All Recipes"
-                            index={0}
-                            data={recipes}
-                            handleStarClick={handleFavoriteToggle}
-                            handleBellClick={handleRequestToggle}
-                            handleCardClick={handleSelectedRecipe}
-                        />
-                        <Requested
-                            title="Requested"
-                            index={1}
-                            data={recipes}
-                            handleStarClick={handleFavoriteToggle}
-                            handleBellClick={handleRequestToggle}
-                            handleCardClick={handleSelectedRecipe}
-                        />
-                        <Favorited 
-                            title="Favorites"
-                            index={2}
-                            data={recipes}
-                            handleStarClick={handleFavoriteToggle}
-                            handleBellClick={handleRequestToggle}
-                            handleCardClick={handleSelectedRecipe}
-                        />
-                        {selectedRecipe && <RecipePage
-                            index={3}
-                            data={recipes}
-                            handleStarClick={handleFavoriteToggle}
-                            handleBellClick={handleRequestToggle}
-                            handleCardClick={handleSelectedRecipe}
-                            currentRecipe={selectedRecipe}
-                        />}
+            <AllRecipes 
+                title="All Recipes"
+                index={0}
+                data={data}
+                handleStarClick={handleFavoriteToggle}
+                handleBellClick={handleRequestToggle}
+                handleCardClick={handleSelectedRecipe}
+            />
+            <Requested
+                title="Requested"
+                index={1}
+                data={data}
+                handleStarClick={handleFavoriteToggle}
+                handleBellClick={handleRequestToggle}
+                handleCardClick={handleSelectedRecipe}
+            />
+            <Favorited 
+                title="Favorites"
+                index={2}
+                data={data}
+                handleStarClick={handleFavoriteToggle}
+                handleBellClick={handleRequestToggle}
+                handleCardClick={handleSelectedRecipe}
+            />
+            {/* {selectedRecipe && <RecipePage
+                index={3}
+                data={data}
+                handleStarClick={handleFavoriteToggle}
+                handleBellClick={handleRequestToggle}
+                handleCardClick={handleSelectedRecipe}
+                currentRecipe={selectedRecipe}
+            />} */}
             <TempRecipeComponent 
                         // data={recipes} 
                     />
