@@ -33,7 +33,8 @@ export default [{
             totalTimesCooked: 0,
             lastCooked: '5/21/23'
         }],
-        tags: ['vegetarian', 'cozy meal', 'Dairy Free', "Healthy"]
+        tags: ['vegetarian', 'cozy meal', 'Dairy Free', "Healthy"],
+        author: 'Kevin'
     },
 
     {
@@ -65,7 +66,8 @@ export default [{
             totalTimesCooked: 0,
             lastCooked: '5/21/23'
         }],
-        tags: ['Summer Meal', 'cozy meal', 'Dairy Free', "Healthy"]
+        tags: ['Summer Meal', 'cozy meal', 'Dairy Free', "Healthy"],
+        author: 'Kevin'
     },
 
     {
@@ -97,7 +99,8 @@ export default [{
             totalTimesCooked: 0,
             lastCooked: '5/21/23'
         }],
-        tags: ['vegetarian', 'cozy meal', 'Dairy Free', "Healthy"]
+        tags: ['vegetarian', 'cozy meal', 'Dairy Free', "Healthy"],
+        author: 'Kevin'
     },
     {
         id: '04',
@@ -128,7 +131,8 @@ export default [{
             totalTimesCooked: 0,
             lastCooked: '5/21/23'
         }],
-        tags: ['vegetarian', 'cozy meal', 'Dairy Free', "Healthy"]
+        tags: ['vegetarian', 'cozy meal', 'Dairy Free', "Healthy"],
+        author: 'Lizzie'
     },
     {
         id: '05',
@@ -159,7 +163,8 @@ export default [{
             totalTimesCooked: 0,
             lastCooked: '5/21/23'
         }],
-        tags: ['vegetarian', 'cozy meal', 'Dairy Free', "Healthy"]
+        tags: ['vegetarian', 'cozy meal', 'Dairy Free', "Healthy"],
+        author: 'Lizzie'
     },
     {
         id: '06',

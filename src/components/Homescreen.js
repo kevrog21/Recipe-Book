@@ -3,6 +3,7 @@ import AllRecipes from './AllRecipes'
 import Requested from './Requested'
 import Favorited from './Favorited'
 import FullRecipe from './FullRecipe'
+import AddRecipe from './AddRecipe'
 import data from '../data'
 
 export default function Homescreen() {
@@ -47,7 +48,6 @@ export default function Homescreen() {
         })
     }
 
-
     return (
             <main>
                 {/* nav menu */}
@@ -84,6 +84,7 @@ export default function Homescreen() {
                     handleCardClick={handleSelectedRecipe}
                     currentRecipe={selectedRecipe}
                 />}
+                <AddRecipe />
                 {/* Suggested */}
                 {/* top-rated - and add the rating in top left of card*/}
                 {/* most cooked  - and add the number in top left of card*/}
