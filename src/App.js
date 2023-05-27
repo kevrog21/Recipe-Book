@@ -1,19 +1,28 @@
 import './App.css';
-import { Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Homescreen from './components/Homescreen'
-import RecipePage from './components/RecipePage'
+import TempRecipeComponent from './components/TempRecipeComponent'
 
 export default function App() {
   return (
-    <div>
-      <Header />
+    <Router>
+        <Header />
+        <Routes>
+          <Route exact path="/" element={<Homescreen />} />
 
-      <Routes>
-        <Route exact path='/' element={<Homescreen />}/>
-        <Route path={`/recipes/:id`} element={<RecipePage />}/>
-      </Routes>
+          <Route path="/:recipeId" element={<TempRecipeComponent />} />
+        </Routes>
+    </Router>
 
-    </div>
+    // <div>
+    //   <Header />
+
+    //   <Routes>
+    //     <Route exact path='/' element={<Homescreen />}/>
+    //     <Route path={`/:recipeId`} element={<RecipePage />}/>
+    //   </Routes>
+
+    // </div>
   )
 }

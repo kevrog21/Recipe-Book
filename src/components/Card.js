@@ -1,5 +1,5 @@
 import background from '../assets/grilled-cheese-tomato-soup.jpg'
-import {Link, useParams} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import star from '../assets/star.svg'
 import bell from '../assets/bell.svg'
@@ -48,7 +48,7 @@ const toggleDisplayFullRecipe = (e) => {
                     {props.recipeData.recipeSubheader && <h4 className='recipe-subheader'>{props.recipeData.recipeSubheader}</h4>}
                 </div>
                 <img className='bell-icon' src={props.recipeData.isRequested ? filledBell : bell} alt='request icon' onClick={handleBellClick} />
-                <Link to={`/recipes/${props.recipeData.id}`} />
+                <Link to={`/${props.recipeData.id}`} />
             </div>
     )
 }
