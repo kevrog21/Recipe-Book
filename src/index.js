@@ -8,7 +8,7 @@ import "@fontsource/poppins/500.css"
 import "@fontsource/poppins/600.css"
 import "@fontsource/poppins/700.css"
 import "@fontsource/poppins/800.css"
-import {BrowserRouter} from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -17,7 +17,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <Routes>
+          <Route path='/' element={<App />}></Route>
+        </Routes>
     </BrowserRouter>
   </React.StrictMode>
 );

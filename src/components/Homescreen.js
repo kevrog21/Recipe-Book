@@ -2,7 +2,7 @@ import { useState } from 'react'
 import AllRecipes from './AllRecipes'
 import Requested from './Requested'
 import Favorited from './Favorited'
-import FullRecipe from './FullRecipe'
+import RecipePage from './RecipePage'
 import AddRecipe from './AddRecipe'
 import data from '../data'
 
@@ -76,7 +76,7 @@ export default function Homescreen() {
                     handleBellClick={handleRequestToggle}
                     handleCardClick={handleSelectedRecipe}
                 />
-                {selectedRecipe && <FullRecipe
+                {selectedRecipe && <RecipePage
                     index={3}
                     data={recipes}
                     handleStarClick={handleFavoriteToggle}

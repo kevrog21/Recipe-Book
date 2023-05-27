@@ -1,4 +1,5 @@
 import background from '../assets/grilled-cheese-tomato-soup.jpg'
+import {Link, useParams} from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import star from '../assets/star.svg'
 import bell from '../assets/bell.svg'
@@ -39,15 +40,16 @@ const toggleDisplayFullRecipe = (e) => {
 }
 
     return (
-        <div className='card' style={styles} onClick={toggleDisplayFullRecipe}>
-            <img className='star-icon icon-drop-shadow' src={props.isFavorited ? filledStar : star} onClick={handleStarClick} alt='favorite icon'/>
-            <div className='card-text-container'>
-                <img className='bell-icon-above-text' src={bell} alt='request icon'/>
-                <h3 className='recipe-card-name icon-drop-shadow' >{props.recipeData.recipeHeader}</h3>
-                {props.recipeData.recipeSubheader && <h4 className='recipe-subheader'>{props.recipeData.recipeSubheader}</h4>}
+            <div className='card' style={styles} onClick={toggleDisplayFullRecipe}>
+                <img className='star-icon icon-drop-shadow' src={props.isFavorited ? filledStar : star} onClick={handleStarClick} alt='favorite icon'/>
+                <div className='card-text-container'>
+                    <img className='bell-icon-above-text' src={bell} alt='request icon'/>
+                    <h3 className='recipe-card-name icon-drop-shadow' >{props.recipeData.recipeHeader}</h3>
+                    {props.recipeData.recipeSubheader && <h4 className='recipe-subheader'>{props.recipeData.recipeSubheader}</h4>}
+                </div>
+                <img className='bell-icon' src={props.recipeData.isRequested ? filledBell : bell} alt='request icon' onClick={handleBellClick} />
+                <Link to={`/recipes/${props.recipeData.id}`} />
             </div>
-            <img className='bell-icon' src={props.recipeData.isRequested ? filledBell : bell} alt='request icon' onClick={handleBellClick} />
-        </div>
     )
 }
 
