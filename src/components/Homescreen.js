@@ -3,7 +3,6 @@ import AllRecipes from './AllRecipes'
 import Requested from './Requested'
 import Favorited from './Favorited'
 import RecipePage from './RecipePage'
-import TempRecipeComponent from './TempRecipeComponent'
 import AddRecipe from './AddRecipe'
 
 export default function Homescreen(props) {
@@ -45,9 +44,7 @@ export default function Homescreen(props) {
                 handleCardClick={handleSelectedRecipe}
                 currentRecipe={selectedRecipe}
             />} */}
-            <TempRecipeComponent 
-                        // data={recipes} 
-                    />
+          
             <AddRecipe />
             {/* Suggested */}
             {/* top-rated - and add the rating in top left of card*/}

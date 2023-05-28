@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Homescreen from './components/Homescreen'
-import TempRecipeComponent from './components/TempRecipeComponent'
+import RecipePage from './components/RecipePage'
 import data from './data'
 
 export default function App() {
@@ -61,7 +61,7 @@ export default function App() {
             />} />
 
           <Route path="/:recipeId" element={
-            <TempRecipeComponent 
+            <RecipePage 
               data={recipes}
               handleFavoriteToggle={handleFavoriteToggle}
               handleRequestToggle={handleRequestToggle}

@@ -195,4 +195,6 @@ main {
 
 /* full recipe page */
 
-
+.header-img {
+  width: 200px;
+}
