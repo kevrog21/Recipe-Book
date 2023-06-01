@@ -1,14 +1,33 @@
 import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react' 
+import RecipeDataService from '../services/recipeList'
 
-export default function AddRecipe(props) {
+const RecipesList = props => {
+
+    // const [recipeData, setRecipeData] = useState([])
+
+    // useEffect(() => {
+    //     retrieveRecipes()
+    // }, [])
+
+    // const retrieveRecipes = () => {
+    //     RecipeDataService.getAll()
+    //         .then(response => {
+    //             console.log(response.data)
+    //             setRecipeData(response.data.recipes)
+    //         })
+    //         .catch(e => {
+    //             console.log(e)
+    //         })
+    // }
+
     return (
-
         <div>
-            <Link to="/03" ><p>Add Recipe Form Goes here!</p></Link>
-            <form>
-                
+            <h2>All Recipes</h2>
+            {/* <h4>{recipeData}</h4> */}
 
-            </form>
         </div>
     )
 }
+
+export default RecipesList

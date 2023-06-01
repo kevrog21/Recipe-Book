@@ -1,5 +1,5 @@
 import { Router } from "express"
-import Recipe from '../models/recipes.model.mjs'
+import Recipe from '../models/recipes.model.js'
 
 const router = Router()
 
