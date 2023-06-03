@@ -4,27 +4,29 @@ import RecipeDataService from '../services/recipeList'
 
 const RecipesList = props => {
 
-    // const [recipeData, setRecipeData] = useState([])
+    const [recipeData, setRecipeData] = useState([])
 
-    // useEffect(() => {
-    //     retrieveRecipes()
-    // }, [])
+    useEffect(() => {
+        retrieveRecipes()
+    }, [])
 
-    // const retrieveRecipes = () => {
-    //     RecipeDataService.getAll()
-    //         .then(response => {
-    //             console.log(response.data)
-    //             setRecipeData(response.data.recipes)
-    //         })
-    //         .catch(e => {
-    //             console.log(e)
-    //         })
-    // }
+    const retrieveRecipes = () => {
+        RecipeDataService.getAll()
+            .then(response => {
+                console.log(response.data)
+                setRecipeData(response.data)
+            })
+            .catch(e => {
+                console.log(e)
+            })
+    }
+
+    const list = recipeData ? recipeData.map(recipe => <h4>{recipe.recipeName}</h4>) : ""
 
     return (
         <div>
             <h2>All Recipes</h2>
-            {/* <h4>{recipeData}</h4> */}
+            {list}
 
         </div>
     )
