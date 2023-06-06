@@ -192,6 +192,33 @@ main {
   margin: 0 0 0 2em;
 }
 
+/* add recipe page */
+
+.add-recipe-form {
+  display: grid;
+  width: 90%;
+  margin: 3rem auto;
+}
+
+.add-recipe-form > input {
+  margin: 0 0 1rem 0;
+  padding: .5rem;
+}
+
+.submit-recipe-btn {
+  padding: 1rem 0;
+  width: 50%;
+  margin: 1rem auto;
+  text-transform: uppercase;
+  font-weight: 800;
+  cursor: pointer;
+  background: #64EB79;
+  border-radius: 10vw;
+}
+
+.submit-recipe-btn:hover {
+  background: #22F043;
+}
 
 /* full recipe page */
 
