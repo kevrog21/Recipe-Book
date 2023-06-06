@@ -14,10 +14,11 @@ router.route('/add').post((req, res) => {
     const instructions = req.body.instructions
     const cooktime = Number(req.body.cooktime)
     const password = req.body.password
+    const honeyp = req.body.honeyp
 
     const secretPassword = process.env.SECRET_PWORD
 
-    if (password === secretPassword) {
+    if (password === secretPassword && honeyp === '') {
         const newRecipe = new Recipe({
             recipeName,
             instructions,

@@ -27,7 +27,8 @@ const RecipesList = props => {
         recipeName: '',
         instructions: '',
         cooktime: '',
-        password: ''
+        password: '',
+        honeyp: ''
     })
 
     const handleChange = (e) => {
@@ -60,7 +61,8 @@ const RecipesList = props => {
                         recipeName: '',
                         instructions: '',
                         cooktime: '',
-                        password: ''
+                        password: '',
+                        honeyp: ''
                     })
                 }
             })
@@ -81,6 +83,7 @@ const RecipesList = props => {
                 <input type="number" id="cooktime" name="cooktime" value={formData.cooktime} onChange={handleChange}></input>
                 <label for="password">Secret Password:</label>
                 <input type="password" id="password" name="password" value={formData.password} onChange={handleChange}></input>
+                <input type="text" id="honeyp" name="honeyp" value={formData.honeyp} onChange={handleChange}></input>
                 <button type="submit" className="submit-recipe-btn" id="submit" >Submit Recipe</button>
             </form>
 

@@ -220,6 +220,10 @@ main {
   background: #22F043;
 }
 
+#honeyp {
+  display: none;
+}
+
 /* full recipe page */
 
 .header-img {
