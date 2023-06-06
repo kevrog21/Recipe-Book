@@ -13,16 +13,23 @@ router.route('/add').post((req, res) => {
     const recipeName = req.body.recipeName
     const instructions = req.body.instructions
     const cooktime = Number(req.body.cooktime)
+    const password = req.body.password
 
-    const newRecipe = new Recipe({
-        recipeName,
-        instructions,
-        cooktime
-    })
+    const secretPassword = process.env.SECRET_PWORD
 
-    newRecipe.save()
-        .then(() => res.json('Recipe Added!'))
-        .catch(err => res.status(400).json('Error: ' + err))
+    if (password === secretPassword) {
+        const newRecipe = new Recipe({
+            recipeName,
+            instructions,
+            cooktime
+        })
+    
+        newRecipe.save()
+            .then(() => res.json('Recipe Added!'))
+            .catch(err => res.status(400).json('Error: ' + err))
+    } else {
+        res.status(401).json({ error: 'Incorrect password' })
+    }
 })
 
 router.route('/:id').get((req, res) => {

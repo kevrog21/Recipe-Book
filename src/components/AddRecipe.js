@@ -26,7 +26,8 @@ const RecipesList = props => {
     const [formData, setFormData] = useState({
         recipeName: '',
         instructions: '',
-        cooktime: ''
+        cooktime: '',
+        password: ''
     })
 
     const handleChange = (e) => {
@@ -37,7 +38,6 @@ const RecipesList = props => {
             ...prevData,
             [name]: isNumericField ? parseInt(value) : value
         }))
-        console.log(formData)
     }
 
     const handleSubmit = (e) => {
@@ -50,12 +50,22 @@ const RecipesList = props => {
             }
         }
 
+
+
         fetch("http://localhost:5000/recipes/add", options)
-            .then(res => res.json())
+            .then(res => {
+                res.json()
+                if (res.ok) {
+                    setFormData({
+                        recipeName: '',
+                        instructions: '',
+                        cooktime: '',
+                        password: ''
+                    })
+                }
+            })
             .then(data => console.log(data))
     }
-
-    // submitBtn.addEventListener("submit", submitRecipe)
 
     return (
         <div>
@@ -69,6 +79,8 @@ const RecipesList = props => {
                 <input type="text" id="instructions" name="instructions" value={formData.instructions} onChange={handleChange}></input>
                 <label for="cooktime">Cooktime:</label>
                 <input type="number" id="cooktime" name="cooktime" value={formData.cooktime} onChange={handleChange}></input>
+                <label for="password">Secret Password:</label>
+                <input type="password" id="password" name="password" value={formData.password} onChange={handleChange}></input>
                 <button type="submit" className="submit-recipe-btn" id="submit" >Submit Recipe</button>
             </form>
 
