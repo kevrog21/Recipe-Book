@@ -1,12 +1,35 @@
 import { Router } from "express"
 import Recipe from '../models/recipes.model.js'
+import cloudinary from 'cloudinary'
 
 const router = Router()
+
+const cloudinaryConfig = cloudinary.config({
+    cloud_name: process.env.CLOUDNAME,
+    api_key: process.env.CLOUDAPIKEY,
+    api_secret: process.env.CLOUDINARYSECRET,
+    secure: true
+  })
+
+const secretPassword = process.env.SECRET_PWORD
 
 router.route('/').get((req, res) => {
     Recipe.find()
         .then(recipes => res.json(recipes))
         .catch(err => res.status(400).json('Error: ' + err))
+})
+
+router.route('/get-signature').get((req, res) => {
+    console.log('server code started')
+        const timestamp = Math.round(new Date().getTime() / 1000)
+        const signature = cloudinary.utils.api_sign_request(
+            {
+                timestamp: timestamp
+            },
+            cloudinaryConfig.api_secret
+        )
+        res.json({ timestamp, signature })
+        console.log('server code finished')
 })
 
 router.route('/add').post((req, res) => {
@@ -15,8 +38,6 @@ router.route('/add').post((req, res) => {
     const cooktime = Number(req.body.cooktime)
     const password = req.body.password
     const honeyp = req.body.honeyp
-
-    const secretPassword = process.env.SECRET_PWORD
 
     if (password === secretPassword && honeyp === '') {
         const newRecipe = new Recipe({

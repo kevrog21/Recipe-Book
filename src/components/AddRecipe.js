@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react' 
 import RecipeDataService from '../services/recipeList'
+import axios from 'axios'
+import { CloudinaryContext, Image } from "cloudinary-react"
 
 const RecipesList = props => {
 
@@ -21,7 +23,7 @@ const RecipesList = props => {
             })
     }
 
-    const list = recipeData ? recipeData.map(recipe => <h4>{recipe.recipeName}</h4>) : ""
+    const list = recipeData ? recipeData.map(recipe => <h4 key={recipe._id}>{recipe.recipeName}</h4>) : ""
 
     const [formData, setFormData] = useState({
         recipeName: '',
@@ -31,7 +33,31 @@ const RecipesList = props => {
         honeyp: ''
     })
 
-    const handleChange = (e) => {
+
+
+
+    const api_key = "124659146613462"
+    const cloud_name = "dot31xj56"
+
+    // const [image, setImage] = useState(null)
+
+    const [imageObject, setImageObject] = useState({})
+
+    const handleImageChange = (e) => {
+        const selectedImage = e.target.files[0]
+        setImageObject({
+            file: selectedImage
+        })
+        console.log(selectedImage)
+    }
+
+    // const handleImageSubmit = (e) => {
+    //     e.preventDefault()
+    // }
+
+
+
+    const handleInputChange = (e) => {
         const { name, value } = e.target
 
         const isNumericField = ["cooktime"].includes(name) //returns true if the target name is included in the array
@@ -43,6 +69,7 @@ const RecipesList = props => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
         const options = {
             method: "POST",
             body: JSON.stringify(formData),
@@ -51,22 +78,76 @@ const RecipesList = props => {
             }
         }
 
+        // if image, get signature and add it to form data to be sent to the server.
 
+        // check if a file is included in form
 
-        fetch("http://localhost:5000/recipes/add", options)
-            .then(res => {
-                res.json()
-                if (res.ok) {
-                    setFormData({
-                        recipeName: '',
-                        instructions: '',
-                        cooktime: '',
-                        password: '',
-                        honeyp: ''
+        let signatureResponse = {}
+
+        if (imageObject.file) {
+            // make a get request to our own server at /get-signature
+            console.log(imageObject.file)
+            signatureResponse = fetch("http://localhost:5000/recipes/get-signature")
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    new Promise((resolve) => {
+                        setImageObject((prevData) => ({
+                            ...prevData,
+                            file: imageObject.file,
+                            api_key: api_key,
+                            signature: data.signature,
+                            timestamp: data.timestamp
+                        }))
+                        resolve()
+                        return imageObject
                     })
-                }
-            })
-            .then(data => console.log(data))
+                    .then(() => {
+                        console.log(imageObject)
+                        
+                        const cloudinaryResponse = fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
+                            method: "POST",
+                            body: JSON.stringify(imageObject),
+                            headers: { "Content-Type": "multipart/form-data" },
+                            onUploadProgress: function (e) {
+                                console.log(e.loaded / e.total)
+                            }
+                        })
+                        cloudinaryResponse.then(response => response.json())
+                        cloudinaryResponse.then(data => {
+                            console.log(data)
+                        })
+                        .catch(error => {
+                            console.error(error)
+                        })
+                        console.log(cloudinaryResponse.data)
+                    })
+
+                })
+                .catch(error => {
+                    console.error(error)
+                })
+                console.log("image code ran")
+        }
+        
+        console.log(signatureResponse)
+
+
+        // fetch("http://localhost:5000/recipes/add", options)
+        //     .then(res => {
+        //         res.json()
+        //         if (res.ok) {
+        //             setFormData({
+        //                 recipeName: '',
+        //                 instructions: '',
+        //                 cooktime: '',
+        //                 password: '',
+        //                 honeyp: ''
+        //             })
+        //             setImage(null)
+        //         }
+        //     })
+        //     .then(data => console.log(data))
     }
 
     return (
@@ -74,18 +155,34 @@ const RecipesList = props => {
             <h2>Add Recipes</h2>
             {list}
 
+            <CloudinaryContext cloudName="dot31xj56">
+                <div>
+                    <Image publicId="sample" width="50" />
+                </div>
+                <Image publicId="sample" width="0.5" />
+            </CloudinaryContext>
+
             <form className="add-recipe-form" onSubmit={handleSubmit}>
-                <label for="recipe-name">Recipe Name:</label>
-                <input type="text" id="recipe-name" name="recipeName" value={formData.recipeName} onChange={handleChange}></input>
-                <label for="instructions">Instructions:</label>
-                <input type="text" id="instructions" name="instructions" value={formData.instructions} onChange={handleChange}></input>
-                <label for="cooktime">Cooktime:</label>
-                <input type="number" id="cooktime" name="cooktime" value={formData.cooktime} onChange={handleChange}></input>
-                <label for="password">Secret Password:</label>
-                <input type="password" id="password" name="password" value={formData.password} onChange={handleChange}></input>
-                <input type="text" id="honeyp" name="honeyp" value={formData.honeyp} onChange={handleChange}></input>
+                <label htmlFor="recipe-name">Recipe Name:</label>
+                <input type="text" id="recipe-name" name="recipeName" value={formData.recipeName} onChange={handleInputChange}></input>
+                <label htmlFor="instructions">Instructions:</label>
+                <textarea type="text" id="instructions" name="instructions" value={formData.instructions} onChange={handleInputChange}></textarea>
+                <label htmlFor="cooktime">Cooktime:</label>
+                <input type="number" id="cooktime" name="cooktime" value={formData.cooktime} onChange={handleInputChange}></input>
+                <label htmlFor="password">Secret Password:</label>
+                <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange}></input>
+                <input type="text" id="honeyp" name="honeyp" value={formData.honeyp} onChange={handleInputChange}></input>
+                <label htmlFor="image">Upload Image:</label>
+                <input type="file" id="image" name="image" onChange={handleImageChange}/>
                 <button type="submit" className="submit-recipe-btn" id="submit" >Submit Recipe</button>
             </form>
+
+            {/* <form className="temp-img-form" onSubmit={handleImageSubmit}>
+                <label htmlFor="image">Upload Image:</label>
+                <input type="file" id="image" name="image" onChange={handleImageChange}/>
+
+                <button type="submit" className="submit-image-btn" id="submitImage" >Submit Image</button>
+            </form> */}
 
         </div>
     )

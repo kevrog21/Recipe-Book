@@ -194,13 +194,15 @@ main {
 
 /* add recipe page */
 
-.add-recipe-form {
+.add-recipe-form,
+.temp-img-form {
   display: grid;
   width: 90%;
   margin: 3rem auto;
 }
 
-.add-recipe-form > input {
+.add-recipe-form > input,
+.add-recipe-form > textarea {
   margin: 0 0 1rem 0;
   padding: .5rem;
 }
