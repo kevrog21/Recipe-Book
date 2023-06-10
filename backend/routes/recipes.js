@@ -1,8 +1,11 @@
 import { Router } from "express"
 import Recipe from '../models/recipes.model.js'
 import cloudinary from 'cloudinary'
+import cors from 'cors'
 
 const router = Router()
+
+router.use(cors())
 
 const cloudinaryConfig = cloudinary.config({
     cloud_name: process.env.CLOUDNAME,
@@ -12,6 +15,16 @@ const cloudinaryConfig = cloudinary.config({
   })
 
 const secretPassword = process.env.SECRET_PWORD
+
+// router.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', '*')
+//     res.header('Access-Control-Allow-Headers', '*')
+//     if (req.method === 'OPTIONS') {
+//         res.header('Access-Control-Allow-Methods', 'POST, PUT, GET, DELETE')
+//         return res.status(200).json({})
+//     }
+//     next()
+// })
 
 router.route('/').get((req, res) => {
     Recipe.find()
@@ -30,6 +43,15 @@ router.route('/get-signature').get((req, res) => {
         )
         res.json({ timestamp, signature })
         console.log('server code finished')
+})
+
+router.route('/test-endpoint').get((req, res) => {
+    res.json({message: 'This is a test endpoint'})
+})
+
+router.route('/upload-image').get((req, res) => {
+    cloudinary.v2.uploader.upload(file, options).then()
+       
 })
 
 router.route('/add').post((req, res) => {
