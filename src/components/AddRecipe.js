@@ -5,43 +5,43 @@ import image from '../assets/grilled-cheese-tomato-soup.jpg'
 const RecipesList = props => {
 
     const [recipeData, setRecipeData] = useState([])
-    const [initialRender, setInitialRender] = useState(false)
-    let imageUrls = []
+    // const [initialRender, setInitialRender] = useState(false)
+    const [imageUrls, setImageUrls] = useState([])
 
     useEffect(() => {
         retrieveRecipes()
     }, [])
 
     useEffect(() => {
-        if (initialRender) {
+        if (recipeData.length > 0) {
+            const urls =[]
             recipeData.forEach((recipe) => {
                 console.log('hello')
                 if (recipe.imageId) {
-                    imageUrls.push({
+                    urls.push({
                         id: recipe._id,
                         url: `https://res.cloudinary.com/dot31xj56/image/upload/${recipe.imgTimestamp}/${recipe.imageId}.jpg`
                     })
                 }
             })
-            console.log('image urls', imageUrls)
-            imageUrls.forEach((imageUrl) => {
+            setImageUrls(urls)
+            console.log('image urls', urls)
+            urls.forEach((imageUrl) => {
                 const img = new Image()
                 img.src = imageUrl.url
             })
-        } else {
-            setInitialRender(true)
-        }
+        } 
     }, [recipeData])
 
     const retrieveRecipes = () => {
         RecipeDataService.getAll()
-            .then(response => {
-                console.log(response.data)
-                setRecipeData(response.data)
-            })
-            .catch(e => {
-                console.log(e)
-            })
+        .then(response => {
+            console.log(response.data)
+            setRecipeData(response.data)
+        })
+        .catch(e => {
+            console.log(e)
+        })
     }
 
     const imageUrl = 'https://res.cloudinary.com/dot31xj56/image/upload/v1686782748/kzmuby62ud8hneqi33nu.jpg'
@@ -51,7 +51,7 @@ const RecipesList = props => {
 
     const list = recipeData ? 
         recipeData.map(recipe => {
-            const matchedImageUrl = imageUrls.find((url) => url.id === recipe._id)
+            const matchedImageUrl = imageUrls.find((url) => url.id == recipe._id)
             console.log('matchedImageUrl', matchedImageUrl)
 
             return (
