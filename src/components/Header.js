@@ -4,9 +4,7 @@ export default function Header() {
     return (
         <header>
             <Link to='/'><h1 className='app_title'>Recipe<br />Box</h1></Link>
-            <div className='hamburger_wrapper'>
-                
-            </div>
+            <Link to='/add-recipe'><div className='hamburger_wrapper'>   </div></Link>
 
 
         </header>

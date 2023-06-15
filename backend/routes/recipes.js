@@ -4,7 +4,6 @@ import cloudinary from 'cloudinary'
 import cors from 'cors'
 import express from "express"
 import dotenv from 'dotenv'
-// import bodyParser from "body-parser"
 
 dotenv.config()
 
@@ -12,16 +11,6 @@ const router = Router()
 
 router.use(express.static("public"))
 router.use(express.json())
-// router.use(bodyParser.raw({ type: 'multipart/form-data' }))
-
-
-// const express = require("express")
-// const app = express()
-// app.use(express.static("public"))
-// app.use(express.json())
-// app.use(express.urlencoded({ extended: false }))
-
-
 router.use(cors())
 
 const cloudinaryConfig = cloudinary.config({
@@ -33,25 +22,18 @@ const cloudinaryConfig = cloudinary.config({
 
 const secretPassword = process.env.SECRET_PWORD
 
-// router.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', '*')
-//     res.header('Access-Control-Allow-Headers', '*')
-//     if (req.method === 'OPTIONS') {
-//         res.header('Access-Control-Allow-Methods', 'POST, PUT, GET, DELETE')
-//         return res.status(200).json({})
-//     }
-//     next()
-// })
-
 router.route('/').get((req, res) => {
     Recipe.find()
         .then(recipes => res.json(recipes))
         .catch(err => res.status(400).json('Error: ' + err))
 })
 
-// const signatureResponse = await axios.get("http://localhost:5000/get-signature")
+router.get("/check-password", (req, res) => {
+
+})
 
 router.get("/get-signature", (req, res) => {
+
     const timestamp = Math.round(new Date().getTime() / 1000)
     const signature = cloudinary.utils.api_sign_request(
       {
@@ -62,78 +44,33 @@ router.get("/get-signature", (req, res) => {
     res.json({ timestamp, signature })
   })
 
-
-router.get("/get-signature", (req, res) => {
-    const timestamp = Math.round(new Date().getTime() / 1000)
-    const signature = cloudinary.utils.api_sign_request(
-      {
-        timestamp: timestamp
-      },
-      cloudinaryConfig.api_secret
-    )
-    res.json({ timestamp, signature })
+  router.post("/post-to-cloudinary", (req, res) => {
+    console.log('received req')
+    cloudinary.v2.uploader.upload(req.body.file.path, {resource_type: "image"})
+        .then((result) => {console.log("success", JSON.stringinfy(result, null, 2))
+        res.sendStatus(200
+    )})
+    .catch((error) => {console.log("error", JSON.stringify(error, null, 2))
+            res.status(500).json({error: "Upload Failed" })
+    })
   })
 
 
-
-router.post("/do-something-with-photo", async (req, res) => {
-    // based on the public_id and the version that the (potentially malicious) user is submitting...
-    // we can combine those values along with our SECRET key to see what we would expect the signature to be if it was innocent / valid / actually coming from Cloudinary
-    const expectedSignature = cloudinary.utils.api_sign_request({ public_id: req.body.public_id, version: req.body.version }, cloudinaryConfig.api_secret)
+// router.post("/do-something-with-photo", async (req, res) => {
+//     // based on the public_id and the version that the (potentially malicious) user is submitting...
+//     // we can combine those values along with our SECRET key to see what we would expect the signature to be if it was innocent / valid / actually coming from Cloudinary
+//     const expectedSignature = cloudinary.utils.api_sign_request({ public_id: req.body.public_id, version: req.body.version }, cloudinaryConfig.api_secret)
   
-    // We can trust the visitor's data if their signature is what we'd expect it to be...
-    // Because without the SECRET key there's no way for someone to know what the signature should be...
-    if (expectedSignature === req.body.signature) {
-      // Do whatever you need to do with the public_id for the photo
-      // Store it in a database or pass it to another service etc...
-      await fse.ensureFile("./data.txt")
-      const existingData = await fse.readFile("./data.txt", "utf8")
-      await fse.outputFile("./data.txt", existingData + req.body.public_id + "\n")
-    }
-  })
-
-// const signatureResponse = await axios.get("http://localhost:5000/get-signature")
-
-// app.get("/get-signature", (req, res) => {
-//     const timestamp = Math.round(new Date().getTime() / 1000)
-//     const signature = cloudinary.utils.api_sign_request(
-//       {
-//         timestamp: timestamp
-//       },
-//       cloudinaryConfig.api_secret
-//     )
-//     res.json({ timestamp, signature })
+//     // We can trust the visitor's data if their signature is what we'd expect it to be...
+//     // Because without the SECRET key there's no way for someone to know what the signature should be...
+//     if (expectedSignature === req.body.signature) {
+//       // Do whatever you need to do with the public_id for the photo
+//       // Store it in a database or pass it to another service etc...
+//       await fse.ensureFile("./data.txt")
+//       const existingData = await fse.readFile("./data.txt", "utf8")
+//       await fse.outputFile("./data.txt", existingData + req.body.public_id + "\n")
+//     }
 //   })
-
-
-router.route('/test-endpoint').get((req, res) => {
-    res.json({message: 'This is a test endpoint'})
-})
-
-router.route('/upload-image').post((req, res) => {
-    console.log(req.body)
-
-    // const body = {
-    //     file: req.body.file,
-    //     timestamp: req.body.timestamp,
-    //     api_key: req.body.api_key,
-    //     signature: req.body.signature
-    // }
-    const formData = parseFormData(req.body.toString())
-
-    console.log("formData", formData)
-
-    const options = {
-        headers: { "Content-Type": "multipart/form-data" },
-        api_key: formData.api_key
-    }
-
-    console.log(options)
-
-    cloudinary.uploader.upload(req.body, options)
-        .then(data => console.log(data))
-        .catch(error => console.error(error))
-})
 
 router.route('/add').post((req, res) => {
     const recipeName = req.body.recipeName
@@ -146,7 +83,8 @@ router.route('/add').post((req, res) => {
         const newRecipe = new Recipe({
             recipeName,
             instructions,
-            cooktime
+            cooktime,
+            imageId
         })
     
         newRecipe.save()
@@ -175,6 +113,8 @@ router.route('/update/:id').post((req, res) => {
             recipe.recipeName = req.body.recipeName
             recipe.instructions = req.body.instructions
             recipe.cooktime = Number(req.body.cooktime)
+            recipe.imageId = req.body.imageId
+            recipe.imgTimestamp = req.body.imgTimestamp
 
             recipe.save()
                 .then(() => res.json('Recipe updated!'))
