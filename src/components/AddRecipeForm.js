@@ -305,16 +305,47 @@ export default function AddRecipeForm() {
             </Link>
             <h2 className='recipe-form-title'>New Recipe Form</h2>
 
-            {/* <CloudinaryContext cloudName="dot31xj56">
-                <div>
-                    <Image publicId="sample" width="50" />
-                </div>
-                <Image publicId="sample" width="0.5" />
-            </CloudinaryContext> */}
+            <div className="recipe-preview-container">
+
+            </div>
 
             <form className="add-recipe-form" onSubmit={handleSubmit}>
-                <label htmlFor="recipe-name">Recipe Names:</label>
-                <input type="text" id="recipe-name" name="recipeName" value={formData.recipeName} onChange={handleInputChange}></input>
+                {/* <div className='container'>
+                    <section className='title-section'>
+                        <div className='section-title-container'>
+                            <h4 className='section-title'>Title</h4>
+                            <div className='section-arrow-container'>
+                                <img src={arrow} className="arrowHead section-arrowhead"/>
+                                
+                            </div>
+                        </div>
+                        <div className='section-input-container'>
+                            <label htmlFor="recipe-name">Recipe Title</label>
+                            <input type="text" id="recipe-name" name="recipeName" value={formData.recipeName} onChange={handleInputChange}></input>
+                            <label htmlFor="recipe-name">Recipe Subitle:</label>
+                            <input type="text" id="recipe-name" name="recipeName" value={formData.recipeName} onChange={handleInputChange}></input>
+                        </div>
+                    </section>
+                </div> */}
+
+                <section className='title-section'>
+                        
+                        <h4 className='section-title'>Title</h4>
+                        <div className='section-arrow-container'>
+                            <img src={arrow} className="arrowHead section-arrowhead"/>
+                            {/* <div className='section-arrow'></div> */}
+                        </div>
+                        
+                        <div className='section-input-container'>
+                            <label htmlFor="recipe-name">Recipe Title</label>
+                            <input type="text" id="recipe-name" name="recipeName" value={formData.recipeName} onChange={handleInputChange}></input>
+                            
+                            <label htmlFor="recipe-name">Recipe Subitle:</label>
+                            <input type="text" id="recipe-name" name="recipeName" value={formData.recipeName} onChange={handleInputChange}></input>
+                        </div>
+                </section>
+
+
                 <label htmlFor="instructions">Instructions:</label>
                 <textarea type="text" id="instructions" name="instructions" value={formData.instructions} onChange={handleInputChange}></textarea>
                 <label htmlFor="cooktime">Cooktime:</label>
