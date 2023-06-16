@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import arrow from '../assets/arrow.svg'
+// import image from '../assets/grilled-cheese-tomato-soup.jpg'
 import { CloudinaryContext, Image } from "cloudinary-react"
 
 export default function AddRecipeForm() {
@@ -32,6 +33,7 @@ export default function AddRecipeForm() {
     // const [image, setImage] = useState(null)
 
     const [imageObject, setImageObject] = useState({})
+    const [imgPreview, setImgPreview] = useState(null)
     const [finalImageObject, setFinalImageObject] = useState({})
     const [isInitialRender, setIsInitialRender] = useState(true)
 
@@ -304,7 +306,42 @@ export default function AddRecipeForm() {
         errorElement.textContent = ''
     }
 
+    // useEffect(() => {
+    //     const imageInput = document.getElementById("imageInput")
+    //     const fancyImageButton = document.getElementById("image-upload-btn")
 
+    //     fancyImageButton.addEventListener('click', () => {
+    //         imageInput.click()
+    //     })
+
+    //     // imageInput.addEventListener('change', (event) => {
+    //     //     console.log(event.target.files)
+    //     // })
+    // }, [])
+
+    useEffect(() => {
+        if (imageObject.file) {
+            const recipeTitlePreview = document.getElementById("recipe-title-preview")
+            const recipeSubitlePreview = document.getElementById("recipe-subtitle-preview")
+            const previewGradient = document.getElementById("preview-gradient")
+            const uploadImagePrompt = document.getElementById("upload-image-prompt")
+            const reader = new FileReader()
+            reader.onloadend = () => {
+                setImgPreview(reader.result)
+            }
+            reader.readAsDataURL(imageObject.file)
+
+            uploadImagePrompt.classList.add("hide")
+            recipeTitlePreview.classList.add("white-text")
+            recipeSubitlePreview.classList.add("white-text")
+            previewGradient.classList.remove("hide")
+        }
+    }, [imageObject])
+
+    function handleImageButtonClick() {
+        const imageInput = document.getElementById("imageInput")
+        imageInput.click()
+    }
 
 
     return (
@@ -317,10 +354,17 @@ export default function AddRecipeForm() {
             </Link>
             <h2 className='recipe-form-title'>New Recipe Form</h2>
 
-            <div className="recipe-preview-container">
-                <div id='recipe-title-preview'>Test words to style</div>
-                <div id='recipe-subtitle-preview'>Test words to style</div>
-            </div>
+           
+            <button id="image-upload-btn" onClick={handleImageButtonClick} style={{backgroundImage: `url(${imgPreview})`}}>
+                <div id="upload-image-prompt">click here to upload image</div>
+                <div id='preview-gradient' className='hide'></div>
+                <div className="preview-text-container">
+                    <div id='recipe-title-preview'></div>
+                    <div id='recipe-subtitle-preview'></div>
+                </div>
+            </button>
+            <input type="file" id="imageInput" name="image" onChange={handleImageChange}/>
+            
 
             <form className="add-recipe-form" onSubmit={handleSubmit}>
                 {/* <div className='container'>
@@ -369,8 +413,8 @@ export default function AddRecipeForm() {
                 <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange}></input>
                 <div id="error-message" className="error"></div>
                 <input type="text" id="honeyp" name="honeyp" value={formData.honeyp} onChange={handleInputChange}></input>
-                <label htmlFor="image">Upload Image:</label>
-                <input type="file" id="image" name="image" onChange={handleImageChange}/>
+                {/* <label htmlFor="image">Upload Image:</label> */}
+                {/* <input type="file" id="image" name="image" onChange={handleImageChange}/> */}
                 <button type="submit" className="submit-recipe-btn" id="submit" >Submit Recipe</button>
             </form>
 
