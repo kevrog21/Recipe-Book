@@ -8,6 +8,7 @@ export default function AddRecipeForm() {
 
     const [formData, setFormData] = useState({
         recipeName: '',
+        recipeSubName: '',
         instructions: '',
         cooktime: '',
         password: '',
@@ -17,6 +18,16 @@ export default function AddRecipeForm() {
     const api_key = "124659146613462"
     const cloud_name = "dot31xj56"
     const CLOUDINARY_PRESET = "o6im1opl"
+
+    useEffect(() => {
+        const recipeTitlePreview = document.getElementById("recipe-title-preview")
+        recipeTitlePreview.textContent = formData.recipeName
+    }, [formData.recipeName])
+
+    useEffect(() => {
+        const recipeSubitlePreview = document.getElementById("recipe-subtitle-preview")
+        recipeSubitlePreview.textContent = formData.recipeSubName
+    }, [formData.recipeSubName])
 
     // const [image, setImage] = useState(null)
 
@@ -180,6 +191,7 @@ export default function AddRecipeForm() {
                 if (res.ok) {
                     setFormData({
                         recipeName: '',
+                        recipeSubName: '',
                         instructions: '',
                         cooktime: '',
                         password: '',
@@ -306,7 +318,8 @@ export default function AddRecipeForm() {
             <h2 className='recipe-form-title'>New Recipe Form</h2>
 
             <div className="recipe-preview-container">
-
+                <div id='recipe-title-preview'>Test words to style</div>
+                <div id='recipe-subtitle-preview'>Test words to style</div>
             </div>
 
             <form className="add-recipe-form" onSubmit={handleSubmit}>
@@ -338,10 +351,12 @@ export default function AddRecipeForm() {
                         
                         <div className='section-input-container'>
                             <label htmlFor="recipe-name">Recipe Title</label>
-                            <input type="text" id="recipe-name" name="recipeName" value={formData.recipeName} onChange={handleInputChange}></input>
+                            <input type="text" id="recipe-name" name="recipeName"
+                            placeholder='Grilled Chicken' value={formData.recipeName} onChange={handleInputChange}></input>
                             
-                            <label htmlFor="recipe-name">Recipe Subitle:</label>
-                            <input type="text" id="recipe-name" name="recipeName" value={formData.recipeName} onChange={handleInputChange}></input>
+                            <label htmlFor="recipe-sub-name">Recipe Subitle:</label>
+                            <input type="text" id="recipe-sub-name" name="recipeSubName"
+                            placeholder='with rice & veggies' value={formData.recipeSubName} onChange={handleInputChange}></input>
                         </div>
                 </section>
 
