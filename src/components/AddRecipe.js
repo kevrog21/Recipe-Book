@@ -63,7 +63,6 @@ const RecipesList = props => {
                             <img className='tempImgPreview' src={imageUrl} alt="recipe image" />
                         )
                     }
-                    
                 </div>
             )
         })

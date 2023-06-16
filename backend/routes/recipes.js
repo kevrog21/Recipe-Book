@@ -28,8 +28,16 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err))
 })
 
-router.get("/check-password", (req, res) => {
+router.route('/check-password').post((req, res) => {
+    console.log("check password running")
+    const password = req.body.password
+    const honeyp = req.body.honeyp
 
+    if (password === secretPassword && honeyp === '') {
+        res.json({ valid: true })
+    } else {
+        res.json({ valid: false })
+    }
 })
 
 router.get("/get-signature", (req, res) => {
@@ -76,6 +84,7 @@ router.route('/add').post((req, res) => {
     const recipeName = req.body.recipeName
     const instructions = req.body.instructions
     const cooktime = Number(req.body.cooktime)
+    const imageUrl = req.body.imageUrl
     const password = req.body.password
     const honeyp = req.body.honeyp
 
@@ -84,7 +93,8 @@ router.route('/add').post((req, res) => {
             recipeName,
             instructions,
             cooktime,
-            imageId
+            imageId,
+            imageUrl
         })
     
         newRecipe.save()

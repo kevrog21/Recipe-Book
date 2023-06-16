@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react' 
+import { Link } from 'react-router-dom'
 import axios from 'axios'
+import arrow from '../assets/arrow.svg'
 import { CloudinaryContext, Image } from "cloudinary-react"
 
 export default function AddRecipeForm() {
@@ -86,19 +88,43 @@ export default function AddRecipeForm() {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        // const options = {
-        //     method: "POST",
-        //     body: JSON.stringify(formData),
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     }
-        // }
+        const options = {
+            method: "POST",
+            body: JSON.stringify(formData),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
 
-        // if image, get signature and add it to form data to be sent to the server.
+        try {
+            const response = await fetch("http://localhost:5000/recipes/check-password", options)
+            const data = await response.json()
 
-        // check if a file is included in form
+            if (data.valid === false) {
+                throw new Error("Invalid Password")
+            }
+            console.log('Password is Valid')
+            resetError()
+        } catch (error) {
+            console.error(error)
+            showError("Invalid password. Please try again.")
+            return
+        }
 
-        // let signatureResponse = {}
+        // await fetch("http://localhost:5000/recipes/check-password", options)
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         if (data.valid === false) {
+        //             throw new Error("Invalid Password")
+        //         }
+        //         // if password is correct, continue with rest of the function
+        //         console.log('Password Is Valid')
+        //     })
+        //     .catch(error => {
+        //         console.error(error)
+        //     })
+
+             console.log('only log this if password is valid')
 
         if (imageObject.file) {
             try {
@@ -109,9 +135,9 @@ export default function AddRecipeForm() {
                 data.append("signature", signatureResponse.data.signature)
                 data.append("timestamp", signatureResponse.data.timestamp)
 
-                for (const entry of data.entries()) {
-                    console.log(entry)
-                    }
+                // for (const entry of data.entries()) {
+                //     console.log(entry)
+                //     }
 
                 // console.log(data)
                 // console.log(imageObject)
@@ -134,7 +160,10 @@ export default function AddRecipeForm() {
 
                 setFormData((prevData) => ({
                     ...prevData,
-                    imageId: photoData.public_id
+                    imageId: cloudinaryResponse.data.public_id,
+                    imgUrl: cloudinaryResponse.data.secure_url,
+                    signature: cloudinaryResponse.data.signature
+
                     // maybe add signature to request to check if matches expected signature
                 }))
 
@@ -144,6 +173,22 @@ export default function AddRecipeForm() {
             }
             console.log("image code ran")
         }
+
+        await fetch("http://localhost:5000/recipes/add", options)
+            .then(res => {
+                res.json()
+                if (res.ok) {
+                    setFormData({
+                        recipeName: '',
+                        instructions: '',
+                        cooktime: '',
+                        password: '',
+                        honeyp: ''
+                    })
+                    setImageObject({})
+                }
+            })
+            .then(data => console.log(data))
 
 
 
@@ -237,16 +282,35 @@ export default function AddRecipeForm() {
         //     .then(data => console.log(data))
     }
 
+    const showError = (message) => {
+        const errorElement = document.getElementById('error-message')
+        errorElement.textContent = message
+    }
+
+    const resetError = () => {
+        const errorElement = document.getElementById('error-message')
+        errorElement.textContent = ''
+    }
+
+
+
+
     return (
         <div>
-            <h2>Add Recipes</h2>
+            <Link to='/'>
+                <div className='back-arrow-container'>
+                    <img src={arrow} className="arrowHead back-arrowhead"/>
+                    <div className='back-arrow'></div>
+                </div>
+            </Link>
+            <h2 className='recipe-form-title'>New Recipe Form</h2>
 
-            <CloudinaryContext cloudName="dot31xj56">
+            {/* <CloudinaryContext cloudName="dot31xj56">
                 <div>
                     <Image publicId="sample" width="50" />
                 </div>
                 <Image publicId="sample" width="0.5" />
-            </CloudinaryContext>
+            </CloudinaryContext> */}
 
             <form className="add-recipe-form" onSubmit={handleSubmit}>
                 <label htmlFor="recipe-name">Recipe Names:</label>
@@ -257,6 +321,7 @@ export default function AddRecipeForm() {
                 <input type="number" id="cooktime" name="cooktime" value={formData.cooktime} onChange={handleInputChange}></input>
                 <label htmlFor="password">Secret Password:</label>
                 <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange}></input>
+                <div id="error-message" className="error"></div>
                 <input type="text" id="honeyp" name="honeyp" value={formData.honeyp} onChange={handleInputChange}></input>
                 <label htmlFor="image">Upload Image:</label>
                 <input type="file" id="image" name="image" onChange={handleImageChange}/>
