@@ -82,6 +82,8 @@ router.get("/get-signature", (req, res) => {
 
 router.route('/add').post((req, res) => {
     const recipeName = req.body.recipeName
+    const recipeSubName = req.body.recipeSubName
+    const ingredients = req.body.ingredients
     const instructions = req.body.instructions
     const cooktime = Number(req.body.cooktime)
     const imageUrl = req.body.imageUrl
@@ -91,6 +93,8 @@ router.route('/add').post((req, res) => {
     if (password === secretPassword && honeyp === '') {
         const newRecipe = new Recipe({
             recipeName,
+            recipeSubName,
+            ingredients,
             instructions,
             cooktime,
             imageId,

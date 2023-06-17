@@ -10,6 +10,11 @@ export default function AddRecipeForm() {
     const [formData, setFormData] = useState({
         recipeName: '',
         recipeSubName: '',
+        ingredients: [{
+            measurement: '',
+            ingredientName: '',
+            ingredientExtraDetail: ''
+        }],
         instructions: '',
         cooktime: '',
         password: '',
@@ -29,6 +34,12 @@ export default function AddRecipeForm() {
         const recipeSubitlePreview = document.getElementById("recipe-subtitle-preview")
         recipeSubitlePreview.textContent = formData.recipeSubName
     }, [formData.recipeSubName])
+
+    useEffect(() => {
+        console.log('this is running')
+        const measurementPreview = document.getElementById("ingredient-measurement-preview")
+        measurementPreview.textContent = formData.ingredients.measurement
+    }, [formData.ingredients.measurement])
 
     // const [image, setImage] = useState(null)
 
@@ -88,14 +99,72 @@ export default function AddRecipeForm() {
         console.log(selectedImage)
     }
 
+    // const handleInputChange = (e) => {
+    //     const { name, value } = e.target
+
+    //     const isNumericField = ["cooktime"].includes(name) //returns true if the target name is included in the array
+
+    //     // if (name === 'measurement' || name === 'ingredientName' || name === 'ingredientExtraDetail') {
+    //     if (name.startsWith("ingredient")) {
+    //         const ingredienIndex = parseInt(name.split("-"[1]))
+    //         setFormData((prevData) => {
+    //             const updatedIngredients = [...prevData.ingredients]
+    //             updatedIngredients[ingredienIndex] = {
+    //                 ...updatedIngredients[ingredienIndex],
+    //                 [name.split("-")[0]]: value
+    //             }
+    //             return {
+    //             ...prevData,
+    //             ingerdients: updatedIngredients
+    //             }
+    //         })
+    //     } else {
+    //         setFormData((prevData) => ({
+    //             ...prevData,
+    //             [name]: isNumericField ? parseInt(value) : value
+    //         }))
+    //     }
+    // }
+
+    // const handleInputChange = (e) => {
+    //     const { name, value } = e.target
+
+    //     if (name === 'measurement' || name === 'ingredientName' || name === 'ingredientExtraDetail') {
+    //         setFormData((prevData) => ({
+    //             ...prevData,
+    //             ingredients: {
+    //                 ...prevData.ingredients,
+    //                 [name]: value,
+    //             }
+    //         }))
+    //     } else {
+    //         const isNumericField = ["cooktime"].includes(name) //returns true if the target name is included in the array
+    //         setFormData((prevData) => ({
+    //             ...prevData,
+    //             [name]: isNumericField ? parseInt(value) : value
+    //         }))
+    //     }
+    // }
+
     const handleInputChange = (e) => {
         const { name, value } = e.target
 
-        const isNumericField = ["cooktime"].includes(name) //returns true if the target name is included in the array
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: isNumericField ? parseInt(value) : value
-        }))
+        if (name === 'measurement' || name === 'ingredientName' || name === 'ingredientExtraDetail') {
+            setFormData((prevData) => ({
+                ...prevData,
+                ingredients: [{
+                    ...prevData.ingredients,
+                    [name]: value,
+                }]
+            }))
+        } else {
+            const isNumericField = ["cooktime"].includes(name) //returns true if the target name is included in the array
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: isNumericField ? parseInt(value) : value
+            }))
+        }
+        console.log(formData.ingredients)
     }
 
     const handleSubmit = async (e) => {
@@ -194,6 +263,7 @@ export default function AddRecipeForm() {
                     setFormData({
                         recipeName: '',
                         recipeSubName: '',
+                        ingredients: [],
                         instructions: '',
                         cooktime: '',
                         password: '',
@@ -343,6 +413,22 @@ export default function AddRecipeForm() {
         imageInput.click()
     }
 
+    const handleAddClick = (e) => {
+        // push the new ingredient object to the ingredients array, then reset the value to ''
+        console.log(formData.ingredients)
+        // const measurement = document.getElementById("measurement")
+        // const ingredientName = document.getElementById("ingredient-name")
+        // const ingredientExtraDetail = document.getElementById("ingredient-extra-detail")
+        console.log(e)
+        // const newIngredientObj = {
+        //     measurement: e.measurement.value,
+        //     name: e.ingredientName.value,
+        //     extraDetail: e.ingredientExtraDetail.value
+        // }
+        // formData.ingredients.push(newIngredientObj)
+        // console.log(formData.ingredients)
+    }
+
 
     return (
         <div>
@@ -367,23 +453,6 @@ export default function AddRecipeForm() {
             
 
             <form className="add-recipe-form" onSubmit={handleSubmit}>
-                {/* <div className='container'>
-                    <section className='title-section'>
-                        <div className='section-title-container'>
-                            <h4 className='section-title'>Title</h4>
-                            <div className='section-arrow-container'>
-                                <img src={arrow} className="arrowHead section-arrowhead"/>
-                                
-                            </div>
-                        </div>
-                        <div className='section-input-container'>
-                            <label htmlFor="recipe-name">Recipe Title</label>
-                            <input type="text" id="recipe-name" name="recipeName" value={formData.recipeName} onChange={handleInputChange}></input>
-                            <label htmlFor="recipe-name">Recipe Subitle:</label>
-                            <input type="text" id="recipe-name" name="recipeName" value={formData.recipeName} onChange={handleInputChange}></input>
-                        </div>
-                    </section>
-                </div> */}
 
                 <section className='title-section'>
                         
@@ -394,20 +463,65 @@ export default function AddRecipeForm() {
                         </div>
                         
                         <div className='section-input-container'>
-                            <label htmlFor="recipe-name">Recipe Title</label>
-                            <input type="text" id="recipe-name" name="recipeName"
+                            <label htmlFor="recipe-name">Recipe Title:</label>
+                            <input type="text" id="recipe-name" name="recipeName" className='has-placeholder'
                             placeholder='Grilled Chicken' value={formData.recipeName} onChange={handleInputChange}></input>
                             
                             <label htmlFor="recipe-sub-name">Recipe Subitle:</label>
-                            <input type="text" id="recipe-sub-name" name="recipeSubName"
+                            <input type="text" id="recipe-sub-name" className='has-placeholder' name="recipeSubName"
                             placeholder='with rice & veggies' value={formData.recipeSubName} onChange={handleInputChange}></input>
                         </div>
+
+                </section>
+
+                <section className='ingredients-section'>
+                        
+                        <h4 className='section-title'>Ingredients</h4>
+                        <div className='section-arrow-container'>
+                            <img src={arrow} className="arrowHead section-arrowhead"/>
+                        </div>
+                        
+                        <div className='section-input-container'>
+                            <div className='ingredients-preview'>
+                                <span id='ingredient-measurement-preview'></span>
+                                <span id='ingredient-name-preview'>Diced Carrots</span>
+                                <span id='ingredient-extra-detail-preview'>(about 1 large carrot)</span>
+                            </div>
+                            <label htmlFor="measurement">Measurement:</label>
+                            <input type="text" id="measurement" name="measurement" className='has-placeholder'
+                            placeholder='1/2 cup' value={formData.ingredients.measurement} onChange={handleInputChange}></input>
+                            <label htmlFor="ingredientName">Ingredient Name:</label>
+                            <input type="text" id="ingredient-name" name="ingredientName" className='has-placeholder'
+                            placeholder='Diced Carrots' value={formData.ingredients.ingredientName} onChange={handleInputChange}></input>
+                            <label htmlFor="ingredientExtraDetail">Extra Detail:</label>
+                            <input type="text" id="ingredient-extra-detail" name="ingredientExtraDetail" className='has-placeholder'
+                            placeholder='(about 1 large carrot)' value={formData.ingredients.ingredientExtraDetail} onChange={handleInputChange}></input>
+                            <div className="add-button" onClick={handleAddClick}>add</div>
+                        </div>
+
+                </section>
+
+                <section className='instructions-section'>
+                        
+                        <h4 className='section-title'>Instructions</h4>
+                        <div className='section-arrow-container'>
+                            <img src={arrow} className="arrowHead section-arrowhead"/>
+                        </div>
+                        
+                        <div className='section-input-container'>
+                            <label htmlFor="instructions">Type instructions (click 'add' to start a new step)</label>
+                            <textarea type="text" id="instructions" name="instructions" className='has-placeholder'
+                            placeholder='Bring 3 quarts of water to a boil...' value={formData.instructions} onChange={handleInputChange}></textarea>
+                            <div className="add-button">add</div>
+                        </div>
+
                 </section>
 
 
-                <label htmlFor="instructions">Instructions:</label>
+
+                {/* <label htmlFor="instructions">Instructions:</label>
                 <textarea type="text" id="instructions" name="instructions" value={formData.instructions} onChange={handleInputChange}></textarea>
-                <label htmlFor="cooktime">Cooktime:</label>
+                <label htmlFor="cooktime">Cooktime:</label> */}
                 <input type="number" id="cooktime" name="cooktime" value={formData.cooktime} onChange={handleInputChange}></input>
                 <label htmlFor="password">Secret Password:</label>
                 <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange}></input>
