@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react' 
+import React, { useState, useEffect } from 'react' 
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import arrow from '../assets/arrow.svg'
@@ -10,20 +10,25 @@ export default function AddRecipeForm() {
     const [formData, setFormData] = useState({
         recipeName: '',
         recipeSubName: '',
-        ingredients: [{
-            measurement: '',
-            ingredientName: '',
-            ingredientExtraDetail: ''
-        }],
+        ingredients: [],
         instructions: '',
         cooktime: '',
         password: '',
         honeyp: ''
     })
+    const [imageObject, setImageObject] = useState({})
+    const [imgPreview, setImgPreview] = useState(null)
+    const [currentIngredientsObj, setCurrentIngredientsObj] = useState({
+        ingredientMeasurement: '',
+        ingredientName: '',
+        ingredientExtraDetail: ''
+    })
+    const [ingredientPreviews, setIngredientPreviews] = useState([])
+    const [duplicateIngredients, setDuplicateIngredients] = useState(false)
 
     const api_key = "124659146613462"
     const cloud_name = "dot31xj56"
-    const CLOUDINARY_PRESET = "o6im1opl"
+    // const CLOUDINARY_PRESET = "o6im1opl"
 
     useEffect(() => {
         const recipeTitlePreview = document.getElementById("recipe-title-preview")
@@ -36,15 +41,42 @@ export default function AddRecipeForm() {
     }, [formData.recipeSubName])
 
     useEffect(() => {
-        console.log('this is running')
-        const measurementPreview = document.getElementById("ingredient-measurement-preview")
-        measurementPreview.textContent = formData.ingredients.measurement
-    }, [formData.ingredients.measurement])
+        const ingredientMeasurementPreview = document.getElementById("ingredient-measurement-preview")
+        const ingredientNamePreview = document.getElementById("ingredient-name-preview")
+        const ingredientExtraDetailPreview = document.getElementById("ingredient-extra-detail-preview")
+        ingredientMeasurementPreview.textContent = currentIngredientsObj.ingredientMeasurement
+        ingredientNamePreview.textContent = currentIngredientsObj.ingredientName
+        ingredientExtraDetailPreview.textContent = currentIngredientsObj.ingredientExtraDetail
+    }, [currentIngredientsObj])
+
+    useEffect(() => {
+        //map over formData ingredients array and create a preview for each one.
+        const previews = formData.ingredients.map((ingredient) => {
+            return (
+                <div key={ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail}
+                     className='ingredient-preview-element' onMouseEnter={showDeleteButton} onMouseDown={showDeleteButton} onMouseLeave={hideDeleteButton}>
+                    <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>
+                    <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>
+                    <span className='ingredient-extra-detail-preview'>{ingredient.ingredientExtraDetail}</span>
+                    <span className='delete-ingredient-btn hide' onMouseDown={() => deleteIngredient(ingredient)}>delete</span>
+                </div>
+            )
+        })
+        setIngredientPreviews(previews)
+        const uniqueKeys = new Set(previews.map((preview) => preview.key))
+        if (uniqueKeys.size !== previews.length) {
+            setDuplicateIngredients(true)
+        }
+    }, [formData.ingredients])
+
+    // useEffect(() => {
+    //     console.log('this is running')
+    //     const measurementPreview = document.getElementById("ingredient-measurement-preview")
+    //     measurementPreview.textContent = formData.ingredients.measurement
+    // }, [formData.ingredients.measurement])
 
     // const [image, setImage] = useState(null)
 
-    const [imageObject, setImageObject] = useState({})
-    const [imgPreview, setImgPreview] = useState(null)
     const [finalImageObject, setFinalImageObject] = useState({})
     const [isInitialRender, setIsInitialRender] = useState(true)
 
@@ -148,27 +180,53 @@ export default function AddRecipeForm() {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
+        const isNumericField = ["cooktime"].includes(name) //returns true if the target name is included in the array
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: isNumericField ? parseInt(value) : value
+        }))
+    }
 
-        if (name === 'measurement' || name === 'ingredientName' || name === 'ingredientExtraDetail') {
-            setFormData((prevData) => ({
-                ...prevData,
-                ingredients: [{
-                    ...prevData.ingredients,
-                    [name]: value,
-                }]
-            }))
-        } else {
-            const isNumericField = ["cooktime"].includes(name) //returns true if the target name is included in the array
-            setFormData((prevData) => ({
-                ...prevData,
-                [name]: isNumericField ? parseInt(value) : value
-            }))
-        }
-        console.log(formData.ingredients)
+    const handleIngredientChange = (e) => {
+        const { name, value } = e.target
+        setCurrentIngredientsObj((prevData) => ({
+            ...prevData,
+            [name]: value
+        }))
+    }
+
+    const checkKeyDown = (e) => {
+        if (e.key === 'Enter') e.preventDefault()
+    }
+
+    const showDeleteButton = (e) => {
+        e.currentTarget.querySelector(".delete-ingredient-btn").classList.remove("hide")
+    }
+
+    const hideDeleteButton = (e) => {
+        e.currentTarget.querySelector(".delete-ingredient-btn").classList.add("hide")
+    }
+
+    const deleteIngredient = (ingredientToDelete) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            ingredients: prevData.ingredients.filter(
+                (ingredient) => ingredient !== ingredientToDelete
+            )
+        }))
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        if (!currentIngredientsObj.ingredientMeasurement == '' && 
+            !currentIngredientsObj.ingredientName == '' && 
+            !currentIngredientsObj.ingredientExtraDetail == '') {
+                setFormData((prevData) => ({
+                    ...prevData,
+                    ingredients: [...prevData.ingredients, currentIngredientsObj]
+                }))
+            }
 
         const options = {
             method: "POST",
@@ -414,20 +472,54 @@ export default function AddRecipeForm() {
     }
 
     const handleAddClick = (e) => {
-        // push the new ingredient object to the ingredients array, then reset the value to ''
         console.log(formData.ingredients)
-        // const measurement = document.getElementById("measurement")
-        // const ingredientName = document.getElementById("ingredient-name")
-        // const ingredientExtraDetail = document.getElementById("ingredient-extra-detail")
-        console.log(e)
-        // const newIngredientObj = {
-        //     measurement: e.measurement.value,
-        //     name: e.ingredientName.value,
-        //     extraDetail: e.ingredientExtraDetail.value
-        // }
-        // formData.ingredients.push(newIngredientObj)
-        // console.log(formData.ingredients)
+        if (currentIngredientsObj.ingredientMeasurement !== '' || 
+            currentIngredientsObj.ingredientName !== '' || 
+            currentIngredientsObj.ingredientExtraDetail !== '') {
+                console.log('running this code')
+                setFormData((prevData) => ({
+                    ...prevData,
+                    ingredients: [...prevData.ingredients, currentIngredientsObj]
+                }))
+                console.log(formData.ingredients)
+                setCurrentIngredientsObj(() => ({
+                    ingredientMeasurement: '',
+                    ingredientName: '',
+                    ingredientExtraDetail: ''
+                }))
+        } else {
+            console.log('nothing to add. add some stuff yo!')
+        }
     }
+
+    // const useErrorBoundary = () => {
+    //     const [hasError, setHasError] = useState(false)
+
+    //     const handleCatchError = (error, errorInfo) => {
+    //         setHasError(true)
+    //     }
+    //     return { hasError, handleCatchError}
+    // }
+
+    // const ErrorBoundary = ({ children }) => {
+    //     // const {hasError, handleCatchError } = useErrorBoundary()
+    //     const [hasError, setHasError] = useState(false)
+    //     const handleCatchError = (error, errorInfo) => {
+    //         console.error(error, errorInfo)
+    //         setHasError(true)
+    //     }
+
+    //     if (hasError) {
+    //         return <div>pssst... you have two of the same ingredients 
+    //             on there. You can delete one of them if you want.. or don't, 
+    //             I don't really care. I'm just a robot beep boop bop.</div>
+    //     }
+    //     return (
+    //         <React.fragment>
+    //             {children}
+    //         </React.fragment>
+    //     )
+    // }
 
 
     return (
@@ -452,7 +544,7 @@ export default function AddRecipeForm() {
             <input type="file" id="imageInput" name="image" onChange={handleImageChange}/>
             
 
-            <form className="add-recipe-form" onSubmit={handleSubmit}>
+            <form className="add-recipe-form" onSubmit={handleSubmit} onKeyDown={(e) => checkKeyDown(e)}>
 
                 <section className='title-section'>
                         
@@ -482,20 +574,24 @@ export default function AddRecipeForm() {
                         </div>
                         
                         <div className='section-input-container'>
-                            <div className='ingredients-preview'>
+                            {/* map over ingredients array to display entered ingredients here */}
+                            {/* <div id='ingredient-elements'>{ingredientPreviewEls}</div> */}
+                            {ingredientPreviews}
+                            <div className='current-ingredient-preview'>
                                 <span id='ingredient-measurement-preview'></span>
-                                <span id='ingredient-name-preview'>Diced Carrots</span>
-                                <span id='ingredient-extra-detail-preview'>(about 1 large carrot)</span>
+                                <span id='ingredient-name-preview'></span>
+                                <span id='ingredient-extra-detail-preview'></span>
                             </div>
-                            <label htmlFor="measurement">Measurement:</label>
-                            <input type="text" id="measurement" name="measurement" className='has-placeholder'
-                            placeholder='1/2 cup' value={formData.ingredients.measurement} onChange={handleInputChange}></input>
+                            {duplicateIngredients && <div className='duplicate-alert'>You have the same ingredient on there twice. Not judging, but it's just kinda weird to do that.</div>}
+                            <label htmlFor="ingredientMeasurement">Measurement:</label>
+                            <input type="text" id="measurement" name="ingredientMeasurement" className='has-placeholder'
+                            placeholder='1/2 cup' value={currentIngredientsObj.ingredientMeasurement} onChange={handleIngredientChange}></input>
                             <label htmlFor="ingredientName">Ingredient Name:</label>
                             <input type="text" id="ingredient-name" name="ingredientName" className='has-placeholder'
-                            placeholder='Diced Carrots' value={formData.ingredients.ingredientName} onChange={handleInputChange}></input>
+                            placeholder='Diced Carrots' value={currentIngredientsObj.ingredientName} onChange={handleIngredientChange}></input>
                             <label htmlFor="ingredientExtraDetail">Extra Detail:</label>
                             <input type="text" id="ingredient-extra-detail" name="ingredientExtraDetail" className='has-placeholder'
-                            placeholder='(about 1 large carrot)' value={formData.ingredients.ingredientExtraDetail} onChange={handleInputChange}></input>
+                            placeholder='(about 1 large carrot)' value={currentIngredientsObj.ingredientExtraDetail} onChange={handleIngredientChange}></input>
                             <div className="add-button" onClick={handleAddClick}>add</div>
                         </div>
 
@@ -510,7 +606,7 @@ export default function AddRecipeForm() {
                         
                         <div className='section-input-container'>
                             <label htmlFor="instructions">Type instructions (click 'add' to start a new step)</label>
-                            <textarea type="text" id="instructions" name="instructions" className='has-placeholder'
+                            <textarea rows="4" type="text" id="instructions" name="instructions" className='has-placeholder'
                             placeholder='Bring 3 quarts of water to a boil...' value={formData.instructions} onChange={handleInputChange}></textarea>
                             <div className="add-button">add</div>
                         </div>

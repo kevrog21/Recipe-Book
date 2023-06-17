@@ -376,19 +376,57 @@ main {
   color: #C0C0C0;
 }
 
-.ingredients-preview {
+.current-ingredient-preview {
   margin: .5rem 0 1.25rem 0;
 }
 
-#ingredient-measurement-preview {
+#ingredient-measurement-preview,
+.ingredient-measurement-preview {
   font-weight: 700;
   margin: 0 .4em 0 0;
 }
 
-#ingredient-name-preview {
+#ingredient-name-preview,
+.ingredient-name-preview {
   margin: 0 .25em 0 0;
+  font-weight: 500;
 }
 
+#ingredient-extra-detail-preview, 
+.ingredient-extra-detail-preview {
+  margin: 0 .25em 0 0;
+  color: #7E7E7E;
+}
+
+#ingredient-measurement-preview,
+#ingredient-name-preview,
+#ingredient-extra-detail-preview {
+  font-size: 1.25rem;
+  color: green;
+}
+
+.ingredient-preview-element {
+  cursor: pointer;
+}
+
+.delete-ingredient-btn {
+  margin: 0 0 0 .5rem;
+  cursor: pointer;
+  color: red;
+}
+
+.delete-ingredient-btn:hover {
+  font-weight: 600;
+}
+
+.duplicate-alert {
+  color: red;
+  font-weight: 700;
+}
+
+#instructions {
+  font-size: 1.25rem;
+}
 
 .add-recipe-form,
 .temp-img-form {
