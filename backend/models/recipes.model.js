@@ -5,6 +5,7 @@ const recipeSchema = new mongoose.Schema({
     recipeSubName: { type: String, required: false },
     ingredients: { type: Array, required: false },
     instructions: { type: String, required: false},
+    notes: {type: String, required: false},
     cooktime: { type: Number, required: false},
     imageId: { type: String, required: false },
     imgUrl: { type: String, required: false }

@@ -17,10 +17,10 @@ const RecipesList = props => {
             const urls =[]
             recipeData.forEach((recipe) => {
                 console.log('hello')
-                if (recipe.imageId) {
+                if (recipe.imgUrl) {
                     urls.push({
                         id: recipe._id,
-                        url: `https://res.cloudinary.com/dot31xj56/image/upload/${recipe.imgTimestamp}/${recipe.imageId}.jpg`
+                        url: recipe.imgUrl
                     })
                 }
             })
@@ -58,9 +58,9 @@ const RecipesList = props => {
                 <div key={recipe._id} className='tempDatabaseView'>
                     <h4>{recipe.recipeName}</h4>
                     { matchedImageUrl ? (
-                            <img className='tempImgPreview' src={matchedImageUrl.url} alt="recipe image" />
+                            <img className='tempImgPreview' src={matchedImageUrl.url} alt="recipe" />
                         ) : (
-                            <img className='tempImgPreview' src={imageUrl} alt="recipe image" />
+                            <img className='tempImgPreview' src={imageUrl} alt="recipe" />
                         )
                     }
                 </div>

@@ -12,10 +12,12 @@ export default function AddRecipeForm() {
         recipeSubName: '',
         ingredients: [],
         instructions: '',
+        notes: '',
         cooktime: '',
         password: '',
         honeyp: ''
     })
+    const [finalDataObject, setFinalDataObject] = useState({})
     const [imageObject, setImageObject] = useState({})
     const [imgPreview, setImgPreview] = useState(null)
     const [currentIngredientsObj, setCurrentIngredientsObj] = useState({
@@ -297,14 +299,13 @@ export default function AddRecipeForm() {
                     version: cloudinaryResponse.data.version,
                     signature: cloudinaryResponse.data.signature
                 }
+                console.log(formData)
 
-                setFormData((prevData) => ({
-                    ...prevData,
+                setFinalDataObject(() => ({
+                    ...formData,
                     imageId: cloudinaryResponse.data.public_id,
                     imgUrl: cloudinaryResponse.data.secure_url,
                     signature: cloudinaryResponse.data.signature
-
-                    // maybe add signature to request to check if matches expected signature
                 }))
 
                 console.log(formData)
@@ -314,23 +315,31 @@ export default function AddRecipeForm() {
             console.log("image code ran")
         }
 
-        await fetch("http://localhost:5000/recipes/add", options)
-            .then(res => {
-                res.json()
-                if (res.ok) {
-                    setFormData({
-                        recipeName: '',
-                        recipeSubName: '',
-                        ingredients: [],
-                        instructions: '',
-                        cooktime: '',
-                        password: '',
-                        honeyp: ''
-                    })
-                    setImageObject({})
-                }
-            })
-            .then(data => console.log(data))
+        // fetch("http://localhost:5000/recipes/add", {
+        //     method: "POST",
+        //     body: JSON.stringify(formData), 
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     }
+        // })
+        //     .then(res => {
+        //         res.json()
+        //         if (res.ok) {
+        //             console.log('successfully posted!')
+        //             setFormData({
+        //                 recipeName: '',
+        //                 recipeSubName: '',
+        //                 ingredients: [],
+        //                 instructions: '',
+        //                 notes: '',
+        //                 cooktime: '',
+        //                 password: '',
+        //                 honeyp: ''
+        //             })
+        //             setImageObject({})
+        //         }
+        //     })
+        //     .then(data => console.log(data))
 
 
 
@@ -446,6 +455,39 @@ export default function AddRecipeForm() {
     //     //     console.log(event.target.files)
     //     // })
     // }, [])
+
+    useEffect(() => {
+        if (Object.keys(finalDataObject).length !== 0) {
+            console.log(finalDataObject)
+        fetch("http://localhost:5000/recipes/add", {
+                method: "POST",
+                body: JSON.stringify(finalDataObject), 
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(res => {
+                    res.json()
+                    if (res.ok) {
+                        console.log('successfully posted!')
+                        setFormData({
+                            recipeName: '',
+                            recipeSubName: '',
+                            ingredients: [],
+                            instructions: '',
+                            notes: '',
+                            cooktime: '',
+                            password: '',
+                            honeyp: ''
+                        })
+                        setImageObject({})
+                    }
+                })
+                .then(data => console.log(data))
+            } else {
+                console.log('should be running this')
+            }
+    }, [finalDataObject])
 
     useEffect(() => {
         if (imageObject.file) {
@@ -605,10 +647,26 @@ export default function AddRecipeForm() {
                         </div>
                         
                         <div className='section-input-container'>
-                            <label htmlFor="instructions">Type instructions (click 'add' to start a new step)</label>
+                            <label htmlFor="instructions">Type all instructions:</label>
                             <textarea rows="4" type="text" id="instructions" name="instructions" className='has-placeholder'
                             placeholder='Bring 3 quarts of water to a boil...' value={formData.instructions} onChange={handleInputChange}></textarea>
-                            <div className="add-button">add</div>
+                            {/* <div className="add-button">add</div> */}
+                        </div>
+
+                </section>
+
+                <section className='notes-section'>
+                        
+                        <h4 className='section-title'>Notes</h4>
+                        <div className='section-arrow-container'>
+                            <img src={arrow} className="arrowHead section-arrowhead"/>
+                        </div>
+                        
+                        <div className='section-input-container'>
+                            <label htmlFor="notes">Type any notes here:</label>
+                            <textarea rows="2" type="text" id="notes" name="notes" className='has-placeholder'
+                            placeholder='Lizzie prefers the low sodium soy sauce...' value={formData.notes} onChange={handleInputChange}></textarea>
+                            {/* <div className="add-button">add</div> */}
                         </div>
 
                 </section>

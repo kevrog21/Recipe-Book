@@ -81,33 +81,86 @@ router.get("/get-signature", (req, res) => {
 //   })
 
 router.route('/add').post((req, res) => {
+    console.log("running this code yooo")
     const recipeName = req.body.recipeName
     const recipeSubName = req.body.recipeSubName
-    const ingredients = req.body.ingredients
+    const ingredients = Array.isArray(req.body.ingredients) ? req.body.ingredients : []
     const instructions = req.body.instructions
+    const notes = req.body.notes
     const cooktime = Number(req.body.cooktime)
-    const imageUrl = req.body.imageUrl
+    const imgUrl = req.body.imgUrl
     const password = req.body.password
     const honeyp = req.body.honeyp
+
+    console.log('Recipe Name: ', recipeName,'Recipe Subname: ', recipeSubName, 'ingredients: ', ingredients, 'instructions: ', instructions,'notes: ', notes,'cooktime: ', cooktime,'imgUrl: ', imgUrl,'password: ', password,'noeypot: ', honeyp)
 
     if (password === secretPassword && honeyp === '') {
         const newRecipe = new Recipe({
             recipeName,
             recipeSubName,
+            cooktime,
             ingredients,
             instructions,
-            cooktime,
-            imageId,
-            imageUrl
+            notes,
+            imgUrl
         })
-    
         newRecipe.save()
-            .then(() => res.json('Recipe Added!'))
-            .catch(err => res.status(400).json('Error: ' + err))
+        .then(() => res.json('Recipe Added!'))
+        .catch(err => res.status(400).json('Error: ' + err))
     } else {
         res.status(401).json({ error: 'Incorrect password' })
     }
 })
+
+// if (password === secretPassword && honeyp === '') {
+//     const newRecipe = new Recipe({
+//         recipeName,
+//         recipeSubName,
+//         ingredients,
+//         instructions,
+//         notes,
+//         cooktime,
+//         imageId,
+//         imageUrl
+//     })
+//     newRecipe.save()
+//         .then(() => res.json('Recipe Added!'))
+//         .catch(err => res.status(400).json('Error: ' + err))
+// } else {
+//     res.status(401).json({ error: 'Incorrect password' })
+// }
+
+
+// router.route('/add').post((req, res) => {
+//     const recipeName = req.body.recipeName
+//     const recipeSubName = req.body.recipeSubName
+//     const ingredients = req.body.ingredients
+//     const instructions = req.body.instructions
+//     const notes = req.body.notes
+//     const cooktime = Number(req.body.cooktime)
+//     const imageUrl = req.body.imageUrl
+//     const password = req.body.password
+//     const honeyp = req.body.honeyp
+
+//     if (password === secretPassword && honeyp === '') {
+//         const newRecipe = new Recipe({
+//             recipeName,
+//             recipeSubName,
+//             ingredients,
+//             instructions,
+//             notes,
+//             cooktime,
+//             imageId,
+//             imageUrl
+//         })
+    
+//         newRecipe.save()
+//             .then(() => res.json('Recipe Added!'))
+//             .catch(err => res.status(400).json('Error: ' + err))
+//     } else {
+//         res.status(401).json({ error: 'Incorrect password' })
+//     }
+// })
 
 router.route('/:id').get((req, res) => {
     Recipe.findById(req.params.id)
