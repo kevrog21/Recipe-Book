@@ -13,7 +13,8 @@ export default function AddRecipeForm() {
         ingredients: [],
         instructions: '',
         notes: '',
-        cooktime: '',
+        cooktimeHours: 0,
+        cooktimeMins: 0,
         password: '',
         honeyp: ''
     })
@@ -68,6 +69,8 @@ export default function AddRecipeForm() {
         const uniqueKeys = new Set(previews.map((preview) => preview.key))
         if (uniqueKeys.size !== previews.length) {
             setDuplicateIngredients(true)
+        } else {
+            setDuplicateIngredients(false)
         }
     }, [formData.ingredients])
 
@@ -182,7 +185,7 @@ export default function AddRecipeForm() {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
-        const isNumericField = ["cooktime"].includes(name) //returns true if the target name is included in the array
+        const isNumericField = ["cooktimeHourse", "cooktimeMins"].includes(name) //returns true if the target name is included in the array
         setFormData((prevData) => ({
             ...prevData,
             [name]: isNumericField ? parseInt(value) : value
@@ -198,7 +201,7 @@ export default function AddRecipeForm() {
     }
 
     const checkKeyDown = (e) => {
-        if (e.key === 'Enter') e.preventDefault()
+        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') e.preventDefault()
     }
 
     const showDeleteButton = (e) => {
@@ -303,17 +306,25 @@ export default function AddRecipeForm() {
 
                 setFinalDataObject(() => ({
                     ...formData,
+                    totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
                     imageId: cloudinaryResponse.data.public_id,
                     imgUrl: cloudinaryResponse.data.secure_url,
                     signature: cloudinaryResponse.data.signature
                 }))
 
-                console.log(formData)
             } catch (error) {
                 console.log(error)
             }
             console.log("image code ran")
         }
+
+        setFinalDataObject(() => ({
+            ...formData,
+            totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
+            imageId: 'no image added',
+            imgUrl: 'no image added',
+            signature: 'no image added'
+        }))
 
         // fetch("http://localhost:5000/recipes/add", {
         //     method: "POST",
@@ -476,7 +487,9 @@ export default function AddRecipeForm() {
                             ingredients: [],
                             instructions: '',
                             notes: '',
-                            cooktime: '',
+                            cooktimeHours: '',
+                            cooktimeMins: '',
+                            lastCooked: '',
                             password: '',
                             honeyp: ''
                         })
@@ -654,7 +667,7 @@ export default function AddRecipeForm() {
                         
                         <div className='section-input-container'>
                             <label htmlFor="instructions">Type all instructions:</label>
-                            <textarea rows="4" type="text" id="instructions" name="instructions" className='has-placeholder'
+                            <textarea rows="5" type="text" id="instructions" name="instructions" className='has-placeholder'
                             placeholder='Bring 3 quarts of water to a boil...' value={formData.instructions} onChange={handleInputChange}></textarea>
                             {/* <div className="add-button">add</div> */}
                         </div>
@@ -677,12 +690,29 @@ export default function AddRecipeForm() {
 
                 </section>
 
+                <section className='extra-info-section'>
+                        
+                        <h4 className='section-title'>Extra Info</h4>
+                        <div className='section-arrow-container'>
+                            <img src={arrow} className="arrowHead section-arrowhead"/>
+                        </div>
+                        
+                        <div className='section-input-container'>
+                            <label htmlFor="cooktime-hours">Estimated Total Cooktime:</label>
+                            <input className="cooktime-hours" type="number" id="cooktime-hours" name="cooktimeHours" value={formData.cooktimeHours} onChange={handleInputChange}></input>
+                            <span className="cooktime-text">hour(s)</span>
+                            <input className="cooktime-mins" type="number" id="cooktime-mins" name="cooktimeMins" value={formData.cooktimeMins} onChange={handleInputChange}></input>
+                            <span className="cooktime-text">mins</span>
+                        </div>
+
+                </section>
+
 
 
                 {/* <label htmlFor="instructions">Instructions:</label>
                 <textarea type="text" id="instructions" name="instructions" value={formData.instructions} onChange={handleInputChange}></textarea>
                 <label htmlFor="cooktime">Cooktime:</label> */}
-                <input type="number" id="cooktime" name="cooktime" value={formData.cooktime} onChange={handleInputChange}></input>
+                {/* <input type="number" id="cooktime" name="cooktime" value={formData.cooktime} onChange={handleInputChange}></input> */}
                 <label htmlFor="password">Secret Password:</label>
                 <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange}></input>
                 <div id="error-message" className="error"></div>

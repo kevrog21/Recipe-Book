@@ -314,7 +314,8 @@ main {
 .title-section,
 .instructions-section,
 .ingredients-section,
-.notes-section {
+.notes-section,
+.extra-info-section {
   margin: 0 0 3em 0;
   display: grid;
   grid-template-columns: auto 1fr 1fr;
@@ -426,7 +427,21 @@ main {
 }
 
 #instructions {
-  font-size: 1.25rem;
+  font-size: 1rem;
+}
+
+#cooktime-hours,
+#cooktime-mins {
+  display: inline-block;
+  width: 2em;
+  padding: .25rem;
+}
+
+.cooktime-text {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 2rem 1.25rem .5rem;
 }
 
 .add-recipe-form,

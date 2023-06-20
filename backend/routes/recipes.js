@@ -87,21 +87,25 @@ router.route('/add').post((req, res) => {
     const ingredients = Array.isArray(req.body.ingredients) ? req.body.ingredients : []
     const instructions = req.body.instructions
     const notes = req.body.notes
-    const cooktime = Number(req.body.cooktime)
+    const cooktimeHours = Number(req.body.cooktimeHours)
+    const cooktimeMins = Number(req.body.cooktimeMins)
+    const totalCooktime = Number(req.body.totalCooktime)
     const imgUrl = req.body.imgUrl
     const password = req.body.password
     const honeyp = req.body.honeyp
 
-    console.log('Recipe Name: ', recipeName,'Recipe Subname: ', recipeSubName, 'ingredients: ', ingredients, 'instructions: ', instructions,'notes: ', notes,'cooktime: ', cooktime,'imgUrl: ', imgUrl,'password: ', password,'honeypot: ', honeyp)
+    console.log('Recipe Name: ', recipeName,'Recipe Subname: ', recipeSubName, 'ingredients: ', ingredients, 'instructions: ', instructions,'notes: ', notes,'imgUrl: ', imgUrl,'password: ', password,'honeypot: ', honeyp)
 
     if (password === secretPassword && honeyp === '') {
         const newRecipe = new Recipe({
             recipeName,
             recipeSubName,
-            cooktime,
             ingredients,
             instructions,
             notes,
+            cooktimeHours,
+            cooktimeMins,
+            totalCooktime,
             imgUrl
         })
         newRecipe.save()
