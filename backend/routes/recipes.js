@@ -92,7 +92,7 @@ router.route('/add').post((req, res) => {
     const password = req.body.password
     const honeyp = req.body.honeyp
 
-    console.log('Recipe Name: ', recipeName,'Recipe Subname: ', recipeSubName, 'ingredients: ', ingredients, 'instructions: ', instructions,'notes: ', notes,'cooktime: ', cooktime,'imgUrl: ', imgUrl,'password: ', password,'noeypot: ', honeyp)
+    console.log('Recipe Name: ', recipeName,'Recipe Subname: ', recipeSubName, 'ingredients: ', ingredients, 'instructions: ', instructions,'notes: ', notes,'cooktime: ', cooktime,'imgUrl: ', imgUrl,'password: ', password,'honeypot: ', honeyp)
 
     if (password === secretPassword && honeyp === '') {
         const newRecipe = new Recipe({

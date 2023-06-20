@@ -534,6 +534,12 @@ export default function AddRecipeForm() {
         }
     }
 
+    const handleIngredientsEnterKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleAddClick()
+        }
+    }
+
     // const useErrorBoundary = () => {
     //     const [hasError, setHasError] = useState(false)
 
@@ -627,13 +633,13 @@ export default function AddRecipeForm() {
                             {duplicateIngredients && <div className='duplicate-alert'>You have the same ingredient on there twice. Not judging, but it's just kinda weird to do that.</div>}
                             <label htmlFor="ingredientMeasurement">Measurement:</label>
                             <input type="text" id="measurement" name="ingredientMeasurement" className='has-placeholder'
-                            placeholder='1/2 cup' value={currentIngredientsObj.ingredientMeasurement} onChange={handleIngredientChange}></input>
+                            placeholder='1/2 cup' value={currentIngredientsObj.ingredientMeasurement} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
                             <label htmlFor="ingredientName">Ingredient Name:</label>
                             <input type="text" id="ingredient-name" name="ingredientName" className='has-placeholder'
-                            placeholder='Diced Carrots' value={currentIngredientsObj.ingredientName} onChange={handleIngredientChange}></input>
+                            placeholder='Diced Carrots' value={currentIngredientsObj.ingredientName} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
                             <label htmlFor="ingredientExtraDetail">Extra Detail:</label>
                             <input type="text" id="ingredient-extra-detail" name="ingredientExtraDetail" className='has-placeholder'
-                            placeholder='(about 1 large carrot)' value={currentIngredientsObj.ingredientExtraDetail} onChange={handleIngredientChange}></input>
+                            placeholder='(about 1 large carrot)' value={currentIngredientsObj.ingredientExtraDetail} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
                             <div className="add-button" onClick={handleAddClick}>add</div>
                         </div>
 
