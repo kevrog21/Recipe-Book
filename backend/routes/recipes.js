@@ -90,6 +90,10 @@ router.route('/add').post((req, res) => {
     const cooktimeHours = Number(req.body.cooktimeHours)
     const cooktimeMins = Number(req.body.cooktimeMins)
     const totalCooktime = Number(req.body.totalCooktime)
+    const originalRecipeLink = req.body.originalRecipeLink
+    const nutritionScore = req.body.nutritionScore
+    const costScore = req.body.costScore
+    const tags = Array.isArray(req.body.tags) ? req.body.tags : []
     const imgUrl = req.body.imgUrl
     const password = req.body.password
     const honeyp = req.body.honeyp
@@ -106,6 +110,10 @@ router.route('/add').post((req, res) => {
             cooktimeHours,
             cooktimeMins,
             totalCooktime,
+            originalRecipeLink,
+            nutritionScore,
+            costScore,
+            tags,
             imgUrl
         })
         newRecipe.save()

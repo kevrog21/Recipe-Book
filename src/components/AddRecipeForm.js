@@ -15,6 +15,11 @@ export default function AddRecipeForm() {
         notes: '',
         cooktimeHours: 0,
         cooktimeMins: 0,
+        originalRecipeLink: '',
+        nutritionScore: 0,
+        costScore: 0,
+        tags: [],
+        lastCooked: '',
         password: '',
         honeyp: ''
     })
@@ -28,6 +33,7 @@ export default function AddRecipeForm() {
     })
     const [ingredientPreviews, setIngredientPreviews] = useState([])
     const [duplicateIngredients, setDuplicateIngredients] = useState(false)
+    const [tagWords, setTagWords] = useState(['breakfast', 'lunch', 'dinner', 'bunch', 'dessert'])
 
     const api_key = "124659146613462"
     const cloud_name = "dot31xj56"
@@ -185,7 +191,7 @@ export default function AddRecipeForm() {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
-        const isNumericField = ["cooktimeHourse", "cooktimeMins"].includes(name) //returns true if the target name is included in the array
+        const isNumericField = ["cooktimeHourse", "cooktimeMins", "nutritionScore"].includes(name) //returns true if the target name is included in the array
         setFormData((prevData) => ({
             ...prevData,
             [name]: isNumericField ? parseInt(value) : value
@@ -223,15 +229,6 @@ export default function AddRecipeForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        if (!currentIngredientsObj.ingredientMeasurement == '' && 
-            !currentIngredientsObj.ingredientName == '' && 
-            !currentIngredientsObj.ingredientExtraDetail == '') {
-                setFormData((prevData) => ({
-                    ...prevData,
-                    ingredients: [...prevData.ingredients, currentIngredientsObj]
-                }))
-            }
 
         const options = {
             method: "POST",
@@ -304,13 +301,31 @@ export default function AddRecipeForm() {
                 }
                 console.log(formData)
 
-                setFinalDataObject(() => ({
-                    ...formData,
-                    totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
-                    imageId: cloudinaryResponse.data.public_id,
-                    imgUrl: cloudinaryResponse.data.secure_url,
-                    signature: cloudinaryResponse.data.signature
-                }))
+                setFinalDataObject(() => {
+                    console.log('running this code')
+                    if (currentIngredientsObj.ingredientMeasurement == '' && 
+                    currentIngredientsObj.ingredientName == '' && 
+                    currentIngredientsObj.ingredientExtraDetail == '') {
+                        console.log('shouldnt add this code to data object')
+                        return {
+                            ...formData,
+                            totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
+                            imageId: cloudinaryResponse.data.public_id,
+                            imgUrl: cloudinaryResponse.data.secure_url,
+                            signature: cloudinaryResponse.data.signature
+                        }
+                    } else {
+                        console.log('should add this code to data object')
+                        return {
+                            ...formData,
+                            totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
+                            imageId: cloudinaryResponse.data.public_id,
+                            imgUrl: cloudinaryResponse.data.secure_url,
+                            signature: cloudinaryResponse.data.signature,
+                            ingredients: [...formData.ingredients, currentIngredientsObj]
+                        }
+                    }
+                })
 
             } catch (error) {
                 console.log(error)
@@ -318,13 +333,31 @@ export default function AddRecipeForm() {
             console.log("image code ran")
         }
 
-        setFinalDataObject(() => ({
-            ...formData,
-            totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
-            imageId: 'no image added',
-            imgUrl: 'no image added',
-            signature: 'no image added'
-        }))
+        setFinalDataObject(() => {
+            console.log('running this code')
+            if (currentIngredientsObj.ingredientMeasurement == '' && 
+            currentIngredientsObj.ingredientName == '' && 
+            currentIngredientsObj.ingredientExtraDetail == '') {
+                console.log('shouldnt add this code to data object')
+                return {
+                    ...formData,
+                    totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
+                    imageId: 'no image added',
+                    imgUrl: 'no image added',
+                    signature: 'no image added'
+                }
+            } else {
+                console.log('should add this code to data object')
+                return {
+                    ...formData,
+                    totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
+                    imageId: 'no image added',
+                    imgUrl: 'no image added',
+                    signature: 'no image added',
+                    ingredients: [...formData.ingredients, currentIngredientsObj]
+                }
+            }
+        })
 
         // fetch("http://localhost:5000/recipes/add", {
         //     method: "POST",
@@ -487,8 +520,12 @@ export default function AddRecipeForm() {
                             ingredients: [],
                             instructions: '',
                             notes: '',
-                            cooktimeHours: '',
-                            cooktimeMins: '',
+                            cooktimeHours: 0,
+                            cooktimeMins: 0,
+                            originalRecipeLink: '',
+                            nutritionScore: 0,
+                            costScore: 0,
+                            tags: [],
                             lastCooked: '',
                             password: '',
                             honeyp: ''
@@ -553,6 +590,41 @@ export default function AddRecipeForm() {
         }
     }
 
+    // const handleTagClick = (e) => {
+    //     console.log(e.target)
+    //     const { value } = e.target
+    //     setFormData((prevData) => ({
+    //         ...prevData,
+    //         tags: [...prevData.tags, value]
+    //     }))
+    //     console.log('clicked', formData)
+    // }
+
+    // const listOfTagOptions = [
+    //     'breakfast',
+    //     'lunch',
+    //     'dinner',
+    //     'dessert',
+    //     'brunch',
+    //     'supduperecipes'
+    // ]
+
+    // useEffect(() => {
+    //     const tags = listOfTagOptions.map((word) => {
+    //         if (word.length > 10) {
+    //             return (
+    //                 <span key={word} name={word} value={word}className='tag1 two-column-tag' onClick={() => handleTagClick}>{word}</span>
+    //             )
+    //         } else {
+    //             return (
+    //                 <span key={word} name={word} value={word} className='tag1' onClick={() => handleTagClick(word)}>{word}</span>
+    //             )
+    //         }
+    //     })
+        
+    //     setTagElements(tags)
+    // }, [])
+
     // const useErrorBoundary = () => {
     //     const [hasError, setHasError] = useState(false)
 
@@ -582,6 +654,31 @@ export default function AddRecipeForm() {
     //     )
     // }
 
+    const [selectedWord, setSelectedWord] = useState(null)
+
+    const handleTagClick = (word) => {
+        if(selectedWord === word) {
+            setSelectedWord(null)
+        } else {
+            setSelectedWord(word)
+        }
+        console.log(word)
+        setFormData((prevData) => ({
+            ...prevData,
+            tags: [...prevData.tags, word]
+    }))
+    console.log(formData.tags)
+    }
+
+// const handleTagClick = (e) => {
+    //     console.log(e.target)
+    //     const { value } = e.target
+    //     setFormData((prevData) => ({
+    //         ...prevData,
+    //         tags: [...prevData.tags, value]
+    //     }))
+    //     console.log('clicked', formData)
+    // }
 
     return (
         <div>
@@ -699,10 +796,56 @@ export default function AddRecipeForm() {
                         
                         <div className='section-input-container'>
                             <label htmlFor="cooktime-hours">Estimated Total Cooktime:</label>
-                            <input className="cooktime-hours" type="number" id="cooktime-hours" name="cooktimeHours" value={formData.cooktimeHours} onChange={handleInputChange}></input>
-                            <span className="cooktime-text">hour(s)</span>
-                            <input className="cooktime-mins" type="number" id="cooktime-mins" name="cooktimeMins" value={formData.cooktimeMins} onChange={handleInputChange}></input>
-                            <span className="cooktime-text">mins</span>
+                            <input className="cooktime-hours" type="number" min={0} id="cooktime-hours" name="cooktimeHours" 
+                            value={formData.cooktimeHours} onChange={handleInputChange}></input>
+                            <span className="post-input-inline-text">hour(s)</span>
+                            <input className="cooktime-mins" type="number" min={0}  max={59} id="cooktime-mins" name="cooktimeMins" 
+                            value={formData.cooktimeMins} onChange={handleInputChange}></input>
+                            <span className="post-input-inline-text">mins</span>
+                            <label htmlFor="nutrition-score">Nutrition Score:</label>
+                            <input className="nutrition-score" type="number" min={0} max={10} id="nutrition-score" name="nutritionScore" 
+                            value={formData.nutritionScore} onChange={handleInputChange}></input>
+                            <span className="post-input-inline-text">/10</span>
+                            <label htmlFor="cost-score">Cost Score:</label>
+                            <input className="cost-score" type="number" min={0} max={10} id="cost-score" name="costScore" 
+                            value={formData.costScore} onChange={handleInputChange}></input>
+                            <span className="post-input-inline-text">/10</span>
+                            <label htmlFor="originalRecipeLink">Link to original recipe:</label>
+                            <input type="text" id="oringinal-link" name="originalRecipeLink" placeholder='https://examplerecipe.com/'
+                            className='has-placeholder' value={formData.originalRecipeLink} onChange={handleInputChange}></input>
+                        </div>
+
+                </section>
+
+                <section className='tags-section'>
+                        
+                        <h4 className='section-title'>Tags</h4>
+                        <div className='section-arrow-container'>
+                            <img src={arrow} className="arrowHead section-arrowhead"/>
+                        </div>
+                        
+                        <div className='section-input-container' id='tags-container'>
+                            {/* <label>Click all that apply:</label>
+                            <input type="text" className='tag' name="breakfast" value={'breakfast'} onClick={handleTagClick}></input>
+                            <input type="text" className='tag' name="lunch" value={'lunch'} onClick={handleTagClick}></input>
+                            <input type="text" className='tag' name="dinner" value={'dinner'} onClick={handleTagClick}></input> */}
+                            {/* <span className='tag1'>hello</span>
+                            <span className='tag1 two-column-tag'>breakfast</span>
+                            <span className='tag1'>lunch</span>
+                            <span className='tag1'>dinner</span>
+                            <span className='tag1'>hello</span>
+                            <span className='tag1'>breakfast</span>
+                            <span className='tag1'>lunch</span>
+                            <span className='tag1'>dinner</span> */}
+                            {tagWords.map((word, index) => (
+                                <span key={index} onClick={() => handleTagClick(word)}
+                                className={selectedWord === word ? 'tag1 selected' : 'tag1'}
+                                >
+                                    {word}
+                                </span>
+                            ))
+                            }
+                            
                         </div>
 
                 </section>
