@@ -93,6 +93,7 @@ router.route('/add').post((req, res) => {
     const originalRecipeLink = req.body.originalRecipeLink
     const nutritionScore = req.body.nutritionScore
     const costScore = req.body.costScore
+    const tastinessScore = req.body.tastinessScore
     const tags = Array.isArray(req.body.tags) ? req.body.tags : []
     const imgUrl = req.body.imgUrl
     const password = req.body.password
@@ -113,6 +114,7 @@ router.route('/add').post((req, res) => {
             originalRecipeLink,
             nutritionScore,
             costScore,
+            tastinessScore,
             tags,
             imgUrl
         })

@@ -18,6 +18,7 @@ export default function AddRecipeForm() {
         originalRecipeLink: '',
         nutritionScore: 0,
         costScore: 0,
+        tastinessScore: 0,
         tags: [],
         lastCooked: '',
         password: '',
@@ -33,7 +34,9 @@ export default function AddRecipeForm() {
     })
     const [ingredientPreviews, setIngredientPreviews] = useState([])
     const [duplicateIngredients, setDuplicateIngredients] = useState(false)
-    const [tagWords, setTagWords] = useState(['breakfast', 'lunch', 'dinner', 'bunch', 'dessert'])
+    const [tagWords, setTagWords] = useState(['breakfast', 'lunch', 'dinner', 'brunch', 'dessert', 'drinks', 'winter meals', 'summer meals',
+'appetizer', 'side dish', 'main', 'quick', 'vegetarian', 'Vegan', 'Gluten Free', 'Dairy Free', 'italian', 'asian'])
+    const [selectedTagWords, setSelectedTagWords] = useState([])
 
     const api_key = "124659146613462"
     const cloud_name = "dot31xj56"
@@ -302,11 +305,9 @@ export default function AddRecipeForm() {
                 console.log(formData)
 
                 setFinalDataObject(() => {
-                    console.log('running this code')
                     if (currentIngredientsObj.ingredientMeasurement == '' && 
                     currentIngredientsObj.ingredientName == '' && 
                     currentIngredientsObj.ingredientExtraDetail == '') {
-                        console.log('shouldnt add this code to data object')
                         return {
                             ...formData,
                             totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
@@ -315,7 +316,6 @@ export default function AddRecipeForm() {
                             signature: cloudinaryResponse.data.signature
                         }
                     } else {
-                        console.log('should add this code to data object')
                         return {
                             ...formData,
                             totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
@@ -331,33 +331,33 @@ export default function AddRecipeForm() {
                 console.log(error)
             }
             console.log("image code ran")
+        } else {
+            setFinalDataObject(() => {
+                console.log('running this code')
+                if (currentIngredientsObj.ingredientMeasurement == '' && 
+                currentIngredientsObj.ingredientName == '' && 
+                currentIngredientsObj.ingredientExtraDetail == '') {
+                    console.log('shouldnt add this code to data object')
+                    return {
+                        ...formData,
+                        totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
+                        imageId: 'no image added',
+                        imgUrl: 'no image added',
+                        signature: 'no image added'
+                    }
+                } else {
+                    console.log('should add this code to data object')
+                    return {
+                        ...formData,
+                        totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
+                        imageId: 'no image added',
+                        imgUrl: 'no image added',
+                        signature: 'no image added',
+                        ingredients: [...formData.ingredients, currentIngredientsObj]
+                    }
+                }
+            })
         }
-
-        setFinalDataObject(() => {
-            console.log('running this code')
-            if (currentIngredientsObj.ingredientMeasurement == '' && 
-            currentIngredientsObj.ingredientName == '' && 
-            currentIngredientsObj.ingredientExtraDetail == '') {
-                console.log('shouldnt add this code to data object')
-                return {
-                    ...formData,
-                    totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
-                    imageId: 'no image added',
-                    imgUrl: 'no image added',
-                    signature: 'no image added'
-                }
-            } else {
-                console.log('should add this code to data object')
-                return {
-                    ...formData,
-                    totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
-                    imageId: 'no image added',
-                    imgUrl: 'no image added',
-                    signature: 'no image added',
-                    ingredients: [...formData.ingredients, currentIngredientsObj]
-                }
-            }
-        })
 
         // fetch("http://localhost:5000/recipes/add", {
         //     method: "POST",
@@ -499,6 +499,10 @@ export default function AddRecipeForm() {
     //     //     console.log(event.target.files)
     //     // })
     // }, [])
+    const recipeTitlePreview = document.getElementById("recipe-title-preview")
+    const recipeSubitlePreview = document.getElementById("recipe-subtitle-preview")
+    const previewGradient = document.getElementById("preview-gradient")
+    const uploadImagePrompt = document.getElementById("upload-image-prompt")
 
     useEffect(() => {
         if (Object.keys(finalDataObject).length !== 0) {
@@ -525,12 +529,24 @@ export default function AddRecipeForm() {
                             originalRecipeLink: '',
                             nutritionScore: 0,
                             costScore: 0,
+                            tastinessScore: 0,
                             tags: [],
                             lastCooked: '',
                             password: '',
                             honeyp: ''
                         })
                         setImageObject({})
+                        setImgPreview(null)
+                        uploadImagePrompt.classList.remove("hide")
+                        recipeTitlePreview.classList.remove("white-text")
+                        recipeSubitlePreview.classList.remove("white-text")
+                        previewGradient.classList.add("hide")
+                        setCurrentIngredientsObj({
+                            ingredientMeasurement: '',
+                            ingredientName: '',
+                            ingredientExtraDetail: ''
+                        })
+                        setSelectedTagWords([])
                     }
                 })
                 .then(data => console.log(data))
@@ -541,10 +557,6 @@ export default function AddRecipeForm() {
 
     useEffect(() => {
         if (imageObject.file) {
-            const recipeTitlePreview = document.getElementById("recipe-title-preview")
-            const recipeSubitlePreview = document.getElementById("recipe-subtitle-preview")
-            const previewGradient = document.getElementById("preview-gradient")
-            const uploadImagePrompt = document.getElementById("upload-image-prompt")
             const reader = new FileReader()
             reader.onloadend = () => {
                 setImgPreview(reader.result)
@@ -654,20 +666,40 @@ export default function AddRecipeForm() {
     //     )
     // }
 
-    const [selectedWord, setSelectedWord] = useState(null)
-
     const handleTagClick = (word) => {
-        if(selectedWord === word) {
-            setSelectedWord(null)
-        } else {
-            setSelectedWord(word)
-        }
-        console.log(word)
-        setFormData((prevData) => ({
-            ...prevData,
-            tags: [...prevData.tags, word]
-    }))
-    console.log(formData.tags)
+        setFormData((prevData) => {
+            const tags = prevData.tags
+            const isTagIncluded = tags.includes(word)
+
+            if (isTagIncluded) {
+                const updatedTags = tags.filter((tag) => tag !== word)
+
+                return {
+                    ...prevData,
+                    tags: updatedTags
+                }
+            } else {
+                const updatedTags = [...tags, word]
+
+                return {
+                    ...prevData,
+                    tags: updatedTags
+                }
+            }
+        })
+        setSelectedTagWords((prevSelectedTagWords) => {
+            const isSelected = prevSelectedTagWords.includes(word)
+
+            if (word.length > 8) {
+                
+            }
+
+            if (isSelected) {
+                return prevSelectedTagWords.filter((selectedWord) => selectedWord !== word)
+            } else {
+                return [...prevSelectedTagWords, word]
+            }
+        })
     }
 
 // const handleTagClick = (e) => {
@@ -810,6 +842,10 @@ export default function AddRecipeForm() {
                             <input className="cost-score" type="number" min={0} max={10} id="cost-score" name="costScore" 
                             value={formData.costScore} onChange={handleInputChange}></input>
                             <span className="post-input-inline-text">/10</span>
+                            <label htmlFor="tastiness-score">Tastiness Score:</label>
+                            <input className="tastiness-score" type="number" min={0} max={10} id="tastiness-score" name="tastinessScore" 
+                            value={formData.tastinessScore} onChange={handleInputChange}></input>
+                            <span className="post-input-inline-text">/10</span>
                             <label htmlFor="originalRecipeLink">Link to original recipe:</label>
                             <input type="text" id="oringinal-link" name="originalRecipeLink" placeholder='https://examplerecipe.com/'
                             className='has-placeholder' value={formData.originalRecipeLink} onChange={handleInputChange}></input>
@@ -839,7 +875,11 @@ export default function AddRecipeForm() {
                             <span className='tag1'>dinner</span> */}
                             {tagWords.map((word, index) => (
                                 <span key={index} onClick={() => handleTagClick(word)}
-                                className={selectedWord === word ? 'tag1 selected' : 'tag1'}
+                                className={
+                                    word.length > 10
+                                    ? selectedTagWords.includes(word) ? 'tag1 two-column-tag selected' : 'tag1 two-column-tag'
+                                    : selectedTagWords.includes(word) ? 'tag1 selected' : 'tag1'
+                                }
                                 >
                                     {word}
                                 </span>
