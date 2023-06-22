@@ -11,6 +11,8 @@ export default function App() {
 
   const [recipes, setRecipes] = useState(data)
 
+  const [recipeDataFromDatabase, setRecipeDataFromDatabase] = useState([])
+
     const [selectedRecipe, setSelectedRecipe] = useState()
 
     const handleSelectedRecipe = (clickedRecipe) => {

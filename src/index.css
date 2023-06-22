@@ -49,16 +49,58 @@ header {
 
 .app_title {
   font-weight: 800;
-  line-height: 1em;
+  line-height: 2em;
   color: white;
   margin: 0;
+  text-decoration: none;
 }
 
 .hamburger_wrapper {
-  width: 7vw;
-  height: 7vw;
+  width: 9vw;
+  height: 9vw;
+  margin: 0 3vw 0 0; 
+  cursor: pointer;
+}
+
+#hamburger-line1,
+#hamburger-line2 {
   background: white;
-  margin: 0 .5em 0 0; 
+  height: 7%;
+  margin: 30% 0 0 0;
+  width: 100%;
+  border-radius: .5vw;;
+}
+
+#hamburger-line2 {
+  margin: 2vw 0 0 0;
+  width: 60%;
+}
+
+.nav-menu-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .85);
+  z-index: 2;
+}
+
+#nav-menu {
+  background: white;
+  width: 70%;
+  height: 100%;
+  margin: 0 0 0 auto;
+  padding: 30vw 0 0 0;
+}
+
+#nav-menu * {
+  width: 75%;
+  margin: 1rem 0 1rem auto;
+  text-decoration: none;
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: black;
 }
 
 main {
