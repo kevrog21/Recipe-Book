@@ -2,6 +2,7 @@ import './App.css';
 import { useState } from 'react'; 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
+import Footer from './components/Footer'
 import Homescreen from './components/Homescreen'
 import RecipePage from './components/RecipePage'
 import AddRecipeForm from './components/AddRecipeForm'
@@ -74,6 +75,7 @@ export default function App() {
             <AddRecipeForm />
           } />
         </Routes>
+        <Footer />
     </Router>
 
     // <div>

@@ -65,10 +65,10 @@ header {
 #hamburger-line1,
 #hamburger-line2 {
   background: white;
-  height: 7%;
+  height: 10%;
   margin: 30% 0 0 0;
   width: 100%;
-  border-radius: .5vw;;
+  border-radius: .5vw;
 }
 
 #hamburger-line2 {
@@ -101,6 +101,17 @@ header {
   font-size: 1.75rem;
   font-weight: 500;
   color: black;
+}
+
+.footer-wrapper {
+  bottom: 0;
+  background: #3F3F3F;
+  padding: 3em 0;
+}
+
+.footer-content {
+  color: white;
+  text-align: center;
 }
 
 main {

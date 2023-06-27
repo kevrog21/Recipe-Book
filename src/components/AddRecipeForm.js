@@ -35,7 +35,7 @@ export default function AddRecipeForm() {
     const [ingredientPreviews, setIngredientPreviews] = useState([])
     const [duplicateIngredients, setDuplicateIngredients] = useState(false)
     const [tagWords, setTagWords] = useState(['breakfast', 'lunch', 'dinner', 'brunch', 'dessert', 'drinks', 'winter meals', 'summer meals',
-'appetizer', 'side dish', 'main', 'quick', 'vegetarian', 'Vegan', 'Gluten Free', 'Dairy Free', 'italian', 'asian'])
+'appetizer', 'side dish', 'main', 'quick', 'vegetarian', 'Vegan', 'Gluten Free', 'Dairy Free', 'basics', 'seafood'])
     const [selectedTagWords, setSelectedTagWords] = useState([])
 
     const api_key = "124659146613462"
@@ -689,10 +689,6 @@ export default function AddRecipeForm() {
         })
         setSelectedTagWords((prevSelectedTagWords) => {
             const isSelected = prevSelectedTagWords.includes(word)
-
-            if (word.length > 8) {
-                
-            }
 
             if (isSelected) {
                 return prevSelectedTagWords.filter((selectedWord) => selectedWord !== word)
