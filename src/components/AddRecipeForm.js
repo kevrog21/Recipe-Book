@@ -5,7 +5,7 @@ import arrow from '../assets/arrow.svg'
 // import image from '../assets/grilled-cheese-tomato-soup.jpg'
 import { CloudinaryContext, Image } from "cloudinary-react"
 
-export default function AddRecipeForm() {
+export default function AddRecipeForm(props) {
 
     const [formData, setFormData] = useState({
         recipeName: '',
@@ -555,6 +555,7 @@ export default function AddRecipeForm() {
                             ingredientExtraDetail: ''
                         })
                         setSelectedTagWords([])
+                        props.retrieveRecipes()
                     }
                 })
                 .then(data => console.log(data))

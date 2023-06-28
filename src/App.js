@@ -14,13 +14,13 @@ export default function App() {
   const [recipes, setRecipes] = useState(data)
 
   const [recipeData, setRecipeData] = useState([])
-  const [imageUrls, setImageUrls] = useState([])
+  const [itemCount, setItemCount] = useState(recipeData.length)
 
   const retrieveRecipes = () => {
     RecipeDataService.getAll()
     .then(response => {
-        console.log(response.data)
         setRecipeData(response.data)
+        setItemCount(response.data.length)
     })
     .catch(e => {
         console.log(e)
@@ -29,28 +29,27 @@ export default function App() {
 
   useEffect(() => {
       retrieveRecipes()
-      console.log('the recipes have been retrieved')
   }, [])
 
-  useEffect(() => {
-    if (recipeData.length > 0) {
-        const urls =[]
-        recipeData.forEach((recipe) => {
-            if (recipe.imgUrl) {
-                urls.push({
-                    id: recipe._id,
-                    url: recipe.imgUrl
-                })
-            }
-        })
-        setImageUrls(urls)
-        console.log('image urls', urls)
-        urls.forEach((imageUrl) => {
-            const img = new Image()
-            img.src = imageUrl.url
-        })
-    } 
-}, [recipeData])
+//   useEffect(() => {
+//     if (recipeData.length > 0) {
+//         const urls =[]
+//         recipeData.forEach((recipe) => {
+//             if (recipe.imgUrl) {
+//                 urls.push({
+//                     id: recipe._id,
+//                     url: recipe.imgUrl
+//                 })
+//             }
+//         })
+//         setImageUrls(urls)
+//         console.log('image urls', urls)
+//         urls.forEach((imageUrl) => {
+//             const img = new Image()
+//             img.src = imageUrl.url
+//         })
+//     } 
+// }, [recipeData])
 
     const [selectedRecipe, setSelectedRecipe] = useState()
 
@@ -112,7 +111,9 @@ export default function App() {
               handleSelectedRecipe={handleSelectedRecipe}
             />} />
           <Route path="/add-recipe" element={
-            <AddRecipeForm />
+            <AddRecipeForm 
+              retrieveRecipes={retrieveRecipes}
+            />
           } />
         </Routes>
         <Footer />
