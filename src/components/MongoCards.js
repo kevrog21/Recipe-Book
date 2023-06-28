@@ -8,7 +8,7 @@ import filledBell from '../assets/filled-bell.svg'
 
 export default function MongoCards(props) {
 
-const [backgroundImageURL, setBackgroundImageURL] = useState()
+// const [backgroundImageURL, setBackgroundImageURL] = useState()
 
 // useEffect(() => {
 //     const importImage = async () => {
@@ -26,12 +26,12 @@ const styles = {
  
 const handleStarClick = (e) => {
     e.stopPropagation()
-    props.handleStarClick(props.recipeData.id)
+    props.handleStarClick(props.recipeData._id)
 }
 
 const handleBellClick = (e) => {
     e.stopPropagation()
-    props.handleBellClick(props.recipeData.id)
+    props.handleBellClick(props.recipeData._id)
 }
 
 const toggleDisplayFullRecipe = (e) => {
@@ -47,7 +47,7 @@ const toggleDisplayFullRecipe = (e) => {
                     {props.recipeData.recipeSubName && <h4 className='recipe-subheader'>{props.recipeData.recipeSubheader}</h4>}
                 </div>
                 <img className='bell-icon' src={props.recipeData.isRequested ? filledBell : bell} alt='request icon' onClick={handleBellClick} />
-                <Link to={`/${props.recipeData.id}`} />
+                <Link to={`/${props.recipeData._id}`} />
             </div>
     )
 }

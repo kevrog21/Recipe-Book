@@ -718,7 +718,7 @@ export default function AddRecipeForm(props) {
     // }
 
     return (
-        <div>
+        <main>
             <Link to='/'>
                 <div className='back-arrow-container'>
                     <img src={arrow} className="arrowHead back-arrowhead"/>
@@ -917,6 +917,6 @@ export default function AddRecipeForm(props) {
                 <button type="submit" className="submit-image-btn" id="submitImage" >Submit Image</button>
             </form> */}
 
-        </div>
+        </main>
     )
 }

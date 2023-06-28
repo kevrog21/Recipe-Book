@@ -74,6 +74,10 @@ export default function App() {
         // or you can update database with new value if you want the UI to update quicker
     }
 
+    const handleMongoFavoriteToggle = (recipeID) => {
+      console.log('mongo favorite toggle is running', recipeID )
+    }
+
     const handleRequestToggle = (recipeID) => {
         console.log(recipeID)
         setRecipes(prevRecipes => {
@@ -100,6 +104,7 @@ export default function App() {
               handleFavoriteToggle={handleFavoriteToggle}
               handleRequestToggle={handleRequestToggle}
               handleSelectedRecipe={handleSelectedRecipe}
+              handleMongoFavoriteToggle={handleMongoFavoriteToggle}
             />} />
 
           <Route path="/:recipeId" element={

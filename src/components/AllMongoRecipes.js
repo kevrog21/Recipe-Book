@@ -36,9 +36,10 @@ export default function AllMongoRecipes(props) {
                 recipeData={recipe}
                 isFavorited={recipe.isFavorited}
                 isRequested={recipe.isRequested}
-                handleStarClick={props.handleStarClick}
+                handleStarClick={props.handleMongoFavoriteToggle}
                 handleBellClick={props.handleBellClick}
                 handleCardClick={props.handleCardClick}
+                handleMongoFavoriteToggle={props.handleMongoFavoriteToggle}
                 // title={card.recipeHeader}
                 // subTitle={card.recipeSubHeader}
                 // img={card.recipeImage}
@@ -56,9 +57,10 @@ export default function AllMongoRecipes(props) {
                 recipeData={recipe}
                 isFavorited={recipe.isFavorited}
                 isRequested={recipe.isRequested}
-                handleStarClick={props.handleStarClick}
+                handleStarClick={props.handleMongoFavoriteToggle}
                 handleBellClick={props.handleBellClick}
                 handleCardClick={props.handleCardClick}
+                handleMongoFavoriteToggle={props.handleMongoFavoriteToggle}
                 // title={card.recipeHeader}
                 // subTitle={card.recipeSubHeader}
                 // img={card.recipeImage}

@@ -5,15 +5,16 @@ import Favorited from './Favorited'
 import RecipePage from './RecipePage'
 import AddRecipe from './AddRecipe'
 import AllMongoRecipes from './AllMongoRecipes'
+import MongoFavorites from './MongoFavorites'
 
 export default function Homescreen(props) {
-    const { data, mongoData, handleFavoriteToggle, handleRequestToggle, handleSelectedRecipe } = props
+    const { data, mongoData, handleFavoriteToggle, handleRequestToggle, handleSelectedRecipe, handleMongoFavoriteToggle } = props
 
     return (
         <main>
             {/* nav menu */}
             {/* Howdy, Kevin || welcome stranger */}
-            <AllRecipes 
+            {/* <AllRecipes 
                 title="All Recipes"
                 index={0}
                 data={data}
@@ -36,7 +37,7 @@ export default function Homescreen(props) {
                 handleStarClick={handleFavoriteToggle}
                 handleBellClick={handleRequestToggle}
                 handleCardClick={handleSelectedRecipe}
-            />
+            /> */}
             {/* {selectedRecipe && <RecipePage
                 index={3}
                 data={data}
@@ -48,14 +49,25 @@ export default function Homescreen(props) {
 
             <AllMongoRecipes 
                 title="All Mongo Recipes"
-                index={3}
+                index={0}
                 data={mongoData}
                 handleStarClick={handleFavoriteToggle}
                 handleBellClick={handleRequestToggle}
                 handleCardClick={handleSelectedRecipe}
+                handleMongoFavoriteToggle={handleMongoFavoriteToggle}
+            />
+
+            <MongoFavorites
+                title="Mongo Favorites"
+                index={1}
+                data={mongoData}
+                handleStarClick={handleFavoriteToggle}
+                handleBellClick={handleRequestToggle}
+                handleCardClick={handleSelectedRecipe}
+                handleMongoFavoriteToggle={handleMongoFavoriteToggle}
             />
           
-            <AddRecipe />
+            {/* <AddRecipe /> */}
             {/* Suggested */}
             {/* top-rated - and add the rating in top left of card*/}
             {/* most cooked  - and add the number in top left of card*/}

@@ -256,8 +256,9 @@ main {
 
 /* add recipe page */
 
-.back-arrow-container {
-  margin: 8rem 0 0 2rem;
+.back-arrow-container,
+.recipe-page-back-arrow-container {
+  margin: 0 0 0 2rem;
   width: 2.5em;
   height: 2em;
   display: flex;
@@ -288,7 +289,8 @@ main {
   margin: 1rem auto;
 }
 
-.recipe-form-title{
+.recipe-form-title,
+.recipe-title {
   font-size: 7vw;
   font-weight: 500;
   text-align: center;
@@ -307,7 +309,8 @@ main {
   justify-content: flex-end;
 } */
 
-#image-upload-btn {
+#image-upload-btn,
+.recipe-page-hero {
   box-shadow: -5px 6px 4px rgb(0 0 0 / 0.25);
   width: 88vw;
   height: 50vw;
@@ -370,7 +373,8 @@ main {
 .ingredients-section,
 .notes-section,
 .extra-info-section,
-.tags-section {
+.tags-section,
+.stats-section {
   margin: 0 0 3em 0;
   display: grid;
   grid-template-columns: auto 1fr 1fr;
@@ -404,7 +408,8 @@ main {
   left: 0;
 }
 
-.section-input-container {
+.section-input-container,
+.section-content-container {
   grid-column: 2 / span 2;
   grid-row: 2 / span 2;
   margin: .5rem 0 .75rem 0;
@@ -606,6 +611,14 @@ main {
 
 /* full recipe page */
 
-.header-img {
-  width: 200px;
+.recipe-page section {
+  width: 90%;
+  margin: 3em auto;
+}
+
+#back-text  {
+  margin: 0 0 0 3.5em;
+  font-weight: 600;
+  text-decoration: none;
+  color: black;
 }
