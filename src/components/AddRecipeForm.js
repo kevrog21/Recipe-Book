@@ -310,6 +310,8 @@ export default function AddRecipeForm() {
                     currentIngredientsObj.ingredientExtraDetail == '') {
                         return {
                             ...formData,
+                            isFavorited: false,
+                            isRequested: false,
                             totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
                             imageId: cloudinaryResponse.data.public_id,
                             imgUrl: cloudinaryResponse.data.secure_url,
@@ -318,6 +320,8 @@ export default function AddRecipeForm() {
                     } else {
                         return {
                             ...formData,
+                            isFavorited: false,
+                            isRequested: false,
                             totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
                             imageId: cloudinaryResponse.data.public_id,
                             imgUrl: cloudinaryResponse.data.secure_url,
@@ -340,6 +344,8 @@ export default function AddRecipeForm() {
                     console.log('shouldnt add this code to data object')
                     return {
                         ...formData,
+                        isFavorited: false,
+                        isRequested: false,
                         totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
                         imageId: 'no image added',
                         imgUrl: 'no image added',
@@ -349,6 +355,8 @@ export default function AddRecipeForm() {
                     console.log('should add this code to data object')
                     return {
                         ...formData,
+                        isFavorited: false,
+                        isRequested: false,
                         totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
                         imageId: 'no image added',
                         imgUrl: 'no image added',

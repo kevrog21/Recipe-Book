@@ -16,7 +16,6 @@ const RecipesList = props => {
         if (recipeData.length > 0) {
             const urls =[]
             recipeData.forEach((recipe) => {
-                console.log('hello')
                 if (recipe.imgUrl) {
                     urls.push({
                         id: recipe._id,

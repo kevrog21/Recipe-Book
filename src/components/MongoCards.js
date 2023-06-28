@@ -6,7 +6,7 @@ import bell from '../assets/bell.svg'
 import filledStar from '../assets/filled-star.svg'
 import filledBell from '../assets/filled-bell.svg'
 
-export default function Card(props) {
+export default function MongoCards(props) {
 
 const [backgroundImageURL, setBackgroundImageURL] = useState()
 
@@ -21,7 +21,7 @@ const [backgroundImageURL, setBackgroundImageURL] = useState()
 
 
 const styles = {
-        backgroundImage: `linear-gradient(25deg, rgba(0, 0, 0, .95), rgba(0, 0, 0, 0) 45%), url(${backgroundImageURL})`
+        backgroundImage: `linear-gradient(25deg, rgba(0, 0, 0, .95), rgba(0, 0, 0, 0) 45%), url(${props.recipeData.imgUrl})`
  }
  
 const handleStarClick = (e) => {
@@ -43,8 +43,8 @@ const toggleDisplayFullRecipe = (e) => {
                 <img className='star-icon icon-drop-shadow' src={props.isFavorited ? filledStar : star} onClick={handleStarClick} />
                 <div className='card-text-container'>
                     <img className='bell-icon-above-text' src={bell} alt='request icon'/>
-                    <h3 className='recipe-card-name icon-drop-shadow' >{props.recipeData.recipeHeader}</h3>
-                    {props.recipeData.recipeSubheader && <h4 className='recipe-subheader'>{props.recipeData.recipeSubheader}</h4>}
+                    <h3 className='recipe-card-name icon-drop-shadow' >{props.recipeData.recipeName}</h3>
+                    {props.recipeData.recipeSubName && <h4 className='recipe-subheader'>{props.recipeData.recipeSubheader}</h4>}
                 </div>
                 <img className='bell-icon' src={props.recipeData.isRequested ? filledBell : bell} alt='request icon' onClick={handleBellClick} />
                 <Link to={`/${props.recipeData.id}`} />

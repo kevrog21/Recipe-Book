@@ -19,7 +19,7 @@ export default function RecipePage(props) {
     }, [])
 
     return (
-        <div>
+        <main>
             <h2>Okay here is recipe {recipeId}</h2>
             <h2>Okay here is recipe {recipeId}</h2>
             <h2>Okay here is recipe {recipeId}</h2>
@@ -28,6 +28,6 @@ export default function RecipePage(props) {
             <img className="header-img" src={headerImage} alt="" />
             {/* <img src={require(imagePath).default} /> */}
             {/* <img src={`../assets/${headerImage}.jpg`} /> */}
-        </div>
+        </main>
     )
 }

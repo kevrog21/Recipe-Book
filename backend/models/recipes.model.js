@@ -16,7 +16,9 @@ const recipeSchema = new mongoose.Schema({
     ingredients: { type: Array, required: false },
     tags: { type: Array, required: false },
     imageId: { type: String, required: false },
-    imgUrl: { type: String, required: false }
+    imgUrl: { type: String, required: false },
+    isFavorited: { type: Boolean, default: false },
+    isRequested: { type: Boolean, default: false }
 }, {
     timestamps: true,
 })

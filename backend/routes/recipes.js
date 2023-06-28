@@ -98,6 +98,8 @@ router.route('/add').post((req, res) => {
     const imgUrl = req.body.imgUrl
     const password = req.body.password
     const honeyp = req.body.honeyp
+    const isFavorited = req.body.isFavorited
+    const isRequested = req.body.isRequested
 
     console.log('Recipe Name: ', recipeName,'Recipe Subname: ', recipeSubName, 'ingredients: ', ingredients, 'instructions: ', instructions,'notes: ', notes,'imgUrl: ', imgUrl,'password: ', password,'honeypot: ', honeyp)
 
@@ -116,7 +118,9 @@ router.route('/add').post((req, res) => {
             costScore,
             tastinessScore,
             tags,
-            imgUrl
+            imgUrl,
+            isFavorited,
+            isRequested
         })
         newRecipe.save()
         .then(() => res.json('Recipe Added!'))
