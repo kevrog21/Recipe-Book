@@ -216,6 +216,7 @@ main {
   line-height: 1em;
   grid-column: 1;
   grid-row: 3;
+  font-size: 3.25vw;
 }
 
 .recipe-subheader {
@@ -223,6 +224,7 @@ main {
   font-size: .65em;
   font-weight: 600;
   line-height: 1em;
+  font-size: 1.75vw;
 }
 
 .star-icon {
