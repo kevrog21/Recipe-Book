@@ -803,7 +803,6 @@ export default function AddRecipeForm(props) {
                             <label htmlFor="instructions">Type all instructions:</label>
                             <textarea rows="5" type="text" id="instructions" name="instructions" className='has-placeholder'
                             placeholder='Bring 3 quarts of water to a boil...' value={formData.instructions} onChange={handleInputChange}></textarea>
-                            {/* <div className="add-button">add</div> */}
                         </div>
 
                 </section>
@@ -819,7 +818,6 @@ export default function AddRecipeForm(props) {
                             <label htmlFor="notes">Type any notes here:</label>
                             <textarea rows="2" type="text" id="notes" name="notes" className='has-placeholder'
                             placeholder='Lizzie prefers the low sodium soy sauce...' value={formData.notes} onChange={handleInputChange}></textarea>
-                            {/* <div className="add-button">add</div> */}
                         </div>
 
                 </section>
@@ -866,18 +864,6 @@ export default function AddRecipeForm(props) {
                         </div>
                         
                         <div className='section-input-container' id='tags-container'>
-                            {/* <label>Click all that apply:</label>
-                            <input type="text" className='tag' name="breakfast" value={'breakfast'} onClick={handleTagClick}></input>
-                            <input type="text" className='tag' name="lunch" value={'lunch'} onClick={handleTagClick}></input>
-                            <input type="text" className='tag' name="dinner" value={'dinner'} onClick={handleTagClick}></input> */}
-                            {/* <span className='tag1'>hello</span>
-                            <span className='tag1 two-column-tag'>breakfast</span>
-                            <span className='tag1'>lunch</span>
-                            <span className='tag1'>dinner</span>
-                            <span className='tag1'>hello</span>
-                            <span className='tag1'>breakfast</span>
-                            <span className='tag1'>lunch</span>
-                            <span className='tag1'>dinner</span> */}
                             {tagWords.map((word, index) => (
                                 <span key={index} onClick={() => handleTagClick(word)}
                                 className={
@@ -895,17 +881,11 @@ export default function AddRecipeForm(props) {
 
                 </section>
 
-
-
-                {/* <label htmlFor="instructions">Instructions:</label>
-                <textarea type="text" id="instructions" name="instructions" value={formData.instructions} onChange={handleInputChange}></textarea>
-                <label htmlFor="cooktime">Cooktime:</label> */}
                 {/* <input type="number" id="cooktime" name="cooktime" value={formData.cooktime} onChange={handleInputChange}></input> */}
                 <label htmlFor="password">Secret Password:</label>
                 <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange}></input>
                 <div id="error-message" className="error"></div>
                 <input type="text" id="honeyp" name="honeyp" value={formData.honeyp} onChange={handleInputChange}></input>
-                {/* <label htmlFor="image">Upload Image:</label> */}
                 {/* <input type="file" id="image" name="image" onChange={handleImageChange}/> */}
                 <button type="submit" className="submit-recipe-btn" id="submit" >Submit Recipe</button>
             </form>
