@@ -37,7 +37,6 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1em;
   box-shadow: 0 0 .5em 0;
   position: fixed;
   top: 0;
@@ -45,10 +44,11 @@ header {
   width: 100%;
   box-sizing: border-box;
   z-index: 99;
-  height: 18vw;
+  padding: 3vw;
 }
 
 .app_title {
+  font-size: 2.75vw;
   font-weight: 800;
   line-height: 2em;
   color: white;
