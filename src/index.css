@@ -610,7 +610,12 @@ main {
   display: none;
 }
 
-
+.success-el {
+  text-align: center;
+  color: green;
+  font-size: 2em;
+  font-weight: 800;
+}
 
 /* full recipe page */
 

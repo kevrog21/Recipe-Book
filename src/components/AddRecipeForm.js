@@ -890,6 +890,10 @@ export default function AddRecipeForm(props) {
                 <button type="submit" className="submit-recipe-btn" id="submit" >Submit Recipe</button>
             </form>
 
+            <div className='success-el hide'>
+                SUCCESS!
+            </div>
+
             {/* <form className="temp-img-form" onSubmit={handleImageSubmit}>
                 <label htmlFor="image">Upload Image:</label>
                 <input type="file" id="image" name="image" onChange={handleImageChange}/>
