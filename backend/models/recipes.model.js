@@ -13,7 +13,6 @@ const recipeSchema = new mongoose.Schema({
     nutritionScore: { type: Number, required: false},
     costScore: { type: Number, required: false},
     tastinessScore: { type: Number, required: false},
-    ingredients: { type: Array, required: false },
     tags: { type: Array, required: false },
     imageId: { type: String, required: false },
     imgUrl: { type: String, required: false },

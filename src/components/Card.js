@@ -38,13 +38,15 @@ const toggleDisplayFullRecipe = (e) => {
     props.handleCardClick(props.recipeData)
 }
 
+console.log(props.recipeData)
+
     return (
             <div className='card' style={styles} onClick={toggleDisplayFullRecipe}>
                 <img className='star-icon icon-drop-shadow' src={props.isFavorited ? filledStar : star} onClick={handleStarClick} />
                 <div className='card-text-container'>
                     <img className='bell-icon-above-text' src={bell} alt='request icon'/>
                     <h3 className='recipe-card-name icon-drop-shadow' >{props.recipeData.recipeHeader}</h3>
-                    {props.recipeData.recipeSubheader && <h4 className='recipe-subheader'>{props.recipeData.recipeSubheader}</h4>}
+                    {props.recipeData.recipeSubName && <h4 className='recipe-subheader'>{props.recipeData.recipeSubName}</h4>}
                 </div>
                 <img className='bell-icon' src={props.recipeData.isRequested ? filledBell : bell} alt='request icon' onClick={handleBellClick} />
                 <Link to={`/${props.recipeData.id}`} />

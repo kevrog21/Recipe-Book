@@ -44,7 +44,7 @@ const toggleDisplayFullRecipe = (e) => {
                 <div className='card-text-container'>
                     <img className='bell-icon-above-text' src={bell} alt='request icon'/>
                     <h3 className='recipe-card-name icon-drop-shadow' >{props.recipeData.recipeName}</h3>
-                    {props.recipeData.recipeSubName && <h4 className='recipe-subheader'>{props.recipeData.recipeSubheader}</h4>}
+                    {props.recipeData.recipeSubName && <h4 className='recipe-subheader'>{props.recipeData.recipeSubName}</h4>}
                 </div>
                 <img className='bell-icon' src={props.recipeData.isRequested ? filledBell : bell} alt='request icon' onClick={handleBellClick} />
                 <Link to={`/${props.recipeData._id}`} />
