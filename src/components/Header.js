@@ -1,12 +1,27 @@
 import { Link } from 'react-router-dom'
 import NavMenu from './NavMenu'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Header() {
     const [isNavMenuOpen, setIsNavMenuOpen] = useState(false)
 
+    useEffect(() => {
+        const container = document.querySelector('.nav-menu-container')
+        const navMenu = document.querySelector('#nav-menu')
+
+        if (container) {
+            if (isNavMenuOpen) {
+                container.classList.add('show')
+                navMenu.classList.add('show')
+            } else {
+                container.classList.remove('show')
+                navMenu.classList.remove('show')
+            }
+        }
+    }, [isNavMenuOpen])
+
     const handleMenuToggle = () => {
-        setIsNavMenuOpen(!isNavMenuOpen)
+        setIsNavMenuOpen((prevIsNavMenuOpen) => !prevIsNavMenuOpen)
     }
 
     const handleNavItemClick = () => {
@@ -22,10 +37,7 @@ export default function Header() {
                     <div id='hamburger-line2'></div>
                 </div>
             </header>
-            {isNavMenuOpen && <NavMenu handleNavItemClick={handleNavItemClick}/>}
+            <NavMenu handleNavItemClick={handleNavItemClick}/>
         </div>
-
-        
-        
     )
 }
