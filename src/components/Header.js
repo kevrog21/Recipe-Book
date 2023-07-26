@@ -8,14 +8,21 @@ export default function Header() {
     useEffect(() => {
         const container = document.querySelector('.nav-menu-container')
         const navMenu = document.querySelector('#nav-menu')
+        const mainEl = document.querySelector('main')
 
         if (container) {
             if (isNavMenuOpen) {
                 container.classList.add('show')
                 navMenu.classList.add('show')
+                mainEl.classList.add('disable-pointer-events')
+                document.documentElement.style.overflow = 'hidden'
+                document.body.style.overflow = 'hidden'
             } else {
                 container.classList.remove('show')
                 navMenu.classList.remove('show')
+                mainEl.classList.remove('disable-pointer-events')
+                document.documentElement.style.overflow = ''
+                document.body.style.overflow = ''
             }
         }
     }, [isNavMenuOpen])
