@@ -31,7 +31,7 @@ const handleStarClick = (e) => {
 
 const handleBellClick = (e) => {
     e.stopPropagation()
-    props.handleBellClick(props.recipeData._id)
+    props.handleBellClick(props.recipeData._id, props.recipeData.recipeName, props.recipeData.isRequested)
 }
 
 const toggleDisplayFullRecipe = (e) => {

@@ -1,13 +1,12 @@
-import Card from './Card'
-import MongoCards from './MongoCards'
 import {useEffect, useState} from 'react'
 import arrow from '../assets/arrow.svg'
+import MongoCards from './MongoCards'
 
-export default function AllMongoRecipes(props) {
+export default function Favorited(props) {
 
     const cardsScrollContainer = document.getElementsByClassName('cardsScrollContainer')
 
-    const [scrollAllArrow, setScrollAllArrowWidth] = useState(15)
+    const [scrollArrowWidth, setScrollArrowWidth] = useState(15)
 
     function getScrollPercentage() {
         const totalElementWidth = cardsScrollContainer[`${props.index}`].scrollWidth
@@ -17,12 +16,12 @@ export default function AllMongoRecipes(props) {
         const percentage = distanceScrolled / (totalElementWidth - visibleWidth) * 85
 
         return (
-            setScrollAllArrowWidth(percentage + 15)
+            setScrollArrowWidth(percentage + 15)
         )
     }
 
     const styles = {
-        width: `${scrollAllArrow}% `,
+        width: `${scrollArrowWidth}% `,
         height: '20px',
         margin: `0 auto 0 0`,
         display: 'grid'
@@ -30,28 +29,10 @@ export default function AllMongoRecipes(props) {
 
     const data = props.data
 
-    const [allRecipes, setallRecipes] = useState(data.map(recipe => (
-            <MongoCards 
-                key={recipe._id}
-                recipeData={recipe}
-                isFavorited={recipe.isFavorited}
-                isRequested={recipe.isRequested}
-                handleStarClick={props.handleMongoFavoriteToggle}
-                handleBellClick={props.handleBellClick}
-                handleCardClick={props.handleCardClick}
-                handleMongoFavoriteToggle={props.handleMongoFavoriteToggle}
-                // title={card.recipeHeader}
-                // subTitle={card.recipeSubHeader}
-                // img={card.recipeImage}
-                // favorited={card.isFavorited}
-                // requested={card.isRequested}
-                // uniqueID={card.uniqueIdentifier}
-            /> 
-        ))
-    )
+    const allRequestedRecipes = data.filter(recipe => recipe.isRequested)
 
-    useEffect(() => {
-        setallRecipes(data.map(recipe => (
+    const [requestedRecipeElements, setRequestedRecipeElements] = useState(allRequestedRecipes.map(recipe => {
+        return (
             <MongoCards 
                 key={recipe._id}
                 recipeData={recipe}
@@ -60,7 +41,29 @@ export default function AllMongoRecipes(props) {
                 handleStarClick={props.handleMongoFavoriteToggle}
                 handleBellClick={props.handleMongoRequestToggle}
                 handleCardClick={props.handleCardClick}
-                handleMongoFavoriteToggle={props.handleMongoFavoriteToggle}
+                // favoritedState={favoritedState}
+                // handleClick={toggleFavorite}
+                // title={card.recipeHeader}
+                // subTitle={card.recipeSubHeader}
+                // img={card.recipeImage}
+                // favorited={card.isFavorited}
+                // requested={card.isRequested}
+                // uniqueID={card.uniqueIdentifier}
+            />
+            )
+        })
+    )
+
+    useEffect(() => {
+        setRequestedRecipeElements(data.filter(recipe => recipe.isRequested).map(recipe => (
+            <MongoCards 
+                key={recipe._id}
+                recipeData={recipe}
+                isFavorited={recipe.isFavorited}
+                isRequested={recipe.isRequested}
+                handleStarClick={props.handleMongoFavoriteToggle}
+                handleBellClick={props.handleMongoRequestToggle}
+                handleCardClick={props.handleCardClick}
                 // title={card.recipeHeader}
                 // subTitle={card.recipeSubHeader}
                 // img={card.recipeImage}
@@ -69,11 +72,8 @@ export default function AllMongoRecipes(props) {
                 // uniqueID={card.uniqueIdentifier}
             /> 
         )))
-        console.log('rendered All Recipes section')
+        console.log('rendered the favorites section yo')
     }, [data])
-
-
-
 
     return (
         <div className="cardSecionContainer">
@@ -88,7 +88,7 @@ export default function AllMongoRecipes(props) {
             </div>
             <div className="cardsScrollContainer" onScroll={getScrollPercentage}>
                 <div className="cardsContainer">
-                    {allRecipes}
+                    {requestedRecipeElements}
                     <div className='end-line'></div>
                 </div>
             </div>

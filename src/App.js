@@ -84,6 +84,32 @@ export default function App() {
       }
     }
 
+    const handleMongoRequestToggle = async (recipeID, recipeName, prevRequestStatus) => {
+      console.log('mongo favorite toggle is running', recipeID, recipeName, prevRequestStatus)
+      // database fetch request
+
+      try {
+        const response = await fetch(`http://localhost:5000/recipes/toggleRequest/${recipeID}`, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            recipeName: recipeName,
+            isRequested: prevRequestStatus
+          })
+        })
+
+        if (response.ok) {
+          console.log('successfuly updated the Request status')
+          retrieveRecipes()
+        }
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
   return (
     <Router>
         <Header />
@@ -96,6 +122,7 @@ export default function App() {
               // handleRequestToggle={handleRequestToggle}
               handleSelectedRecipe={handleSelectedRecipe}
               handleMongoFavoriteToggle={handleMongoFavoriteToggle}
+              handleMongoRequestToggle={handleMongoRequestToggle}
             />} />
 
           <Route path="/:recipeId" element={

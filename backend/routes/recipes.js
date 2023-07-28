@@ -222,6 +222,19 @@ router.route('/toggleFavorite/:id').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err))
 })
 
+router.route('/toggleRequest/:id').post((req, res) => {
+    Recipe.findById(req.params.id)
+        .then(recipe => {
+            recipe.recipeName = req.body.recipeName
+            recipe.isRequested = !req.body.isRequested
+
+            recipe.save()
+                .then(() => res.json('toggled!'))
+                .catch(err => res.status(400).json('Error: ' + err))
+        })
+        .catch(err => res.status(400).json('Error: ' + err))
+})
+
 export default router
 
 

@@ -42,7 +42,7 @@ export default function Favorited(props) {
                 isFavorited={recipe.isFavorited}
                 isRequested={recipe.isRequested}
                 handleStarClick={props.handleMongoFavoriteToggle}
-                handleBellClick={props.handleBellClick}
+                handleBellClick={props.handleMongoRequestToggle}
                 handleCardClick={props.handleCardClick}
                 // favoritedState={favoritedState}
                 // handleClick={toggleFavorite}
@@ -53,9 +53,9 @@ export default function Favorited(props) {
                 // requested={card.isRequested}
                 // uniqueID={card.uniqueIdentifier}
             />
-        )
-    })
-)
+            )
+        })
+    )
 
     useEffect(() => {
         setFavoriteRecipeElements(data.filter(recipe => recipe.isFavorited).map(recipe => (
@@ -65,7 +65,7 @@ export default function Favorited(props) {
                 isFavorited={recipe.isFavorited}
                 isRequested={recipe.isRequested}
                 handleStarClick={props.handleMongoFavoriteToggle}
-                handleBellClick={props.handleBellClick}
+                handleBellClick={props.handleMongoRequestToggle}
                 handleCardClick={props.handleCardClick}
                 // title={card.recipeHeader}
                 // subTitle={card.recipeSubHeader}

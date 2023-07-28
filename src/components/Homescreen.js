@@ -6,9 +6,10 @@ import RecipePage from './RecipePage'
 import AddRecipe from './AddRecipe'
 import AllMongoRecipes from './AllMongoRecipes'
 import MongoFavorites from './MongoFavorites'
+import MongoRequests from './MongoRequests'
 
 export default function Homescreen(props) {
-    const { data, mongoData, handleFavoriteToggle, handleRequestToggle, handleSelectedRecipe, handleMongoFavoriteToggle } = props
+    const { data, mongoData, handleFavoriteToggle, handleRequestToggle, handleSelectedRecipe, handleMongoFavoriteToggle, handleMongoRequestToggle } = props
 
     return (
         <main>
@@ -48,23 +49,37 @@ export default function Homescreen(props) {
             />} */}
 
             <AllMongoRecipes 
-                title="All Mongo Recipes"
+                title="All Recipes"
                 index={0}
                 data={mongoData}
                 handleStarClick={handleFavoriteToggle}
                 handleBellClick={handleRequestToggle}
                 handleCardClick={handleSelectedRecipe}
                 handleMongoFavoriteToggle={handleMongoFavoriteToggle}
+                handleMongoRequestToggle={handleMongoRequestToggle}
+                
             />
 
             <MongoFavorites
-                title="Mongo Favorites"
+                title="Favorites"
                 index={1}
                 data={mongoData}
                 handleStarClick={handleFavoriteToggle}
                 handleBellClick={handleRequestToggle}
                 handleCardClick={handleSelectedRecipe}
                 handleMongoFavoriteToggle={handleMongoFavoriteToggle}
+                handleMongoRequestToggle={handleMongoRequestToggle}
+            />
+
+            <MongoRequests
+                title="Requests"
+                index={2}
+                data={mongoData}
+                handleStarClick={handleFavoriteToggle}
+                handleBellClick={handleRequestToggle}
+                handleCardClick={handleSelectedRecipe}
+                handleMongoFavoriteToggle={handleMongoFavoriteToggle}
+                handleMongoRequestToggle={handleMongoRequestToggle}
             />
           
             {/* <AddRecipe /> */}
