@@ -129,6 +129,7 @@ export default function App() {
             <RecipePage 
               // data={recipes}
               mongoData={recipeData}
+              selectedRecipe={selectedRecipe}
               // handleFavoriteToggle={handleFavoriteToggle}
               // handleRequestToggle={handleRequestToggle}
               handleSelectedRecipe={handleSelectedRecipe}

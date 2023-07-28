@@ -20,7 +20,7 @@ export default function Header() {
             } else {
                 container.classList.remove('show')
                 navMenu.classList.remove('show')
-                mainEl.classList.remove('disable-pointer-events')
+                // mainEl.classList.remove('disable-pointer-events')
                 document.documentElement.style.overflow = ''
                 document.body.style.overflow = ''
             }
