@@ -1,10 +1,14 @@
 import { useParams, Link } from 'react-router-dom' 
 import { useState, useEffect } from 'react'
 import arrow from '../assets/arrow.svg'
+import star from '../assets/star.svg'
+import bell from '../assets/bell.svg'
+import filledStar from '../assets/filled-star.svg'
+import filledBell from '../assets/filled-bell.svg'
 
 export default function RecipePage(props) {
     const {recipeId} = useParams()
-    const { mongoData } = props
+    const { mongoData,handleMongoFavoriteToggle } = props
 
     const currentRecipe = mongoData.find(recipe => recipe._id === recipeId)
 
@@ -23,14 +27,22 @@ export default function RecipePage(props) {
         )
     })
 
+    const handleStarClick = (e) => {
+        e.stopPropagation()
+        handleMongoFavoriteToggle(currentRecipe._id, currentRecipe.recipeName, currentRecipe.isFavorited)
+    }
+
     return (
         <main className='recipe-page'>
-            <Link to='/'>
-                <div className='recipe-page-back-arrow-container'>
-                    <img src={arrow} className="arrowHead back-arrowhead"/>
-                    <div className='back-arrow'></div>
-                </div>
-            </Link>
+            <div className='recipe-page-icon-container'>
+                <Link to='/'>
+                    <div className='recipe-page-back-arrow-container'>
+                        <img src={arrow} className="arrowHead back-arrowhead"/>
+                        <div className='back-arrow'></div>
+                    </div>
+                </Link>
+                <img className='recipe-page-star icon-drop-shadow' src={currentRecipe.isFavorited ? filledStar : star} onClick={handleStarClick} />
+            </div>
             <h2 className='recipe-title'>{currentRecipe.recipeName}</h2>
 
             <div className='recipe-page-hero' style={{backgroundImage: `url(${currentRecipe.imgUrl})`}}>

@@ -221,6 +221,10 @@ main {
   grid-template-rows: 1fr 1fr auto;
 }
 
+/* .card * {
+  pointer-events: none;
+} */
+
 .card-text-container {
   grid-column: 1;
   grid-row: 2;
@@ -280,9 +284,18 @@ main {
 
 /* add recipe page */
 
+.recipe-page-icon-container {
+  display: flex;
+  margin: 0 2rem;
+  justify-content: space-between;
+}
+
+.recipe-page-star {
+  width: 2rem;
+}
+
 .back-arrow-container,
 .recipe-page-back-arrow-container {
-  margin: 0 0 0 2rem;
   width: 2.5em;
   height: 2em;
   display: flex;

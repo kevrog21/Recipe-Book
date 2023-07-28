@@ -132,6 +132,7 @@ export default function App() {
               // handleFavoriteToggle={handleFavoriteToggle}
               // handleRequestToggle={handleRequestToggle}
               handleSelectedRecipe={handleSelectedRecipe}
+              handleMongoFavoriteToggle={handleMongoFavoriteToggle}
             />} />
           <Route path="/add-recipe" element={
             <AddRecipeForm 
