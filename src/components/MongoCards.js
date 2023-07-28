@@ -26,7 +26,7 @@ const styles = {
  
 const handleStarClick = (e) => {
     e.stopPropagation()
-    props.handleStarClick(props.recipeData._id)
+    props.handleStarClick(props.recipeData._id, props.recipeData.recipeName, props.recipeData.isFavorited)
 }
 
 const handleBellClick = (e) => {

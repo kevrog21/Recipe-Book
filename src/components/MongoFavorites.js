@@ -60,7 +60,7 @@ export default function Favorited(props) {
     useEffect(() => {
         setFavoriteRecipeElements(data.filter(recipe => recipe.isFavorited).map(recipe => (
             <MongoCards 
-                key={recipe.id}
+                key={recipe._id}
                 recipeData={recipe}
                 isFavorited={recipe.isFavorited}
                 isRequested={recipe.isRequested}

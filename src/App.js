@@ -11,7 +11,7 @@ import RecipeDataService from './services/recipeList'
 
 export default function App() {
 
-  const [recipes, setRecipes] = useState(data)
+  // const [recipes, setRecipes] = useState(data)
 
   const [recipeData, setRecipeData] = useState([])
   const [itemCount, setItemCount] = useState(recipeData.length)
@@ -21,6 +21,7 @@ export default function App() {
     .then(response => {
         setRecipeData(response.data)
         setItemCount(response.data.length)
+        console.log('recipes retrieved')
     })
     .catch(e => {
         console.log(e)
@@ -57,40 +58,30 @@ export default function App() {
         setSelectedRecipe(clickedRecipe)
     }
 
-    const handleFavoriteToggle = (recipeID) => {
-        // update database with new value and send an error if unsuccessful
-        console.log(recipeID)
-        setRecipes(prevRecipes => {
-            return prevRecipes.map(recipe => {
-                if (recipe.id === recipeID) {
-                    return {
-                        ...recipe,
-                        isFavorited: !recipe.isFavorited
-                    }
-                }
-                return recipe
-            })
-        })
-        // or you can update database with new value if you want the UI to update quicker
-    }
+    const handleMongoFavoriteToggle = async (recipeID, recipeName, prevFavoritedStatus) => {
+      console.log('mongo favorite toggle is running', recipeID, recipeName, prevFavoritedStatus)
+      // database fetch request
 
-    const handleMongoFavoriteToggle = (recipeID) => {
-      console.log('mongo favorite toggle is running', recipeID )
-    }
-
-    const handleRequestToggle = (recipeID) => {
-        console.log(recipeID)
-        setRecipes(prevRecipes => {
-            return prevRecipes.map(recipe => {
-                if (recipe.id === recipeID) {
-                    return {
-                        ...recipe,
-                        isRequested: !recipe.isRequested
-                    }
-                }
-                return recipe
-            })
+      try {
+        const response = await fetch(`http://localhost:5000/recipes/toggleFavorite/${recipeID}`, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            recipeName: recipeName,
+            isFavorited: prevFavoritedStatus
+          })
         })
+
+        if (response.ok) {
+          console.log('successfuly updated the favorited status')
+          retrieveRecipes()
+        }
+
+      } catch (error) {
+        console.log(error)
+      }
     }
 
   return (
@@ -99,20 +90,20 @@ export default function App() {
         <Routes>
           <Route exact path="/" element={
             <Homescreen 
-              data={recipes}
+              // data={recipes}
               mongoData={recipeData}
-              handleFavoriteToggle={handleFavoriteToggle}
-              handleRequestToggle={handleRequestToggle}
+              // handleFavoriteToggle={handleFavoriteToggle}
+              // handleRequestToggle={handleRequestToggle}
               handleSelectedRecipe={handleSelectedRecipe}
               handleMongoFavoriteToggle={handleMongoFavoriteToggle}
             />} />
 
           <Route path="/:recipeId" element={
             <RecipePage 
-              data={recipes}
+              // data={recipes}
               mongoData={recipeData}
-              handleFavoriteToggle={handleFavoriteToggle}
-              handleRequestToggle={handleRequestToggle}
+              // handleFavoriteToggle={handleFavoriteToggle}
+              // handleRequestToggle={handleRequestToggle}
               handleSelectedRecipe={handleSelectedRecipe}
             />} />
           <Route path="/add-recipe" element={

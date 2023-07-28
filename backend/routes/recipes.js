@@ -200,9 +200,23 @@ router.route('/update/:id').post((req, res) => {
             recipe.cooktime = Number(req.body.cooktime)
             recipe.imageId = req.body.imageId
             recipe.imgTimestamp = req.body.imgTimestamp
+            recipe.isFavorited = !req.body.isFavorited
 
             recipe.save()
                 .then(() => res.json('Recipe updated!'))
+                .catch(err => res.status(400).json('Error: ' + err))
+        })
+        .catch(err => res.status(400).json('Error: ' + err))
+})
+
+router.route('/toggleFavorite/:id').post((req, res) => {
+    Recipe.findById(req.params.id)
+        .then(recipe => {
+            recipe.recipeName = req.body.recipeName
+            recipe.isFavorited = !req.body.isFavorited
+
+            recipe.save()
+                .then(() => res.json('toggled!'))
                 .catch(err => res.status(400).json('Error: ' + err))
         })
         .catch(err => res.status(400).json('Error: ' + err))
