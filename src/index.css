@@ -82,7 +82,7 @@ header {
 }
 
 .nav-menu-container.show {
-  background-color: rgba(0, 0, 0, .85);
+  background-color: rgba(0, 0, 0, .68);
 }
 
 #nav-menu {
@@ -102,6 +102,7 @@ header {
 
 #nav-menu.show {
   transform: translateX(0);
+  box-shadow: 0 0 1em;
 }
 
 #nav-menu * {
@@ -349,6 +350,9 @@ main {
   background-position: center;
   background-size: cover;
 }
+ .recipe-page-hero {
+  align-items: flex-end;
+ }
 
 #preview-gradient {
   width: 100%;
@@ -379,7 +383,8 @@ main {
   display: none;
 }
 
-#recipe-title-preview {
+#recipe-title-preview,
+#recipe-title-overlay {
   text-align: left;
   font-size: 2rem;
   font-weight: 800;
@@ -388,10 +393,21 @@ main {
   text-transform: uppercase;
 }
 
-#recipe-subtitle-preview {
+#recipe-title-overlay {
+  color: white;
+}
+
+#recipe-subtitle-preview,
+#recipe-subtitle-overlay {
   text-align: left;
   margin: 0 .5rem .5rem 1.5rem;
   font-weight: 600;
+}
+
+#recipe-subtitle-overlay {
+  font-size: 1rem;
+  line-height: 1rem;
+  color: white;
 }
 
 .title-section,
@@ -656,6 +672,28 @@ main {
 
 .show-line-breaks {
   white-space: pre-line;
+}
+
+.taglist {
+  margin: 0 .25rem
+}
+
+.checkbox-container {
+  display: flex;
+  margin: 5em 2em 5em 2em;
+}
+
+#completed-checbox {
+  width: 8vw;
+  height: 8vw;
+  border: 1vw black solid;
+  margin: 0 1em 0 0;
+}
+
+.completed-text {
+  font-size: 5.5vw;
+  font-weight: 800;
+  line-height: 6vw;
 }
 
 /* utility classes */

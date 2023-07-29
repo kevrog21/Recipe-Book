@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom' 
 import { useState, useEffect } from 'react'
 import arrow from '../assets/arrow.svg'
-import star from '../assets/star.svg'
+import greyStar from '../assets/grey-star.svg'
 import bell from '../assets/bell.svg'
 import filledStar from '../assets/filled-star.svg'
 import filledBell from '../assets/filled-bell.svg'
@@ -12,6 +12,7 @@ export default function RecipePage(props) {
     const [currentRecipe, setCurrentRecipe] = useState(selectedRecipe)
     const [isLoading, setIsLoading] = useState(true)
     const [ingredients, setIngredients] = useState([])
+    const [tags, setTags]= useState([])
 
     useEffect(() => {
         if (mongoData.length > 0) {
@@ -33,7 +34,14 @@ export default function RecipePage(props) {
                     </div>
                 )
             })
+            const tags = currentRecipe.tags.map(tag => {
+                return (
+                    <span key={tag}
+                    className='taglist'> #{tag} </span>
+                )
+            })
             setIngredients(ingredients)
+            setTags(tags)
         }
     }, [currentRecipe])
 
@@ -58,12 +66,14 @@ export default function RecipePage(props) {
                             <div className='back-arrow'></div>
                         </div>
                     </Link>
-                    <img className='recipe-page-star icon-drop-shadow' src={currentRecipe.isFavorited ? filledStar : star} onClick={handleStarClick} />
+                    <img className='recipe-page-star' src={currentRecipe.isFavorited ? filledStar : greyStar} onClick={handleStarClick} />
                 </div>
-                <h2 className='recipe-title'>{currentRecipe.recipeName}</h2>
     
-                <div className='recipe-page-hero' style={{backgroundImage: `url(${currentRecipe.imgUrl})`}}>
-                    
+                <div className='recipe-page-hero' style={{backgroundImage: `linear-gradient(12deg, rgba(0, 0, 0, .95), rgba(0, 0, 0, 0) 45%), url(${currentRecipe.imgUrl})`}}>
+                    <div>
+                        <div id='recipe-title-overlay'>{currentRecipe.recipeName}</div>
+                        <div id='recipe-subtitle-overlay'>{currentRecipe.recipeSubName}</div>
+                    </div>
                 </div>
     
                 <section className='ingredients-section'>
@@ -117,6 +127,25 @@ export default function RecipePage(props) {
                     </div>
     
                 </section>
+
+                {tags.length > 0 && <section className='tags-section'>
+                    <h4 className='section-title'>Tags</h4>
+                    <div className='section-arrow-container'>
+                        <img src={arrow} className="arrowHead section-arrowhead"/>
+                    </div>
+    
+                    <div className='section-content-container tags-container'>
+                        {tags}
+                    </div>
+                </section>}
+
+                <div className='checkbox-container'>
+                    <div id="completed-checbox"></div>
+                    <div>
+                        <div className='completed-text'>Check box after cooking</div>
+                        <div>(to add to stats)</div>
+                    </div>
+                </div>
     
                 <Link to='/'>
                     <div className='recipe-page-back-arrow-container'>
