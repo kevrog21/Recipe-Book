@@ -15,18 +15,6 @@ h1, h2, h3, h4 {
   margin: 0;
 }
 
-.white-text {
-  color: white;
-}
-
-.hide {
-  display: none;
-}
-
-.disable-pointer-events {
-  pointer-events: none;
-}
-
 .icon-drop-shadow {
   filter: drop-shadow(0 0 .35rem rgb(0, 0, 0, 1));
 }
@@ -298,6 +286,7 @@ main {
 .recipe-page-back-arrow-container {
   width: 2.5em;
   height: 2em;
+  margin: 0 0 0 2rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -663,4 +652,25 @@ main {
   font-weight: 600;
   text-decoration: none;
   color: black;
+}
+
+.show-line-breaks {
+  white-space: pre-line;
+}
+
+/* utility classes */
+.white-text {
+  color: white;
+}
+
+.hide {
+  display: none;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.disable-pointer-events {
+  pointer-events: none;
 }

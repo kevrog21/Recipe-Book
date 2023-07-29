@@ -44,16 +44,16 @@ export default function RecipePage(props) {
 
     if (isLoading) {
         return (
-            <div>
+            <main>
                 Loading...
-            </div>
+            </main>
         )
     } else {
         return (
             <main className='recipe-page'>
                 <div className='recipe-page-icon-container'>
                     <Link to='/'>
-                        <div className='recipe-page-back-arrow-container'>
+                        <div className='recipe-page-back-arrow-container no-margin'>
                             <img src={arrow} className="arrowHead back-arrowhead"/>
                             <div className='back-arrow'></div>
                         </div>
@@ -85,7 +85,7 @@ export default function RecipePage(props) {
                     </div>
                     
                     <div className='section-content-container'>
-                        <p>{currentRecipe.instructions}</p>
+                        <p className='show-line-breaks'>{currentRecipe.instructions}</p>
                     </div>
     
                 </section>
@@ -98,7 +98,7 @@ export default function RecipePage(props) {
                     </div>
                     
                     <div className='section-content-container'>
-                        <p>{currentRecipe.notes}</p>
+                        <p className='show-line-breaks'>{currentRecipe.notes}</p>
                     </div>
     
                 </section>
