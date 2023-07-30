@@ -7,6 +7,7 @@ import AddRecipe from './AddRecipe'
 import AllMongoRecipes from './AllMongoRecipes'
 import MongoFavorites from './MongoFavorites'
 import MongoRequests from './MongoRequests'
+import AllVegetarian from './AllVegetarian'
 import AllDesserts from './AllDesserts'
 
 export default function Homescreen(props) {
@@ -83,9 +84,20 @@ export default function Homescreen(props) {
                 handleMongoRequestToggle={handleMongoRequestToggle}
             />
 
+            <AllVegetarian
+                title="Vegetarian"
+                index={3}
+                data={mongoData}
+                handleStarClick={handleFavoriteToggle}
+                handleBellClick={handleRequestToggle}
+                handleCardClick={handleSelectedRecipe}
+                handleMongoFavoriteToggle={handleMongoFavoriteToggle}
+                handleMongoRequestToggle={handleMongoRequestToggle}
+            />
+
             <AllDesserts
                 title="Desserts"
-                index={3}
+                index={4}
                 data={mongoData}
                 handleStarClick={handleFavoriteToggle}
                 handleBellClick={handleRequestToggle}

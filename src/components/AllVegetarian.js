@@ -29,9 +29,9 @@ export default function AllMongoRecipes(props) {
 
     const data = props.data
 
-    const allDessertRecipes = data.filter(recipe => recipe.tags.includes('dessert'))
+    const allVegetarianRecipes = data.filter(recipe => recipe.tags.includes('vegetarian'))
     
-    const [dessertRecipeElements, setAllDesserts] = useState(allDessertRecipes.map(recipe => (
+    const [VegetarianRecipeElements, setAllVegetarianRecipes] = useState(allVegetarianRecipes.map(recipe => (
             <MongoCards 
                 key={recipe._id}
                 recipeData={recipe}
@@ -52,7 +52,7 @@ export default function AllMongoRecipes(props) {
     )
 
     useEffect(() => {
-        setAllDesserts(data.filter(recipe => recipe.tags.includes('dessert')).map(recipe => (
+        setAllVegetarianRecipes(data.filter(recipe => recipe.tags.includes('vegetarian')).map(recipe => (
             <MongoCards 
                 key={recipe._id}
                 recipeData={recipe}
@@ -70,7 +70,7 @@ export default function AllMongoRecipes(props) {
                 // uniqueID={card.uniqueIdentifier}
             /> 
         )))
-        console.log('rendered Dessert section')
+        console.log('rendered Vegetarian Recipes section')
     }, [data])
 
 
@@ -89,7 +89,7 @@ export default function AllMongoRecipes(props) {
             </div>
             <div className="cardsScrollContainer" onScroll={getScrollPercentage}>
                 <div className="cardsContainer">
-                    {dessertRecipeElements}
+                    {VegetarianRecipeElements}
                     <div className='end-line'></div>
                 </div>
             </div>
