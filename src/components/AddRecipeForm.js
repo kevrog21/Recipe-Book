@@ -193,12 +193,14 @@ export default function AddRecipeForm(props) {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
-        const isNumericField = ["cooktimeHourse", "cooktimeMins", "nutritionScore"].includes(name) //returns true if the target name is included in the array
+        // const isNumericField = ["cooktimeHours", "cooktimeMins", "nutritionScore", "costScore", "tastinessScore"].includes(name) //returns true if the target name is included in the array
         setFormData((prevData) => ({
             ...prevData,
-            [name]: isNumericField ? parseInt(value) : value
+            [name]: value
         }))
     }
+
+    // [name]: isNumericField ? (value == '' ? parseInt(0) : parseInt(value)) : value
 
     const handleIngredientChange = (e) => {
         const { name, value } = e.target
@@ -227,6 +229,19 @@ export default function AddRecipeForm(props) {
                 (ingredient) => ingredient !== ingredientToDelete
             )
         }))
+    }
+
+    const additionalDefaultRecipeData = {
+        isFavorited: false,
+        isRequested: false,
+        cooktimeHours: formData.cooktimeHours ? parseInt(formData.cooktimeHours) : 0,
+        cooktimeMins: formData.cooktimeMins ? parseInt(formData.cooktimeMins) : 0,
+        totalCooktime: ((parseInt(formData.cooktimeHours) * 60) + parseInt(formData.cooktimeMins)),
+        nutritionScore: formData.nutritionScore ? parseInt(formData.nutritionScore) : 0,
+        costScore: formData.costScore ? parseInt(formData.costScore) : 0,
+        tastinessScore: formData.tastinessScore ? parseInt(formData.tastinessScore) : 0,
+        lastCookedDate: null,
+        cookingHistoryArray: [],
     }
 
     function mountThenRemoveSuccessMessage() {
@@ -317,19 +332,14 @@ export default function AddRecipeForm(props) {
                     currentIngredientsObj.ingredientExtraDetail == '') {
                         return {
                             ...formData,
-                            isFavorited: false,
-                            isRequested: false,
-                            totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
-                            imageId: cloudinaryResponse.data.public_id,
+                            ...additionalDefaultRecipeData,
                             imgUrl: cloudinaryResponse.data.secure_url,
                             signature: cloudinaryResponse.data.signature
                         }
                     } else {
                         return {
                             ...formData,
-                            isFavorited: false,
-                            isRequested: false,
-                            totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
+                            ...additionalDefaultRecipeData,
                             imageId: cloudinaryResponse.data.public_id,
                             imgUrl: cloudinaryResponse.data.secure_url,
                             signature: cloudinaryResponse.data.signature,
@@ -351,9 +361,7 @@ export default function AddRecipeForm(props) {
                     console.log('shouldnt add this code to data object')
                     return {
                         ...formData,
-                        isFavorited: false,
-                        isRequested: false,
-                        totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
+                        ...additionalDefaultRecipeData,
                         imageId: 'no image added',
                         imgUrl: 'no image added',
                         signature: 'no image added'
@@ -362,9 +370,7 @@ export default function AddRecipeForm(props) {
                     console.log('should add this code to data object')
                     return {
                         ...formData,
-                        isFavorited: false,
-                        isRequested: false,
-                        totalCooktime: ((formData.cooktimeHours * 60) + formData.cooktimeMins),
+                        ...additionalDefaultRecipeData,
                         imageId: 'no image added',
                         imgUrl: 'no image added',
                         signature: 'no image added',
