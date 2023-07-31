@@ -34,13 +34,12 @@ export default function AddRecipeForm(props) {
     })
     const [ingredientPreviews, setIngredientPreviews] = useState([])
     const [duplicateIngredients, setDuplicateIngredients] = useState(false)
-    const [tagWords, setTagWords] = useState(['breakfast', 'lunch', 'dinner', 'brunch', 'dessert', 'drinks', 'winter meals', 'summer meals',
-'appetizer', 'side dish', 'main', 'quick', 'vegetarian', 'Vegan', 'Gluten Free', 'Dairy Free', 'basics', 'seafood'])
+    const [tagWords, setTagWords] = useState(['main', 'starter', 'dessert', 'breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 'winter meals', 'summer meals',
+    , 'sides', 'quick', 'vegetarian', 'vegan', 'gluten free', 'Dairy Free', 'basics', 'seafood'])
     const [selectedTagWords, setSelectedTagWords] = useState([])
 
     const api_key = "124659146613462"
     const cloud_name = "dot31xj56"
-    // const CLOUDINARY_PRESET = "o6im1opl"
 
     useEffect(() => {
         const recipeTitlePreview = document.getElementById("recipe-title-preview")
@@ -228,6 +227,14 @@ export default function AddRecipeForm(props) {
                 (ingredient) => ingredient !== ingredientToDelete
             )
         }))
+    }
+
+    function mountThenRemoveSuccessMessage() {
+        const successMessageEl = document.getElementById('success-message')
+        successMessageEl.classList.remove('hide')
+        setTimeout(() => {
+            successMessageEl.classList.add('hide')
+        }, 5000)
     }
 
     const handleSubmit = async (e) => {
@@ -526,6 +533,7 @@ export default function AddRecipeForm(props) {
                     res.json()
                     if (res.ok) {
                         console.log('successfully posted!')
+                        mountThenRemoveSuccessMessage()
                         setFormData({
                             recipeName: '',
                             recipeSubName: '',
@@ -611,70 +619,6 @@ export default function AddRecipeForm(props) {
         }
     }
 
-    // const handleTagClick = (e) => {
-    //     console.log(e.target)
-    //     const { value } = e.target
-    //     setFormData((prevData) => ({
-    //         ...prevData,
-    //         tags: [...prevData.tags, value]
-    //     }))
-    //     console.log('clicked', formData)
-    // }
-
-    // const listOfTagOptions = [
-    //     'breakfast',
-    //     'lunch',
-    //     'dinner',
-    //     'dessert',
-    //     'brunch',
-    //     'supduperecipes'
-    // ]
-
-    // useEffect(() => {
-    //     const tags = listOfTagOptions.map((word) => {
-    //         if (word.length > 10) {
-    //             return (
-    //                 <span key={word} name={word} value={word}className='tag1 two-column-tag' onClick={() => handleTagClick}>{word}</span>
-    //             )
-    //         } else {
-    //             return (
-    //                 <span key={word} name={word} value={word} className='tag1' onClick={() => handleTagClick(word)}>{word}</span>
-    //             )
-    //         }
-    //     })
-        
-    //     setTagElements(tags)
-    // }, [])
-
-    // const useErrorBoundary = () => {
-    //     const [hasError, setHasError] = useState(false)
-
-    //     const handleCatchError = (error, errorInfo) => {
-    //         setHasError(true)
-    //     }
-    //     return { hasError, handleCatchError}
-    // }
-
-    // const ErrorBoundary = ({ children }) => {
-    //     // const {hasError, handleCatchError } = useErrorBoundary()
-    //     const [hasError, setHasError] = useState(false)
-    //     const handleCatchError = (error, errorInfo) => {
-    //         console.error(error, errorInfo)
-    //         setHasError(true)
-    //     }
-
-    //     if (hasError) {
-    //         return <div>pssst... you have two of the same ingredients 
-    //             on there. You can delete one of them if you want.. or don't, 
-    //             I don't really care. I'm just a robot beep boop bop.</div>
-    //     }
-    //     return (
-    //         <React.fragment>
-    //             {children}
-    //         </React.fragment>
-    //     )
-    // }
-
     const handleTagClick = (word) => {
         setFormData((prevData) => {
             const tags = prevData.tags
@@ -706,16 +650,6 @@ export default function AddRecipeForm(props) {
             }
         })
     }
-
-// const handleTagClick = (e) => {
-    //     console.log(e.target)
-    //     const { value } = e.target
-    //     setFormData((prevData) => ({
-    //         ...prevData,
-    //         tags: [...prevData.tags, value]
-    //     }))
-    //     console.log('clicked', formData)
-    // }
 
     return (
         <main>
@@ -868,8 +802,8 @@ export default function AddRecipeForm(props) {
                                 <span key={index} onClick={() => handleTagClick(word)}
                                 className={
                                     word.length > 10
-                                    ? selectedTagWords.includes(word) ? 'tag1 two-column-tag selected' : 'tag1 two-column-tag'
-                                    : selectedTagWords.includes(word) ? 'tag1 selected' : 'tag1'
+                                    ? selectedTagWords.includes(word) ? 'form-tag  two-column-tag selected' : 'form-tag  two-column-tag'
+                                    : selectedTagWords.includes(word) ? 'form-tag  selected' : 'form-tag '
                                 }
                                 >
                                     {word}
@@ -890,8 +824,10 @@ export default function AddRecipeForm(props) {
                 <button type="submit" className="submit-recipe-btn" id="submit" >Submit Recipe</button>
             </form>
 
-            <div className='success-el hide'>
-                SUCCESS!
+            <div className='success-message-container'>
+                <div id='success-message' className='success-el hide'>
+                    SUCCESS!
+                </div>
             </div>
 
             {/* <form className="temp-img-form" onSubmit={handleImageSubmit}>

@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react'
 import arrow from '../assets/arrow.svg'
 import greyStar from '../assets/grey-star.svg'
 import bell from '../assets/bell.svg'
-import filledStar from '../assets/filled-star.svg'
+import filledYellowStar from '../assets/light-grey-outline.svg'
+// import filledYellowStar from '../assets/filled-star-outline.svg'
 import filledBell from '../assets/filled-bell.svg'
 
 export default function RecipePage(props) {
@@ -66,7 +67,7 @@ export default function RecipePage(props) {
                             <div className='back-arrow'></div>
                         </div>
                     </Link>
-                    <img className='recipe-page-star' src={currentRecipe.isFavorited ? filledStar : greyStar} onClick={handleStarClick} />
+                    <img className='recipe-page-star star-outline' src={currentRecipe.isFavorited ? filledYellowStar : greyStar} onClick={handleStarClick} />
                 </div>
     
                 <div className='recipe-page-hero' style={{backgroundImage: `linear-gradient(12deg, rgba(0, 0, 0, .95), rgba(0, 0, 0, 0) 45%), url(${currentRecipe.imgUrl})`}}>
