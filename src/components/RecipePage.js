@@ -51,6 +51,33 @@ export default function RecipePage(props) {
         handleMongoFavoriteToggle(currentRecipe._id, currentRecipe.recipeName, currentRecipe.isFavorited)
     }
 
+    const handleCheckboxClick = () => {
+        setHasBeenCookedToday(true)
+        // fetch request to server to add current day to cooked array
+        // add total cooked number
+    }
+
+    const cookedArray = ['2023-02-31', '2023-01-31', '2023-08-01']
+
+    const [hasBeenCookedToday, setHasBeenCookedToday] = useState(() => {
+        const userTimezoneOffset = new Date().getTimezoneOffset() * 60000
+        const currentDateInUserTimezone = new Date(Date.now() - userTimezoneOffset)
+        const currentDay = currentDateInUserTimezone.toISOString().split('T')[0]
+
+        console.log(currentDay)
+        currentDay === cookedArray[cookedArray.length - 1] ? console.log('Yes! we have a match') : console.log('no match')
+        return currentDay === cookedArray[cookedArray.length - 1]
+        // return currentDay === currentRecipe.lastCookedDate
+    })
+
+    useEffect(() => {
+        const checkmarkEl = document.getElementById('checkmark')
+        console.log(checkmarkEl)
+        if (checkmarkEl) {
+            hasBeenCookedToday ? checkmarkEl.classList.remove('hide') : checkmarkEl.classList.add('hide')
+        }
+    }, [hasBeenCookedToday])
+
     if (isLoading) {
         return (
             <main>
@@ -58,6 +85,13 @@ export default function RecipePage(props) {
             </main>
         )
     } else {
+        setTimeout(() => {
+            const checkmarkEl = document.getElementById('checkmark')
+            console.log(checkmarkEl)
+            if (checkmarkEl) {
+                hasBeenCookedToday ? checkmarkEl.classList.remove('hide') : checkmarkEl.classList.add('hide')
+            }
+        }, 0)
         return (
             <main className='recipe-page'>
                 <div className='recipe-page-icon-container'>
@@ -141,7 +175,9 @@ export default function RecipePage(props) {
                 </section>}
 
                 <div className='checkbox-container'>
-                    <div id="completed-checbox"></div>
+                    <div id="completed-checbox" onClick={handleCheckboxClick}>
+                        <div id='checkmark' className='hide'></div>
+                    </div>
                     <div>
                         <div className='completed-text'>Check box after cooking</div>
                         <div>(to add to stats)</div>
