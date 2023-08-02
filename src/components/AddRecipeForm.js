@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import arrow from '../assets/arrow.svg'
+import arrowLight from '../assets/arrow-grey.svg'
 // import image from '../assets/grilled-cheese-tomato-soup.jpg'
 import { CloudinaryContext, Image } from "cloudinary-react"
 
@@ -34,9 +35,24 @@ export default function AddRecipeForm(props) {
     })
     const [ingredientPreviews, setIngredientPreviews] = useState([])
     const [duplicateIngredients, setDuplicateIngredients] = useState(false)
-    const [tagWords, setTagWords] = useState(['main', 'starter', 'dessert', 'breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 'winter meals', 'summer meals',
-    , 'sides', 'quick', 'vegetarian', 'vegan', 'gluten free', 'Dairy Free', 'basics', 'seafood'])
+    const defaultTagWords = ['main', 'starter', 'dessert', 'breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 
+    'winter meals', 'summer meals', 'sides', 'quick', 'vegetarian', 'vegan', 'gluten free', 'Dairy Free', 'basics']
+    const moreTagWords = ['BBQ', 'seafood', 'holiday', 'halloween', 'thanksgiving', 'christmas', 'hanukkah', '4th of july']
+    const [tagWords, setTagWords] = useState([defaultTagWords])
     const [selectedTagWords, setSelectedTagWords] = useState([])
+    const [showMoreTags, setShowMoreTags] = useState(false)
+    
+
+    useEffect(() => {
+        showMoreTags ? 
+        setTagWords([...defaultTagWords ,...moreTagWords]) : 
+        setTagWords(defaultTagWords)
+    }, [showMoreTags])
+
+    const handleTagToggle = () => {
+        setShowMoreTags(!showMoreTags)
+        console.log('clicked !', showMoreTags)
+    }
 
     const api_key = "124659146613462"
     const cloud_name = "dot31xj56"
@@ -796,8 +812,8 @@ export default function AddRecipeForm(props) {
 
                 </section>
 
-                <section className='tags-section'>
-                        
+                <section>
+                    <div className='tags-section'>
                         <h4 className='section-title'>Tags</h4>
                         <div className='section-arrow-container'>
                             <img src={arrow} className="arrowHead section-arrowhead"/>
@@ -816,8 +832,15 @@ export default function AddRecipeForm(props) {
                                 </span>
                             ))
                             }
-                            
                         </div>
+                    </div>
+                    <div className='show-more-tags-container' onClick={handleTagToggle}>
+                        <div>show {showMoreTags ? 'less' : 'more'}</div>
+                        <div className='show-more-arrow-container'>
+                            <img src={arrowLight} className={`arrowHead show-more-arrow ${showMoreTags ? 'rotate270' : ''}`}/>
+                        </div>
+                    </div>
+                    
 
                 </section>
 

@@ -424,6 +424,10 @@ main {
   gap: 5px;
 }
 
+.tags-section {
+  margin: 0 0 0 0;
+}
+
 .section-title {
   grid-column: 1 / span 3;
   width: 100%;
@@ -569,6 +573,7 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: .15rem;
+  margin-bottom: 0;
 }
 
 .form-tag {
@@ -576,6 +581,7 @@ main {
   border: 3px solid black;
   background: #F5F5F5;
   padding: .25rem 1rem;
+  padding: .75vw 3vw;
   border-radius: 10vw;
   cursor: pointer;
   margin: .25rem .25rem;
@@ -598,6 +604,32 @@ main {
 .selected,
 .selected:hover {
   background: #E2FF6E;
+}
+
+.show-more-tags-container {
+  display: flex;
+  align-items: flex-end;
+  font-size: 3.5vw;
+  line-height: 3.5vw;
+  color: #BDBDBD;
+  margin: .5rem 0 3rem 2.5rem;
+  cursor: pointer;
+}
+
+.show-more-arrow-container {
+  margin: 0 0 0 1.5vw;
+  width: 3.5vw;
+  height: 3.5vw;
+}
+
+.show-more-arrow {
+  margin: 1vw 0 0 .5vw;
+  height: 70%;
+  transform: rotate(90deg);
+}
+
+.rotate270 {
+  transform: rotate(270deg);
 }
 
 .add-recipe-form,
