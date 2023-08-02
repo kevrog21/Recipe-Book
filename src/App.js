@@ -58,6 +58,32 @@ export default function App() {
         setSelectedRecipe(clickedRecipe)
     }
 
+    const addNewCookedDate = async (recipeID, recipeName, prevCookingHistoryArray) => {
+      console.log(prevCookingHistoryArray)
+      console.log('running check box click function')
+      const currentDate = new Date()
+      const currentUTCDate = currentDate.toISOString()
+      try {
+        const response = await fetch(`http://localhost:5000/recipes/addCookedDate/${recipeID}`, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            recipeName: recipeName,
+            cookingHistoryArray: [...prevCookingHistoryArray, currentUTCDate]
+          })
+        })
+
+        if (response.ok) {
+          console.log('successfuly updated the cooking history array')
+        }
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
     const handleMongoFavoriteToggle = async (recipeID, recipeName, prevFavoritedStatus) => {
       console.log('mongo favorite toggle is running', recipeID, recipeName, prevFavoritedStatus)
       // database fetch request
@@ -134,6 +160,7 @@ export default function App() {
               // handleRequestToggle={handleRequestToggle}
               handleSelectedRecipe={handleSelectedRecipe}
               handleMongoFavoriteToggle={handleMongoFavoriteToggle}
+              addNewCookedDate={addNewCookedDate}
             />} />
           <Route path="/add-recipe" element={
             <AddRecipeForm 

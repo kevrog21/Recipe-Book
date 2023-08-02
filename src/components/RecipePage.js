@@ -9,7 +9,7 @@ import filledBell from '../assets/filled-bell.svg'
 
 export default function RecipePage(props) {
     const {recipeId} = useParams()
-    const { mongoData, handleMongoFavoriteToggle, selectedRecipe } = props
+    const { mongoData, handleMongoFavoriteToggle, selectedRecipe, addNewCookedDate } = props
     const [currentRecipe, setCurrentRecipe] = useState(selectedRecipe)
     const [isLoading, setIsLoading] = useState(true)
     const [ingredients, setIngredients] = useState([])
@@ -51,11 +51,24 @@ export default function RecipePage(props) {
         handleMongoFavoriteToggle(currentRecipe._id, currentRecipe.recipeName, currentRecipe.isFavorited)
     }
 
-    const handleCheckboxClick = () => {
-        setHasBeenCookedToday(true)
-        // fetch request to server to add current day to cooked array
-        // add total cooked number
+    const handleCheckboxClick = (e) => {
+        e.stopPropagation()
+        if (!hasBeenCookedToday) {
+            addNewCookedDate(currentRecipe._id, currentRecipe.recipeName, currentRecipe.cookingHistoryArray)
+            setHasBeenCookedToday(true)
+        }
     }
+
+
+    // const handleCheckboxClick = () => {
+    //     console.log(currentRecipe.cookingHistoryArray)
+    //     if (!hasBeenCookedToday) {
+
+    //         setHasBeenCookedToday(true)
+    //     }
+    //     // fetch request to server to add current day to cooked array 
+    //     // add total cooked number
+    // }
 
     const cookedArray = ['2023-02-31', '2023-01-31', '2023-08-01']
 
@@ -65,7 +78,7 @@ export default function RecipePage(props) {
         const currentDay = currentDateInUserTimezone.toISOString().split('T')[0]
 
         console.log(currentDay)
-        currentDay === cookedArray[cookedArray.length - 1] ? console.log('Yes! we have a match') : console.log('no match')
+        currentDay === currentRecipe.cookingHistoryArray[currentRecipe.cookingHistoryArray.length - 1] ? console.log('Yes! we have a match') : console.log('no match')
         return currentDay === cookedArray[cookedArray.length - 1]
         // return currentDay === currentRecipe.lastCookedDate
     })

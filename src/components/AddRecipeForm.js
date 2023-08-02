@@ -37,7 +37,8 @@ export default function AddRecipeForm(props) {
     const [duplicateIngredients, setDuplicateIngredients] = useState(false)
     const defaultTagWords = ['main', 'starter', 'dessert', 'breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 
     'winter meals', 'summer meals', 'sides', 'quick', 'vegetarian', 'vegan', 'gluten free', 'Dairy Free', 'basics']
-    const moreTagWords = ['BBQ', 'seafood', 'holiday', 'halloween', 'thanksgiving', 'christmas', 'hanukkah', '4th of july']
+    const moreTagWords = ['BBQ', 'seafood', 'holiday', 'halloween', 'thanksgiving', 'christmas', 'hanukkah', '4th of july', 
+'cost friendly', 'something light', 'pasta', 'healthy', 'snacks', 'the balcony']
     const [tagWords, setTagWords] = useState([defaultTagWords])
     const [selectedTagWords, setSelectedTagWords] = useState([])
     const [showMoreTags, setShowMoreTags] = useState(false)
@@ -51,7 +52,6 @@ export default function AddRecipeForm(props) {
 
     const handleTagToggle = () => {
         setShowMoreTags(!showMoreTags)
-        console.log('clicked !', showMoreTags)
     }
 
     const api_key = "124659146613462"
