@@ -63,25 +63,26 @@ export default function App() {
       console.log('running check box click function')
       const currentDate = new Date()
       const currentUTCDate = currentDate.toISOString()
-      try {
-        const response = await fetch(`http://localhost:5000/recipes/addCookedDate/${recipeID}`, {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            recipeName: recipeName,
-            cookingHistoryArray: [...prevCookingHistoryArray, currentUTCDate]
+        try {
+          const response = await fetch(`http://localhost:5000/recipes/addCookedDate/${recipeID}`, {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              recipeName: recipeName,
+              cookingHistoryArray: [...prevCookingHistoryArray, currentUTCDate]
+            })
           })
-        })
 
-        if (response.ok) {
-          console.log('successfuly updated the cooking history array')
+          if (response.ok) {
+            console.log('successfuly updated the cooking history array')
+            retrieveRecipes()
+          }
+
+        } catch (error) {
+          console.log(error)
         }
-
-      } catch (error) {
-        console.log(error)
-      }
     }
 
     const handleMongoFavoriteToggle = async (recipeID, recipeName, prevFavoritedStatus) => {

@@ -247,7 +247,7 @@ router.route('/addCookedDate/:id').post((req, res) => {
             recipe.cookingHistoryArray = req.body.cookingHistoryArray
 
             recipe.save()
-                .then(() => res.json('toggled!'))
+                .then(() => res.json('added!'))
                 .catch(err => res.status(400).json('Error: ' + err))
         })
         .catch(err => res.status(400).json('Error: ' + err))

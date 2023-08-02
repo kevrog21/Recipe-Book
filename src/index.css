@@ -759,3 +759,7 @@ main {
 .disable-pointer-events {
   pointer-events: none;
 }
+
+.weight600 {
+  font-weight: 600;
+}

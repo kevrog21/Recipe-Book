@@ -36,9 +36,9 @@ export default function AddRecipeForm(props) {
     const [ingredientPreviews, setIngredientPreviews] = useState([])
     const [duplicateIngredients, setDuplicateIngredients] = useState(false)
     const defaultTagWords = ['main', 'starter', 'dessert', 'breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 
-    'winter meals', 'summer meals', 'sides', 'quick', 'vegetarian', 'vegan', 'gluten free', 'Dairy Free', 'basics']
+    'winter meals', 'summer meals', 'sides', 'quick', 'vegetarian', 'vegan', 'gluten free', 'dairy free', 'basics']
     const moreTagWords = ['BBQ', 'seafood', 'holiday', 'halloween', 'thanksgiving', 'christmas', 'hanukkah', '4th of july', 
-'cost friendly', 'something light', 'pasta', 'healthy', 'snacks', 'the balcony']
+'cost friendly', 'something light', 'pasta', 'healthy', "dad's recipe" , 'the balcony', 'snacks']
     const [tagWords, setTagWords] = useState([defaultTagWords])
     const [selectedTagWords, setSelectedTagWords] = useState([])
     const [showMoreTags, setShowMoreTags] = useState(false)

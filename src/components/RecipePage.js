@@ -43,6 +43,22 @@ export default function RecipePage(props) {
             })
             setIngredients(ingredients)
             setTags(tags)
+
+            setHasBeenCookedToday(() => {
+                const userTimezoneOffset = new Date().getTimezoneOffset() * 60000
+                const currentDateInUserTimezone = new Date(Date.now() - userTimezoneOffset)
+                const currentDay = currentDateInUserTimezone.toISOString().split('T')[0]
+                const lastCookedDay = currentRecipe.cookingHistoryArray.length > 0 ? currentRecipe.cookingHistoryArray[currentRecipe.cookingHistoryArray.length - 1].split('T')[0] : ''
+                console.log(currentDay, lastCookedDay)
+
+                return currentDay === lastCookedDay 
+            })
+
+            const checkmarkEl = document.getElementById('checkmark')
+            console.log(checkmarkEl)
+            if (checkmarkEl) {
+                hasBeenCookedToday ? checkmarkEl.classList.remove('hide') : checkmarkEl.classList.add('hide')
+            }
         }
     }, [currentRecipe])
 
@@ -59,29 +75,36 @@ export default function RecipePage(props) {
         }
     }
 
-
-    // const handleCheckboxClick = () => {
-    //     console.log(currentRecipe.cookingHistoryArray)
-    //     if (!hasBeenCookedToday) {
-
-    //         setHasBeenCookedToday(true)
-    //     }
-    //     // fetch request to server to add current day to cooked array 
-    //     // add total cooked number
-    // }
-
-    const cookedArray = ['2023-02-31', '2023-01-31', '2023-08-01']
-
-    const [hasBeenCookedToday, setHasBeenCookedToday] = useState(() => {
+    function convertAndFormatDate(dateInUTC) {
         const userTimezoneOffset = new Date().getTimezoneOffset() * 60000
-        const currentDateInUserTimezone = new Date(Date.now() - userTimezoneOffset)
-        const currentDay = currentDateInUserTimezone.toISOString().split('T')[0]
+        const parsedDate = Date.parse(dateInUTC)
 
-        console.log(currentDay)
-        currentDay === currentRecipe.cookingHistoryArray[currentRecipe.cookingHistoryArray.length - 1] ? console.log('Yes! we have a match') : console.log('no match')
-        return currentDay === cookedArray[cookedArray.length - 1]
-        // return currentDay === currentRecipe.lastCookedDate
-    })
+        if (!isNaN(parsedDate)) {
+            const unformattedDate = new Date(parsedDate - userTimezoneOffset)
+            const formattedDate = unformattedDate.toLocaleDateString('en-US', {
+                month: 'numeric',
+                day: '2-digit',
+                year: 'numeric'
+            })
+            return formattedDate
+        } else {
+            console.log("Invalid Date")
+        }
+    }
+
+    // const [hasBeenCookedToday, setHasBeenCookedToday] = useState(() => {
+    //     const userTimezoneOffset = new Date().getTimezoneOffset() * 60000
+    //     const currentDateInUserTimezone = new Date(Date.now() - userTimezoneOffset)
+    //     const currentDay = currentDateInUserTimezone.toISOString().split('T')[0]
+
+    //     console.log(currentDay)
+    //     console.log(currentRecipe)
+    //     currentDay === currentRecipe.cookingHistoryArray[currentRecipe.cookingHistoryArray.length - 1] ? console.log('Yes! we have a match') : console.log('no match')
+    //     return currentDay === cookedArray[cookedArray.length - 1]
+    //     // return currentDay === currentRecipe.lastCookedDate
+    // })
+
+    const [hasBeenCookedToday, setHasBeenCookedToday] = useState(false)
 
     useEffect(() => {
         const checkmarkEl = document.getElementById('checkmark')
@@ -98,13 +121,6 @@ export default function RecipePage(props) {
             </main>
         )
     } else {
-        setTimeout(() => {
-            const checkmarkEl = document.getElementById('checkmark')
-            console.log(checkmarkEl)
-            if (checkmarkEl) {
-                hasBeenCookedToday ? checkmarkEl.classList.remove('hide') : checkmarkEl.classList.add('hide')
-            }
-        }, 0)
         return (
             <main className='recipe-page'>
                 <div className='recipe-page-icon-container'>
@@ -169,9 +185,15 @@ export default function RecipePage(props) {
                     </div>
                     
                     <div className='section-content-container'>
+                        <div>
+
+                        </div>
                         <p><b>cost:</b> {currentRecipe.costScore}/10</p>
                         <p><b>nutrition:</b> {currentRecipe.nutritionScore}/10</p>
                         <p><b>tastiness:</b> {currentRecipe.tastinessScore}/10</p>
+                        <div><span className='weight600'>Total Times Cooked: </span> {currentRecipe.cookingHistoryArray.length}</div>
+                        {(currentRecipe.cookingHistoryArray.length > 0) && <div><span className='weight600'>Last Cooked: </span> 
+                            {convertAndFormatDate(currentRecipe.cookingHistoryArray[currentRecipe.cookingHistoryArray.length - 1])}</div>}
                     </div>
     
                 </section>
