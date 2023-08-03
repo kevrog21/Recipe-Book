@@ -90,6 +90,7 @@ router.route('/add').post((req, res) => {
     const cooktimeHours = Number(req.body.cooktimeHours)
     const cooktimeMins = Number(req.body.cooktimeMins)
     const totalCooktime = Number(req.body.totalCooktime)
+    const difficultyRating = req.body.difficultyRating
     const originalRecipeLink = req.body.originalRecipeLink
     const nutritionScore = req.body.nutritionScore
     const costScore = req.body.costScore
@@ -115,6 +116,7 @@ router.route('/add').post((req, res) => {
             cooktimeHours,
             cooktimeMins,
             totalCooktime,
+            difficultyRating,
             originalRecipeLink,
             nutritionScore,
             costScore,
@@ -213,6 +215,7 @@ router.route('/update/:id').post((req, res) => {
             recipe.cooktimeHours = Number(req.body.cooktimeHours)
             recipe.cooktimeMins = Number(req.body.cooktimeMins)
             recipe.totalCooktime = Number(req.body.totalCooktime)
+            recipe.difficultyRating = req.body.difficultyRating
             recipe.originalRecipeLink = req.body.originalRecipeLink
             recipe.nutritionScore = req.body.nutritionScore
             recipe.costScore = req.body.costScore

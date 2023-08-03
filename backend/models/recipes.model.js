@@ -9,6 +9,7 @@ const recipeSchema = new mongoose.Schema({
     cooktimeHours: { type: Number, required: false},
     cooktimeMins: { type: Number, required: false},
     totalCooktime: { type: Number, required: false},
+    difficultyRating: { type: String, required: false},
     originalRecipeLink: { type: String, required: false },
     nutritionScore: { type: Number, required: false},
     costScore: { type: Number, required: false},

@@ -310,6 +310,7 @@ main {
 }
 
 .add-recipe-form,
+.edit-recipe-form,
 .temp-img-form {
   display: grid;
   width: 100%;
@@ -317,9 +318,22 @@ main {
 }
 
 .recipe-form-title,
-.recipe-title {
+.recipe-title,
+.edit-form-title {
   font-size: 7vw;
-  font-weight: 500;
+  font-weight: 600;
+  text-align: center;
+}
+
+.edit-form-title {
+  margin: 3rem 0 0 0;
+  line-height: 7vw;
+}
+
+.edit-form-subtitle {
+  margin: 0 0 3rem 0;
+  font-size: 3vw;
+  font-weight: 400;
   text-align: center;
 }
 
@@ -336,7 +350,7 @@ main {
   justify-content: flex-end;
 } */
 
-#image-upload-btn,
+.image-upload-btn,
 .recipe-page-hero {
   box-shadow: -5px 6px 4px rgb(0 0 0 / 0.25);
   width: 88vw;
@@ -345,12 +359,31 @@ main {
   border-radius: 1.25rem;
   margin: 2rem auto;
   display: grid;
-  cursor: pointer;
   padding: 0;
   background-position: center;
   background-size: cover;
 }
- .recipe-page-hero {
+
+.image-upload-btn {
+  cursor: pointer;
+}
+
+.small-img-btn {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: .75rem 3rem;
+  border-radius: 6rem;
+  margin: 0 auto;
+  cursor: pointer;
+  border: 3px solid black;
+}
+
+.small-img-btn:hover {
+  background: #C0C0C0;
+}
+
+.recipe-page-hero {
   align-items: flex-end;
  }
 
@@ -370,6 +403,10 @@ main {
   grid-column: 1;
   grid-row: 1;
   margin: auto 0;
+}
+
+#edit-image-prompt {
+  height: 100%;
 }
 
 .preview-text-container {
@@ -461,14 +498,21 @@ main {
   margin: .5rem 0 .75rem 0;
 }
 
-.add-recipe-form label {
+.add-recipe-form label,
+.edit-recipe-form label,
+.add-recipe-form select,
+.edit-recipe-form select {
   font-size: 1rem;
   font-weight: 500;
   display: block;
 }
 
 .add-recipe-form input,
-.add-recipe-form textarea {
+.add-recipe-form textarea,
+.edit-recipe-form input,
+.edit-recipe-form textarea,
+.add-recipe-form select,
+.edit-recipe-form select {
   font-family: 'poppins', sans-serif;
   font-size: 1.25rem;
   font-weight: 500;
@@ -478,6 +522,12 @@ main {
   margin: .2rem auto 1rem auto;
   border: 3px solid black;
   vertical-align: bottom;
+}
+
+.add-recipe-form select,
+.edit-recipe-form select {
+  margin: .2rem 0 1rem 0;
+  width: 50%;
 }
 
 .has-placeholder::placeholder {
@@ -633,7 +683,8 @@ main {
 }
 
 .add-recipe-form,
-.temp-img-form {
+.temp-img-form,
+.edit-recipe-form {
   display: grid;
   width: 90%;
   margin: 2rem auto;

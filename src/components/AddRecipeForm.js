@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import arrow from '../assets/arrow.svg'
 import arrowLight from '../assets/arrow-grey.svg'
-// import image from '../assets/grilled-cheese-tomato-soup.jpg'
-import { CloudinaryContext, Image } from "cloudinary-react"
 
 export default function AddRecipeForm(props) {
 
@@ -16,12 +14,12 @@ export default function AddRecipeForm(props) {
         notes: '',
         cooktimeHours: 0,
         cooktimeMins: 0,
+        difficultyRating: 'easy',
         originalRecipeLink: '',
         nutritionScore: 0,
         costScore: 0,
         tastinessScore: 0,
         tags: [],
-        lastCooked: '',
         password: '',
         honeyp: ''
     })
@@ -256,7 +254,6 @@ export default function AddRecipeForm(props) {
         nutritionScore: formData.nutritionScore ? parseInt(formData.nutritionScore) : 0,
         costScore: formData.costScore ? parseInt(formData.costScore) : 0,
         tastinessScore: formData.tastinessScore ? parseInt(formData.tastinessScore) : 0,
-        lastCookedDate: null,
         cookingHistoryArray: [],
     }
 
@@ -564,12 +561,12 @@ export default function AddRecipeForm(props) {
                             notes: '',
                             cooktimeHours: 0,
                             cooktimeMins: 0,
+                            difficultyRating: 'easy',
                             originalRecipeLink: '',
                             nutritionScore: 0,
                             costScore: 0,
                             tastinessScore: 0,
                             tags: [],
-                            lastCooked: '',
                             password: '',
                             honeyp: ''
                         })
@@ -684,7 +681,7 @@ export default function AddRecipeForm(props) {
             <h2 className='recipe-form-title'>New Recipe Form</h2>
 
            
-            <button id="image-upload-btn" onClick={handleImageButtonClick} style={{backgroundImage: `url(${imgPreview})`}}>
+            <button className="image-upload-btn" onClick={handleImageButtonClick} style={{backgroundImage: `url(${imgPreview})`}}>
                 <div id="upload-image-prompt">click here to upload image</div>
                 <div id='preview-gradient' className='hide'></div>
                 <div className="preview-text-container">
@@ -793,6 +790,13 @@ export default function AddRecipeForm(props) {
                             <input className="cooktime-mins" type="number" min={0}  max={59} id="cooktime-mins" name="cooktimeMins" 
                             value={formData.cooktimeMins} onChange={handleInputChange}></input>
                             <span className="post-input-inline-text">mins</span>
+                            <label htmlFor="difficulty-ratinge">Difficulty:</label>
+                            <select className="difficulty-rating" id="difficulty-rating" name="difficultyRating" 
+                            value={formData.difficultyRating} onChange={handleInputChange}>
+                                <option value='easy'>Easy</option>
+                                <option value='medium'>Medium</option>
+                                <option value='hard'>Hard</option>
+                            </select>
                             <label htmlFor="nutrition-score">Nutrition Score:</label>
                             <input className="nutrition-score" type="number" min={0} max={10} id="nutrition-score" name="nutritionScore" 
                             value={formData.nutritionScore} onChange={handleInputChange}></input>
@@ -840,16 +844,12 @@ export default function AddRecipeForm(props) {
                             <img src={arrowLight} className={`arrowHead show-more-arrow ${showMoreTags ? 'rotate270' : ''}`}/>
                         </div>
                     </div>
-                    
-
                 </section>
 
-                {/* <input type="number" id="cooktime" name="cooktime" value={formData.cooktime} onChange={handleInputChange}></input> */}
                 <label htmlFor="password">Secret Password:</label>
                 <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange}></input>
                 <div id="error-message" className="error"></div>
                 <input type="text" id="honeyp" name="honeyp" value={formData.honeyp} onChange={handleInputChange}></input>
-                {/* <input type="file" id="image" name="image" onChange={handleImageChange}/> */}
                 <button type="submit" className="submit-recipe-btn" id="submit" >Submit Recipe</button>
             </form>
 

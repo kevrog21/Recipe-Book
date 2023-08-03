@@ -172,12 +172,12 @@ export default function App() {
           } />
           <Route path="/:recipeId/edit" element={
             <EditRecipeForm 
-              // data={recipes}
               mongoData={recipeData}
               selectedRecipe={selectedRecipe}
               // handleFavoriteToggle={handleFavoriteToggle}
               // handleRequestToggle={handleRequestToggle}
               handleSelectedRecipe={handleSelectedRecipe}
+              retrieveRecipes={retrieveRecipes}
             />} />
         </Routes>
         <Footer />
