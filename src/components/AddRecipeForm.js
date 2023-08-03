@@ -786,7 +786,7 @@ export default function AddRecipeForm(props) {
                         </div>
                         
                         <div className='section-input-container'>
-                            <label htmlFor="cooktime-hours">Estimated Total Cooktime:</label>
+                            <label htmlFor="cooktime-hours">Estimated Total Cooktime (including prep):</label>
                             <input className="cooktime-hours" type="number" min={0} id="cooktime-hours" name="cooktimeHours" 
                             value={formData.cooktimeHours} onChange={handleInputChange}></input>
                             <span className="post-input-inline-text">hour(s)</span>

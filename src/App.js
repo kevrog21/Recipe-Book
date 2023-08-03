@@ -6,7 +6,7 @@ import Footer from './components/Footer'
 import Homescreen from './components/Homescreen'
 import RecipePage from './components/RecipePage'
 import AddRecipeForm from './components/AddRecipeForm'
-import data from './data'
+import EditRecipeForm from './components/EditRecipeForm'
 import RecipeDataService from './services/recipeList'
 
 export default function App() {
@@ -168,6 +168,15 @@ export default function App() {
               retrieveRecipes={retrieveRecipes}
             />
           } />
+          <Route path="/:recipeId/edit" element={
+            <EditRecipeForm 
+              // data={recipes}
+              mongoData={recipeData}
+              selectedRecipe={selectedRecipe}
+              // handleFavoriteToggle={handleFavoriteToggle}
+              // handleRequestToggle={handleRequestToggle}
+              handleSelectedRecipe={handleSelectedRecipe}
+            />} />
         </Routes>
         <Footer />
     </Router>

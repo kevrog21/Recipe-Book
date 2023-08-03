@@ -188,9 +188,9 @@ export default function RecipePage(props) {
                         <div>
 
                         </div>
-                        <p><b>cost:</b> {currentRecipe.costScore}/10</p>
-                        <p><b>nutrition:</b> {currentRecipe.nutritionScore}/10</p>
-                        <p><b>tastiness:</b> {currentRecipe.tastinessScore}/10</p>
+                        <p><b>cost:</b> {currentRecipe.costScore}/5</p>
+                        <p><b>nutrition:</b> {currentRecipe.nutritionScore}/5</p>
+                        <p><b>tastiness:</b> {currentRecipe.tastinessScore}/5</p>
                         <div><span className='weight600'>Total Times Cooked: </span> {currentRecipe.cookingHistoryArray.length}</div>
                         {(currentRecipe.cookingHistoryArray.length > 0) && <div><span className='weight600'>Last Cooked: </span> 
                             {convertAndFormatDate(currentRecipe.cookingHistoryArray[currentRecipe.cookingHistoryArray.length - 1])}</div>}
@@ -218,14 +218,19 @@ export default function RecipePage(props) {
                         <div>(to add to stats)</div>
                     </div>
                 </div>
+
+                <div className='edit-text-container'>
+                    <Link to={`/${currentRecipe._id}/edit`} className='edit-recipe-link'>
+                        <div className='edit-text'>Edit this recipe</div>
+                    </Link>
+                </div>
     
-                <Link to='/'>
-                    <div className='recipe-page-back-arrow-container'>
+                <Link to='/' className='back-arrow-link'>
+                    <div className='recipe-page-back-arrow-container bottom-back-arrow'>
                         <img src={arrow} className="arrowHead back-arrowhead"/>
                         <div className='back-arrow'></div>
                         <span id='back-text'>back</span>
                     </div>
-                    
                 </Link>
     
             

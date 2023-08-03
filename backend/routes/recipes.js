@@ -100,7 +100,6 @@ router.route('/add').post((req, res) => {
     const honeyp = req.body.honeyp
     const isFavorited = req.body.isFavorited
     const isRequested = req.body.isRequested
-    const lastCookedDate = req.body.lastCookedDate
     const cookingHistoryArray = req.body.cookingHistoryArray
 
 
@@ -124,7 +123,6 @@ router.route('/add').post((req, res) => {
             imgUrl,
             isFavorited,
             isRequested,
-            lastCookedDate,
             cookingHistoryArray,
         })
         newRecipe.save()
@@ -200,12 +198,30 @@ router.route('/:id').delete((req, res) => {
 router.route('/update/:id').post((req, res) => {
     Recipe.findById(req.params.id)
         .then(recipe => {
+            // recipe.recipeName = req.body.recipeName
+            // recipe.instructions = req.body.instructions
+            // recipe.cooktime = Number(req.body.cooktime)
+            // recipe.imageId = req.body.imageId
+            // recipe.imgTimestamp = req.body.imgTimestamp
+            // recipe.isFavorited = !req.body.isFavorited
+
             recipe.recipeName = req.body.recipeName
+            recipe.recipeSubName = req.body.recipeSubName
+            recipe.ingredients = Array.isArray(req.body.ingredients) ? req.body.ingredients : []
             recipe.instructions = req.body.instructions
-            recipe.cooktime = Number(req.body.cooktime)
-            recipe.imageId = req.body.imageId
-            recipe.imgTimestamp = req.body.imgTimestamp
-            recipe.isFavorited = !req.body.isFavorited
+            recipe.notes = req.body.notes
+            recipe.cooktimeHours = Number(req.body.cooktimeHours)
+            recipe.cooktimeMins = Number(req.body.cooktimeMins)
+            recipe.totalCooktime = Number(req.body.totalCooktime)
+            recipe.originalRecipeLink = req.body.originalRecipeLink
+            recipe.nutritionScore = req.body.nutritionScore
+            recipe.costScore = req.body.costScore
+            recipe.tastinessScore = req.body.tastinessScore
+            recipe.tags = Array.isArray(req.body.tags) ? req.body.tags : []
+            recipe.imgUrl = req.body.imgUrl
+            recipe.isFavorited = req.body.isFavorited
+            recipe.isRequested = req.body.isRequested
+            recipe.cookingHistoryArray = req.body.cookingHistoryArray
 
             recipe.save()
                 .then(() => res.json('Recipe updated!'))

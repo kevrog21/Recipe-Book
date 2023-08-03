@@ -18,7 +18,6 @@ const recipeSchema = new mongoose.Schema({
     imgUrl: { type: String, required: false },
     isFavorited: { type: Boolean, default: false },
     isRequested: { type: Boolean, default: false },
-    lastCookedDate: { type: Date, default: null },
     cookingHistoryArray: { type: Array, required: false }
 }, {
     timestamps: true,

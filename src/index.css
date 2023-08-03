@@ -717,7 +717,7 @@ main {
 
 .checkbox-container {
   display: flex;
-  margin: 5em 2em 5em 2em;
+  margin: 5em 2em 2em 2em;
 }
 
 #completed-checbox {
@@ -725,6 +725,7 @@ main {
   height: 8vw;
   border: 1vw black solid;
   margin: 0 1em 0 0;
+  cursor: pointer;
 }
 
 #checkmark {
@@ -737,6 +738,35 @@ main {
   font-size: 5.5vw;
   font-weight: 800;
   line-height: 6vw;
+}
+
+.edit-text-container {
+  margin: 5rem 0 4rem 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.edit-recipe-link {
+  text-decoration: none;
+  color: black;
+}
+
+.edit-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 0 .5em;
+  border-bottom: 3px solid black;
+  cursor: pointer;
+}
+
+
+.bottom-back-arrow {
+  margin: 0 0 2rem 2rem;
+}
+
+.back-arrow-link {
+  text-decoration: none;
 }
 
 /* utility classes */
