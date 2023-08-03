@@ -8,6 +8,7 @@ import RecipePage from './components/RecipePage'
 import AddRecipeForm from './components/AddRecipeForm'
 import EditRecipeForm from './components/EditRecipeForm'
 import RecipeDataService from './services/recipeList'
+import ScrollToTop from './components/ScrollToTop';
 
 export default function App() {
 
@@ -140,6 +141,7 @@ export default function App() {
   return (
     <Router>
         <Header />
+        <ScrollToTop />
         <Routes>
           <Route exact path="/" element={
             <Homescreen 
