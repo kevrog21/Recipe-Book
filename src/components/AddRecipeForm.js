@@ -75,7 +75,6 @@ export default function AddRecipeForm(props) {
     }, [currentIngredientsObj])
 
     useEffect(() => {
-        //map over formData ingredients array and create a preview for each one.
         const previews = formData.ingredients.map((ingredient) => {
             return (
                 <div key={ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail}
@@ -96,59 +95,8 @@ export default function AddRecipeForm(props) {
         }
     }, [formData.ingredients])
 
-    // useEffect(() => {
-    //     console.log('this is running')
-    //     const measurementPreview = document.getElementById("ingredient-measurement-preview")
-    //     measurementPreview.textContent = formData.ingredients.measurement
-    // }, [formData.ingredients.measurement])
-
-    // const [image, setImage] = useState(null)
-
     const [finalImageObject, setFinalImageObject] = useState({})
     const [isInitialRender, setIsInitialRender] = useState(true)
-
-//     useEffect(() => {
-//         const postData = async () => {
-//             if (!isInitialRender) {
-//                 console.log(finalImageObject)
-
-//                 const formData = new FormData()
-//                 formData.append("file", finalImageObject.file)
-//                 formData.append("api_key", api_key)
-//                 formData.append("signature", finalImageObject.signature)
-//                 formData.append("timestamp", finalImageObject.timestamp)
-//                 // formData.append("upload_preset", 'khjbvoiy' )
-
-//                 console.log("formData entries")
-//                 for (const entry of formData.entries()) {
-//                     console.log(entry)
-//                 }
-
-//                 const requestOptions = {
-//                     method: "POST",
-//                     body: formData,
-//                     headers: { "Content-Type": "multipart/form-data" },
-//                     onUploadProgress: function (e) {
-//                         console.log(e.loaded / e.total)
-//                     }
-//                 }
-
-// //https://api.cloudinary.com/v1_1/${cloud_name}/image/upload
-
-//                 console.log("body:", requestOptions.body)
-//                 try {
-//                     const cloudinaryResponse = await axios.post(`http://localhost:5000/recipes/upload-image`, formData, requestOptions)
-//                     const data = await cloudinaryResponse.data.json()
-//                     console.log(data)
-//                 } catch(error) {
-//                     console.error(error)
-//                 }
-//             } else {
-//                 setIsInitialRender(false)
-//             }
-//         }
-//         postData()
-//     }, [finalImageObject])
 
     const handleImageChange = (e) => {
         const selectedImage = e.target.files[0]
@@ -158,63 +106,13 @@ export default function AddRecipeForm(props) {
         console.log(selectedImage)
     }
 
-    // const handleInputChange = (e) => {
-    //     const { name, value } = e.target
-
-    //     const isNumericField = ["cooktime"].includes(name) //returns true if the target name is included in the array
-
-    //     // if (name === 'measurement' || name === 'ingredientName' || name === 'ingredientExtraDetail') {
-    //     if (name.startsWith("ingredient")) {
-    //         const ingredienIndex = parseInt(name.split("-"[1]))
-    //         setFormData((prevData) => {
-    //             const updatedIngredients = [...prevData.ingredients]
-    //             updatedIngredients[ingredienIndex] = {
-    //                 ...updatedIngredients[ingredienIndex],
-    //                 [name.split("-")[0]]: value
-    //             }
-    //             return {
-    //             ...prevData,
-    //             ingerdients: updatedIngredients
-    //             }
-    //         })
-    //     } else {
-    //         setFormData((prevData) => ({
-    //             ...prevData,
-    //             [name]: isNumericField ? parseInt(value) : value
-    //         }))
-    //     }
-    // }
-
-    // const handleInputChange = (e) => {
-    //     const { name, value } = e.target
-
-    //     if (name === 'measurement' || name === 'ingredientName' || name === 'ingredientExtraDetail') {
-    //         setFormData((prevData) => ({
-    //             ...prevData,
-    //             ingredients: {
-    //                 ...prevData.ingredients,
-    //                 [name]: value,
-    //             }
-    //         }))
-    //     } else {
-    //         const isNumericField = ["cooktime"].includes(name) //returns true if the target name is included in the array
-    //         setFormData((prevData) => ({
-    //             ...prevData,
-    //             [name]: isNumericField ? parseInt(value) : value
-    //         }))
-    //     }
-    // }
-
     const handleInputChange = (e) => {
         const { name, value } = e.target
-        // const isNumericField = ["cooktimeHours", "cooktimeMins", "nutritionScore", "costScore", "tastinessScore"].includes(name) //returns true if the target name is included in the array
         setFormData((prevData) => ({
             ...prevData,
             [name]: value
         }))
     }
-
-    // [name]: isNumericField ? (value == '' ? parseInt(0) : parseInt(value)) : value
 
     const handleIngredientChange = (e) => {
         const { name, value } = e.target
@@ -291,19 +189,6 @@ export default function AddRecipeForm(props) {
             return
         }
 
-        // await fetch("http://localhost:5000/recipes/check-password", options)
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         if (data.valid === false) {
-        //             throw new Error("Invalid Password")
-        //         }
-        //         // if password is correct, continue with rest of the function
-        //         console.log('Password Is Valid')
-        //     })
-        //     .catch(error => {
-        //         console.error(error)
-        //     })
-
              console.log('only log this if password is valid')
 
         if (imageObject.file) {
@@ -315,13 +200,6 @@ export default function AddRecipeForm(props) {
                 data.append("signature", signatureResponse.data.signature)
                 data.append("timestamp", signatureResponse.data.timestamp)
 
-                // for (const entry of data.entries()) {
-                //     console.log(entry)
-                //     }
-
-                // console.log(data)
-                // console.log(imageObject)
-
                 const cloudinaryResponse = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, data, {
                     headers: { "Content-Type": "multipart/form-data" },
                     onUploadProgress: function (e) {
@@ -329,7 +207,6 @@ export default function AddRecipeForm(props) {
                     }
                 })
 
-                // const cloudinaryResponse = await axios.post("http://localhost:5000/recipes/post-to-cloudinary", data)
                 console.log(cloudinaryResponse.data)
 
                 const photoData = {
@@ -392,123 +269,6 @@ export default function AddRecipeForm(props) {
                 }
             })
         }
-
-        // fetch("http://localhost:5000/recipes/add", {
-        //     method: "POST",
-        //     body: JSON.stringify(formData), 
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     }
-        // })
-        //     .then(res => {
-        //         res.json()
-        //         if (res.ok) {
-        //             console.log('successfully posted!')
-        //             setFormData({
-        //                 recipeName: '',
-        //                 recipeSubName: '',
-        //                 ingredients: [],
-        //                 instructions: '',
-        //                 notes: '',
-        //                 cooktime: '',
-        //                 password: '',
-        //                 honeyp: ''
-        //             })
-        //             setImageObject({})
-        //         }
-        //     })
-        //     .then(data => console.log(data))
-
-
-
-            
-
-
-
-            // // make a get request to our own server at /get-signature
-            // console.log(typeof imageObject.file)
-            // signatureResponse = fetch("http://localhost:5000/recipes/get-signature")
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         console.log(data)
-
-            //         console.log(imageObject)
-            //         setFinalImageObject((prevData) => ({
-            //             ...prevData,
-            //             file: imageObject.file,
-            //             api_key: api_key,
-            //             signature: data.signature,
-            //             timestamp: data.timestamp
-            //         }))
-            //     })
-            //     .catch(error => {
-            //         console.error(error)
-            //     })
-            //     console.log("image code ran")
-        
-
-
-        // if (imageObject.file) {
-        //     // make a get request to our own server at /get-signature
-        //     console.log(imageObject.file)
-        //     signatureResponse = fetch("http://localhost:5000/recipes/get-signature")
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             console.log(data)
-        //             new Promise((resolve) => {
-        //                 setImageObject((prevData) => ({
-        //                     ...prevData,
-        //                     file: imageObject.file,
-        //                     api_key: api_key,
-        //                     signature: data.signature,
-        //                     timestamp: data.timestamp
-        //                 }))
-        //                 resolve()
-        //                 return imageObject
-        //             })
-        //             .then(() => {
-        //                 console.log(imageObject)
-                        
-        //                 const cloudinaryResponse = fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload?upload_preset=khjbvoiy`, {
-        //                     method: "POST",
-        //                     body: JSON.stringify(imageObject),
-        //                     headers: { "Content-Type": "multipart/form-data" },
-        //                     onUploadProgress: function (e) {
-        //                         console.log(e.loaded / e.total)
-        //                     }
-        //                 })
-        //                 cloudinaryResponse.then(response => response.json())
-        //                 cloudinaryResponse.then(data => {
-        //                     console.log(data)
-        //                 })
-        //                 .catch(error => {
-        //                     console.error(error)
-        //                 })
-        //                 console.log(cloudinaryResponse.data)
-        //             })
-
-        //         })
-        //         .catch(error => {
-        //             console.error(error)
-        //         })
-        //         console.log("image code ran")
-        // }
-
-        // fetch("http://localhost:5000/recipes/add", options)
-        //     .then(res => {
-        //         res.json()
-        //         if (res.ok) {
-        //             setFormData({
-        //                 recipeName: '',
-        //                 instructions: '',
-        //                 cooktime: '',
-        //                 password: '',
-        //                 honeyp: ''
-        //             })
-        //             setImageObject({})
-        //         }
-        //     })
-        //     .then(data => console.log(data))
     }
 
     const showError = (message) => {
@@ -521,18 +281,6 @@ export default function AddRecipeForm(props) {
         errorElement.textContent = ''
     }
 
-    // useEffect(() => {
-    //     const imageInput = document.getElementById("imageInput")
-    //     const fancyImageButton = document.getElementById("image-upload-btn")
-
-    //     fancyImageButton.addEventListener('click', () => {
-    //         imageInput.click()
-    //     })
-
-    //     // imageInput.addEventListener('change', (event) => {
-    //     //     console.log(event.target.files)
-    //     // })
-    // }, [])
     const recipeTitlePreview = document.getElementById("recipe-title-preview")
     const recipeSubitlePreview = document.getElementById("recipe-subtitle-preview")
     const previewGradient = document.getElementById("preview-gradient")
@@ -699,7 +447,6 @@ export default function AddRecipeForm(props) {
                         <h4 className='section-title'>Title</h4>
                         <div className='section-arrow-container'>
                             <img src={arrow} className="arrowHead section-arrowhead"/>
-                            {/* <div className='section-arrow'></div> */}
                         </div>
                         
                         <div className='section-input-container'>
@@ -722,8 +469,6 @@ export default function AddRecipeForm(props) {
                         </div>
                         
                         <div className='section-input-container'>
-                            {/* map over ingredients array to display entered ingredients here */}
-                            {/* <div id='ingredient-elements'>{ingredientPreviewEls}</div> */}
                             {ingredientPreviews}
                             <div className='current-ingredient-preview'>
                                 <span id='ingredient-measurement-preview'></span>
@@ -858,14 +603,6 @@ export default function AddRecipeForm(props) {
                     SUCCESS!
                 </div>
             </div>
-
-            {/* <form className="temp-img-form" onSubmit={handleImageSubmit}>
-                <label htmlFor="image">Upload Image:</label>
-                <input type="file" id="image" name="image" onChange={handleImageChange}/>
-
-                <button type="submit" className="submit-image-btn" id="submitImage" >Submit Image</button>
-            </form> */}
-
         </main>
     )
 }
