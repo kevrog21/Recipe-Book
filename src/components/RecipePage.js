@@ -4,6 +4,7 @@ import arrow from '../assets/arrow.svg'
 import greyStar from '../assets/grey-star.svg'
 import bell from '../assets/bell.svg'
 import filledYellowStar from '../assets/light-grey-outline.svg'
+import checkmark from '../assets/checkmark.svg'
 // import filledYellowStar from '../assets/filled-star-outline.svg'
 import filledBell from '../assets/filled-bell.svg'
 
@@ -48,10 +49,15 @@ export default function RecipePage(props) {
                 const userTimezoneOffset = new Date().getTimezoneOffset() * 60000
                 const currentDateInUserTimezone = new Date(Date.now() - userTimezoneOffset)
                 const currentDay = currentDateInUserTimezone.toISOString().split('T')[0]
-                const lastCookedDay = currentRecipe.cookingHistoryArray.length > 0 ? currentRecipe.cookingHistoryArray[currentRecipe.cookingHistoryArray.length - 1].split('T')[0] : ''
-                console.log(currentDay, lastCookedDay)
+                const lastCookedDay = currentRecipe.cookingHistoryArray.length > 0 ? currentRecipe.cookingHistoryArray[currentRecipe.cookingHistoryArray.length - 1] : null
 
-                return currentDay === lastCookedDay 
+                // const lastCookedDayInUserTimezone = lastCookedDay ? new Date(lastCookedDay - userTimezoneOffset) : null
+                // const lastCokedDayString = lastCookedDayInUserTimezone ? lastCookedDayInUserTimezone.toISOString().split('T')[0] : ''
+
+                // console.log(currentDay, lastCokedDayString)
+
+                // return currentDay === lastCokedDayString 
+                return true
             })
 
             const checkmarkEl = document.getElementById('checkmark')
@@ -211,7 +217,7 @@ export default function RecipePage(props) {
 
                 <div className='checkbox-container'>
                     <div id="completed-checbox" onClick={handleCheckboxClick}>
-                        <div id='checkmark' className='hide'></div>
+                        <img src={checkmark} id='checkmark'/>
                     </div>
                     <div>
                         <div className='completed-text'>Check box after cooking</div>

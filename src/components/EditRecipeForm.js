@@ -5,6 +5,7 @@ import axios from 'axios'
 import arrow from '../assets/arrow.svg'
 import arrowLight from '../assets/arrow-grey.svg'
 import trashIcon from '../assets/trash-icon.svg'
+import closeIcon from '../assets/close-x.svg'
 
 export default function EditRecipeForm(props) {
 
@@ -496,7 +497,7 @@ export default function EditRecipeForm(props) {
             setTimeout(() => {
                 navigate('/')
                 props.retrieveRecipes()
-            }, 2000)
+            }, 1000)
 
         } catch (error) {
             console.error(error)
@@ -529,7 +530,9 @@ export default function EditRecipeForm(props) {
                 </div>
                 {isDeleteModalShowing && <div className='delete-modal-container' onClick={handleDeleteModalToggle}>
                     <div className='delete-modal' onClick={(e) => e.stopPropagation()}>
-                        <div className='close-btn-container' onClick={handleDeleteModalToggle}></div>
+                        <div className='close-btn-container' onClick={handleDeleteModalToggle}>
+                            <img src={closeIcon} />
+                        </div>
                         <div className='delete-modal-text'>Are you sure you want to delete this recipe?</div>
                         <div className='yes-no-btn-container'>
                             <div id='delete-yes' className='delete-modal-btn' onClick={handleDeletionFormToggle}>yes</div>
