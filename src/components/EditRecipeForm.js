@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react' 
-import { useParams, Link } from 'react-router-dom' 
+import { useParams, Link } from 'react-router-dom'
+import { useNavigateToLink } from './ToHomePage'
 import axios from 'axios'
 import arrow from '../assets/arrow.svg'
 import arrowLight from '../assets/arrow-grey.svg'
+import trashIcon from '../assets/trash-icon.svg'
 
 export default function EditRecipeForm(props) {
 
@@ -13,6 +15,7 @@ export default function EditRecipeForm(props) {
     const [imgPreview, setImgPreview] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [finalDataObject, setFinalDataObject] = useState({})
+    const navigate = useNavigateToLink()
 
     const defaultTagWords = ['main', 'starter', 'dessert', 'breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 
     'winter meals', 'summer meals', 'sides', 'quick', 'vegetarian', 'vegan', 'gluten free', 'dairy free', 'basics']
@@ -355,6 +358,16 @@ export default function EditRecipeForm(props) {
         errorElement.textContent = ''
     }
 
+    const showDeletionError = (message) => {
+        const deletionErrorEl = document.getElementById('deletion-error-message')
+        deletionErrorEl.textContent = message
+    }
+
+    const resetDeletionError = () => {
+        const deletionErrorEl = document.getElementById('deletion-error-message')
+        deletionErrorEl.textContent = ''
+    }
+
     useEffect(() => {
         if (Object.keys(finalDataObject).length !== 0) {
             console.log(finalDataObject)
@@ -424,6 +437,75 @@ export default function EditRecipeForm(props) {
         }, 5000)
     }
 
+    const [deletionFormData, setDeletionFormData] = useState({
+        honeyp: '',
+        password: ''
+    })
+
+    const handleDeleteFormChange = (e) => {
+        const { name, value } = e.target
+        setDeletionFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }))
+    }
+
+    const [isDeleteModalShowing, setIsDeleteModalShowing] = useState(false)
+    const [isDeletionFormShowing, setIsDeletionFormShowing] = useState(false)
+
+    const handleDeleteModalToggle = (e) => {
+        setIsDeleteModalShowing(!isDeleteModalShowing)
+        setIsDeletionFormShowing(false)
+    }
+
+    const handleDeletionFormToggle = (e) => {
+        setIsDeletionFormShowing(!isDeletionFormShowing)
+    }
+
+    const handleDeleteFormSubmit = async (e) => {
+        e.preventDefault()
+
+        const options = {
+            method: "POST",
+            body: JSON.stringify(deletionFormData),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+
+        try {
+            const response = await fetch("http://localhost:5000/recipes/check-password", options)
+            const data = await response.json()
+
+            if (data.valid === false) {
+                throw new Error("Invalid Password")
+            }
+            console.log('Password is Valid')
+            resetDeletionError()
+
+            const deletionResponse = await fetch(`http://localhost:5000/recipes/${currentRecipe._id}`, {
+                method: "DELETE",
+                body: JSON.stringify(deletionFormData),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            const deletionData = await deletionResponse.json()
+            console.log(deletionData)
+            // show successful deletion message
+            setTimeout(() => {
+                navigate('/')
+                props.retrieveRecipes()
+            }, 2000)
+
+        } catch (error) {
+            console.error(error)
+            showDeletionError("Invalid password. Please try again.")
+            return
+        }
+        console.log('only log this if password is valid')
+    }
+
     if (isLoading) {
         return (
             <main>
@@ -434,12 +516,38 @@ export default function EditRecipeForm(props) {
         return (
             <main>
 
-                <Link to={`/${currentRecipe._id}`}>
-                    <div className='back-arrow-container'>
-                        <img src={arrow} className="arrowHead back-arrowhead"/>
-                        <div className='back-arrow'></div>
+                <div className='recipe-page-icon-container'>
+                    <Link to={`/${currentRecipe._id}`}>
+                        <div className='recipe-page-back-arrow-container no-margin'>
+                            <img src={arrow} className="arrowHead back-arrowhead"/>
+                            <div className='back-arrow'></div>
+                        </div>
+                    </Link>
+                    <div className='delete-icon-container' onClick={handleDeleteModalToggle}>
+                        <img src={trashIcon} />
                     </div>
-                </Link>
+                </div>
+                {isDeleteModalShowing && <div className='delete-modal-container' onClick={handleDeleteModalToggle}>
+                    <div className='delete-modal' onClick={(e) => e.stopPropagation()}>
+                        <div className='close-btn-container' onClick={handleDeleteModalToggle}></div>
+                        <div className='delete-modal-text'>Are you sure you want to delete this recipe?</div>
+                        <div className='yes-no-btn-container'>
+                            <div id='delete-yes' className='delete-modal-btn' onClick={handleDeletionFormToggle}>yes</div>
+                            <div id='delete-no' className='delete-modal-btn'onClick={handleDeleteModalToggle}>no</div>
+                        </div>
+
+                        {isDeletionFormShowing && <form className='deletion-form' onSubmit={handleDeleteFormSubmit}>
+                            <input type="password" id="deletion-password" name="password" className='has-placeholder'
+                            placeholder="please enter password to delete" value={deletionFormData.password} onChange={handleDeleteFormChange}></input>
+                            <div id="deletion-error-message" className="error"></div>
+                            <input type="text" id="deletion-honeyp" name="honeyp" value={deletionFormData.honeyp} onChange={handleDeleteFormChange}></input>
+                            <button type="submit" className="delete-recipe-btn" id="submit" >Delete</button>
+                        </form>
+
+                        }
+                    </div>
+                </div>}
+
                 <h2 className='edit-form-title'>Edit Recipe</h2>
                 <h4 className='edit-form-subtitle'>make changes and then click save</h4>
 
@@ -606,14 +714,24 @@ export default function EditRecipeForm(props) {
                     placeholder="please re-enter password to save changes" value={editFormData.password} onChange={handleInputChange}></input>
                     <div id="error-message" className="error"></div>
                     <input type="text" id="honeyp" name="honeyp" value={editFormData.honeyp} onChange={handleInputChange}></input>
-                    <button type="submit" className="submit-recipe-btn" id="submit" >Save</button>
+                    <button type="submit" className="save-recipe-btn" id="submit" >Save</button>
                 </form>
+                
+                {/* <div className='delete-btn-container'>
+                    <button type="submit" className="delete-recipe-btn" id="submit" >Delete Recipe</button>
+                </div> */}
 
                 <div className='success-message-container'>
                     <div id='success-message' className='success-el hide'>
                         Changes Saved!
                     </div>
                 </div>
+                <Link to={`/${currentRecipe._id}`}>
+                    <div className='back-arrow-container'>
+                        <img src={arrow} className="arrowHead back-arrowhead"/>
+                        <div className='back-arrow'></div>
+                    </div>
+                </Link>
             </main>
         )
     }

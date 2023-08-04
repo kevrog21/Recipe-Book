@@ -283,6 +283,57 @@ main {
   width: 2rem;
 }
 
+.delete-icon-container {
+  width: 1.5em;
+  margin: 0 .5em 0 0;
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+}
+
+.delete-icon-container img {
+  margin: auto 0 0 0;
+}
+
+.delete-modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 3;
+  background: rgba(0, 0, 0, .80);
+  display: grid;
+}
+
+.delete-modal {
+  background: white;
+  margin: auto;
+  width: 90%;
+  height: 50%;
+  opacity: 100%;
+  border-radius: 1rem;
+  border: 3px solid black;
+}
+
+.close-btn-container {
+  background: black;
+  width: 2rem;
+  height: 2rem;
+  margin: 1.5rem 1.5rem 0 auto;
+  cursor: pointer;
+}
+
+.deletion-form {
+  display: grid;
+  width: 90%;
+  margin: 2rem auto;
+}
+
+.deletion-form input {
+  margin: 1rem;
+}
+
 .back-arrow-container,
 .recipe-page-back-arrow-container {
   width: 2.5em;
@@ -326,7 +377,7 @@ main {
 }
 
 .edit-form-title {
-  margin: 3rem 0 0 0;
+  margin: 2rem 0 0 0;
   line-height: 7vw;
 }
 
@@ -700,7 +751,9 @@ main {
 }
 
 .submit-recipe-btn,
-.add-button {
+.add-button,
+.save-recipe-btn,
+.delete-recipe-btn {
   padding: 1rem 0;
   width: 50%;
   margin: 1rem auto;
@@ -712,6 +765,74 @@ main {
   border: 3px solid black;
 }
 
+.save-recipe-btn,
+.delete-recipe-btn {
+  width: 80%;
+  margin: 3rem auto 0 auto;
+  padding: .75rem 0
+}
+
+.delete-btn-container {
+  display: grid;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.delete-recipe-btn {
+  background: rgb(250, 98, 98);
+  margin: 0 auto;
+}
+
+.delete-recipe-btn:hover {
+  background: red;
+}
+
+.delete-modal-text {
+  width: 80%;
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 2rem auto;
+}
+
+.yes-no-btn-container {
+  width: 80%;
+  margin: 0 auto;
+  justify-content: space-around;
+  display: flex;
+}
+
+.delete-modal-btn {
+  cursor: pointer;
+  width: 40%;
+  padding: .25rem 0;
+  text-align: center;
+  font-weight: 600;
+  border: 3px solid black;
+  border-radius: 1.5rem;
+}
+
+#delete-no {
+  background: #C0C0C0;
+}
+
+.delete-modal-btn:hover {
+  background: #C0C0C0;
+}
+
+#delete-no:hover {
+  background: #949494;
+}
+
+#deletion-password {
+  padding: .5rem;
+  font-size: 1rem;
+  border: 2px solid black;
+}
+
+#deletion-password::placeholder {
+  color: #949494;
+}
+
 .add-button {
   display: inline-block;
   width: auto;
@@ -721,15 +842,19 @@ main {
 }
 
 .submit-recipe-btn:hover,
-.add-button:hover {
+.add-button:hover,
+.save-recipe-btn:hover {
   background: #22F043;
 }
 
 .error {
+  text-align: center;
+  margin: 0 0 1rem 0;
   color: red;
 }
 
-#honeyp {
+#honeyp,
+#deletion-honeyp {
   display: none;
 }
 
