@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react' 
+import React, { useState, useEffect, useRef } from 'react' 
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import arrow from '../assets/arrow.svg'
@@ -40,6 +40,7 @@ export default function AddRecipeForm(props) {
     const [tagWords, setTagWords] = useState([defaultTagWords])
     const [selectedTagWords, setSelectedTagWords] = useState([])
     const [showMoreTags, setShowMoreTags] = useState(false)
+    const ingredientMeasurementEl = useRef(null)
     
 
     useEffect(() => {
@@ -375,6 +376,7 @@ export default function AddRecipeForm(props) {
                     ingredientName: '',
                     ingredientExtraDetail: ''
                 }))
+                ingredientMeasurementEl.current.focus()
         } else {
             console.log('nothing to add. add some stuff yo!')
         }
@@ -382,7 +384,7 @@ export default function AddRecipeForm(props) {
 
     const handleIngredientsEnterKeyDown = (e) => {
         if (e.key === 'Enter') {
-            handleAddClick()
+            handleAddClick() 
         }
     }
 
@@ -478,7 +480,7 @@ export default function AddRecipeForm(props) {
                             {duplicateIngredients && <div className='duplicate-alert'>You have the same ingredient on there twice. Not judging, but it's just kinda weird to do that.</div>}
                             <label htmlFor="ingredientMeasurement">Measurement:</label>
                             <input type="text" id="measurement" name="ingredientMeasurement" className='has-placeholder'
-                            placeholder='1/2 cup' value={currentIngredientsObj.ingredientMeasurement} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
+                            ref={ingredientMeasurementEl} placeholder='1/2 cup' value={currentIngredientsObj.ingredientMeasurement} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
                             <label htmlFor="ingredientName">Ingredient Name:</label>
                             <input type="text" id="ingredient-name" name="ingredientName" className='has-placeholder'
                             placeholder='Diced Carrots' value={currentIngredientsObj.ingredientName} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
