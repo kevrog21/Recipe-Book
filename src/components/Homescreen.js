@@ -9,6 +9,7 @@ import MongoFavorites from './MongoFavorites'
 import MongoRequests from './MongoRequests'
 import AllVegetarian from './AllVegetarian'
 import AllDesserts from './AllDesserts'
+import Basics from './Basics'
 
 export default function Homescreen(props) {
     const { data, mongoData, handleFavoriteToggle, handleRequestToggle, handleSelectedRecipe, handleMongoFavoriteToggle, handleMongoRequestToggle } = props
@@ -98,6 +99,17 @@ export default function Homescreen(props) {
             <AllDesserts
                 title="Desserts"
                 index={4}
+                data={mongoData}
+                handleStarClick={handleFavoriteToggle}
+                handleBellClick={handleRequestToggle}
+                handleCardClick={handleSelectedRecipe}
+                handleMongoFavoriteToggle={handleMongoFavoriteToggle}
+                handleMongoRequestToggle={handleMongoRequestToggle}
+            />
+
+            <Basics 
+                title="Basics"
+                index={5}
                 data={mongoData}
                 handleStarClick={handleFavoriteToggle}
                 handleBellClick={handleRequestToggle}

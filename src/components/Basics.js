@@ -29,9 +29,9 @@ export default function AllMongoRecipes(props) {
 
     const data = props.data
 
-    const allDessertRecipes = data.filter(recipe => recipe.tags.includes('dessert'))
+    const allBasicsRecipes = data.filter(recipe => recipe.tags.includes('basics'))
     
-    const [dessertRecipeElements, setAllDesserts] = useState(allDessertRecipes.map(recipe => (
+    const [basicsRecipeElements, setAllbasics] = useState(allBasicsRecipes.map(recipe => (
             <MongoCards 
                 key={recipe._id}
                 recipeData={recipe}
@@ -46,7 +46,7 @@ export default function AllMongoRecipes(props) {
     )
 
     useEffect(() => {
-        setAllDesserts(data.filter(recipe => recipe.tags.includes('dessert')).map(recipe => (
+        setAllbasics(data.filter(recipe => recipe.tags.includes('basics')).map(recipe => (
             <MongoCards 
                 key={recipe._id}
                 recipeData={recipe}
@@ -58,7 +58,7 @@ export default function AllMongoRecipes(props) {
                 handleMongoFavoriteToggle={props.handleMongoFavoriteToggle}
             /> 
         )))
-        console.log('rendered Dessert section')
+        console.log('rendered basics section')
     }, [data])
 
 
@@ -77,7 +77,7 @@ export default function AllMongoRecipes(props) {
             </div>
             <div className="cardsScrollContainer" onScroll={getScrollPercentage}>
                 <div className="cardsContainer">
-                    {dessertRecipeElements}
+                    {basicsRecipeElements}
                     <div className='end-line'></div>
                 </div>
             </div>

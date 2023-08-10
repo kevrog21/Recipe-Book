@@ -194,9 +194,9 @@ export default function RecipePage(props) {
                         <div>
 
                         </div>
-                        <p><b>cost:</b> {currentRecipe.costScore}/5</p>
-                        <p><b>nutrition:</b> {currentRecipe.nutritionScore}/5</p>
-                        <p><b>tastiness:</b> {currentRecipe.tastinessScore}/5</p>
+                        <p><b>cost:</b> {currentRecipe.costScore}/10</p>
+                        <p><b>nutrition:</b> {currentRecipe.nutritionScore}/10</p>
+                        <p><b>tastiness:</b> {currentRecipe.tastinessScore}/10</p>
                         <div><span className='weight600'>Total Times Cooked: </span> {currentRecipe.cookingHistoryArray.length}</div>
                         {(currentRecipe.cookingHistoryArray.length > 0) && <div><span className='weight600'>Last Cooked: </span> 
                             {convertAndFormatDate(currentRecipe.cookingHistoryArray[currentRecipe.cookingHistoryArray.length - 1])}</div>}
