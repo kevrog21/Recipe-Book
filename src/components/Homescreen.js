@@ -1,4 +1,4 @@
-import { Routes, Route, useParams} from 'react-router-dom'
+import { Routes, Route, useParams, Link} from 'react-router-dom'
 import AllRecipes from './AllRecipes'
 import Requested from './Requested'
 import Favorited from './Favorited'
@@ -129,6 +129,11 @@ export default function Homescreen(props) {
                 handleMongoFavoriteToggle={handleMongoFavoriteToggle}
                 handleMongoRequestToggle={handleMongoRequestToggle}
             />
+
+            <div className='add-recipes-section'>
+                <Link to='/add-recipe' className='plus-icon'><div className='plus-icon'></div></Link>
+                <div>add more recipes</div>
+            </div>
           
             {/* <AddRecipe /> */}
             {/* Suggested */}

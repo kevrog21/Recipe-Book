@@ -128,7 +128,7 @@ header {
 main {
   height: 100%;
   min-height: 100vh;
-  padding: 9em 0 3em 0;
+  padding: 25vw 0 3em 0;
 }
 
 .cardSectionHeading {
@@ -271,6 +271,34 @@ main {
   margin: 0 0 0 2em;
 }
 
+.nothing-here-text {
+  margin: auto 1em;
+  font-weight: 600;
+}
+
+.add-recipes-section {
+  width: 80%;
+  margin: 15vw auto 10vw auto;
+}
+
+.plus-icon {
+  width: 12vw;
+  height: 12vw;
+  margin: 3vw auto;
+  border-radius: 50%;
+  background: #64EB79;
+  border: 3px solid black;
+  cursor: pointer;
+}
+
+.plus-icon:hover {
+  background: #64EB79;
+}
+
+.add-recipes-section > * {
+  text-align: center;
+}
+
 /* add recipe page */
 
 .recipe-page-icon-container {
@@ -278,6 +306,7 @@ main {
   margin: 0 2rem 1rem 2rem;
   justify-content: space-between;
 }
+
 
 .recipe-page-star {
   width: 2rem;
@@ -752,7 +781,7 @@ main {
 .submit-recipe-btn,
 .add-button,
 .save-recipe-btn,
-.delete-recipe-btn {
+.delete-recipe-btn{
   padding: 1rem 0;
   width: 50%;
   margin: 1rem auto;
@@ -842,7 +871,8 @@ main {
 
 .submit-recipe-btn:hover,
 .add-button:hover,
-.save-recipe-btn:hover {
+.save-recipe-btn:hover,
+.plus-icon:hover {
   background: #22F043;
 }
 
