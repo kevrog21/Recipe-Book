@@ -4,6 +4,7 @@ import Requested from './Requested'
 import Favorited from './Favorited'
 import RecipePage from './RecipePage'
 import AddRecipe from './AddRecipe'
+import plusIcon from '../assets/plus-icon.svg'
 import AllMongoRecipes from './AllMongoRecipes'
 import MongoFavorites from './MongoFavorites'
 import MongoRequests from './MongoRequests'
@@ -131,7 +132,7 @@ export default function Homescreen(props) {
             />
 
             <div className='add-recipes-section'>
-                <Link to='/add-recipe' className='plus-icon'><div className='plus-icon'></div></Link>
+                <Link to='/add-recipe' ><div className='plus-icon'><img src={plusIcon} ></img></div></Link>
                 <div>add more recipes</div>
             </div>
           

@@ -289,6 +289,14 @@ main {
   background: #64EB79;
   border: 3px solid black;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.plus-icon img {
+  height: 50%;
+  width: 50%;
 }
 
 .plus-icon:hover {
