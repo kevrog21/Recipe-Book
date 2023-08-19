@@ -92,6 +92,7 @@ export default function Favorited(props) {
                 <div className="cardsContainer">
                     {favoriteRecipeElements}
                     <div className='end-line'></div>
+                    {!favoriteRecipeElements.length > 0 && <div className='nothing-here-text'>No Recipes Yet</div>}
                 </div>
             </div>
         </div>

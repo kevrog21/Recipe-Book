@@ -90,6 +90,7 @@ export default function Requested(props) {
                 <div className="cardsContainer">
                     {requestedRecipElements}
                     <div className='end-line'></div>
+                    {!requestedRecipElements.length > 0 && <div className='nothing-here-text'>No Recipes Yet</div>}
                 </div>
             </div>
         </div>

@@ -79,6 +79,7 @@ export default function AllMongoRecipes(props) {
                 <div className="cardsContainer">
                     {basicsRecipeElements}
                     <div className='end-line'></div>
+                    {!basicsRecipeElements.length > 0 && <div className='nothing-here-text'>No Recipes Yet</div>}
                 </div>
             </div>
         </div>
