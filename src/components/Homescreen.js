@@ -132,7 +132,7 @@ export default function Homescreen(props) {
             />
 
             <div className='add-recipes-section'>
-                <Link to='/add-recipe' ><div className='plus-icon'><img src={plusIcon} ></img></div></Link>
+                <Link to='/add-recipe'><div className='plus-icon'><img src={plusIcon} ></img></div></Link>
                 <div>add more recipes</div>
             </div>
           

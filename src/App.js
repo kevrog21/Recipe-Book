@@ -22,7 +22,8 @@ export default function App() {
     .then(response => {
         setRecipeData(response.data)
         setItemCount(response.data.length)
-        console.log('recipes retrieved')
+        console.log('recipes retrieveddd')
+        console.log(response.data)
     })
     .catch(e => {
         console.log(e)

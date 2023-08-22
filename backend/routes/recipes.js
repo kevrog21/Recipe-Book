@@ -81,7 +81,6 @@ router.get("/get-signature", (req, res) => {
 //   })
 
 router.route('/add').post((req, res) => {
-    console.log("running this code yooo")
     const recipeName = req.body.recipeName
     const recipeSubName = req.body.recipeSubName
     const ingredients = Array.isArray(req.body.ingredients) ? req.body.ingredients : []
@@ -102,9 +101,6 @@ router.route('/add').post((req, res) => {
     const isFavorited = req.body.isFavorited
     const isRequested = req.body.isRequested
     const cookingHistoryArray = req.body.cookingHistoryArray
-
-
-    console.log('Recipe Name: ', recipeName,'Recipe Subname: ', recipeSubName, 'ingredients: ', ingredients, 'instructions: ', instructions,'notes: ', notes,'imgUrl: ', imgUrl,'password: ', password,'honeypot: ', honeyp)
 
     if (password === secretPassword && honeyp === '') {
         const newRecipe = new Recipe({

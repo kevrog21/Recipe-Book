@@ -14,22 +14,10 @@ const app = express()
 
 import path from 'path'
 
-// const _dirname = path.dirname("")
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const buildPath = path.resolve(__dirname, '../build')
 
 app.use(express.static(buildPath))
-
-app.get("/*", function(req, res) {
-    res.sendFile(
-        path.join(buildPath, "index.html"),
-        function (err) {
-            if (err) {
-                res.status(500).send(err)
-            }
-        }
-    )
-})
 
 dotenv.config()
 
@@ -50,6 +38,18 @@ app.use(express.json())
 
 app.use('/recipes', recipeRouter)
 app.use('*', (req, res) => res.status(404).json({error: "not found"}))
+
+app.get("/*", function(req, res) {
+    res.sendFile(
+        path.join(buildPath, "index.html"),
+        function (err) {
+            if (err) {
+                console.log(err)
+                res.status(500).send(err)
+            }
+        }
+    )
+})
 
 // app.listen(port, () => {
 //     console.log(`Server is running on port: ${port}`)
