@@ -10,7 +10,6 @@
 /coverage
 
 # production
-/build
 credentials.js
 
 # misc
