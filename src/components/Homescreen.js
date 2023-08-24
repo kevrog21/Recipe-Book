@@ -66,7 +66,7 @@ export default function Homescreen(props) {
             />
 
             <MongoFavorites
-                title="Favoritess"
+                title="Favorites"
                 index={1}
                 data={mongoData}
                 handleStarClick={handleFavoriteToggle}

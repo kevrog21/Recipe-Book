@@ -25,14 +25,14 @@ dotenv.config()
 // const port = process.env.PORT || 5000
 
 app.use(cors({
-    origin: 'http://54.219.239.120',
+    origin: 'http://bastebook.com',
     credentials: false,
 }))
 app.use(express.json())
 
  const uri = process.env.ATLAS_URI
- console.log(uri)
  mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+ console.log('testing 123')
 
  const connection = mongoose.connection
  connection.once('open', () => {
@@ -40,7 +40,6 @@ app.use(express.json())
  })
 
 app.use('/recipes', recipeRouter)
-app.use('*', (req, res) => res.status(404).json({error: "not found"}))
 
 app.get("/*", function(req, res) {
     res.sendFile(
@@ -53,6 +52,8 @@ app.get("/*", function(req, res) {
         }
     )
 })
+
+app.use('*', (req, res) => res.status(404).json({error: "not found"}))
 
 // app.listen(port, () => {
 //     console.log(`Server is running on port: ${port}`)

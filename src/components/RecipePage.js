@@ -49,15 +49,18 @@ export default function RecipePage(props) {
                 const userTimezoneOffset = new Date().getTimezoneOffset() * 60000
                 const currentDateInUserTimezone = new Date(Date.now() - userTimezoneOffset)
                 const currentDay = currentDateInUserTimezone.toISOString().split('T')[0]
-                const lastCookedDay = currentRecipe.cookingHistoryArray.length > 0 ? currentRecipe.cookingHistoryArray[currentRecipe.cookingHistoryArray.length - 1] : null
+                const lastCookedDay = currentRecipe.cookingHistoryArray.length > 0 ? currentRecipe.cookingHistoryArray[currentRecipe.cookingHistoryArray.length - 1] : new Date(2023, 0, 1).toISOString()
 
-                // const lastCookedDayInUserTimezone = lastCookedDay ? new Date(lastCookedDay - userTimezoneOffset) : null
-                // const lastCokedDayString = lastCookedDayInUserTimezone ? lastCookedDayInUserTimezone.toISOString().split('T')[0] : ''
+                const lastCookedDayDate = new Date(lastCookedDay)
+                const lastCookedDayTimestamp = lastCookedDayDate.getTime()
+                const lastCookedDayInUserTimezone = new Date(lastCookedDayTimestamp - userTimezoneOffset)
+                const lastCookedDayString = lastCookedDayInUserTimezone.toISOString().split('T')[0]
+                // console.log(lastCookedDayString, "lastCookedDayString")
 
-                // console.log(currentDay, lastCokedDayString)
+                // console.log("current day", currentDay)
+                // console.log("last cooked day", lastCookedDayString)
 
-                // return currentDay === lastCokedDayString 
-                return true
+                return currentDay === lastCookedDayString
             })
 
             const checkmarkEl = document.getElementById('checkmark')
@@ -185,7 +188,7 @@ export default function RecipePage(props) {
     
                 <section className='stats-section'>
                             
-                    <h4 className='section-title'>Stats</h4>
+                    <h4 className='section-title'>States</h4>
                     <div className='section-arrow-container'>
                         <img src={arrow} className="arrowHead section-arrowhead"/>
                     </div>
@@ -217,7 +220,7 @@ export default function RecipePage(props) {
 
                 <div className='checkbox-container'>
                     <div id="completed-checbox" onClick={handleCheckboxClick}>
-                        <img src={checkmark} id='checkmark'/>
+                        {hasBeenCookedToday && <img src={checkmark} id='checkmark'/>}
                     </div>
                     <div>
                         <div className='completed-text'>Check box after cooking</div>
