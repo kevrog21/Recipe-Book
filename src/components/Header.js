@@ -38,7 +38,7 @@ export default function Header() {
     return (
         <div>
             <header>
-                <Link to='/' className='app_title'><h1>Recipe<br />Box</h1></Link>
+                <Link to='/' className='app_title'><h1>bastebook</h1></Link>
                 <div className='hamburger_wrapper' onClick={handleMenuToggle}>
                     <div id='hamburger-line1'></div>
                     <div id='hamburger-line2'></div>
