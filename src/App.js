@@ -9,6 +9,7 @@ import AddRecipeForm from './components/AddRecipeForm'
 import EditRecipeForm from './components/EditRecipeForm'
 import RecipeDataService from './services/recipeList'
 import ScrollToTop from './components/ScrollToTop';
+import Settings from './components/Settings'
 
 export default function App() {
 
@@ -179,6 +180,10 @@ export default function App() {
               // handleRequestToggle={handleRequestToggle}
               handleSelectedRecipe={handleSelectedRecipe}
               retrieveRecipes={retrieveRecipes}
+            />} />
+            <Route path="/settings" element={
+            <Settings 
+
             />} />
         </Routes>
         <Footer />
