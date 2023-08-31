@@ -8,8 +8,9 @@ import RecipePage from './components/RecipePage'
 import AddRecipeForm from './components/AddRecipeForm'
 import EditRecipeForm from './components/EditRecipeForm'
 import RecipeDataService from './services/recipeList'
-import ScrollToTop from './components/ScrollToTop';
+import ScrollToTop from './components/ScrollToTop'
 import Settings from './components/Settings'
+import Blog from './components/Blog'
 
 export default function App() {
 
@@ -181,9 +182,11 @@ export default function App() {
               handleSelectedRecipe={handleSelectedRecipe}
               retrieveRecipes={retrieveRecipes}
             />} />
-            <Route path="/settings" element={
+          <Route path="/settings" element={
             <Settings 
-
+            />} />
+          <Route path="/blog" element={
+            <Blog 
             />} />
         </Routes>
         <Footer />
