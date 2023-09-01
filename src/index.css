@@ -266,7 +266,6 @@ main {
 .end-line {
   content: '';
   width: 3px;
-  height: 42vw;
   background: black;
   margin: 0 0 0 2em;
 }
@@ -1007,3 +1006,43 @@ main {
 .weight600 {
   font-weight: 600;
 }
+
+@media screen and (min-width: 850px) {
+  
+  header {
+    padding: 1vw 1vw 1vw 2em;
+  }
+
+  .app_title {
+    font-size: 1.25vw;
+  }
+
+  .hamburger_wrapper {
+    width: 4vw;
+    height: 4vw;
+  }
+
+  #hamburger-line2 {
+    margin: 1vw 0 0 0;
+  }
+
+  main {
+    padding: 10vw 0 0 0;
+  }
+
+  .card {
+    width: 20vw;
+    height: 27vw;
+  }
+
+  .recipe-card-name {
+    font-size: 1.75vw;
+  }
+  
+  .recipe-subheader {
+    font-size: 1vw;
+  }
+
+}
+
+
