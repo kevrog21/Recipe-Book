@@ -8,17 +8,7 @@ import filledBell from '../assets/filled-bell.svg'
 
 export default function MongoCards(props) {
 
-// const [backgroundImageURL, setBackgroundImageURL] = useState()
-
-// useEffect(() => {
-//     const importImage = async () => {
-//         const imageModule = await import(`../assets/${props.recipeData.recipeImage}`)
-//         setBackgroundImageURL(imageModule.default)
-//     }
-
-//     importImage()
-// }, [])
-
+const [isRotating, setIsRotating] = useState(false)
 
 const styles = {
         backgroundImage: `linear-gradient(25deg, rgba(0, 0, 0, .95), rgba(0, 0, 0, 0) 45%), url(${props.recipeData.imgUrl})`
@@ -26,6 +16,7 @@ const styles = {
  
 const handleStarClick = (e) => {
     e.stopPropagation()
+    setIsRotating(true)
     props.handleStarClick(props.recipeData._id, props.recipeData.recipeName, props.recipeData.isFavorited)
 }
 
@@ -40,7 +31,7 @@ const toggleDisplayFullRecipe = (e) => {
 
     return (
             <div className='card' style={styles} onClick={toggleDisplayFullRecipe}>
-                <img className='star-icon icon-drop-shadow' src={props.isFavorited ? filledStar : star} onClick={handleStarClick} />
+                <img className={`star-icon icon-drop-shadow ${isRotating ? 'rotating' : ''}`} src={props.isFavorited ? filledStar : star} onClick={handleStarClick} />
                 <div className='card-text-container'>
                     <img className='bell-icon-above-text' src={bell} alt='request icon'/>
                     <h3 className='recipe-card-name icon-drop-shadow' >{props.recipeData.recipeName}</h3>

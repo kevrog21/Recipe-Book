@@ -120,7 +120,7 @@ header {
   margin: 0 auto 5vw auto;
   padding: 1vw 5vw;
   font-size: 2vh;
-  font-weight: 500;
+  font-weight: 400;
   border: 3px solid black;
   border-radius: 2em;
 }
@@ -260,6 +260,24 @@ main {
   grid-row: 1;
   color: #FFEE51;
   width: 3.5vw;
+  /* transition: transform 1.25s ease; */
+}
+
+.rotating {
+  /* transform: rotate(-360deg); */
+  animation: starRotateAnimation 1s ease;
+}
+
+@keyframes starRotateAnimation {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(-180deg) scale(1.25);
+  }
+  100% {
+    transform: rotate(-360deg) scale(1);
+  }
 }
 
 .bell-icon-above-text{
