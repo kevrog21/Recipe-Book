@@ -265,15 +265,15 @@ main {
 
 .rotating {
   /* transform: rotate(-360deg); */
-  animation: starRotateAnimation 1s ease;
+  animation: starRotateAnimation 1.2s ease;
 }
 
 @keyframes starRotateAnimation {
   0% {
     transform: rotate(0deg) scale(1);
   }
-  50% {
-    transform: rotate(-180deg) scale(1.25);
+  70% {
+    transform: rotate(-360deg) scale(1.4);
   }
   100% {
     transform: rotate(-360deg) scale(1);
