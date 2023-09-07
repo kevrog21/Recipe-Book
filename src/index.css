@@ -265,7 +265,7 @@ main {
 
 .rotating {
   /* transform: rotate(-360deg); */
-  animation: starRotateAnimation 1.2s ease;
+  animation: starRotateAnimation 1s ease;
 }
 
 @keyframes starRotateAnimation {

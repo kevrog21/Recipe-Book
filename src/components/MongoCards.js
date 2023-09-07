@@ -16,7 +16,7 @@ const styles = {
  
 const handleStarClick = (e) => {
     e.stopPropagation()
-    setIsRotating(true)
+    setIsRotating(!isRotating)
     props.handleStarClick(props.recipeData._id, props.recipeData.recipeName, props.recipeData.isFavorited)
 }
 
