@@ -218,6 +218,17 @@ export default function RecipePage(props) {
                     </div>
                 </section>}
 
+                {currentRecipe.originalRecipeLink && <section className='original-link-section'>
+                    <h4 className='section-title'>Original Recipe Link</h4>
+                    <div className='section-arrow-container'>
+                        <img src={arrow} className="arrowHead section-arrowhead"/>
+                    </div>
+    
+                    <div className='section-content-container'>
+                        <a href={`${currentRecipe.originalRecipeLink}`} target='_blank'>{currentRecipe.originalRecipeLink}</a>
+                    </div>
+                </section>}
+
                 <div className='checkbox-container'>
                     <div id="completed-checbox" onClick={handleCheckboxClick}>
                         {hasBeenCookedToday && <img src={checkmark} id='checkmark'/>}
