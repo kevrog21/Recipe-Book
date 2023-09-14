@@ -148,6 +148,8 @@ export default function RecipePage(props) {
                         <div id='recipe-subtitle-overlay'>{currentRecipe.recipeSubName}</div>
                     </div>
                 </div>
+
+                <section className='cooktime'>cooktime: {currentRecipe.totalCooktime > 60 ? `${currentRecipe.cooktimeHours} hours ${currentRecipe.cooktimeMins} mins` : `${currentRecipe.cooktimeMins} mins`}</section>
     
                 <section className='ingredients-section'>
                     <h4 className='section-title'>Ingredients</h4>
@@ -188,7 +190,7 @@ export default function RecipePage(props) {
     
                 <section className='stats-section'>
                             
-                    <h4 className='section-title'>States</h4>
+                    <h4 className='section-title'>Stats</h4>
                     <div className='section-arrow-container'>
                         <img src={arrow} className="arrowHead section-arrowhead"/>
                     </div>
