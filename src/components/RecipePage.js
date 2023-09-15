@@ -14,7 +14,9 @@ export default function RecipePage(props) {
     const [currentRecipe, setCurrentRecipe] = useState(selectedRecipe)
     const [isLoading, setIsLoading] = useState(true)
     const [ingredients, setIngredients] = useState([])
-    const [tags, setTags]= useState([])
+    const [tags, setTags] = useState([])
+    const [timeScore, setTimeScore] = useState(null)
+    const [overallScore, setOverallScore] = useState(null)
 
     useEffect(() => {
         if (mongoData.length > 0) {
@@ -68,6 +70,34 @@ export default function RecipePage(props) {
             if (checkmarkEl) {
                 hasBeenCookedToday ? checkmarkEl.classList.remove('hide') : checkmarkEl.classList.add('hide')
             }
+
+            setTimeScore(() => {
+                if(currentRecipe.totalCooktime <= 30) {
+                    return 10
+                } else if(currentRecipe.totalCooktime <= 45) {
+                    return 9
+                } else if(currentRecipe.totalCooktime <= 60) {
+                    return 8
+                } else if(currentRecipe.totalCooktime <= 75) {
+                    return 7
+                } else if(currentRecipe.totalCooktime <= 90) {
+                    return 6
+                } else if(currentRecipe.totalCooktime <= 105) {
+                    return 5
+                } else if(currentRecipe.totalCooktime <= 120) {
+                    return 4
+                } else if(currentRecipe.totalCooktime <= 135) {
+                    return 3
+                } else if(currentRecipe.totalCooktime <= 150) {
+                    return 2
+                } else if(currentRecipe.totalCooktime <= 175) {
+                    return 1
+                } else {
+                    return 0
+                }
+            }) 
+        
+            setOverallScore((((currentRecipe.nutritionScore + currentRecipe.costScore + currentRecipe.tastinessScore + timeScore) / 40) * 10).toFixed(1))
         }
     }, [currentRecipe])
 
@@ -122,6 +152,13 @@ export default function RecipePage(props) {
             hasBeenCookedToday ? checkmarkEl.classList.remove('hide') : checkmarkEl.classList.add('hide')
         }
     }, [hasBeenCookedToday])
+
+    const overallScoreStyle = {
+        width: `${overallScore * 10}% `,
+        background: '#A541F3',
+        height: '100%',
+        borderRadius: '.25em'
+    }
 
     if (isLoading) {
         return (
@@ -196,7 +233,10 @@ export default function RecipePage(props) {
                     </div>
                     
                     <div className='section-content-container'>
-                        <div>
+                        <div className='overall-score-container'>Overall Score: {overallScore}  /  10
+                            <div className='score-bar-background'>
+                                <div className='overall-score-bar' style={overallScoreStyle}></div>
+                            </div>
 
                         </div>
                         <p><b>cost:</b> {currentRecipe.costScore}/10</p>

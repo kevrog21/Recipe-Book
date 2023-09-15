@@ -1003,6 +1003,21 @@ main {
   cursor: pointer;
 }
 
+.overall-score-container {
+  
+}
+
+.score-bar-background {
+  width: 100%;
+  background: black;
+  height: .5em;
+  border: 2px solid black;
+  border-radius: .5em;
+}
+
+.overall-score-bar {
+  
+}
 
 .bottom-back-arrow {
   margin: 0 0 2rem 2rem;
