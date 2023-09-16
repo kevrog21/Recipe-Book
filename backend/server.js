@@ -25,7 +25,7 @@ dotenv.config()
 // const port = process.env.PORT || 5000
 
 app.use(cors({
-    origin: 'http://bastebook.com',
+    origin: 'http://localhost:3000',
     credentials: false,
 }))
 app.use(express.json())

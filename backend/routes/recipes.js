@@ -102,6 +102,18 @@ router.route('/add').post((req, res) => {
     const isRequested = req.body.isRequested
     const cookingHistoryArray = req.body.cookingHistoryArray
 
+    const timeScore = 
+        req.body.totalCooktime <= 30 ? 10 : 
+        req.body.totalCooktime <= 45 ? 9 :
+        req.body.totalCooktime <= 60 ? 8 :
+        req.body.totalCooktime <= 75 ? 7 :
+        req.body.totalCooktime <= 90 ? 6 :
+        req.body.totalCooktime <= 105 ? 5 :
+        req.body.totalCooktime <= 120 ? 4 :
+        req.body.totalCooktime <= 135 ? 3 :
+        req.body.totalCooktime <= 150 ? 2 :
+        req.body.totalCooktime <= 175 ? 1 : 0
+
     if (password === secretPassword && honeyp === '') {
         const newRecipe = new Recipe({
             recipeName,
@@ -117,6 +129,7 @@ router.route('/add').post((req, res) => {
             nutritionScore,
             costScore,
             tastinessScore,
+            timeScore,
             tags,
             imgUrl,
             isFavorited,
@@ -221,6 +234,8 @@ router.route('/update/:id').post((req, res) => {
             recipe.isFavorited = req.body.isFavorited
             recipe.isRequested = req.body.isRequested
             recipe.cookingHistoryArray = req.body.cookingHistoryArray
+
+            recipe.timeScore = req.body.totalCooktime <= 30 ? 10 : 0
 
             recipe.save()
                 .then(() => res.json('Recipe updated!'))
