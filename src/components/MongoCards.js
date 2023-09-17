@@ -8,7 +8,9 @@ import filledBell from '../assets/filled-bell.svg'
 
 export default function MongoCards(props) {
 
+const [currentFavoritedState, setCurrentFavoritedState] = useState(props.recipeData.isFavorited)
 const [isRotating, setIsRotating] = useState(false)
+const [rotationDirection, setRotationDirection] = useState(currentFavoritedState ? 'unrotate' : 'rotate')
 
 const styles = {
         backgroundImage: `linear-gradient(25deg, rgba(0, 0, 0, .95), rgba(0, 0, 0, 0) 45%), url(${props.recipeData.imgUrl})`
@@ -16,8 +18,10 @@ const styles = {
  
 const handleStarClick = (e) => {
     e.stopPropagation()
-    setIsRotating(!isRotating)
+    setIsRotating(true)
+    setRotationDirection(currentFavoritedState ? 'unrotate' : 'rotate')
     props.handleStarClick(props.recipeData._id, props.recipeData.recipeName, props.recipeData.isFavorited)
+    setCurrentFavoritedState(!currentFavoritedState)
 }
 
 const handleBellClick = (e) => {
@@ -29,9 +33,13 @@ const toggleDisplayFullRecipe = (e) => {
     props.handleCardClick(props.recipeData)
 }
 
+// on card load, determine favorited status and set state to match
+// when card is clicked, set isRotating to true
+// determine rotation direction based on based on favorited state
+
     return (
             <div className='card' style={styles} onClick={toggleDisplayFullRecipe}>
-                <img className={`star-icon icon-drop-shadow ${isRotating ? 'rotating' : ''}`} src={props.isFavorited ? filledStar : star} onClick={handleStarClick} />
+                <img className={`star-icon icon-drop-shadow ${isRotating ? rotationDirection : ''}`} src={props.isFavorited ? filledStar : star} onClick={handleStarClick} />
                 <div className='card-text-container'>
                     <img className='bell-icon-above-text' src={bell} alt='request icon'/>
                     <h3 className='recipe-card-name icon-drop-shadow' >{props.recipeData.recipeName}</h3>

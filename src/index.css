@@ -263,9 +263,13 @@ main {
   /* transition: transform 1.25s ease; */
 }
 
-.rotating {
+.rotate {
   /* transform: rotate(-360deg); */
   animation: starRotateAnimation 1s ease;
+}
+
+.unrotate {
+  animation: starUnrotateAnimation 1s ease;
 }
 
 @keyframes starRotateAnimation {
@@ -277,6 +281,18 @@ main {
   }
   100% {
     transform: rotate(-360deg) scale(1);
+  }
+}
+
+@keyframes starUnrotateAnimation {
+  0% {
+    transform: rotate(-360deg) scale(1);
+  }
+  70% {
+    transform: rotate(0deg) scale(1.4);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
   }
 }
 
