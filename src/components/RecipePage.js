@@ -233,7 +233,7 @@ export default function RecipePage(props) {
                     </div>
                     
                     <div className='section-content-container'>
-                        <div className='overall-score-container'>Overall Score: {overallScore}  /  10  {currentRecipe.timeScore}
+                        <div className='overall-score-container'>Overall Score: {overallScore}  /  10
                             <div className='score-bar-background'>
                                 <div className='overall-score-bar' style={overallScoreStyle}></div>
                             </div>
