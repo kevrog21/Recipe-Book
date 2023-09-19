@@ -8,9 +8,8 @@ import filledBell from '../assets/filled-bell.svg'
 
 export default function MongoCards(props) {
 
-const [currentFavoritedState, setCurrentFavoritedState] = useState(props.recipeData.isFavorited)
 const [isRotating, setIsRotating] = useState(false)
-const [rotationDirection, setRotationDirection] = useState(currentFavoritedState ? 'unrotate' : 'rotate')
+const [rotationDirection, setRotationDirection] = useState()
 
 const styles = {
         backgroundImage: `linear-gradient(25deg, rgba(0, 0, 0, .95), rgba(0, 0, 0, 0) 45%), url(${props.recipeData.imgUrl})`
@@ -18,10 +17,12 @@ const styles = {
  
 const handleStarClick = (e) => {
     e.stopPropagation()
+    setRotationDirection(props.recipeData.isFavorited ? 'unrotate' : 'rotate')
     setIsRotating(true)
-    setRotationDirection(currentFavoritedState ? 'unrotate' : 'rotate')
     props.handleStarClick(props.recipeData._id, props.recipeData.recipeName, props.recipeData.isFavorited)
-    setCurrentFavoritedState(!currentFavoritedState)
+    setTimeout(() => {
+        setIsRotating(false)
+    }, 1000)
 }
 
 const handleBellClick = (e) => {
