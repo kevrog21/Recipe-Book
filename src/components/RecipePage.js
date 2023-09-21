@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import arrow from '../assets/arrow.svg'
 import greyStar from '../assets/grey-star.svg'
+import thumbIcon from '../assets/thumb-icon.svg'
 import bell from '../assets/bell.svg'
 import filledYellowStar from '../assets/light-grey-outline.svg'
 import checkmark from '../assets/checkmark.svg'
@@ -266,7 +267,7 @@ export default function RecipePage(props) {
                     </div>
                     
                     <div className='section-content-container'>
-                        <div className='overall-score-container'>Overall Score: {overallScore}  /  10
+                        <div className='overall-score-container'>Overall Score: <span className='weight600'>{overallScore} </span>/10
                             <div className='score-bar-background'>
                                 <div className='overall-score-bar' style={overallScoreStyle}></div>
                             </div>
@@ -275,8 +276,8 @@ export default function RecipePage(props) {
 
                             <div className='score-data-container'>
                                 <div className='score-bar-icon-container'>
-                                    <img className='score-icon' src={greyStar}></img>
-                                    <img className='score-icon' src={greyStar}></img>
+                                    <img className='score-icon rotate180' src={thumbIcon}></img>
+                                    <img className='score-icon ' src={thumbIcon}></img>
                                 </div>
                                 <div className='score-bar-background'>
                                     <div className='nutrition-score-bar' style={nutritionScoreStyle}></div>
@@ -288,8 +289,8 @@ export default function RecipePage(props) {
                             </div>
                             <div className='score-data-container'>
                                 <div className='score-bar-icon-container'>
-                                    <img className='score-icon' src={greyStar}></img>
-                                    <img className='score-icon' src={greyStar}></img>
+                                    <img className='score-icon rotate180' src={thumbIcon}></img>
+                                    <img className='score-icon ' src={thumbIcon}></img>
                                 </div>
                                 <div className='score-bar-background'>
                                     <div className='nutrition-score-bar' style={tastinessScoreStyle}></div>
@@ -301,8 +302,8 @@ export default function RecipePage(props) {
                             </div>
                             <div className='score-data-container'>
                                 <div className='score-bar-icon-container'>
-                                    <img className='score-icon' src={greyStar}></img>
-                                    <img className='score-icon' src={greyStar}></img>
+                                    <img className='score-icon rotate180' src={thumbIcon}></img>
+                                    <img className='score-icon ' src={thumbIcon}></img>
                                 </div>
                                 <div className='score-bar-background'>
                                     <div className='nutrition-score-bar' style={timeScoreStyle}></div>
@@ -314,8 +315,8 @@ export default function RecipePage(props) {
                             </div>
                             <div className='score-data-container'>
                                 <div className='score-bar-icon-container'>
-                                    <img className='score-icon' src={greyStar}></img>
-                                    <img className='score-icon' src={greyStar}></img>
+                                    <div className='cost-icon-container'>$$$</div>
+                                    <div>$</div>
                                 </div>
                                 <div className='score-bar-background'>
                                     <div className='nutrition-score-bar' style={costScoreStyle}></div>
