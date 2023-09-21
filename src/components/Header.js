@@ -40,8 +40,8 @@ export default function Header() {
             <header>
                 <Link to='/' className='app_title'><h1>bastebook</h1></Link>
                 <div className='hamburger_wrapper' onClick={handleMenuToggle}>
-                    <div id='hamburger-line1'></div>
-                    <div id='hamburger-line2'></div>
+                    <div className={`hamburger-line1 ${isNavMenuOpen ? 'rotate-hamburger-line1' : ''}`}></div>
+                    <div className={`hamburger-line2 ${isNavMenuOpen ? 'rotate-hamburger-line2' : ''}`}></div>
                 </div>
             </header>
             <NavMenu handleNavItemClick={handleNavItemClick}/>

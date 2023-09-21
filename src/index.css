@@ -55,18 +55,30 @@ header {
   cursor: pointer;
 }
 
-#hamburger-line1,
-#hamburger-line2 {
+.hamburger-line1,
+.hamburger-line2 {
   background: white;
   height: 10%;
   margin: 30% 0 0 0;
   width: 100%;
   border-radius: .5vw;
+  transition: all .3s ease;
 }
 
-#hamburger-line2 {
+.hamburger-line2 {
   margin: 2vw 0 0 0;
   width: 60%;
+}
+
+.rotate-hamburger-line1 {
+  transform: rotate(45deg)  translate(1px, 2vw);
+  transition: all .3s ease;
+}
+
+.rotate-hamburger-line2 {
+  width: 100%;
+  transform: rotate(-45deg) translate(1px, -2vw);
+  transition: all .3s ease;
 }
 
 .nav-menu-container {
@@ -1119,7 +1131,7 @@ main {
     height: 4vw;
   }
 
-  #hamburger-line2 {
+  .hamburger-line2 {
     margin: 1vw 0 0 0;
   }
 
