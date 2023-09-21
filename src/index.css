@@ -1024,7 +1024,7 @@ main {
 }
 
 .score-bar-background {
-  width: 100%;
+  width: 98%;
   background: black;
   height: .5em;
   border: 2px solid black;
@@ -1033,6 +1033,42 @@ main {
 
 .overall-score-bar {
   
+}
+
+.recipe-scores-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 1em 0 2em 0;
+}
+
+.score-data-container {
+  margin: 0 4% 0 0;
+  width: 100%;
+}
+
+.score-bar-icon-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 .25em 0;
+}
+
+.score-icon {
+  width: 12%;
+}
+
+.score-text-container {
+  text-align: center;
+}
+
+.score-label-text {
+  font-size: 2.1vw;
+  text-align: center;
+}
+
+.score-number-text {
+  font-size: 2vw;
+  font-weight: 600;
 }
 
 .bottom-back-arrow {

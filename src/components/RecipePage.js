@@ -17,6 +17,9 @@ export default function RecipePage(props) {
     const [tags, setTags] = useState([])
     const [timeScore, setTimeScore] = useState(null)
     const [overallScore, setOverallScore] = useState(null)
+    const [nutritionScore, setNutritionScore] = useState(null)
+    const [tastinessScore, setTastinessScore] = useState(null)
+    const [costScore, setCostScore] = useState(null)
 
     useEffect(() => {
         if (mongoData.length > 0) {
@@ -98,6 +101,9 @@ export default function RecipePage(props) {
             }) 
         
             setOverallScore((((currentRecipe.nutritionScore + currentRecipe.costScore + currentRecipe.tastinessScore + currentRecipe.timeScore) / 40) * 10).toFixed(1))
+            setNutritionScore(currentRecipe.nutritionScore)
+            setTastinessScore(currentRecipe.tastinessScore)
+            setCostScore(currentRecipe.costScore)
         }
     }, [currentRecipe])
 
@@ -156,6 +162,33 @@ export default function RecipePage(props) {
     const overallScoreStyle = {
         width: `${overallScore * 10}% `,
         background: '#A541F3',
+        height: '100%',
+        borderRadius: '.25em'
+    }
+
+    const nutritionScoreStyle = {
+        width: `${nutritionScore * 10}% `,
+        background: '#71FF5A',
+        height: '100%',
+        borderRadius: '.25em'
+    }
+    const tastinessScoreStyle = {
+        width: `${tastinessScore * 10}% `,
+        background: '#FFF960',
+        height: '100%',
+        borderRadius: '.25em'
+    }
+
+    const timeScoreStyle = {
+        width: `${timeScore * 10}% `,
+        background: '#FF3AC8',
+        height: '100%',
+        borderRadius: '.25em'
+    }
+
+    const costScoreStyle = {
+        width: `${costScore * 10}% `,
+        background: '#60D9FF',
         height: '100%',
         borderRadius: '.25em'
     }
@@ -237,11 +270,86 @@ export default function RecipePage(props) {
                             <div className='score-bar-background'>
                                 <div className='overall-score-bar' style={overallScoreStyle}></div>
                             </div>
-
                         </div>
-                        <p><b>cost:</b> {currentRecipe.costScore}/10</p>
+                        <div className='recipe-scores-container'>
+
+                            <div className='score-data-container'>
+                                <div className='score-bar-icon-container'>
+                                    <img className='score-icon' src={greyStar}></img>
+                                    <img className='score-icon' src={greyStar}></img>
+                                </div>
+                                <div className='score-bar-background'>
+                                    <div className='nutrition-score-bar' style={nutritionScoreStyle}></div>
+                                </div>
+                                <div className='score-text-container'>
+                                    <span className='score-label-text'>Nutrition: </span>
+                                    <span className='score-number-text'>{currentRecipe.nutritionScore}/10</span>
+                                </div>
+                            </div>
+                            <div className='score-data-container'>
+                                <div className='score-bar-icon-container'>
+                                    <img className='score-icon' src={greyStar}></img>
+                                    <img className='score-icon' src={greyStar}></img>
+                                </div>
+                                <div className='score-bar-background'>
+                                    <div className='nutrition-score-bar' style={tastinessScoreStyle}></div>
+                                </div>
+                                <div className='score-text-container'>
+                                    <span className='score-label-text'>Tastiness: </span>
+                                    <span className='score-number-text'>{tastinessScore}/10</span>
+                                </div>
+                            </div>
+                            <div className='score-data-container'>
+                                <div className='score-bar-icon-container'>
+                                    <img className='score-icon' src={greyStar}></img>
+                                    <img className='score-icon' src={greyStar}></img>
+                                </div>
+                                <div className='score-bar-background'>
+                                    <div className='nutrition-score-bar' style={timeScoreStyle}></div>
+                                </div>
+                                <div className='score-text-container'>
+                                    <span className='score-label-text'>Cook Time: </span>
+                                    <span className='score-number-text'>{timeScore}/10</span>
+                                </div>
+                            </div>
+                            <div className='score-data-container'>
+                                <div className='score-bar-icon-container'>
+                                    <img className='score-icon' src={greyStar}></img>
+                                    <img className='score-icon' src={greyStar}></img>
+                                </div>
+                                <div className='score-bar-background'>
+                                    <div className='nutrition-score-bar' style={costScoreStyle}></div>
+                                </div>
+                                <div className='score-text-container'>
+                                    <span className='score-label-text'>Cost: </span>
+                                    <span className='score-number-text'>{costScore}/10</span>
+                                </div>
+                            </div>
+                            
+                            {/* <div className='nutrition-score-container'>Nutrition Score: {overallScore}  /  10
+                                <div className='score-bar-background'>
+                                    <div className='overall-score-bar' style={overallScoreStyle}></div>
+                                </div>
+                            </div>
+                            <div className='tastiness-score-container'>Overall Score: {overallScore}  /  10
+                                <div className='score-bar-background'>
+                                    <div className='overall-score-bar' style={overallScoreStyle}></div>
+                                </div>
+                            </div>
+                            <div className='cooktime-score-container'>Overall Score: {overallScore}  /  10
+                                <div className='score-bar-background'>
+                                    <div className='overall-score-bar' style={overallScoreStyle}></div>
+                                </div>
+                            </div>
+                            <div className='cost-score-container'>Overall Score: {overallScore}  /  10
+                                <div className='score-bar-background'>
+                                    <div className='overall-score-bar' style={overallScoreStyle}></div>
+                                </div>
+                            </div> */}
+                        </div>
+                        {/* <p><b>cost:</b> {currentRecipe.costScore}/10</p>
                         <p><b>nutrition:</b> {currentRecipe.nutritionScore}/10</p>
-                        <p><b>tastiness:</b> {currentRecipe.tastinessScore}/10</p>
+                        <p><b>tastiness:</b> {currentRecipe.tastinessScore}/10</p> */}
                         <div><span className='weight600'>Total Times Cooked: </span> {currentRecipe.cookingHistoryArray.length}</div>
                         {(currentRecipe.cookingHistoryArray.length > 0) && <div><span className='weight600'>Last Cooked: </span> 
                             {convertAndFormatDate(currentRecipe.cookingHistoryArray[currentRecipe.cookingHistoryArray.length - 1])}</div>}
