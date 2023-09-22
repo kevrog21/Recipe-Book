@@ -217,7 +217,8 @@ main {
 }
 
 .card {
-  display: grid;
+  display: flex;
+  position: relative;
   height: 43vw;
   width: 33vw;
   border: 3px solid black;
@@ -227,23 +228,21 @@ main {
   cursor: pointer;
   background-size: cover;
   background-position: center;
-  justify-content: space-between;
-  flex-direction: column;
-  grid-template-columns: 65% 20%;
-  grid-template-rows: 1fr 1fr auto;
 }
 
-/* .card * {
-  pointer-events: none;
-} */
-
-.card-text-container {
-  grid-column: 1;
-  grid-row: 2;
-  margin: 0 0 1.2vw 1.2vw;
+.card-link-container {
+  height: 100%;
+  width: 100%;
+  padding: 0 0 1.2vw 1.2vw;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
+  text-decoration: none;
+}
+
+.card-text-container {
+  margin: auto 0 1.2vw 0;
+  width: 80%;
 }
 
 .recipe-card-name {
@@ -266,7 +265,9 @@ main {
 }
 
 .star-icon {
-  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
   margin: 1.4vw 1.4vw 0 auto;
   grid-column: 2;
   grid-row: 1;
@@ -314,8 +315,9 @@ main {
 }
 
 .bell-icon {
-  grid-column: 2;
-  grid-row: 2;
+  position: absolute;
+  bottom: 0;
+  right: 0;
   margin: auto 1.75vw 2vw auto;
   width: 3vw;
 }

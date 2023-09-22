@@ -30,25 +30,17 @@ const handleBellClick = (e) => {
     props.handleBellClick(props.recipeData._id, props.recipeData.recipeName, props.recipeData.isRequested)
 }
 
-const toggleDisplayFullRecipe = (e) => {
-    props.handleCardClick(props.recipeData)
-}
-
-// on card load, determine favorited status and set state to match
-// when card is clicked, set isRotating to true
-// determine rotation direction based on based on favorited state
-
     return (
-            <div className='card' style={styles} onClick={toggleDisplayFullRecipe}>
-                <img className={`star-icon icon-drop-shadow ${isRotating ? rotationDirection : ''}`} src={props.isFavorited ? filledStar : star} onClick={handleStarClick} />
+        <div className='card' style={styles}>   
+            <Link to={`/${props.recipeData._id}`} className='card-link-container'>
                 <div className='card-text-container'>
-                    <img className='bell-icon-above-text' src={bell} alt='request icon'/>
                     <h3 className='recipe-card-name icon-drop-shadow' >{props.recipeData.recipeName}</h3>
                     {props.recipeData.recipeSubName && <h4 className='recipe-subheader'>{props.recipeData.recipeSubName}</h4>}
                 </div>
-                <img className='bell-icon' src={props.recipeData.isRequested ? filledBell : bell} alt='request icon' onClick={handleBellClick} />
-                <Link to={`/${props.recipeData._id}`} />
-            </div>
+            </Link>
+            <img className={`star-icon icon-drop-shadow ${isRotating ? rotationDirection : ''}`} src={props.isFavorited ? filledStar : star} onClick={handleStarClick} />
+            <img className='bell-icon' src={props.recipeData.isRequested ? filledBell : bell} alt='request icon' onClick={handleBellClick} />
+        </div>
     )
 }
 
