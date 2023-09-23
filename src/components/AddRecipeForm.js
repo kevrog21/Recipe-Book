@@ -12,6 +12,8 @@ export default function AddRecipeForm(props) {
         ingredients: [],
         instructions: '',
         notes: '',
+        prepTimeHours: 0,
+        prepTimeMins: 0,
         cooktimeHours: 0,
         cooktimeMins: 0,
         difficultyRating: 'easy',
@@ -147,9 +149,11 @@ export default function AddRecipeForm(props) {
     const additionalDefaultRecipeData = {
         isFavorited: false,
         isRequested: false,
+        prepTimeHours: formData.prepTimeHours ? parseInt(formData.prepTimeHours) : 0,
+        prepTimeMins: formData.prepTimeMins ? parseInt(formData.prepTimeMins) : 0,
         cooktimeHours: formData.cooktimeHours ? parseInt(formData.cooktimeHours) : 0,
         cooktimeMins: formData.cooktimeMins ? parseInt(formData.cooktimeMins) : 0,
-        totalCooktime: ((parseInt(formData.cooktimeHours) * 60) + parseInt(formData.cooktimeMins)),
+        totalCooktime: ((parseInt(formData.prepTimeHours) * 60) + parseInt(formData.prepTimeMins) + (parseInt(formData.cooktimeHours) * 60) + parseInt(formData.cooktimeMins)),
         nutritionScore: formData.nutritionScore ? parseInt(formData.nutritionScore) : 0,
         costScore: formData.costScore ? parseInt(formData.costScore) : 0,
         tastinessScore: formData.tastinessScore ? parseInt(formData.tastinessScore) : 0,
@@ -308,6 +312,8 @@ export default function AddRecipeForm(props) {
                             ingredients: [],
                             instructions: '',
                             notes: '',
+                            prepTimeHours: 0,
+                            prepTimeMins: 0,
                             cooktimeHours: 0,
                             cooktimeMins: 0,
                             difficultyRating: 'easy',
@@ -463,6 +469,39 @@ export default function AddRecipeForm(props) {
 
                 </section>
 
+                <section className='title-section'>
+                        
+                        <h4 className='section-title'>Info</h4>
+                        <div className='section-arrow-container'>
+                            <img src={arrow} className="arrowHead section-arrowhead"/>
+                        </div>
+                        
+                        <div className='section-input-container'>
+                            <label htmlFor="cooktime-hours">Prep Time:</label>
+                            <input className="cooktime-hours" type="number" min={0} id="cooktime-hours" name="prepTimeHours" 
+                            value={formData.prepTimeHours} onChange={handleInputChange}></input>
+                            <span className="post-input-inline-text">hour(s)</span>
+                            <input className="cooktime-mins" type="number" min={0}  max={59} id="cooktime-mins" name="prepTimeMins" 
+                            value={formData.prepTimeMins} onChange={handleInputChange}></input>
+                            <span className="post-input-inline-text">mins</span>
+                            <label htmlFor="cooktime-hours">Cook Time:</label>
+                            <input className="cooktime-hours" type="number" min={0} id="cooktime-hours" name="cooktimeHours" 
+                            value={formData.cooktimeHours} onChange={handleInputChange}></input>
+                            <span className="post-input-inline-text">hour(s)</span>
+                            <input className="cooktime-mins" type="number" min={0}  max={59} id="cooktime-mins" name="cooktimeMins" 
+                            value={formData.cooktimeMins} onChange={handleInputChange}></input>
+                            <span className="post-input-inline-text">mins</span>
+                            <label htmlFor="difficulty-ratinge">Difficulty:</label>
+                            <select className="difficulty-rating" id="difficulty-rating" name="difficultyRating" 
+                            value={formData.difficultyRating} onChange={handleInputChange}>
+                                <option value='easy'>Easy</option>
+                                <option value='medium'>Medium</option>
+                                <option value='hard'>Hard</option>
+                            </select>
+                        </div>
+
+                </section>
+
                 <section className='ingredients-section'>
                         
                         <h4 className='section-title'>Ingredients</h4>
@@ -530,20 +569,6 @@ export default function AddRecipeForm(props) {
                         </div>
                         
                         <div className='section-input-container'>
-                            <label htmlFor="cooktime-hours">Estimated Total Cooktime (including prep):</label>
-                            <input className="cooktime-hours" type="number" min={0} id="cooktime-hours" name="cooktimeHours" 
-                            value={formData.cooktimeHours} onChange={handleInputChange}></input>
-                            <span className="post-input-inline-text">hour(s)</span>
-                            <input className="cooktime-mins" type="number" min={0}  max={59} id="cooktime-mins" name="cooktimeMins" 
-                            value={formData.cooktimeMins} onChange={handleInputChange}></input>
-                            <span className="post-input-inline-text">mins</span>
-                            <label htmlFor="difficulty-ratinge">Difficulty:</label>
-                            <select className="difficulty-rating" id="difficulty-rating" name="difficultyRating" 
-                            value={formData.difficultyRating} onChange={handleInputChange}>
-                                <option value='easy'>Easy</option>
-                                <option value='medium'>Medium</option>
-                                <option value='hard'>Hard</option>
-                            </select>
                             <label htmlFor="nutrition-score">Nutrition Score:</label>
                             <input className="nutrition-score" type="number" min={0} max={10} id="nutrition-score" name="nutritionScore" 
                             value={formData.nutritionScore} onChange={handleInputChange}></input>

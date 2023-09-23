@@ -32,6 +32,8 @@ export default function EditRecipeForm(props) {
         ingredients: [],
         instructions: '',
         notes: '',
+        prepTimeHours: 0,
+        prepTimeMins: 0,
         cooktimeHours: 0,
         cooktimeMins: 0,
         difficultyRating: 'easy',
@@ -52,6 +54,8 @@ export default function EditRecipeForm(props) {
                 ingredients: currentRecipe.ingredients,
                 instructions: currentRecipe.instructions,
                 notes: currentRecipe.notes,
+                prepTimeHours: currentRecipe.prepTimeHours,
+                prepTimeMins: currentRecipe.prepTimeMins,
                 cooktimeHours: currentRecipe.cooktimeHours,
                 cooktimeMins: currentRecipe.cooktimeMins,
                 originalRecipeLink: currentRecipe.originalRecipeLink,
@@ -64,7 +68,7 @@ export default function EditRecipeForm(props) {
 
                 isFavorited: currentRecipe.isFavorited,
                 isRequested: currentRecipe.isRequested,
-                totalCooktime: ((parseInt(currentRecipe.cooktimeHours) * 60) + parseInt(currentRecipe.cooktimeMins)),
+                totalCooktime: ((parseInt(currentRecipe.prepTimeHours) * 60) + parseInt(currentRecipe.prepTimeMins) + (parseInt(currentRecipe.cooktimeHours) * 60) + parseInt(currentRecipe.cooktimeMins)),
                 difficultyRating: currentRecipe.difficultyRating ? currentRecipe.difficultyRating : 'easy',
                 cookingHistoryArray: currentRecipe.cookingHistoryArray,
 
@@ -390,6 +394,8 @@ export default function EditRecipeForm(props) {
                             ingredients: currentRecipe.ingredients,
                             instructions: currentRecipe.instructions,
                             notes: currentRecipe.notes,
+                            prepTimeHours: currentRecipe.prepTimeHours,
+                            prepTimeMins: currentRecipe.prepTimeMins,
                             cooktimeHours: currentRecipe.cooktimeHours,
                             cooktimeMins: currentRecipe.cooktimeMins,
                             originalRecipeLink: currentRecipe.originalRecipeLink,
@@ -402,7 +408,7 @@ export default function EditRecipeForm(props) {
 
                             isFavorited: currentRecipe.isFavorited,
                             isRequested: currentRecipe.isRequested,
-                            totalCooktime: ((parseInt(currentRecipe.cooktimeHours) * 60) + parseInt(currentRecipe.cooktimeMins)),
+                            totalCooktime: ((parseInt(currentRecipe.prepTimeHours) * 60) + parseInt(currentRecipe.prepTimeMins) + (parseInt(currentRecipe.cooktimeHours) * 60) + parseInt(currentRecipe.cooktimeMins)),
                             difficultyRating: currentRecipe.difficultyRating ? currentRecipe.difficultyRating : 'easy',
                             cookingHistoryArray: currentRecipe.cookingHistoryArray,
 
@@ -590,6 +596,37 @@ export default function EditRecipeForm(props) {
                             </div>
                     </section>
 
+                    <section className='title-section'> 
+                            <h4 className='section-title'>Info</h4>
+                            <div className='section-arrow-container'>
+                                <img src={arrow} className="arrowHead section-arrowhead"/>
+                            </div>
+                            
+                            <div className='section-input-container'>
+                                <label htmlFor="cooktime-hours">Prep Time:</label>
+                                <input className="cooktime-hours" type="number" min={0} id="cooktime-hours" name="prepTimeHours" 
+                                value={editFormData.prepTimeHours} onChange={handleInputChange}></input>
+                                <span className="post-input-inline-text">hour(s)</span>
+                                <input className="cooktime-mins" type="number" min={0}  max={59} id="cooktime-mins" name="prepTimeMins" 
+                                value={editFormData.prepTimeMins} onChange={handleInputChange}></input>
+                                <span className="post-input-inline-text">mins</span>
+                                <label htmlFor="cooktime-hours">Cook Time:</label>
+                                <input className="cooktime-hours" type="number" min={0} id="cooktime-hours" name="cooktimeHours" 
+                                value={editFormData.cooktimeHours} onChange={handleInputChange}></input>
+                                <span className="post-input-inline-text">hour(s)</span>
+                                <input className="cooktime-mins" type="number" min={0}  max={59} id="cooktime-mins" name="cooktimeMins" 
+                                value={editFormData.cooktimeMins} onChange={handleInputChange}></input>
+                                <span className="post-input-inline-text">mins</span>
+                                <label htmlFor="difficulty-ratinge">Difficulty:</label>
+                                <select className="difficulty-rating" id="difficulty-rating" name="difficultyRating" 
+                                value={editFormData.difficultyRating} onChange={handleInputChange}>
+                                    <option value='easy'>Easy</option>
+                                    <option value='medium'>Medium</option>
+                                    <option value='hard'>Hard</option>
+                                </select>
+                            </div>
+                    </section>
+
                     <section className='ingredients-section'>
                         <h4 className='section-title'>Ingredients</h4>
                         <div className='section-arrow-container'>
@@ -650,20 +687,6 @@ export default function EditRecipeForm(props) {
                         </div>
 
                         <div className='section-input-container'>
-                            <label htmlFor="cooktime-hours">Estimated Total Cooktime (including prep):</label>
-                            <input className="cooktime-hours" type="number" min={0} id="cooktime-hours" name="cooktimeHours" 
-                            value={editFormData.cooktimeHours} onChange={handleInputChange}></input>
-                            <span className="post-input-inline-text">hour(s)</span>
-                            <input className="cooktime-mins" type="number" min={0}  max={59} id="cooktime-mins" name="cooktimeMins" 
-                            value={editFormData.cooktimeMins} onChange={handleInputChange}></input>
-                            <span className="post-input-inline-text">mins</span>
-                            <label htmlFor="difficulty-ratinge">Difficulty:</label>
-                            <select className="difficulty-rating" id="difficulty-rating" name="difficultyRating" 
-                            value={editFormData.difficultyRating} onChange={handleInputChange}>
-                                <option value='easy'>Easy</option>
-                                <option value='medium'>Medium</option>
-                                <option value='hard'>Hard</option>
-                            </select>
                             <label htmlFor="nutrition-score">Nutrition Score:</label>
                             <input className="nutrition-score" type="number" min={0} max={10} id="nutrition-score" name="nutritionScore" 
                             value={editFormData.nutritionScore} onChange={handleInputChange}></input>

@@ -86,6 +86,8 @@ router.route('/add').post((req, res) => {
     const ingredients = Array.isArray(req.body.ingredients) ? req.body.ingredients : []
     const instructions = req.body.instructions
     const notes = req.body.notes
+    const prepTimeHours = Number(req.body.prepTimeHours)
+    const prepTimeMins = Number(req.body.prepTimeMins)
     const cooktimeHours = Number(req.body.cooktimeHours)
     const cooktimeMins = Number(req.body.cooktimeMins)
     const totalCooktime = Number(req.body.totalCooktime)
@@ -121,6 +123,8 @@ router.route('/add').post((req, res) => {
             ingredients,
             instructions,
             notes,
+            prepTimeHours,
+            prepTimeMins,
             cooktimeHours,
             cooktimeMins,
             totalCooktime,
@@ -221,6 +225,8 @@ router.route('/update/:id').post((req, res) => {
             recipe.ingredients = Array.isArray(req.body.ingredients) ? req.body.ingredients : []
             recipe.instructions = req.body.instructions
             recipe.notes = req.body.notes
+            recipe.prepTimeHours = Number(req.body.prepTimeHours)
+            recipe.prepTimeMins = Number(req.body.prepTimeMins)
             recipe.cooktimeHours = Number(req.body.cooktimeHours)
             recipe.cooktimeMins = Number(req.body.cooktimeMins)
             recipe.totalCooktime = Number(req.body.totalCooktime)
