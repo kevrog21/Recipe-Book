@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 const recipeSchema = new mongoose.Schema({
     recipeName: { type: String, required: true, unique: true },
     recipeSubName: { type: String, required: false },
+    defaultServings: { type: Number, required: false},
     ingredients: { type: Array, required: false },
     instructions: { type: String, required: false},
     notes: {type: String, required: false},

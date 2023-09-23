@@ -29,6 +29,7 @@ export default function EditRecipeForm(props) {
     const [editFormData, setEditFormData] = useState({
         recipeName: '',
         recipeSubName: '',
+        defaultServings: 0,
         ingredients: [],
         instructions: '',
         notes: '',
@@ -51,6 +52,7 @@ export default function EditRecipeForm(props) {
             setEditFormData({
                 recipeName: currentRecipe.recipeName,
                 recipeSubName: currentRecipe.recipeSubName,
+                defaultServings: currentRecipe.defaultServings,
                 ingredients: currentRecipe.ingredients,
                 instructions: currentRecipe.instructions,
                 notes: currentRecipe.notes,
@@ -391,6 +393,7 @@ export default function EditRecipeForm(props) {
                         setEditFormData({
                             recipeName: currentRecipe.recipeName,
                             recipeSubName: currentRecipe.recipeSubName,
+                            defaultServings: currentRecipe.defaultServings,
                             ingredients: currentRecipe.ingredients,
                             instructions: currentRecipe.instructions,
                             notes: currentRecipe.notes,
@@ -624,6 +627,9 @@ export default function EditRecipeForm(props) {
                                     <option value='medium'>Medium</option>
                                     <option value='hard'>Hard</option>
                                 </select>
+                                <label htmlFor="cooktime-hours">Servings:</label>
+                                <input className="default-servings" id="serving-size-input" type="number" min={0} name="defaultServings" 
+                                value={editFormData.defaultServings} onChange={handleInputChange}></input>
                             </div>
                     </section>
 

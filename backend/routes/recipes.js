@@ -83,6 +83,7 @@ router.get("/get-signature", (req, res) => {
 router.route('/add').post((req, res) => {
     const recipeName = req.body.recipeName
     const recipeSubName = req.body.recipeSubName
+    const defaultServings = Number(req.body.defaultServings)
     const ingredients = Array.isArray(req.body.ingredients) ? req.body.ingredients : []
     const instructions = req.body.instructions
     const notes = req.body.notes
@@ -120,6 +121,7 @@ router.route('/add').post((req, res) => {
         const newRecipe = new Recipe({
             recipeName,
             recipeSubName,
+            defaultServings,
             ingredients,
             instructions,
             notes,
@@ -222,6 +224,7 @@ router.route('/update/:id').post((req, res) => {
 
             recipe.recipeName = req.body.recipeName
             recipe.recipeSubName = req.body.recipeSubName
+            recipe.defaultServings =  Number(req.body.defaultServings)
             recipe.ingredients = Array.isArray(req.body.ingredients) ? req.body.ingredients : []
             recipe.instructions = req.body.instructions
             recipe.notes = req.body.notes

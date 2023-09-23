@@ -9,6 +9,7 @@ export default function AddRecipeForm(props) {
     const [formData, setFormData] = useState({
         recipeName: '',
         recipeSubName: '',
+        defaultServings: 0,
         ingredients: [],
         instructions: '',
         notes: '',
@@ -309,6 +310,7 @@ export default function AddRecipeForm(props) {
                         setFormData({
                             recipeName: '',
                             recipeSubName: '',
+                            defaultServings: 0,
                             ingredients: [],
                             instructions: '',
                             notes: '',
@@ -498,6 +500,9 @@ export default function AddRecipeForm(props) {
                                 <option value='medium'>Medium</option>
                                 <option value='hard'>Hard</option>
                             </select>
+                            <label htmlFor="cooktime-hours">Servings:</label>
+                            <input className="default-servings" id="serving-size-input" type="number" min={0} name="defaultServings" 
+                            value={formData.defaultServings} onChange={handleInputChange}></input>
                         </div>
 
                 </section>
