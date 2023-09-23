@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import arrow from '../assets/arrow.svg'
 import greyStar from '../assets/grey-star.svg'
+import timerIcon from '../assets/timer-icon.svg'
 import thumbIcon from '../assets/thumb-icon.svg'
 import bell from '../assets/bell.svg'
 import filledYellowStar from '../assets/light-grey-outline.svg'
@@ -213,14 +214,38 @@ export default function RecipePage(props) {
                     <img className='recipe-page-star star-outline' src={currentRecipe.isFavorited ? filledYellowStar : greyStar} onClick={handleStarClick} />
                 </div>
     
-                <div className='recipe-page-hero' style={{backgroundImage: `linear-gradient(12deg, rgba(0, 0, 0, .95), rgba(0, 0, 0, 0) 45%), url(${currentRecipe.imgUrl})`}}>
+                {/* <div className='recipe-page-hero' style={{backgroundImage: `linear-gradient(12deg, rgba(0, 0, 0, .95), rgba(0, 0, 0, 0) 45%), url(${currentRecipe.imgUrl})`}}>
                     <div>
                         <div id='recipe-title-overlay'>{currentRecipe.recipeName}</div>
                         <div id='recipe-subtitle-overlay'>{currentRecipe.recipeSubName}</div>
                     </div>
-                </div>
+                </div> */}
 
-                <section className='cooktime'>cooktime: {currentRecipe.totalCooktime > 60 ? `${currentRecipe.cooktimeHours} hours ${currentRecipe.cooktimeMins} mins` : `${currentRecipe.cooktimeMins} mins`}</section>
+                <h1 id='recipe-page-title'>{currentRecipe.recipeName}</h1>
+                <h2 id='recipe-page-subtitle'>{currentRecipe.recipeSubName}</h2>
+
+                <div className='recipe-page-hero' style={{backgroundImage: `url(${currentRecipe.imgUrl})`}}></div>
+
+                
+
+                <section className='info-overview'>
+                    <div className='dificulty-overview'>
+                        <div className='grey-text'>difficulty:</div>
+                        <div className='weight600'>{currentRecipe.difficultyRating}</div>
+                    </div>
+                    <div className='time-overview'>
+                        <div className='time-overview-img'><img className='overview-timer-icon' src={timerIcon}></img></div>
+                        <div>
+                            <div className='time-overview-text'>{currentRecipe.totalCooktime > 60 ? `${currentRecipe.cooktimeHours} hours ${currentRecipe.cooktimeMins} minutes` : `${currentRecipe.cooktimeMins} minutes`}</div>
+                            <div className='time-overview-subtext'>prep: {currentRecipe.totalCooktime > 60 ? `${currentRecipe.cooktimeHours} hours ${currentRecipe.cooktimeMins} mins` : `${currentRecipe.cooktimeMins} mins`}</div>
+                            <div className='time-overview-subtext'>cook: {currentRecipe.totalCooktime > 60 ? `${currentRecipe.cooktimeHours} hours ${currentRecipe.cooktimeMins} mins` : `${currentRecipe.cooktimeMins} mins`}</div>
+                        </div>
+                    </div>
+                    <div className='serving-overview'>
+                        <div className='grey-text'>servings:</div>
+                        <div className='weight600'>4</div>
+                    </div>
+                </section>
     
                 <section className='ingredients-section'>
                     <h4 className='section-title'>Ingredients</h4>

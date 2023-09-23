@@ -454,6 +454,68 @@ main {
   position: absolute;
 }
 
+#recipe-page-title,
+#recipe-page-subtitle {
+  text-align: center;
+  font-size: 2rem;
+  line-height: 2.25rem;
+  font-weight: 900;
+  margin: 0 5vw;
+  text-transform: capitalize;
+}
+
+#recipe-page-subtitle {
+  font-size: 1em;
+  line-height: 1em;
+  font-weight: 600;
+}
+
+.info-overview {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dificulty-overview {
+  flex: 1;
+  text-align: center;
+}
+
+.time-overview {
+  flex: 1.5;
+  display: flex;
+  padding: 2vw;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.time-overview-img {
+  margin: 0 2vw 0 0;
+}
+
+.overview-timer-icon {
+  width: 8vw;
+  height: auto;
+}
+
+.time-overview-text {
+  font-weight: 700;
+}
+
+.time-overview-subtext {
+  font-size: .75em;
+  color: #706A6A;
+}
+
+.serving-overview{
+  flex: 1;
+  text-align: center;
+}
+
 .add-recipe-form,
 .edit-recipe-form,
 .temp-img-form {
@@ -1118,6 +1180,10 @@ main {
 
 .disable-pointer-events {
   pointer-events: none;
+}
+
+.grey-text {
+  color: #706A6A;
 }
 
 .weight600 {
