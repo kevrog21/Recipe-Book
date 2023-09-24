@@ -671,6 +671,29 @@ main {
   gap: 5px;
 }
 
+.ingredients-section-title-container {
+  grid-column: 1 / span 3;
+  /* background: red; */
+  display: flex;
+  position: relative;
+}
+
+.dynamic-servings-current-selection {
+  /* background: yellow; */
+  flex: 1;
+  white-space: nowrap;
+  position: relative;
+  display: flex;
+  margin: 0 5vw 0 0;
+}
+
+.dynamic-servings-selection-container {
+  /* background: orange; */
+  position: absolute;
+  top: 100%;
+  width: 100%;
+}
+
 .tags-section {
   margin: 0 0 0 0;
 }

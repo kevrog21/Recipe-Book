@@ -26,6 +26,8 @@ export default function RecipePage(props) {
     const [displayPrepTime, setDisplayPrepTime] = useState(null)
     const [displayCookTime, setDisplayCookTime] = useState(null)
     const [displayTotalTime, setDisplayTotalTime] = useState(null)
+    const [servingSelection, setServingSelection] = useState(null)
+    const [servingSelectionIsOpen, setServingSelectionIsOpen] = useState(false)
 
     useEffect(() => {
         if (mongoData.length > 0) {
@@ -121,6 +123,8 @@ export default function RecipePage(props) {
             setDisplayTotalTime(     
                 convertTotalMinutesToHoursAndMinutes(currentRecipe.totalCooktime)
             )
+
+            setServingSelection(currentRecipe.defaultServings)
                            
             setOverallScore((((currentRecipe.nutritionScore + currentRecipe.costScore + currentRecipe.tastinessScore + currentRecipe.timeScore) / 40) * 10).toFixed(1))
             setNutritionScore(currentRecipe.nutritionScore)
@@ -152,6 +156,10 @@ export default function RecipePage(props) {
             addNewCookedDate(currentRecipe._id, currentRecipe.recipeName, currentRecipe.cookingHistoryArray)
             setHasBeenCookedToday(true)
         }
+    }
+
+    const handleServingSizeClick = (e) => {
+        setServingSelectionIsOpen(!servingSelectionIsOpen)
     }
 
     function convertAndFormatDate(dateInUTC) {
@@ -275,12 +283,25 @@ export default function RecipePage(props) {
                     </div>
                     <div className='serving-overview'>
                         <div className='grey-text'>servings:</div>
-                        <div className='weight600'>{currentRecipe.defaultServings}</div>
+                        <div className='weight600'>{servingSelection}</div>
                     </div>
                 </section>
     
                 <section className='ingredients-section'>
-                    <h4 className='section-title'>Ingredients</h4>
+                    <div className='ingredients-section-title-container' onClick={handleServingSizeClick}>
+                        <h4 className='section-title'>Ingredients</h4>
+                        <div className='dynamic-servings-current-selection'>
+                            <div>{servingSelection} servings</div>
+                            {servingSelectionIsOpen && <div className='dynamic-servings-selection-container'>
+                                    <div>1 serving</div>
+                                    <div>2 servings</div>
+                                    <div>3 servings</div>
+                                    <div>4 servings</div>
+                                    <div>custom</div>
+                                </div>}
+                        </div>               
+                    </div>
+                    
                     <div className='section-arrow-container'>
                         <img src={arrow} className="arrowHead section-arrowhead"/>
                     </div>
