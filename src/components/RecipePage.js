@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import arrow from '../assets/arrow.svg'
 import greyStar from '../assets/grey-star.svg'
 import timerIcon from '../assets/timer-icon.svg'
+import thickTimer from '../assets/thick-timer.svg'
 import thumbIcon from '../assets/thumb-icon.svg'
 import bell from '../assets/bell.svg'
 import filledYellowStar from '../assets/light-grey-outline.svg'
@@ -358,8 +359,12 @@ export default function RecipePage(props) {
                             </div>
                             <div className='score-data-container'>
                                 <div className='score-bar-icon-container'>
-                                    <img className='score-icon rotate180' src={thumbIcon}></img>
-                                    <img className='score-icon ' src={thumbIcon}></img>
+                                    <div className='timer-icon-container'>
+                                        <img className='timerIcon' src={thickTimer}></img>
+                                        <img className='timerIcon' src={thickTimer}></img>
+                                        <img className='timerIcon' src={thickTimer}></img>
+                                    </div>
+                                    <img className='timerIcon' src={thickTimer}></img>
                                 </div>
                                 <div className='score-bar-background'>
                                     <div className='nutrition-score-bar' style={timeScoreStyle}></div>
@@ -383,30 +388,7 @@ export default function RecipePage(props) {
                                 </div>
                             </div>
                             
-                            {/* <div className='nutrition-score-container'>Nutrition Score: {overallScore}  /  10
-                                <div className='score-bar-background'>
-                                    <div className='overall-score-bar' style={overallScoreStyle}></div>
-                                </div>
-                            </div>
-                            <div className='tastiness-score-container'>Overall Score: {overallScore}  /  10
-                                <div className='score-bar-background'>
-                                    <div className='overall-score-bar' style={overallScoreStyle}></div>
-                                </div>
-                            </div>
-                            <div className='cooktime-score-container'>Overall Score: {overallScore}  /  10
-                                <div className='score-bar-background'>
-                                    <div className='overall-score-bar' style={overallScoreStyle}></div>
-                                </div>
-                            </div>
-                            <div className='cost-score-container'>Overall Score: {overallScore}  /  10
-                                <div className='score-bar-background'>
-                                    <div className='overall-score-bar' style={overallScoreStyle}></div>
-                                </div>
-                            </div> */}
                         </div>
-                        {/* <p><b>cost:</b> {currentRecipe.costScore}/10</p>
-                        <p><b>nutrition:</b> {currentRecipe.nutritionScore}/10</p>
-                        <p><b>tastiness:</b> {currentRecipe.tastinessScore}/10</p> */}
                         <div><span className='weight600'>Total Times Cooked: </span> {currentRecipe.cookingHistoryArray.length}</div>
                         {(currentRecipe.cookingHistoryArray.length > 0) && <div><span className='weight600'>Last Cooked: </span> 
                             {convertAndFormatDate(currentRecipe.cookingHistoryArray[currentRecipe.cookingHistoryArray.length - 1])}</div>}

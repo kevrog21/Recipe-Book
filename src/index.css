@@ -1139,6 +1139,20 @@ main {
   align-items: end;
 }
 
+.timer-icon-container {
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.timer-icon-container > img {
+  margin: 0 .25vw 0 0;
+}
+
+.timerIcon {
+  height: 70%;
+}
+
 .score-icon {
   width: 12%;
 }
