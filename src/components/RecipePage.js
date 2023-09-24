@@ -22,6 +22,9 @@ export default function RecipePage(props) {
     const [nutritionScore, setNutritionScore] = useState(null)
     const [tastinessScore, setTastinessScore] = useState(null)
     const [costScore, setCostScore] = useState(null)
+    const [displayPrepTime, setDisplayPrepTime] = useState(null)
+    const [displayCookTime, setDisplayCookTime] = useState(null)
+    const [displayTotalTime, setDisplayTotalTime] = useState(null)
 
     useEffect(() => {
         if (mongoData.length > 0) {
@@ -101,13 +104,41 @@ export default function RecipePage(props) {
                     return 0
                 }
             }) 
-        
+
+            setDisplayPrepTime(
+                currentRecipe.prepTimeHours > 0 ?
+                `${(currentRecipe.prepTimeHours * 60) + currentRecipe.prepTimeMins} mins` : currentRecipe.prepTimeMins > 0 ? `${currentRecipe.prepTimeMins} mins` :
+                '0 mins'
+            )
+
+            setDisplayCookTime(
+                currentRecipe.cooktimeHours > 0 ?
+                `${(currentRecipe.cooktimeHours * 60) + currentRecipe.cooktimeMins} mins` : currentRecipe.cooktimeMins > 0 ? `${currentRecipe.cooktimeMins} mins` :
+                '0 mins'
+            )
+
+            setDisplayTotalTime(     
+                convertTotalMinutesToHoursAndMinutes(currentRecipe.totalCooktime)
+            )
+                           
             setOverallScore((((currentRecipe.nutritionScore + currentRecipe.costScore + currentRecipe.tastinessScore + currentRecipe.timeScore) / 40) * 10).toFixed(1))
             setNutritionScore(currentRecipe.nutritionScore)
             setTastinessScore(currentRecipe.tastinessScore)
             setCostScore(currentRecipe.costScore)
         }
     }, [currentRecipe])
+
+    function convertTotalMinutesToHoursAndMinutes(totalMinutes) {
+        const hours = Math.floor(totalMinutes / 60)
+        const minutes = totalMinutes % 60
+
+        const displayHours = `${hours} hour${hours > 1 ? 's' : ''}`
+        const displayMinutes = `${minutes} minute${minutes > 1 ? 's' : ''}`
+        
+        const result = `${hours > 0 ? displayHours : ''} ${minutes > 0 ? displayMinutes : ''}`
+
+        return result
+    }
 
     const handleStarClick = (e) => {
         e.stopPropagation()
@@ -236,14 +267,14 @@ export default function RecipePage(props) {
                     <div className='time-overview'>
                         <div className='time-overview-img'><img className='overview-timer-icon' src={timerIcon}></img></div>
                         <div>
-                            <div className='time-overview-text'>{currentRecipe.totalCooktime > 60 ? `${currentRecipe.cooktimeHours} hours ${currentRecipe.cooktimeMins} minutes` : `${currentRecipe.cooktimeMins} minutes`}</div>
-                            <div className='time-overview-subtext'>prep: {currentRecipe.totalCooktime > 60 ? `${currentRecipe.cooktimeHours} hours ${currentRecipe.cooktimeMins} mins` : `${currentRecipe.cooktimeMins} mins`}</div>
-                            <div className='time-overview-subtext'>cook: {currentRecipe.totalCooktime > 60 ? `${currentRecipe.cooktimeHours} hours ${currentRecipe.cooktimeMins} mins` : `${currentRecipe.cooktimeMins} mins`}</div>
+                            <div className='time-overview-text'>{displayTotalTime}</div>
+                            <div className='time-overview-subtext'>prep: {displayPrepTime}</div>
+                            <div className='time-overview-subtext'>cook: {displayCookTime}</div>
                         </div>
                     </div>
                     <div className='serving-overview'>
                         <div className='grey-text'>servings:</div>
-                        <div className='weight600'>4</div>
+                        <div className='weight600'>{currentRecipe.defaultServings}</div>
                     </div>
                 </section>
     

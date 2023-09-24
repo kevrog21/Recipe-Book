@@ -70,7 +70,7 @@ export default function EditRecipeForm(props) {
 
                 isFavorited: currentRecipe.isFavorited,
                 isRequested: currentRecipe.isRequested,
-                totalCooktime: ((parseInt(currentRecipe.prepTimeHours) * 60) + parseInt(currentRecipe.prepTimeMins) + (parseInt(currentRecipe.cooktimeHours) * 60) + parseInt(currentRecipe.cooktimeMins)),
+                totalCooktime: currentRecipe.totalCooktime,
                 difficultyRating: currentRecipe.difficultyRating ? currentRecipe.difficultyRating : 'easy',
                 cookingHistoryArray: currentRecipe.cookingHistoryArray,
 
@@ -411,7 +411,7 @@ export default function EditRecipeForm(props) {
 
                             isFavorited: currentRecipe.isFavorited,
                             isRequested: currentRecipe.isRequested,
-                            totalCooktime: ((parseInt(currentRecipe.prepTimeHours) * 60) + parseInt(currentRecipe.prepTimeMins) + (parseInt(currentRecipe.cooktimeHours) * 60) + parseInt(currentRecipe.cooktimeMins)),
+                            totalCooktime: currentRecipe.totalCooktime,
                             difficultyRating: currentRecipe.difficultyRating ? currentRecipe.difficultyRating : 'easy',
                             cookingHistoryArray: currentRecipe.cookingHistoryArray,
 
@@ -607,10 +607,10 @@ export default function EditRecipeForm(props) {
                             
                             <div className='section-input-container'>
                                 <label htmlFor="cooktime-hours">Prep Time:</label>
-                                <input className="cooktime-hours" type="number" min={0} id="cooktime-hours" name="prepTimeHours" 
+                                <input className="cooktime-hours" type="number" min={0} id="preptime-hours" name="prepTimeHours" 
                                 value={editFormData.prepTimeHours} onChange={handleInputChange}></input>
                                 <span className="post-input-inline-text">hour(s)</span>
-                                <input className="cooktime-mins" type="number" min={0}  max={59} id="cooktime-mins" name="prepTimeMins" 
+                                <input className="cooktime-mins" type="number" min={0}  max={59} id="preptime-mins" name="prepTimeMins" 
                                 value={editFormData.prepTimeMins} onChange={handleInputChange}></input>
                                 <span className="post-input-inline-text">mins</span>
                                 <label htmlFor="cooktime-hours">Cook Time:</label>

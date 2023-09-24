@@ -504,6 +504,7 @@ main {
 
 .time-overview-text {
   font-weight: 700;
+  line-height: 1.2em;
 }
 
 .time-overview-subtext {
@@ -797,6 +798,8 @@ main {
 
 #cooktime-hours,
 #cooktime-mins,
+#preptime-hours,
+#preptime-mins,
 #serving-size-input,
 #nutrition-score,
 #cost-score,
