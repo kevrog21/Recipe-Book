@@ -27,6 +27,7 @@ export default function RecipePage(props) {
     const [displayCookTime, setDisplayCookTime] = useState(null)
     const [displayTotalTime, setDisplayTotalTime] = useState(null)
     const [servingSelection, setServingSelection] = useState(null)
+    const [servingMultiplier, setServingMultiplier] = useState(1)
     const [servingSelectionIsOpen, setServingSelectionIsOpen] = useState(false)
 
     useEffect(() => {
@@ -39,10 +40,58 @@ export default function RecipePage(props) {
 
     useEffect(() => {
         if (currentRecipe) {
+
+            setServingMultiplier(servingSelection)
+            console.log('default servings', currentRecipe.defaultServings)
+            console.log('serving selection', servingSelection)
+            console.log('serving multiplier state', servingMultiplier)
+            console.log('serving test', (servingSelection / currentRecipe.defaultServings))
+            console.log('proper multiplier', (servingSelection / servingMultiplier) * (servingSelection / currentRecipe.defaultServings))
+            
+            const ingredientQuantityElements = document.querySelectorAll('.ingredient-quantity-preview')
+
+            ingredientQuantityElements.forEach((element, index) => {
+                
+                const currentValue = parseFloat(element.textContent)
+                const originalValue = parseFloat(currentRecipe.ingredients[index].ingredientQuantity)
+                
+                if (!isNaN(currentValue)) {
+                    const newQuantity = (originalValue / currentRecipe.defaultServings) * servingSelection
+
+                    element.textContent = newQuantity
+                    element.classList.add('updated-quantity-animation')
+                    setTimeout(() => {
+                        element.classList.remove('updated-quantity-animation')
+                    }, 1000)
+                    
+                }
+                console.log(`Element at index ${index}`, element)
+            })
+
+            console.log(ingredients)
+
+            // const ingredients = currentRecipe.ingredients.map(ingredient => {
+            //     return (
+            //         <div key={ingredient.ingredientQuantity + ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail}
+            //                  className='ingredient-preview-element'>
+            //                 <span className='ingredient-quantity-preview'>{ingredient.ingredientQuantity}</span>
+            //                 <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>
+            //                 <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>
+            //                 <span className='ingredient-extra-detail-preview'>{ingredient.ingredientExtraDetail}</span>
+            //         </div>
+            //     )
+            // })
+            // setIngredients(ingredients)
+        }
+    }, [servingSelection])
+
+    useEffect(() => {
+        if (currentRecipe) {
             const ingredients = currentRecipe.ingredients.map(ingredient => {
                 return (
-                    <div key={ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail}
+                    <div key={ingredient.ingredientQuantity + ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail}
                              className='ingredient-preview-element'>
+                            <span className='ingredient-quantity-preview'>{ingredient.ingredientQuantity}</span>
                             <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>
                             <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>
                             <span className='ingredient-extra-detail-preview'>{ingredient.ingredientExtraDetail}</span>

@@ -818,6 +818,28 @@ main {
   cursor: pointer;
 }
 
+.ingredient-quantity-preview {
+  margin: 0 .4em 0 0;
+  /* transition: all .5s ease-out; */
+  font-weight: 900;
+}
+
+.updated-quantity-animation {
+  animation: transitionColor 1.5s ease;
+}
+
+@keyframes transitionColor {
+  .01% {
+    color: #761ABF;
+  }
+  15% {
+    color: #761ABF;
+  }
+  100% {
+    color: #000000;
+  }
+}
+
 .delete-ingredient-btn {
   margin: 0 0 0 .5rem;
   cursor: pointer;
