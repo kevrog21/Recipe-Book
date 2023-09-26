@@ -673,25 +673,43 @@ main {
 
 .ingredients-section-title-container {
   grid-column: 1 / span 3;
-  /* background: red; */
   display: flex;
   position: relative;
+  align-items: end;
 }
 
 .dynamic-servings-current-selection {
-  /* background: yellow; */
   flex: 1;
   white-space: nowrap;
   position: relative;
   display: flex;
   margin: 0 5vw 0 0;
+  color: #706A6A;
+}
+
+.current-serving-display {
+  padding: 0 1em;
+  line-height: .9em;
+}
+
+.gray-down-arrow {
+  width: .5em;
+  height: .5em;
+  margin: 0 auto;
+  transform: rotate(45deg);
+  border-right: 1px solid #706A6A;
+  border-bottom: 1px solid #706A6A;
 }
 
 .dynamic-servings-selection-container {
-  /* background: orange; */
+  background: white;
   position: absolute;
   top: 100%;
   width: 100%;
+  margin: .5em 0 0 0;
+  border: 1px solid black;
+  text-align: center;
+  padding: .5em 0;
 }
 
 .tags-section {

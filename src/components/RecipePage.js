@@ -291,12 +291,14 @@ export default function RecipePage(props) {
                     <div className='ingredients-section-title-container' onClick={handleServingSizeClick}>
                         <h4 className='section-title'>Ingredients</h4>
                         <div className='dynamic-servings-current-selection'>
-                            <div>{servingSelection} servings</div>
+                            <div className='current-serving-display'>{servingSelection} servings
+                                <div className='gray-down-arrow'></div>
+                            </div>
                             {servingSelectionIsOpen && <div className='dynamic-servings-selection-container'>
-                                    <div>1 serving</div>
-                                    <div>2 servings</div>
-                                    <div>3 servings</div>
-                                    <div>4 servings</div>
+                                    <div onClick={() => {setServingSelection(2)}}>2 servings</div>
+                                    <div onClick={() => {setServingSelection(4)}}>4 servings</div>
+                                    <div onClick={() => {setServingSelection(6)}}>6 servings</div>
+                                    <div onClick={() => {setServingSelection(8)}}>8 servings</div>
                                     <div>custom</div>
                                 </div>}
                         </div>               
