@@ -483,14 +483,28 @@ main {
   text-align: center;
 }
 
-.time-overview {
+.time-overview-container {
   flex: 1.5;
+  position: relative;
+}
+
+.time-overview {
   display: flex;
   padding: 2vw;
   align-items: center;
   justify-content: center;
   border-left: 1px solid black;
   border-right: 1px solid black;
+}
+
+.time-disclaimer {
+  position: absolute;
+  color: green;
+  width: 84.5%;
+  margin: auto;
+  font-size: 1.53vw;
+  padding: 0 3vw;
+  margin: -1.75vw 0 0 0;
 }
 
 .time-overview-img {
@@ -825,7 +839,7 @@ main {
 }
 
 .updated-quantity-animation {
-  animation: transitionColor 1.5s ease;
+  animation: transitionColor 3s ease;
 }
 
 @keyframes transitionColor {

@@ -27,7 +27,6 @@ export default function RecipePage(props) {
     const [displayCookTime, setDisplayCookTime] = useState(null)
     const [displayTotalTime, setDisplayTotalTime] = useState(null)
     const [servingSelection, setServingSelection] = useState(null)
-    const [servingMultiplier, setServingMultiplier] = useState(1)
     const [servingSelectionIsOpen, setServingSelectionIsOpen] = useState(false)
 
     useEffect(() => {
@@ -40,14 +39,6 @@ export default function RecipePage(props) {
 
     useEffect(() => {
         if (currentRecipe) {
-
-            setServingMultiplier(servingSelection)
-            console.log('default servings', currentRecipe.defaultServings)
-            console.log('serving selection', servingSelection)
-            console.log('serving multiplier state', servingMultiplier)
-            console.log('serving test', (servingSelection / currentRecipe.defaultServings))
-            console.log('proper multiplier', (servingSelection / servingMultiplier) * (servingSelection / currentRecipe.defaultServings))
-            
             const ingredientQuantityElements = document.querySelectorAll('.ingredient-quantity-preview')
 
             ingredientQuantityElements.forEach((element, index) => {
@@ -68,20 +59,16 @@ export default function RecipePage(props) {
                 console.log(`Element at index ${index}`, element)
             })
 
-            console.log(ingredients)
+            const timeDisclaimerEl = document.querySelector('.time-disclaimer')
 
-            // const ingredients = currentRecipe.ingredients.map(ingredient => {
-            //     return (
-            //         <div key={ingredient.ingredientQuantity + ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail}
-            //                  className='ingredient-preview-element'>
-            //                 <span className='ingredient-quantity-preview'>{ingredient.ingredientQuantity}</span>
-            //                 <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>
-            //                 <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>
-            //                 <span className='ingredient-extra-detail-preview'>{ingredient.ingredientExtraDetail}</span>
-            //         </div>
-            //     )
-            // })
-            // setIngredients(ingredients)
+            if (servingSelection !== currentRecipe.defaultServings) {
+                timeDisclaimerEl.classList.remove('hide')
+            } else {
+                timeDisclaimerEl.classList.add('hide')
+            }
+            
+            
+            
         }
     }, [servingSelection])
 
@@ -322,13 +309,17 @@ export default function RecipePage(props) {
                         <div className='grey-text'>difficulty:</div>
                         <div className='weight600'>{currentRecipe.difficultyRating}</div>
                     </div>
-                    <div className='time-overview'>
-                        <div className='time-overview-img'><img className='overview-timer-icon' src={timerIcon}></img></div>
-                        <div>
-                            <div className='time-overview-text'>{displayTotalTime}</div>
-                            <div className='time-overview-subtext'>prep: {displayPrepTime}</div>
-                            <div className='time-overview-subtext'>cook: {displayCookTime}</div>
+                    <div className='time-overview-container'>
+                        <div className='time-overview'>
+                            <div className='time-overview-img'><img className='overview-timer-icon' src={timerIcon}></img></div>
+                            <div>
+                                <div className='time-overview-text'>{displayTotalTime}</div>
+                                <div className='time-overview-subtext'>prep: {displayPrepTime}</div>
+                                <div className='time-overview-subtext'>cook: {displayCookTime}</div>
+                            </div>
                         </div>
+                        <div className='time-disclaimer hide'>*This cook time is based on {currentRecipe.defaultServings} servings. 
+                        The new serving size may affect cook time.</div>
                     </div>
                     <div className='serving-overview'>
                         <div className='grey-text'>servings:</div>
