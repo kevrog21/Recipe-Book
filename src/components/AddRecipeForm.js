@@ -31,6 +31,7 @@ export default function AddRecipeForm(props) {
     const [imgPreview, setImgPreview] = useState(null)
     const [currentIngredientsObj, setCurrentIngredientsObj] = useState({
         ingredientQuantity: '',
+        ingredientQuantityDecimal: null,
         ingredientMeasurement: '',
         ingredientName: '',
         ingredientExtraDetail: ''
@@ -42,6 +43,7 @@ export default function AddRecipeForm(props) {
     // })
     const [ingredientPreviews, setIngredientPreviews] = useState([])
     const [duplicateIngredients, setDuplicateIngredients] = useState(false)
+    const [invalidQuantityMessage, setInvalidQuantityMessage] = useState(false)
     const defaultTagWords = ['main', 'starter', 'dessert', 'breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 
     'winter meals', 'summer meals', 'sides', 'quick', 'vegetarian', 'vegan', 'gluten free', 'dairy free', 'basics']
     const moreTagWords = ['BBQ', 'seafood', 'holiday', 'halloween', 'thanksgiving', 'christmas', 'hanukkah', '4th of july', 
@@ -108,6 +110,62 @@ export default function AddRecipeForm(props) {
         }
     }, [formData.ingredients])
 
+    function parseFraction(fraction) {
+        const parts = fraction.split(' ')
+        parts.length > 2 ? setInvalidQuantityMessage(true) : setInvalidQuantityMessage(false)
+        let totalValue = 0
+       
+        console.log('parts', parts)
+
+        parts.forEach(part => {
+            if (part.includes('/') && part.length > 2) {
+                const [numerator, denominator] = part.split('/')
+                const fractionValue = parseFloat(numerator) / parseFloat(denominator)
+                totalValue += fractionValue
+            } else {
+                totalValue += parseFloat(part) || 0
+            }
+        })
+        totalValue = parseFloat(totalValue.toFixed(4))
+        console.log('total value', totalValue)
+        return totalValue
+
+        
+
+        // if (parts.length === 1) {
+        //     wholePart = parseFloat(parts[0])
+        // } else {
+        //     const fractionalParts = parts[1].split('/')
+        //     if (fractionalParts.length === 2) {
+        //         const numerator = parseFloat(fractionalParts[0])
+        //         const denominator = parseFloat(fractionalParts[1])
+
+        //         if (!isNaN(numerator) && !isNaN(denominator) && denominator !== 0) {
+        //             fractionalPart = numerator / denominator
+        //         }
+        //     }
+        // }
+
+        // if (parts.length > 1) {
+        //     const fractionalParts = parts[1].split('/')
+        //     if (fractionalParts.length === 2) {
+        //         const numerator = parseFloat(fractionalParts[0])
+        //         const denominator = parseFloat(fractionalParts[1])
+
+        //         if (!isNaN(numerator) && !isNaN(denominator) && denominator !== 0) {
+        //             fractionalPart = numerator / denominator
+        //         }
+        //     }
+        // }
+        // console.log('wholePart', wholePart)
+        // console.log('fractionalPart', fractionalPart)
+
+
+        // const totalValue = wholePart + fractionalPart
+
+        // return parts.length === 1 ? fractionalPart : totalValue
+    }
+
     const [finalImageObject, setFinalImageObject] = useState({})
     const [isInitialRender, setIsInitialRender] = useState(true)
 
@@ -129,10 +187,19 @@ export default function AddRecipeForm(props) {
 
     const handleIngredientChange = (e) => {
         const { name, value } = e.target
-        setCurrentIngredientsObj((prevData) => ({
-            ...prevData,
-            [name]: value
-        }))
+
+        if (name === 'ingredientQuantity') {
+            setCurrentIngredientsObj((prevData) => ({
+                ...prevData,
+                [name]: value,
+                ingredientQuantityDecimal: parseFraction(value)
+            }))
+        } else {
+            setCurrentIngredientsObj((prevData) => ({
+                ...prevData,
+                [name]: value
+            }))
+        }
     }
 
     const checkKeyDown = (e) => {
@@ -346,6 +413,7 @@ export default function AddRecipeForm(props) {
                         previewGradient.classList.add("hide")
                         setCurrentIngredientsObj({
                             ingredientQuantity: '',
+                            ingredientQuantityDecimal: null,
                             ingredientMeasurement: '',
                             ingredientName: '',
                             ingredientExtraDetail: ''
@@ -394,6 +462,7 @@ export default function AddRecipeForm(props) {
                 console.log(formData.ingredients)
                 setCurrentIngredientsObj(() => ({
                     ingredientQuantity: '',
+                    ingredientQuantityDecimal: null,
                     ingredientMeasurement: '',
                     ingredientName: '',
                     ingredientExtraDetail: ''
@@ -496,17 +565,17 @@ export default function AddRecipeForm(props) {
                             <label htmlFor="cooktime-hours">Prep Time:</label>
                             <input className="cooktime-hours" type="number" min={0} id="preptime-hours" name="prepTimeHours" 
                             value={formData.prepTimeHours} onChange={handleInputChange}></input>
-                            <span className="post-input-inline-text">hour(s)</span>
+                            <span className="post-input-inline-text">hour{formData.prepTimeHours == 1 ? '' : 's'}</span>
                             <input className="cooktime-mins" type="number" min={0}  max={59} id="preptime-mins" name="prepTimeMins" 
                             value={formData.prepTimeMins} onChange={handleInputChange}></input>
-                            <span className="post-input-inline-text">mins</span>
+                            <span className="post-input-inline-text">min{formData.prepTimeMins == 1 ? '' : 's'}</span>
                             <label htmlFor="cooktime-hours">Cook Time:</label>
                             <input className="cooktime-hours" type="number" min={0} id="cooktime-hours" name="cooktimeHours" 
                             value={formData.cooktimeHours} onChange={handleInputChange}></input>
-                            <span className="post-input-inline-text">hour(s)</span>
+                            <span className="post-input-inline-text">hour{formData.cooktimeHours == 1 ? '' : 's'}</span>
                             <input className="cooktime-mins" type="number" min={0}  max={59} id="cooktime-mins" name="cooktimeMins" 
                             value={formData.cooktimeMins} onChange={handleInputChange}></input>
-                            <span className="post-input-inline-text">mins</span>
+                            <span className="post-input-inline-text">min{formData.cooktimeMins == 1 ? '' : 's'}</span>
                             <label htmlFor="difficulty-ratinge">Difficulty:</label>
                             <select className="difficulty-rating" id="difficulty-rating" name="difficultyRating" 
                             value={formData.difficultyRating} onChange={handleInputChange}>
@@ -537,7 +606,7 @@ export default function AddRecipeForm(props) {
                                 <span id='ingredient-extra-detail-preview'></span>
                             </div>
                             {duplicateIngredients && <div className='duplicate-alert'>You have the same ingredient on there twice. Not judging, but it's just kinda weird to do that.</div>}
-                            <label htmlFor="ingredientQuantity">Quantity:</label>
+                            <label htmlFor="ingredientQuantity">Quantity: {invalidQuantityMessage && <span className='invalid-quantity'>*invalid quantity. Too many spaces</span>}</label>
                             <input type="text" id="quantity" name="ingredientQuantity" className='has-placeholder'
                             ref={ingredientMeasurementEl} placeholder='1/2' value={currentIngredientsObj.ingredientQuantity} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
                             <label htmlFor="ingredientMeasurement">Measurement:</label>

@@ -804,7 +804,8 @@ main {
 }
 
 #ingredient-measurement-preview,
-.ingredient-measurement-preview {
+.ingredient-measurement-preview,
+.ingredient-quantity-preview {
   font-weight: 700;
   margin: 0 .4em 0 0;
 }
@@ -821,11 +822,17 @@ main {
   color: #7E7E7E;
 }
 
+#ingredient-quantity-preview,
 #ingredient-measurement-preview,
 #ingredient-name-preview,
 #ingredient-extra-detail-preview {
   font-size: 1.25rem;
   color: green;
+}
+
+#ingredient-quantity-preview {
+  font-weight: 600;
+  margin: 0 .25em 0 0;
 }
 
 .ingredient-preview-element {
@@ -852,6 +859,11 @@ main {
   100% {
     color: #000000;
   }
+}
+
+.invalid-quantity {
+  font-size: .75em;
+  color: red;
 }
 
 .delete-ingredient-btn {
@@ -888,7 +900,7 @@ main {
 
 .post-input-inline-text {
   display: inline-block;
-  font-size: .75rem;
+  font-size: 1rem;
   font-weight: 600;
   margin: 0 2rem 1.25rem .5rem;
 }
