@@ -565,17 +565,17 @@ export default function AddRecipeForm(props) {
                             <label htmlFor="cooktime-hours">Prep Time:</label>
                             <input className="cooktime-hours" type="number" min={0} id="preptime-hours" name="prepTimeHours" 
                             value={formData.prepTimeHours} onChange={handleInputChange}></input>
-                            <span className="post-input-inline-text">hour{formData.prepTimeHours == 1 ? '' : 's'}</span>
+                            <span className="post-input-inline-text">hour{formData.prepTimeHours == 1 ? <span className='opacity0'>s</span> : 's'}</span>
                             <input className="cooktime-mins" type="number" min={0}  max={59} id="preptime-mins" name="prepTimeMins" 
                             value={formData.prepTimeMins} onChange={handleInputChange}></input>
-                            <span className="post-input-inline-text">min{formData.prepTimeMins == 1 ? '' : 's'}</span>
+                            <span className="post-input-inline-text">min{formData.prepTimeMins == 1 ? <span className='opacity0'>s</span> : 's'}</span>
                             <label htmlFor="cooktime-hours">Cook Time:</label>
                             <input className="cooktime-hours" type="number" min={0} id="cooktime-hours" name="cooktimeHours" 
                             value={formData.cooktimeHours} onChange={handleInputChange}></input>
-                            <span className="post-input-inline-text">hour{formData.cooktimeHours == 1 ? '' : 's'}</span>
+                            <span className="post-input-inline-text">hour{formData.cooktimeHours == 1 ? <span className='opacity0'>s</span> : 's'}</span>
                             <input className="cooktime-mins" type="number" min={0}  max={59} id="cooktime-mins" name="cooktimeMins" 
                             value={formData.cooktimeMins} onChange={handleInputChange}></input>
-                            <span className="post-input-inline-text">min{formData.cooktimeMins == 1 ? '' : 's'}</span>
+                            <span className="post-input-inline-text">min{formData.cooktimeMins == 1 ? <span className='opacity0'>s</span> : 's'}</span>
                             <label htmlFor="difficulty-ratinge">Difficulty:</label>
                             <select className="difficulty-rating" id="difficulty-rating" name="difficultyRating" 
                             value={formData.difficultyRating} onChange={handleInputChange}>

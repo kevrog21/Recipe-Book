@@ -1273,6 +1273,10 @@ main {
   color: white;
 }
 
+.opacity0 {
+  opacity: 0;
+}
+
 .hide {
   display: none;
 }

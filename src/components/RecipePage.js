@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom' 
 import { useState, useEffect } from 'react'
+import Fraction from 'fraction.js'
 import arrow from '../assets/arrow.svg'
 import greyStar from '../assets/grey-star.svg'
 import timerIcon from '../assets/timer-icon.svg'
@@ -37,30 +38,16 @@ export default function RecipePage(props) {
         }
     }, [mongoData, recipeId])
 
-    function parseFraction(fraction) {
-        const parts = fraction.split(' ')
-        
-        let wholePart = 0
-        let fractionalPart = 0
+    function decimalToFraction(decimal) {
+        const fraction = new Fraction(decimal)
 
-        if (parts.length > 0) {
-            wholePart = parseFloat(parts[0])
-        }
+        const simplifiedFraction = fraction.simplify()
 
-        if (parts.length > 1) {
-            const fractionalParts = parts[1].split('/')
-            if (fractionalParts.length === 2) {
-                const numerator = parseFloat(fractionalParts[0])
-                const denominator = parseFloat(fractionalParts[1])
+        const fractionString = simplifiedFraction.toFraction()
 
-                if (!isNaN(numerator) && !isNaN(denominator) && denominator !== 0) {
-                    fractionalPart = numerator / denominator
-                }
-            }
-        }
-        const totalValue = wholePart + fractionalPart
+        console.log('fractionString', fraction)
 
-        return totalValue
+        return `${fractionString}`
     }
 
     useEffect(() => {
@@ -68,16 +55,17 @@ export default function RecipePage(props) {
             const ingredientQuantityElements = document.querySelectorAll('.ingredient-quantity-preview')
 
             ingredientQuantityElements.forEach((element, index) => {
-
-                // change display of database value to a fraction
                 
                 const currentValue = parseFloat(element.textContent)
                 const originalValue = parseFloat(currentRecipe.ingredients[index].ingredientQuantityDecimal)
+
+                console.log(originalValue)
                 
                 if (!isNaN(currentValue)) {
                     const newQuantity = (originalValue / currentRecipe.defaultServings) * servingSelection
+                    const newQuantityAsFraction = decimalToFraction(newQuantity)
 
-                    element.textContent = newQuantity
+                    element.textContent = newQuantityAsFraction
                     element.classList.add('updated-quantity-animation')
                     setTimeout(() => {
                         element.classList.remove('updated-quantity-animation')
