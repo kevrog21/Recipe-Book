@@ -9,6 +9,7 @@ import thumbIcon from '../assets/thumb-icon.svg'
 import bell from '../assets/bell.svg'
 import filledYellowStar from '../assets/light-grey-outline.svg'
 import checkmark from '../assets/checkmark.svg'
+import { checkForVulgarFraction, decimalToFraction } from './utilityFunctions.js'
 // import filledYellowStar from '../assets/filled-star-outline.svg'
 import filledBell from '../assets/filled-bell.svg'
 
@@ -38,16 +39,21 @@ export default function RecipePage(props) {
         }
     }, [mongoData, recipeId])
 
-    function decimalToFraction(decimal) {
-        const fraction = new Fraction(decimal)
+    function formattedFraction(fraction) {
+       const [numerator, denominator] = fraction.split('/')
 
-        const simplifiedFraction = fraction.simplify()
+       if (numerator > denominator) {
+            const wholePart = Math.floor(numerator / denominator)
+            const newNumerator = numerator % denominator
 
-        const fractionString = simplifiedFraction.toFraction()
-
-        console.log('fractionString', fraction)
-
-        return `${fractionString}`
+            if (newNumerator === 0) {
+                return `${wholePart}`
+            } else {
+                return `${wholePart} ${newNumerator}/${denominator}`
+            }
+       } else {
+            return fraction
+       }
     }
 
     useEffect(() => {
@@ -64,8 +70,9 @@ export default function RecipePage(props) {
                 if (!isNaN(currentValue)) {
                     const newQuantity = (originalValue / currentRecipe.defaultServings) * servingSelection
                     const newQuantityAsFraction = decimalToFraction(newQuantity)
+                    const formattedNewQuantityAsFraction = formattedFraction(newQuantityAsFraction)
 
-                    element.textContent = newQuantityAsFraction
+                    element.textContent = formattedNewQuantityAsFraction
                     element.classList.add('updated-quantity-animation')
                     setTimeout(() => {
                         element.classList.remove('updated-quantity-animation')

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react' 
 import { Link } from 'react-router-dom'
+import { parseFraction } from './utilityFunctions.js'
 import axios from 'axios'
 import arrow from '../assets/arrow.svg'
 import arrowLight from '../assets/arrow-grey.svg'
@@ -36,11 +37,6 @@ export default function AddRecipeForm(props) {
         ingredientName: '',
         ingredientExtraDetail: ''
     })
-    // const [currentIngredientsObj, setCurrentIngredientsObj] = useState({
-    //     ingredientMeasurement: '',
-    //     ingredientName: '',
-    //     ingredientExtraDetail: ''
-    // })
     const [ingredientPreviews, setIngredientPreviews] = useState([])
     const [duplicateIngredients, setDuplicateIngredients] = useState(false)
     const [invalidQuantityMessage, setInvalidQuantityMessage] = useState(false)
@@ -110,62 +106,6 @@ export default function AddRecipeForm(props) {
         }
     }, [formData.ingredients])
 
-    function parseFraction(fraction) {
-        const parts = fraction.split(' ')
-        parts.length > 2 ? setInvalidQuantityMessage(true) : setInvalidQuantityMessage(false)
-        let totalValue = 0
-       
-        console.log('parts', parts)
-
-        parts.forEach(part => {
-            if (part.includes('/') && part.length > 2) {
-                const [numerator, denominator] = part.split('/')
-                const fractionValue = parseFloat(numerator) / parseFloat(denominator)
-                totalValue += fractionValue
-            } else {
-                totalValue += parseFloat(part) || 0
-            }
-        })
-        totalValue = parseFloat(totalValue.toFixed(4))
-        console.log('total value', totalValue)
-        return totalValue
-
-        
-
-        // if (parts.length === 1) {
-        //     wholePart = parseFloat(parts[0])
-        // } else {
-        //     const fractionalParts = parts[1].split('/')
-        //     if (fractionalParts.length === 2) {
-        //         const numerator = parseFloat(fractionalParts[0])
-        //         const denominator = parseFloat(fractionalParts[1])
-
-        //         if (!isNaN(numerator) && !isNaN(denominator) && denominator !== 0) {
-        //             fractionalPart = numerator / denominator
-        //         }
-        //     }
-        // }
-
-        // if (parts.length > 1) {
-        //     const fractionalParts = parts[1].split('/')
-        //     if (fractionalParts.length === 2) {
-        //         const numerator = parseFloat(fractionalParts[0])
-        //         const denominator = parseFloat(fractionalParts[1])
-
-        //         if (!isNaN(numerator) && !isNaN(denominator) && denominator !== 0) {
-        //             fractionalPart = numerator / denominator
-        //         }
-        //     }
-        // }
-        // console.log('wholePart', wholePart)
-        // console.log('fractionalPart', fractionalPart)
-
-
-        // const totalValue = wholePart + fractionalPart
-
-        // return parts.length === 1 ? fractionalPart : totalValue
-    }
-
     const [finalImageObject, setFinalImageObject] = useState({})
     const [isInitialRender, setIsInitialRender] = useState(true)
 
@@ -192,7 +132,7 @@ export default function AddRecipeForm(props) {
             setCurrentIngredientsObj((prevData) => ({
                 ...prevData,
                 [name]: value,
-                ingredientQuantityDecimal: parseFraction(value)
+                ingredientQuantityDecimal: parseFraction(value, setInvalidQuantityMessage)
             }))
         } else {
             setCurrentIngredientsObj((prevData) => ({
