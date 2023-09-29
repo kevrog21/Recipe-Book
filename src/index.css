@@ -1268,6 +1268,14 @@ main {
   text-decoration: none;
 }
 
+.n {
+  color: red;
+}
+
+.d {
+color: green;
+}
+
 /* utility classes */
 .white-text {
   color: white;

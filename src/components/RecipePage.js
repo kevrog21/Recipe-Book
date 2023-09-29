@@ -72,7 +72,7 @@ export default function RecipePage(props) {
                     const newQuantityAsFraction = decimalToFraction(newQuantity)
                     const formattedNewQuantityAsFraction = formattedFraction(newQuantityAsFraction)
 
-                    element.textContent = formattedNewQuantityAsFraction
+                    element.textContent = formattedNewQuantityAsFraction == '0' ? '' : formattedNewQuantityAsFraction
                     element.classList.add('updated-quantity-animation')
                     setTimeout(() => {
                         element.classList.remove('updated-quantity-animation')
