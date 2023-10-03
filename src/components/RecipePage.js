@@ -66,6 +66,7 @@ export default function RecipePage(props) {
                 const originalValue = parseFloat(currentRecipe.ingredients[index].ingredientQuantityDecimal)
 
                 console.log(originalValue)
+                console.log(currentValue)
                 
                 if (!isNaN(currentValue)) {
                     const newQuantity = (originalValue / currentRecipe.defaultServings) * servingSelection

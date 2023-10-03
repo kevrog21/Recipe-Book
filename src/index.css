@@ -699,6 +699,7 @@ main {
   display: flex;
   margin: 0 5vw 0 0;
   color: #706A6A;
+  cursor: pointer;
 }
 
 .current-serving-display {
