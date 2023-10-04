@@ -338,7 +338,7 @@ export default function RecipePage(props) {
 
                 
 
-                <section className='info-overview'>
+                <div className='info-overview'>
                     <div className='dificulty-overview'>
                         <div className='grey-text'>difficulty:</div>
                         <div className='weight600'>{currentRecipe.difficultyRating}</div>
@@ -359,7 +359,7 @@ export default function RecipePage(props) {
                         <div className='grey-text'>servings:</div>
                         <div className='weight600'>{servingSelection}</div>
                     </div>
-                </section>
+                </div>
     
                 <section className='ingredients-section'>
                     <div className='ingredients-section-title-container' onClick={handleServingSizeClick}>
