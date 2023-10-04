@@ -264,16 +264,21 @@ main {
   font-size: 2vw;
 }
 
-.star-icon {
+.star-icon-container {
   position: absolute;
   top: 0;
   right: 0;
-  margin: 1.4vw 1.4vw 0 auto;
+  margin: 0 0 0 auto;
+  padding: 1.5vw 1vw 1.5vw 1.5vw;
   grid-column: 2;
   grid-row: 1;
+  width: 4vw;
+}
+
+.star-icon {
   color: #FFEE51;
   width: 3.5vw;
-  /* transition: transform 1.25s ease; */
+  justify-content: center;
 }
 
 .rotate {

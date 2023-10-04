@@ -38,7 +38,9 @@ const handleBellClick = (e) => {
                     {props.recipeData.recipeSubName && <h4 className='recipe-subheader'>{props.recipeData.recipeSubName}</h4>}
                 </div>
             </Link>
-            <img className={`star-icon icon-drop-shadow ${isRotating ? rotationDirection : ''}`} src={props.isFavorited ? filledStar : star} onClick={handleStarClick} />
+            <div className='star-icon-container'>
+                <img className={`star-icon icon-drop-shadow ${isRotating ? rotationDirection : ''}`} src={props.isFavorited ? filledStar : star} onClick={handleStarClick} />
+            </div>
             <img className='bell-icon' src={props.recipeData.isRequested ? filledBell : bell} alt='request icon' onClick={handleBellClick} />
         </div>
     )

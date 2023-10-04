@@ -356,7 +356,7 @@ export default function RecipePage(props) {
                         The new serving size may affect cook time.</div>
                     </div>
                     <div className='serving-overview'>
-                        <div className='grey-text'>servings:</div>
+                        <div className='grey-text'>serving{servingSelection > 1 ? 's' : ''}:</div>
                         <div className='weight600'>{servingSelection}</div>
                     </div>
                 </div>
@@ -365,7 +365,7 @@ export default function RecipePage(props) {
                     <div className='ingredients-section-title-container' onClick={handleServingSizeClick}>
                         <h4 className='section-title'>Ingredients</h4>
                         <div className='dynamic-servings-current-selection'>
-                            <div className='current-serving-display'>{servingSelection} servings
+                            <div className='current-serving-display'>{servingSelection} serving{servingSelection > 1 ? 's' : ''}
                                 <div className='gray-down-arrow'></div>
                             </div>
                             {servingSelectionIsOpen && <div className='dynamic-servings-selection-container'>
