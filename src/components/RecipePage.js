@@ -10,6 +10,7 @@ import bell from '../assets/bell.svg'
 import filledYellowStar from '../assets/light-grey-outline.svg'
 import checkmark from '../assets/checkmark.svg'
 import { checkForVulgarFraction, decimalToFraction } from './utilityFunctions.js'
+import closeIcon from '../assets/close-x.svg'
 // import filledYellowStar from '../assets/filled-star-outline.svg'
 import filledBell from '../assets/filled-bell.svg'
 
@@ -30,6 +31,7 @@ export default function RecipePage(props) {
     const [displayTotalTime, setDisplayTotalTime] = useState(null)
     const [servingSelection, setServingSelection] = useState(null)
     const [servingSelectionIsOpen, setServingSelectionIsOpen] = useState(false)
+    const [customServingsModalIsOpen, setCustomServingsModal] = useState(false)
 
     useEffect(() => {
         if (mongoData.length > 0) {
@@ -64,9 +66,6 @@ export default function RecipePage(props) {
                 
                 const currentValue = parseFloat(element.textContent)
                 const originalValue = parseFloat(currentRecipe.ingredients[index].ingredientQuantityDecimal)
-
-                console.log(originalValue)
-                console.log(currentValue)
                 
                 if (!isNaN(currentValue)) {
                     const newQuantity = (originalValue / currentRecipe.defaultServings) * servingSelection
@@ -214,7 +213,23 @@ export default function RecipePage(props) {
     }
 
     const handleServingSizeClick = (e) => {
+        e.stopPropagation()
         setServingSelectionIsOpen(!servingSelectionIsOpen)
+    }
+
+    const handleCustomServingsClick = (e) => {
+        setCustomServingsModal(!customServingsModalIsOpen)
+        console.log("runnin", servingSelectionIsOpen)
+        setServingSelectionIsOpen(false)
+    }
+
+    const handleCustomServingChange = (e) => {
+        if (e.target.value > 0) {
+            setServingSelection(e.target.value)
+        }
+        if (e.key === 'Enter') {
+            console.log('enter pressed')
+        }
     }
 
     function convertAndFormatDate(dateInUTC) {
@@ -358,8 +373,23 @@ export default function RecipePage(props) {
                                     <div onClick={() => {setServingSelection(4)}}>4 servings</div>
                                     <div onClick={() => {setServingSelection(6)}}>6 servings</div>
                                     <div onClick={() => {setServingSelection(8)}}>8 servings</div>
-                                    <div>custom</div>
+                                    <div onClick={handleCustomServingsClick}>custom</div>
                                 </div>}
+                            {customServingsModalIsOpen && <div className="servings-modal-container" onClick={handleCustomServingsClick}>
+                                <div className="custom-servings-modal" onClick={(e) => e.stopPropagation()}>
+                                    <div>
+                                        <div className='close-btn-container' onClick={() => {setCustomServingsModal(false)}}>
+                                            <img src={closeIcon} />
+                                        </div>
+                                        <label className='custom-serving-label' htmlFor="custom-serving">Enter a serving size below:</label>
+                                        <input type="number" min={1} max={1000} id="custom-serving" name="customServing" className='has-placeholder'
+                                        placeholder={servingSelection}  onChange={handleCustomServingChange} onKeyDown={(e) => e.key === 'Enter' ? setCustomServingsModal(false) : null}></input>
+                                        <div className='ok-button-container'>
+                                            <div className='ok-button' onClick={() => {setCustomServingsModal(false)}}>ok</div>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>}
                         </div>               
                     </div>
                     

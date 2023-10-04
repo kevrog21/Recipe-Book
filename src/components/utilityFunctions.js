@@ -85,7 +85,5 @@ export function decimalToFraction(decimal) {
 
     const fractionString = simplifiedFraction.toFraction()
 
-    console.log('fractionString', fraction)
-
     return `${fractionString}`
 }
