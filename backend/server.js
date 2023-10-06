@@ -8,10 +8,6 @@ import { fileURLToPath } from 'url'
 
 const app = express()
 
-// const express = require('express')
-// const cors = require('cors')
-// const mongoose = require('mongoose')
-
 import path from 'path'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -21,12 +17,9 @@ app.use(express.static(buildPath))
 
 dotenv.config()
 
-
-// const port = process.env.PORT || 5000
-
 app.use(cors({
     origin: 'https://bastebook.com',
-    credentials: false,
+    credentials: true,
 }))
 app.use(express.json())
 
@@ -54,9 +47,5 @@ app.get("/*", function(req, res) {
 })
 
 app.use('*', (req, res) => res.status(404).json({error: "not found"}))
-
-// app.listen(port, () => {
-//     console.log(`Server is running on port: ${port}`)
-// })
 
 export default app

@@ -764,12 +764,26 @@ main {
   margin: 8% 0 0 0;
 }
 
+.custom-serving-input-container {
+  display: flex;
+  justify-content: center;
+}
+
+.plus-minus-btn {
+  background: black;
+  color: white;
+  margin: auto .75em;
+  padding: .25em 1em;
+  border-radius: .5em;
+}
+
 #custom-serving {
-  margin: 3% auto;
+  margin: 3% 0;
   padding: .5em;
   display: block;
   text-align: center;
   border: 2px solid black;
+  font-weight: 600;
 }
 
 .ok-button-container {

@@ -28,7 +28,7 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err))
 })
 
-router.route('/check-password').post((req, res) => {
+router.route('/check-passwords').post((req, res) => {
     console.log("check password running")
     const password = req.body.password
     const honeyp = req.body.honeyp

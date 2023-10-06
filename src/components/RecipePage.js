@@ -32,6 +32,7 @@ export default function RecipePage(props) {
     const [servingSelection, setServingSelection] = useState(null)
     const [servingSelectionIsOpen, setServingSelectionIsOpen] = useState(false)
     const [customServingsModalIsOpen, setCustomServingsModal] = useState(false)
+    const [useInteractedWithCustomServing, setUseInteractedWithCustomServing] = useState(false)
 
     useEffect(() => {
         if (mongoData.length > 0) {
@@ -218,17 +219,31 @@ export default function RecipePage(props) {
     }
 
     const handleCustomServingsClick = (e) => {
+        setUseInteractedWithCustomServing(false)
         setCustomServingsModal(!customServingsModalIsOpen)
-        console.log("runnin", servingSelectionIsOpen)
         setServingSelectionIsOpen(false)
     }
 
     const handleCustomServingChange = (e) => {
-        if (e.target.value > 0) {
+        if (e.target.value > 0 && e.target.value < 1001) {
+            setUseInteractedWithCustomServing(true)
             setServingSelection(e.target.value)
+        } else {
+            setUseInteractedWithCustomServing(false)
         }
-        if (e.key === 'Enter') {
-            console.log('enter pressed')
+    }
+
+    const handleServingPlusClick = (e) => {
+        if (parseInt(servingSelection, 10) < 1000) {
+            setServingSelection(prevSelection => parseInt(prevSelection, 10) + 1)
+            setUseInteractedWithCustomServing(true)
+        }
+    }
+
+    const handleServingMinusClick = (e) => {
+        if (parseInt(servingSelection, 10) > 1 && parseInt(servingSelection, 10) < 1000) {
+            setServingSelection(prevSelection => parseInt(prevSelection, 10) - 1)
+            setUseInteractedWithCustomServing(true)
         }
     }
 
@@ -381,11 +396,16 @@ export default function RecipePage(props) {
                                         <div className='close-btn-container' onClick={() => {setCustomServingsModal(false)}}>
                                             <img src={closeIcon} />
                                         </div>
-                                        <label className='custom-serving-label' htmlFor="custom-serving">Enter a serving size below:</label>
-                                        <input type="number" min={1} max={1000} id="custom-serving" name="customServing" className='has-placeholder'
-                                        placeholder={servingSelection}  onChange={handleCustomServingChange} onKeyDown={(e) => e.key === 'Enter' ? setCustomServingsModal(false) : null}></input>
+                                        <label className='custom-serving-label' htmlFor="custom-serving">Customize serving size:</label>
+                                        <div className='custom-serving-input-container'>
+                                            <div className='plus-minus-btn' onClick={handleServingMinusClick}>-</div>
+                                            <input type="number" min={1} max={1000} id="custom-serving" name="customServing" className='has-placeholder'
+                                            placeholder={servingSelection} value={useInteractedWithCustomServing ? servingSelection : ''} 
+                                            onChange={handleCustomServingChange} onKeyDown={(e) => e.key === 'Enter' ? setCustomServingsModal(false) : null} onBlur={() => setUseInteractedWithCustomServing(true)}></input>
+                                            <div className='plus-minus-btn' onClick={handleServingPlusClick}>+</div>
+                                        </div>                                 
                                         <div className='ok-button-container'>
-                                            <div className='ok-button' onClick={() => {setCustomServingsModal(false)}}>ok</div>
+                                                <div className='ok-button' onClick={() => {setCustomServingsModal(false)}}>okay</div>
                                         </div>
                                     </div>
                                 </div>  
