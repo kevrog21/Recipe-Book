@@ -1401,26 +1401,26 @@ color: green;
   }
 
   .app_title {
-    font-size: 1.25vw;
+    font-size: 1vw;
   }
 
   .hamburger_wrapper {
-    width: 4vw;
-    height: 4vw;
+    width: 2vw;
+    height: 2vw;
   }
 
   .hamburger-line2 {
-    margin: 1vw 0 0 0;
+    margin: .5vw 0 0 0;
   }
 
   .rotate-hamburger-line1 {
-    transform: rotate(45deg)  translate(1px, 1vw);
+    transform: rotate(45deg)  translate(1px, .5vw);
     transition: all .3s ease;
   }
   
   .rotate-hamburger-line2 {
     width: 100%;
-    transform: rotate(-45deg) translate(1px, -1vw);
+    transform: rotate(-45deg) translate(1px, -.5vw);
     transition: all .3s ease;
   }
 
@@ -1439,6 +1439,10 @@ color: green;
   
   .recipe-subheader {
     font-size: 1vw;
+  }
+  
+  #nav-menu {
+    padding: 7vw 0 0 0;
   }
 
 }
