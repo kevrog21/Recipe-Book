@@ -435,7 +435,7 @@ export default function RecipePage(props) {
     
                 </section>
     
-                <section className='notes-section'>
+                {currentRecipe.notes && <section className='notes-section'>
                             
                     <h4 className='section-title'>Notes</h4>
                     <div className='section-arrow-container'>
@@ -446,7 +446,7 @@ export default function RecipePage(props) {
                         <p className='show-line-breaks'>{currentRecipe.notes}</p>
                     </div>
     
-                </section>
+                </section>}
     
                 <section className='stats-section'>
                             
