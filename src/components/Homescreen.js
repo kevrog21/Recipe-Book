@@ -48,6 +48,12 @@ export default function Homescreen(props) {
                 currentRecipe={selectedRecipe}
             />} */}
 
+            <div id='successful-delete-msg' className='hide'>
+                <div classname='deletion-container'>
+                    successfully deleted
+                </div>
+            </div>
+
             <AllMongoRecipes 
                 title="All Recipes"
                 index={0}
@@ -128,8 +134,10 @@ export default function Homescreen(props) {
 
             <div className='add-recipes-section'>
                 <Link to='/add-recipe'><div className='plus-icon'><img src={plusIcon} ></img></div></Link>
-                <div>add more recipes</div>
+                <div>add recipe</div>
             </div>
+
+            
           
             {/* <AddRecipe /> */}
             {/* Suggested */}

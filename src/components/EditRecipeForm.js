@@ -472,6 +472,14 @@ export default function EditRecipeForm(props) {
         setIsDeletionFormShowing(!isDeletionFormShowing)
     }
 
+    function mountThenRemoveDeletionMessage() {
+        const deleteMessageEl = document.getElementById('successful-delete-msg')
+        deleteMessageEl.classList.remove('hide')
+        setTimeout(() => {
+            deleteMessageEl.classList.add('hide')
+        }, 5000)
+    }
+
     const handleDeleteFormSubmit = async (e) => {
         e.preventDefault()
 
@@ -506,6 +514,7 @@ export default function EditRecipeForm(props) {
             setTimeout(() => {
                 navigate('/')
                 props.retrieveRecipes()
+                mountThenRemoveDeletionMessage()
             }, 1000)
 
         } catch (error) {
