@@ -11,6 +11,7 @@ import RecipeDataService from './services/recipeList'
 import ScrollToTop from './components/ScrollToTop'
 import Settings from './components/Settings'
 import Blog from './components/Blog'
+import DeletionMessage from './components/DeletionMessage'
 
 export default function App() {
 
@@ -141,10 +142,21 @@ export default function App() {
       }
     }
 
+    const mountThenRemoveDeletionMessage = () => {
+      const deleteMessageEl = document.getElementById('successful-delete-msg')
+      console.log("running deletion message function")
+      console.log("here is the deletion element", deleteMessageEl)
+      deleteMessageEl.classList.remove('hide')
+      setTimeout(() => {
+          deleteMessageEl.classList.add('hide')
+      }, 2000)
+  }
+
   return (
     <Router>
         <Header />
         <ScrollToTop />
+        <DeletionMessage />
         <Routes>
           <Route exact path="/" element={
             <Homescreen 
@@ -181,6 +193,7 @@ export default function App() {
               // handleRequestToggle={handleRequestToggle}
               handleSelectedRecipe={handleSelectedRecipe}
               retrieveRecipes={retrieveRecipes}
+              mountThenRemoveDeletionMessage={mountThenRemoveDeletionMessage}
             />} />
           <Route path="/settings" element={
             <Settings 

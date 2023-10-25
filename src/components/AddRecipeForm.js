@@ -7,7 +7,7 @@ import arrowLight from '../assets/arrow-grey.svg'
 
 export default function AddRecipeForm(props) {
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState({ 
         recipeName: '',
         recipeSubName: '',
         defaultServings: 0,

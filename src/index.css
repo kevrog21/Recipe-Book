@@ -1357,6 +1357,27 @@ main {
 color: green;
 }
 
+.deletion-message-container {
+  position: fixed;
+  background: rgba(0, 0, 0, .80);
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.deletion-message {
+  width: 60%;
+  text-align: center;
+  font-size: 2em;
+  font-weight: 600;
+}
+
 /* utility classes */
 .white-text {
   color: white;

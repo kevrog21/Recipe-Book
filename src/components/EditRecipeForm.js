@@ -267,7 +267,7 @@ export default function EditRecipeForm(props) {
         }
 
         try {
-            const response = await fetch("s://bastebook.com/recipes/check-password", options)
+            const response = await fetch("https://bastebook.com/recipes/check-passwords", options)
             const data = await response.json()
 
             if (data.valid === false) {
@@ -472,14 +472,6 @@ export default function EditRecipeForm(props) {
         setIsDeletionFormShowing(!isDeletionFormShowing)
     }
 
-    function mountThenRemoveDeletionMessage() {
-        const deleteMessageEl = document.getElementById('successful-delete-msg')
-        deleteMessageEl.classList.remove('hide')
-        setTimeout(() => {
-            deleteMessageEl.classList.add('hide')
-        }, 5000)
-    }
-
     const handleDeleteFormSubmit = async (e) => {
         e.preventDefault()
 
@@ -492,7 +484,7 @@ export default function EditRecipeForm(props) {
         }
 
         try {
-            const response = await fetch("https://bastebook.com/recipes/check-password", options)
+            const response = await fetch("https://bastebook.com/recipes/check-passwords", options)
             const data = await response.json()
 
             if (data.valid === false) {
@@ -514,7 +506,7 @@ export default function EditRecipeForm(props) {
             setTimeout(() => {
                 navigate('/')
                 props.retrieveRecipes()
-                mountThenRemoveDeletionMessage()
+                props.mountThenRemoveDeletionMessage()
             }, 1000)
 
         } catch (error) {

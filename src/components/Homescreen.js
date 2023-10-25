@@ -49,7 +49,7 @@ export default function Homescreen(props) {
             />} */}
 
             <div id='successful-delete-msg' className='hide'>
-                <div classname='deletion-container'>
+                <div className='deletion-container'>
                     successfully deleted
                 </div>
             </div>
