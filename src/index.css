@@ -924,6 +924,17 @@ main {
   font-weight: 900;
 }
 
+.ingredients-button-container {
+  display: flex;
+  align-items: center;
+}
+
+.add-ingredients-header {
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0 1em;
+}
+
 .updated-quantity-animation {
   animation: transitionColor 3s ease;
 }
@@ -1021,10 +1032,6 @@ main {
 
 .two-column-tag {
   grid-column: span 2;
-}
-
-.three-column-tag {
-  
 }
 
 #tags-container .tag:hover,

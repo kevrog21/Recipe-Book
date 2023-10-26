@@ -35,9 +35,11 @@ export default function AddRecipeForm(props) {
         ingredientQuantityDecimal: null,
         ingredientMeasurement: '',
         ingredientName: '',
-        ingredientExtraDetail: ''
+        ingredientExtraDetail: '',
+        ingredientSectionName: ''
     })
     const [ingredientPreviews, setIngredientPreviews] = useState([])
+    const [showIngredientsSectionTitle, setShowIngredientsSectionTitle] = useState(false)
     const [duplicateIngredients, setDuplicateIngredients] = useState(false)
     const [invalidQuantityMessage, setInvalidQuantityMessage] = useState(false)
     const defaultTagWords = ['main', 'starter', 'dessert', 'breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 
@@ -48,7 +50,8 @@ export default function AddRecipeForm(props) {
     const [selectedTagWords, setSelectedTagWords] = useState([])
     const [showMoreTags, setShowMoreTags] = useState(false)
     const ingredientMeasurementEl = useRef(null)
-    
+    // const [currentIngredientSection, setCurrenIngredientSection] = useState([''])
+    // add ingredients to current ingredient section array
 
     useEffect(() => {
         showMoreTags ? 
@@ -78,10 +81,14 @@ export default function AddRecipeForm(props) {
         const ingredientMeasurementPreview = document.getElementById("ingredient-measurement-preview")
         const ingredientNamePreview = document.getElementById("ingredient-name-preview")
         const ingredientExtraDetailPreview = document.getElementById("ingredient-extra-detail-preview")
+        const ingredientSectionPreview = document.getElementById("ingredient-section-preview")
         ingredientQuantityPreview.textContent = currentIngredientsObj.ingredientQuantity
         ingredientMeasurementPreview.textContent = currentIngredientsObj.ingredientMeasurement
         ingredientNamePreview.textContent = currentIngredientsObj.ingredientName
         ingredientExtraDetailPreview.textContent = currentIngredientsObj.ingredientExtraDetail
+        if (ingredientSectionPreview) {
+            ingredientSectionPreview.textContent = currentIngredientsObj.ingredientSectionName
+        }
     }, [currentIngredientsObj])
 
     useEffect(() => {
@@ -89,6 +96,7 @@ export default function AddRecipeForm(props) {
             return (
                 <div key={ingredient.ingredientQuantity + ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail}
                      className='ingredient-preview-element' onMouseEnter={showDeleteButton} onMouseDown={showDeleteButton} onMouseLeave={hideDeleteButton}>
+                    {ingredient.ingredientSectionName && <span className='ingredient-section-preview'>{ingredient.ingredientSectionName}</span>}
                     <span className='ingredient-quantity-preview'>{ingredient.ingredientQuantity}</span>
                     <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>
                     <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>
@@ -357,7 +365,8 @@ export default function AddRecipeForm(props) {
                             ingredientQuantityDecimal: null,
                             ingredientMeasurement: '',
                             ingredientName: '',
-                            ingredientExtraDetail: ''
+                            ingredientExtraDetail: '',
+                            ingredientSectionName: ''
                         })
                         setSelectedTagWords([])
                         props.retrieveRecipes()
@@ -406,7 +415,8 @@ export default function AddRecipeForm(props) {
                     ingredientQuantityDecimal: null,
                     ingredientMeasurement: '',
                     ingredientName: '',
-                    ingredientExtraDetail: ''
+                    ingredientExtraDetail: '',
+                    ingredientSectionName: ''
                 }))
                 ingredientMeasurementEl.current.focus()
         } else {
@@ -417,6 +427,16 @@ export default function AddRecipeForm(props) {
     const handleIngredientsEnterKeyDown = (e) => {
         if (e.key === 'Enter') {
             handleAddClick() 
+        }
+    }
+
+    const handleAddIngredientSectionClick = (e) => {
+        setShowIngredientsSectionTitle(true)
+    }
+
+    const handleAddSectionKeydown = (e) => {
+        if (e.key === 'Enter') {
+            handleAddIngredientSectionClick() 
         }
     }
 
@@ -559,7 +579,13 @@ export default function AddRecipeForm(props) {
                             <label htmlFor="ingredientExtraDetail">Extra Detail:</label>
                             <input type="text" id="ingredient-extra-detail" name="ingredientExtraDetail" className='has-placeholder'
                             placeholder='(about 1 large carrot)' value={currentIngredientsObj.ingredientExtraDetail} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
-                            <div className="add-button" onClick={handleAddClick}>add</div>
+                            {showIngredientsSectionTitle && <div><label htmlFor="ingredientSectionName">Ingredient Section Name:</label>
+                            <input type="text" id="ingredient-section-name" name="ingredientSectionName" className='has-placeholder'
+                            placeholder='Marinade Ingredients' value={currentIngredientsObj.ingredientSectionName} onChange={handleIngredientChange} onKeyDown={handleAddSectionKeydown}></input></div>}
+                            <div className='ingredients-button-container'>
+                                <div className="add-button" onClick={handleAddClick}>add {showIngredientsSectionTitle ? 'section' : 'ingredient'}</div>
+                                <div className="add-ingredients-header" onClick={handleAddIngredientSectionClick}>+ ingredient section</div>
+                            </div>
                         </div>
 
                 </section>

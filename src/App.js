@@ -144,8 +144,6 @@ export default function App() {
 
     const mountThenRemoveDeletionMessage = () => {
       const deleteMessageEl = document.getElementById('successful-delete-msg')
-      console.log("running deletion message function")
-      console.log("here is the deletion element", deleteMessageEl)
       deleteMessageEl.classList.remove('hide')
       setTimeout(() => {
           deleteMessageEl.classList.add('hide')
