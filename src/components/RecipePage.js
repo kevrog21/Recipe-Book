@@ -95,12 +95,13 @@ export default function RecipePage(props) {
         if (currentRecipe) {
             const ingredients = currentRecipe.ingredients.map(ingredient => {
                 return (
-                    <div key={ingredient.ingredientQuantity + ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail}
+                    <div key={ingredient.ingredientQuantity + ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail + ingredient.ingredientSectionName}
                              className='ingredient-preview-element'>
+                            {ingredient.ingredientSectionName && <span className='ingredient-section-preview'>{ingredient.ingredientSectionName}</span>}
                             <span className='ingredient-quantity-preview'>{ingredient.ingredientQuantityDecimal}</span>
-                            <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>
-                            <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>
-                            <span className='ingredient-extra-detail-preview'>{ingredient.ingredientExtraDetail}</span>
+                            {ingredient.ingredientMeasurement && <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>}
+                            {ingredient.ingredientName && <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>}
+                            {ingredient.ingredientExtraDetail && <span className='ingredient-extra-detail-preview'>{ingredient.ingredientExtraDetail}</span>}
                     </div>
                 )
             })

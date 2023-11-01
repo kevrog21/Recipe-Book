@@ -901,10 +901,18 @@ main {
   color: #7E7E7E;
 }
 
+.ingredient-section-preview {
+  display: inline-block;
+  margin: 2em 0 .5em 0;
+  font-size: 1.3em;
+  
+}
+
 #ingredient-quantity-preview,
 #ingredient-measurement-preview,
 #ingredient-name-preview,
-#ingredient-extra-detail-preview {
+#ingredient-extra-detail-preview,
+#ingredient-section-preview {
   font-size: 1.25rem;
   color: green;
 }
@@ -919,7 +927,7 @@ main {
 }
 
 .ingredient-quantity-preview {
-  margin: 0 .4em 0 0;
+  margin: 0 .4em 0 1.25em;
   /* transition: all .5s ease-out; */
   font-weight: 900;
 }
@@ -1400,6 +1408,10 @@ color: green;
 
 .transparent {
   opacity: 0;
+}
+
+.disable-input {
+  opacity: .25;
 }
 
 .no-margin {

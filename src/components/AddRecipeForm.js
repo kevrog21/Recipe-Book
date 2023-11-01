@@ -50,6 +50,7 @@ export default function AddRecipeForm(props) {
     const [selectedTagWords, setSelectedTagWords] = useState([])
     const [showMoreTags, setShowMoreTags] = useState(false)
     const ingredientMeasurementEl = useRef(null)
+    const ingredientSectionInput = useRef(null)
     // const [currentIngredientSection, setCurrenIngredientSection] = useState([''])
     // add ingredients to current ingredient section array
 
@@ -58,6 +59,14 @@ export default function AddRecipeForm(props) {
         setTagWords([...defaultTagWords ,...moreTagWords]) : 
         setTagWords(defaultTagWords)
     }, [showMoreTags])
+
+    useEffect(() => {
+        if (showIngredientsSectionTitle) {
+            ingredientSectionInput.current.focus()
+        } else {
+            ingredientMeasurementEl.current.focus()
+        }
+    }, [showIngredientsSectionTitle])
 
     const handleTagToggle = () => {
         setShowMoreTags(!showMoreTags)
@@ -94,13 +103,13 @@ export default function AddRecipeForm(props) {
     useEffect(() => {
         const previews = formData.ingredients.map((ingredient) => {
             return (
-                <div key={ingredient.ingredientQuantity + ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail}
+                <div key={ingredient.ingredientQuantity + ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail + ingredient.ingredientSectionName}
                      className='ingredient-preview-element' onMouseEnter={showDeleteButton} onMouseDown={showDeleteButton} onMouseLeave={hideDeleteButton}>
                     {ingredient.ingredientSectionName && <span className='ingredient-section-preview'>{ingredient.ingredientSectionName}</span>}
-                    <span className='ingredient-quantity-preview'>{ingredient.ingredientQuantity}</span>
-                    <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>
-                    <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>
-                    <span className='ingredient-extra-detail-preview'>{ingredient.ingredientExtraDetail}</span>
+                    {ingredient.ingredientQuantity && <span className='ingredient-quantity-preview'>{ingredient.ingredientQuantity}</span>}
+                    {ingredient.ingredientMeasurement && <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>}
+                    {ingredient.ingredientName && <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>}
+                    {ingredient.ingredientExtraDetail && <span className='ingredient-extra-detail-preview'>{ingredient.ingredientExtraDetail}</span>}
                     <span className='delete-ingredient-btn hide' onMouseDown={() => deleteIngredient(ingredient)}>delete</span>
                 </div>
             )
@@ -403,7 +412,8 @@ export default function AddRecipeForm(props) {
         if (currentIngredientsObj.ingredientQuantity !== '' || 
             currentIngredientsObj.ingredientMeasurement !== '' || 
             currentIngredientsObj.ingredientName !== '' || 
-            currentIngredientsObj.ingredientExtraDetail !== '') {
+            currentIngredientsObj.ingredientExtraDetail !== '' ||
+            currentIngredientsObj.ingredientSectionName !== '') {
                 console.log('running this code')
                 setFormData((prevData) => ({
                     ...prevData,
@@ -419,8 +429,7 @@ export default function AddRecipeForm(props) {
                     ingredientSectionName: ''
                 }))
                 ingredientMeasurementEl.current.focus()
-        } else {
-            console.log('nothing to add. add some stuff yo!')
+                setShowIngredientsSectionTitle(false)
         }
     }
 
@@ -431,12 +440,14 @@ export default function AddRecipeForm(props) {
     }
 
     const handleAddIngredientSectionClick = (e) => {
-        setShowIngredientsSectionTitle(true)
+        handleAddClick()
+        setShowIngredientsSectionTitle(prevState => !prevState)
     }
 
     const handleAddSectionKeydown = (e) => {
         if (e.key === 'Enter') {
-            handleAddIngredientSectionClick() 
+            handleAddIngredientSectionClick()
+            setShowIngredientsSectionTitle(prevState => !prevState)
         }
     }
 
@@ -565,26 +576,27 @@ export default function AddRecipeForm(props) {
                                 <span id='ingredient-measurement-preview'></span>
                                 <span id='ingredient-name-preview'></span>
                                 <span id='ingredient-extra-detail-preview'></span>
+                                <span id='ingredient-section-preview'></span>
                             </div>
                             {duplicateIngredients && <div className='duplicate-alert'>You have the same ingredient on there twice. Not judging, but it's just kinda weird to do that.</div>}
-                            <label htmlFor="ingredientQuantity">Quantity: {invalidQuantityMessage && <span className='invalid-quantity'>*invalid quantity. Too many spaces</span>}</label>
-                            <input type="text" id="quantity" name="ingredientQuantity" className='has-placeholder'
+                            <label htmlFor="ingredientQuantity" className={`${showIngredientsSectionTitle ? 'disable-input' : ''}`}>Quantity: {invalidQuantityMessage && <span className='invalid-quantity'>*invalid quantity. Too many spaces</span>}</label>
+                            <input type="text" id="quantity" name="ingredientQuantity" className={`has-placeholder ${showIngredientsSectionTitle ? 'disable-input' : ''}`} disabled={showIngredientsSectionTitle}
                             ref={ingredientMeasurementEl} placeholder='1/2' value={currentIngredientsObj.ingredientQuantity} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
-                            <label htmlFor="ingredientMeasurement">Measurement:</label>
-                            <input type="text" id="measurement" name="ingredientMeasurement" className='has-placeholder'
+                            <label htmlFor="ingredientMeasurement" className={`${showIngredientsSectionTitle ? 'disable-input' : ''}`}>Measurement:</label>
+                            <input type="text" id="measurement" name="ingredientMeasurement" className={`has-placeholder ${showIngredientsSectionTitle ? 'disable-input' : ''}`} disabled={showIngredientsSectionTitle}
                             placeholder='cup' value={currentIngredientsObj.ingredientMeasurement} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
-                            <label htmlFor="ingredientName">Ingredient Name:</label>
-                            <input type="text" id="ingredient-name" name="ingredientName" className='has-placeholder'
+                            <label htmlFor="ingredientName" className={`${showIngredientsSectionTitle ? 'disable-input' : ''}`}>Ingredient Name:</label>
+                            <input type="text" id="ingredient-name" name="ingredientName" className={`has-placeholder ${showIngredientsSectionTitle ? 'disable-input' : ''}`} disabled={showIngredientsSectionTitle}
                             placeholder='Diced Carrots' value={currentIngredientsObj.ingredientName} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
-                            <label htmlFor="ingredientExtraDetail">Extra Detail:</label>
-                            <input type="text" id="ingredient-extra-detail" name="ingredientExtraDetail" className='has-placeholder'
+                            <label htmlFor="ingredientExtraDetail" className={`${showIngredientsSectionTitle ? 'disable-input' : ''}`}>Extra Detail:</label>
+                            <input type="text" id="ingredient-extra-detail" name="ingredientExtraDetail" className={`has-placeholder ${showIngredientsSectionTitle ? 'disable-input' : ''}`} disabled={showIngredientsSectionTitle}
                             placeholder='(about 1 large carrot)' value={currentIngredientsObj.ingredientExtraDetail} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
                             {showIngredientsSectionTitle && <div><label htmlFor="ingredientSectionName">Ingredient Section Name:</label>
                             <input type="text" id="ingredient-section-name" name="ingredientSectionName" className='has-placeholder'
-                            placeholder='Marinade Ingredients' value={currentIngredientsObj.ingredientSectionName} onChange={handleIngredientChange} onKeyDown={handleAddSectionKeydown}></input></div>}
+                            placeholder='Marinade Ingredients' ref={ingredientSectionInput} value={currentIngredientsObj.ingredientSectionName} onChange={handleIngredientChange} onKeyDown={handleAddSectionKeydown}></input></div>}
                             <div className='ingredients-button-container'>
                                 <div className="add-button" onClick={handleAddClick}>add {showIngredientsSectionTitle ? 'section' : 'ingredient'}</div>
-                                <div className="add-ingredients-header" onClick={handleAddIngredientSectionClick}>+ ingredient section</div>
+                                <div className="add-ingredients-header" onClick={handleAddIngredientSectionClick}>{showIngredientsSectionTitle ? 'cancel' : '+ ingredient section'}</div>
                             </div>
                         </div>
 
