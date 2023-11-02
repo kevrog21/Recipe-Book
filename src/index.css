@@ -904,8 +904,8 @@ main {
 .ingredient-section-preview {
   display: inline-block;
   margin: 2em 0 .5em 0;
-  font-size: 1.3em;
-  
+  font-size: 1.2em;
+  color: #7E7E7E;
 }
 
 #ingredient-quantity-preview,
@@ -924,12 +924,17 @@ main {
 
 .ingredient-preview-element {
   cursor: pointer;
+  display: flex;
 }
 
 .ingredient-quantity-preview {
   margin: 0 .4em 0 1.25em;
-  /* transition: all .5s ease-out; */
   font-weight: 900;
+  display: flex;
+}
+
+.ingredient-quantity-preview > .fraction-container {
+
 }
 
 .ingredients-button-container {
@@ -941,6 +946,39 @@ main {
   cursor: pointer;
   font-weight: 600;
   margin: 0 1em;
+}
+
+.ingredients-content-container > .ingredient-preview-element:first-child > .ingredient-section-preview {
+  margin: 0 0 .5em 0;
+}
+
+.fraction-container {
+  
+  display: inline-flex;
+  align-items: center;
+  
+}
+
+.numerator,
+.fraction-slash,
+.denominator {
+  font-size: .7em;
+}
+
+.numerator {
+  padding: 0 0 .6em 0;
+}
+
+.fraction-slash {
+  rotate: 15deg;
+}
+
+.denominator {
+  padding: .6em 0 0 0;
+}
+
+.number-pre-fraction {
+  margin: 0 .3em 0 0;
 }
 
 .updated-quantity-animation {

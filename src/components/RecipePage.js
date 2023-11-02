@@ -52,10 +52,69 @@ export default function RecipePage(props) {
             if (newNumerator === 0) {
                 return `${wholePart}`
             } else {
-                return `${wholePart} ${newNumerator}/${denominator}`
+                const container = document.createElement('div')
+
+                const wholePartEl = document.createElement('span')
+                wholePartEl.className = 'number-pre-fraction'
+                wholePartEl.textContent = wholePart
+                container.appendChild(wholePartEl)
+
+                const childDiv = document.createElement('div')
+                childDiv.className = 'fraction-container'
+
+                const numeratorWithClass = document.createElement('span')
+                numeratorWithClass.className = 'whole-number'
+                numeratorWithClass.textContent = newNumerator
+                childDiv.appendChild(numeratorWithClass)
+
+                if (denominator) {
+                    numeratorWithClass.className = 'numerator'
+                    
+                    const slash = document.createElement('span')
+                    slash.className = 'fraction-slash'
+                    slash.textContent = '/'
+                    childDiv.appendChild(slash)
+    
+                    const denominatorWithClass = document.createElement('span')
+                    denominatorWithClass.className = 'denominator'
+                    denominatorWithClass.textContent = denominator
+                    childDiv.appendChild(denominatorWithClass)
+                }
+    
+                container.appendChild(childDiv)
+    
+                return container.innerHTML
+
+                // return `${wholePart} ${newNumerator}/${denominator}`
             }
        } else {
-            return fraction
+            const container = document.createElement('div')
+
+            const childDiv = document.createElement('div')
+            childDiv.className = 'fraction-container'
+
+            const numeratorWithClass = document.createElement('span')
+            numeratorWithClass.className = 'whole-number'
+            numeratorWithClass.textContent = numerator
+            childDiv.appendChild(numeratorWithClass)
+
+            if (denominator) {
+                numeratorWithClass.className = 'numerator'
+                
+                const slash = document.createElement('span')
+                slash.className = 'fraction-slash'
+                slash.textContent = '/'
+                childDiv.appendChild(slash)
+
+                const denominatorWithClass = document.createElement('span')
+                denominatorWithClass.className = 'denominator'
+                denominatorWithClass.textContent = denominator
+                childDiv.appendChild(denominatorWithClass)
+            }
+
+            container.appendChild(childDiv)
+
+            return container.innerHTML
        }
     }
 
@@ -73,7 +132,7 @@ export default function RecipePage(props) {
                     const newQuantityAsFraction = decimalToFraction(newQuantity)
                     const formattedNewQuantityAsFraction = formattedFraction(newQuantityAsFraction)
 
-                    element.textContent = formattedNewQuantityAsFraction == '0' ? '' : formattedNewQuantityAsFraction
+                    element.innerHTML = formattedNewQuantityAsFraction == '0' ? '' : formattedNewQuantityAsFraction
                     element.classList.add('updated-quantity-animation')
                     setTimeout(() => {
                         element.classList.remove('updated-quantity-animation')
@@ -418,7 +477,7 @@ export default function RecipePage(props) {
                         <img src={arrow} className="arrowHead section-arrowhead"/>
                     </div>
     
-                    <div className='section-content-container'>
+                    <div className='section-content-container ingredients-content-container'>
                         {ingredients}
                     </div>
                 </section>
