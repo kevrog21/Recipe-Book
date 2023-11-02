@@ -49,15 +49,17 @@ export default function RecipePage(props) {
             const wholePart = Math.floor(numerator / denominator)
             const newNumerator = numerator % denominator
 
-            if (newNumerator === 0) {
+            if (newNumerator === 0 && wholePart !== 0) {
                 return `${wholePart}`
             } else {
                 const container = document.createElement('div')
 
-                const wholePartEl = document.createElement('span')
-                wholePartEl.className = 'number-pre-fraction'
-                wholePartEl.textContent = wholePart
-                container.appendChild(wholePartEl)
+                if (wholePart !== 0) {
+                    const wholePartEl = document.createElement('span')
+                    wholePartEl.className = 'number-pre-fraction'
+                    wholePartEl.textContent = wholePart
+                    container.appendChild(wholePartEl)
+                }
 
                 const childDiv = document.createElement('div')
                 childDiv.className = 'fraction-container'
@@ -85,7 +87,6 @@ export default function RecipePage(props) {
     
                 return container.innerHTML
 
-                // return `${wholePart} ${newNumerator}/${denominator}`
             }
        } else {
             const container = document.createElement('div')
@@ -156,11 +157,16 @@ export default function RecipePage(props) {
                 return (
                     <div key={ingredient.ingredientQuantity + ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail + ingredient.ingredientSectionName}
                              className='ingredient-preview-element'>
-                            {ingredient.ingredientSectionName && <span className='ingredient-section-preview'>{ingredient.ingredientSectionName}</span>}
-                            <span className='ingredient-quantity-preview'>{ingredient.ingredientQuantityDecimal}</span>
-                            {ingredient.ingredientMeasurement && <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>}
-                            {ingredient.ingredientName && <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>}
-                            {ingredient.ingredientExtraDetail && <span className='ingredient-extra-detail-preview'>{ingredient.ingredientExtraDetail}</span>}
+                            <span>
+                                <div className='bullet-point'></div>
+                            </span>
+                            <span className='ingredient-txt-wrapper'>
+                                {ingredient.ingredientSectionName && <span className='ingredient-section-preview'>{ingredient.ingredientSectionName}</span>}
+                                <span className='ingredient-quantity-preview'>{ingredient.ingredientQuantityDecimal}</span>
+                                {ingredient.ingredientMeasurement && <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>}
+                                {ingredient.ingredientName && <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>}
+                                {ingredient.ingredientExtraDetail && <span className='ingredient-extra-detail-preview'>{ingredient.ingredientExtraDetail}</span>}
+                            </span>
                     </div>
                 )
             })
