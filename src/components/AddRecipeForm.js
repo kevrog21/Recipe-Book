@@ -12,7 +12,7 @@ export default function AddRecipeForm(props) {
         recipeSubName: '',
         defaultServings: 0,
         ingredients: [],
-        instructions: '',
+        instructions: [],
         notes: '',
         prepTimeHours: 0,
         prepTimeMins: 0,
@@ -348,7 +348,7 @@ export default function AddRecipeForm(props) {
                             recipeSubName: '',
                             defaultServings: 0,
                             ingredients: [],
-                            instructions: '',
+                            instructions: [],
                             notes: '',
                             prepTimeHours: 0,
                             prepTimeMins: 0,
@@ -440,8 +440,17 @@ export default function AddRecipeForm(props) {
     }
 
     const handleAddIngredientSectionClick = (e) => {
-        handleAddClick()
-        setShowIngredientsSectionTitle(prevState => !prevState)
+        console.log(showIngredientsSectionTitle)
+        if (!showIngredientsSectionTitle) {
+            handleAddClick()
+            setShowIngredientsSectionTitle(prevState => !prevState)
+        } else {
+            setShowIngredientsSectionTitle(prevState => !prevState)
+            setCurrentIngredientsObj((prevState) => ({
+                ...prevState,
+                ingredientSectionName: ''
+            }))
+        }
     }
 
     const handleAddSectionKeydown = (e) => {
@@ -610,10 +619,15 @@ export default function AddRecipeForm(props) {
                         </div>
                         
                         <div className='section-input-container'>
-                            <label htmlFor="instructions">Type all instructions:</label>
-                            <textarea rows="5" type="text" id="instructions" name="instructions" className='has-placeholder'
+                            <label htmlFor="instructions">Step 1:</label>
+                            <textarea rows="4" type="text" id="instructions" name="instructions" className='has-placeholder'
                             placeholder='Bring 3 quarts of water to a boil...' value={formData.instructions} onChange={handleInputChange}></textarea>
+                            <div className='ingredients-button-container'>
+                                <div className="add-button" onClick={handleAddClick}>add {showIngredientsSectionTitle ? 'section' : 'step'}</div>
+                                <div className="add-ingredients-header" onClick={handleAddIngredientSectionClick}>{showIngredientsSectionTitle ? 'cancel' : '+ section header'}</div>
+                            </div>
                         </div>
+                        
 
                 </section>
 

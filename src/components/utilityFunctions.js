@@ -80,9 +80,7 @@ export function parseFraction(fraction, setInvalidQuantityMessage) {
 
 export function decimalToFraction(decimal) {
     const fraction = new Fraction(decimal)
-
     const simplifiedFraction = fraction.simplify()
-
     const fractionString = simplifiedFraction.toFraction()
 
     return `${fractionString}`

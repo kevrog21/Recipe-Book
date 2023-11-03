@@ -509,9 +509,10 @@ main {
   color: green;
   width: 84.5%;
   margin: auto;
-  font-size: 1.53vw;
+  font-size: .75em;
   padding: 0 3vw;
   margin: -1.75vw 0 0 0;
+  text-align: center;
 }
 
 .time-overview-img {
@@ -903,7 +904,7 @@ main {
 
 .ingredient-section-preview {
   display: inline-block;
-  margin: 2em 0 .5em 0;
+  margin: 2em 0 0 0;
   font-size: 1.2em;
   color: #7E7E7E;
 }
@@ -963,8 +964,8 @@ main {
   margin: 0 1em;
 }
 
-.ingredients-content-container > .ingredient-preview-element:first-child > .ingredient-section-preview {
-  margin: 0 0 .5em 0;
+.ingredients-content-container > .ingredient-preview-element:first-child > .ingredient-txt-wrapper > .ingredient-section-preview {
+  margin: 0 0 0 0;
 }
 
 .fraction-container {

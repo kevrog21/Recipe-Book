@@ -42,6 +42,27 @@ export default function RecipePage(props) {
         }
     }, [mongoData, recipeId])
 
+    function simplifyFraction(numerator, denominator) {
+        const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b))
+        const commonDevisor = gcd(numerator, denominator)
+        const simplifiedNumerator = numerator / commonDevisor
+        const simplifiedDenominator = denominator / commonDevisor
+        return [simplifiedNumerator, simplifiedDenominator]
+    }
+
+    function toMixedNumber(simplifiedNumerator, simplifiedDenominator) {
+        const wholeNumber = Math.floor(simplifiedNumerator / simplifiedDenominator)
+        const numerator = simplifiedNumerator % simplifiedDenominator
+        const mixedNumber = wholeNumber > 0 ? `${wholeNumber} ${numerator}/${simplifiedDenominator}` : `${numerator}/${simplifiedDenominator}`
+        return mixedNumber;
+    }
+
+    const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(15, 4)
+    const mixedNumber = toMixedNumber(simplifiedNumerator, simplifiedDenominator)
+
+    console.log(`${simplifiedNumerator}/${simplifiedDenominator}`)
+    console.log(mixedNumber)
+
     function formattedFraction(fraction) {
        const [numerator, denominator] = fraction.split('/')
 
@@ -49,7 +70,7 @@ export default function RecipePage(props) {
             const wholePart = Math.floor(numerator / denominator)
             const newNumerator = numerator % denominator
 
-            if (newNumerator === 0 && wholePart !== 0) {
+            if (newNumerator === 0) {
                 return `${wholePart}`
             } else {
                 const container = document.createElement('div')
@@ -157,9 +178,9 @@ export default function RecipePage(props) {
                 return (
                     <div key={ingredient.ingredientQuantity + ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail + ingredient.ingredientSectionName}
                              className='ingredient-preview-element'>
-                            <span>
+                            {!ingredient.ingredientSectionName && <span>
                                 <div className='bullet-point'></div>
-                            </span>
+                            </span>}
                             <span className='ingredient-txt-wrapper'>
                                 {ingredient.ingredientSectionName && <span className='ingredient-section-preview'>{ingredient.ingredientSectionName}</span>}
                                 <span className='ingredient-quantity-preview'>{ingredient.ingredientQuantityDecimal}</span>
@@ -433,8 +454,7 @@ export default function RecipePage(props) {
                                 <div className='time-overview-subtext'>cook: {displayCookTime}</div>
                             </div>
                         </div>
-                        <div className='time-disclaimer hide'>*This cook time is based on {currentRecipe.defaultServings} servings. 
-                        The new serving size may affect cook time.</div>
+                        <div className='time-disclaimer hide'>*This cook time is based on a serving size of {currentRecipe.defaultServings}.</div>
                     </div>
                     <div className='serving-overview'>
                         <div className='grey-text'>serving{servingSelection > 1 ? 's' : ''}:</div>
