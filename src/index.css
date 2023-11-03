@@ -1037,6 +1037,15 @@ main {
   font-size: 1rem;
 }
 
+.instruction-step-label {
+  font-weight: 700;
+  font-size: .9em;
+}
+
+.instruction-text {
+  margin: 0 0 1.5em 0;
+}
+
 #cooktime-hours,
 #cooktime-mins,
 #preptime-hours,
