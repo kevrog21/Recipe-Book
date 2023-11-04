@@ -879,7 +879,7 @@ main {
   color: #C0C0C0;
 }
 
-.current-ingredient-preview {
+#current-ingredient-preview {
   margin: .5rem 0 1.25rem 0;
 }
 
@@ -1044,6 +1044,11 @@ main {
 
 .instruction-text {
   margin: 0 0 1.5em 0;
+}
+
+.instruction-section-header {
+  color: #7E7E7E;
+  font-size: 2em;
 }
 
 #cooktime-hours,

@@ -57,6 +57,8 @@ export default function AddRecipeForm(props) {
     const [showMoreTags, setShowMoreTags] = useState(false)
     const ingredientMeasurementEl = useRef(null)
     const ingredientSectionInput = useRef(null)
+    const instructionTextEl = useRef(null)
+    const instructionSectionInput = useRef(null)
     // const [currentIngredientSection, setCurrenIngredientSection] = useState([''])
     // add ingredients to current ingredient section array
 
@@ -73,6 +75,14 @@ export default function AddRecipeForm(props) {
             ingredientMeasurementEl.current.focus()
         }
     }, [showIngredientsSectionTitle])
+
+    useEffect(() => {
+        if (showInstructionsSectionTitle) {
+            instructionSectionInput.current.focus()
+        } else {
+            instructionTextEl.current.focus()
+        }
+    })
 
     const handleTagToggle = () => {
         setShowMoreTags(!showMoreTags)
@@ -133,8 +143,9 @@ export default function AddRecipeForm(props) {
         const previews = formData.instructions.map((instruction, index) => {
             return (
                 <div key={index} >
-                    <div className='instruction-step-label'>Step: {index + 1}</div>
-                    <div className='instruction-text'>{instruction.instructionText}</div>
+                    {!instruction.instructionSection && <div className='instruction-step-label'>Step: {index + 1}</div>}
+                    {!instruction.instructionSection && <div className='instruction-text'>{instruction.instructionText}</div>}
+                    {instruction.instructionSection && <div className='instruction-section-header'>{instruction.instructionSection}</div>}
                 </div>
             )
         })
@@ -161,6 +172,8 @@ export default function AddRecipeForm(props) {
     }
 
     const handleIngredientChange = (e) => {
+        const currentIngredientContainerEl = document.getElementById('current-ingredient-preview')
+        currentIngredientContainerEl.classList.remove('hide')
         const { name, value } = e.target
 
         if (name === 'ingredientQuantity') {
@@ -450,7 +463,9 @@ export default function AddRecipeForm(props) {
         if (currentIngredientsObj.ingredientQuantity !== '' || 
             currentIngredientsObj.ingredientMeasurement !== '' || 
             currentIngredientsObj.ingredientName !== '' || 
-            currentIngredientsObj.ingredientExtraDetail !== '') {
+            currentIngredientsObj.ingredientExtraDetail !== '' || 
+            currentIngredientsObj.ingredientSectionName !== '') {
+                console.log('adding now')
                 setFormData((prevData) => ({
                     ...prevData,
                     ingredients: [...prevData.ingredients, currentIngredientsObj]
@@ -476,7 +491,6 @@ export default function AddRecipeForm(props) {
     }
 
     const handleAddIngredientSectionClick = (e) => {
-        console.log(showIngredientsSectionTitle)
         if (!showIngredientsSectionTitle) {
             handleAddIngredientClick()
             setShowIngredientsSectionTitle(prevState => !prevState)
@@ -491,26 +505,34 @@ export default function AddRecipeForm(props) {
 
     const handleAddSectionKeydown = (e) => {
         if (e.key === 'Enter') {
-            handleAddIngredientSectionClick()
-            setShowIngredientsSectionTitle(prevState => !prevState)
+            handleAddIngredientClick()
+            setShowIngredientsSectionTitle(false)
         }
     }
 
     const handleAddInstructionClick = (e) => {
         if (currentInstructionsObj.instructionText !== '' ||
-        currentInstructionsObj.instructionSection !== '') {
+            currentInstructionsObj.instructionSection !== '') {
             setFormData((prevData) => ({
                 ...prevData,
                 instructions: [...prevData.instructions, currentInstructionsObj]
             }))
+            setCurrentInstructionsObj({
+                instructionText: '',
+                instructionSection: ''
+            })
+            setShowInstructionsSectionTitle(false)
         }
-        setCurrentInstructionsObj({
-            instructionText: '',
-            instructionSection: ''
-        })
     }
 
-
+    const handleAddInstructionSectionClick = (e) => {
+        if (!showIngredientsSectionTitle) {
+            handleAddInstructionClick()
+            setShowInstructionsSectionTitle(prevState => !prevState)
+        } else {
+            setShowInstructionsSectionTitle(prevState => !prevState)
+        }
+    }
 
 
     const handleTagClick = (word) => {
@@ -633,7 +655,7 @@ export default function AddRecipeForm(props) {
                         
                         <div className='section-input-container'>
                             {ingredientPreviews}
-                            <div className='current-ingredient-preview'>
+                            <div id='current-ingredient-preview' className='hide'>
                                 <span id='ingredient-quantity-preview'></span>
                                 <span id='ingredient-measurement-preview'></span>
                                 <span id='ingredient-name-preview'></span>
@@ -673,12 +695,17 @@ export default function AddRecipeForm(props) {
                         
                         <div className='section-input-container'>
                             {instructionsPreview}
-                            <label htmlFor="instructions">Step {formData.instructions.length + 1}:</label>
-                            <textarea rows="4" type="text" id="instructions" name="instructionText" className='has-placeholder'
+                            {showInstructionsSectionTitle && <div>
+                                <label htmlFor="instructionSection">Section Name:</label>
+                                <input type="text" id="instruction-section-name" name="instructionSection" className='has-placeholder'
+                                placeholder='Marinade Ingredients' ref={instructionSectionInput} value={currentInstructionsObj.instructionSection} onChange={handleInstructionsChange} onKeyDown={handleAddSectionKeydown}></input>
+                            </div>}
+                            <label htmlFor="instructions" className={`${showInstructionsSectionTitle ? 'disable-input' : ''}`}>Step {formData.instructions.length + 1}:</label>
+                            <textarea rows="4" type="text" id="instructions" name="instructionText" ref={instructionTextEl} className={`has-placeholder ${showInstructionsSectionTitle ? 'disable-input' : ''}`}
                             placeholder='Bring 3 quarts of water to a boil...' value={currentInstructionsObj.instructionText} onChange={handleInstructionsChange}></textarea>
                             <div className='ingredients-button-container'>
-                                <div className="add-button" onClick={handleAddInstructionClick}>add {showIngredientsSectionTitle ? 'section' : 'step'}</div>
-                                <div className="add-ingredients-header" onClick={handleAddIngredientSectionClick}>{showIngredientsSectionTitle ? 'cancel' : '+ section header'}</div>
+                                <div className="add-button" onClick={handleAddInstructionClick}>add {showInstructionsSectionTitle ? 'section' : 'step'}</div>
+                                <div className="add-ingredients-header" onClick={handleAddInstructionSectionClick}>{showInstructionsSectionTitle ? 'cancel' : '+ section header'}</div>
                             </div>
                         </div>
                         
