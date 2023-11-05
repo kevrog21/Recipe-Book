@@ -902,11 +902,20 @@ main {
   color: #7E7E7E;
 }
 
-.ingredient-section-preview {
+.ingredient-section-preview,
+.instruction-section-header {
   display: inline-block;
   margin: 2em 0 0 0;
   font-size: 1.2em;
   color: #7E7E7E;
+}
+
+.instruction-section-header {
+  margin: 2em 0 1em 0;
+}
+
+.section-input-container > .instruction-section-header {
+  margin: 0 0 1em 0;
 }
 
 #ingredient-quantity-preview,
@@ -1044,11 +1053,6 @@ main {
 
 .instruction-text {
   margin: 0 0 1.5em 0;
-}
-
-.instruction-section-header {
-  color: #7E7E7E;
-  font-size: 2em;
 }
 
 #cooktime-hours,
