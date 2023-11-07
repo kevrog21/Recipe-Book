@@ -40,6 +40,7 @@ export default function AddRecipeForm(props) {
     })
     const [ingredientPreviews, setIngredientPreviews] = useState([])
     const [showIngredientsSectionTitle, setShowIngredientsSectionTitle] = useState(false)
+    const [userInteractedWithIngredients, setUserInteractedWithIngredients] = useState(false)
     const [duplicateIngredients, setDuplicateIngredients] = useState(false)
     const [invalidQuantityMessage, setInvalidQuantityMessage] = useState(false)
     const [currentInstructionsObj, setCurrentInstructionsObj] = useState({
@@ -47,6 +48,7 @@ export default function AddRecipeForm(props) {
         instructionSection: ''
     })
     const [showInstructionsSectionTitle, setShowInstructionsSectionTitle] = useState(false)
+    const [userInteractedWithInstructions, setUserInteractedWithInstructions] = useState(false)
     const [instructionsPreview, setInstructionsPreview] = useState([])
     const defaultTagWords = ['main', 'starter', 'dessert', 'breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 
     'winter meals', 'summer meals', 'sides', 'quick', 'vegetarian', 'vegan', 'gluten free', 'dairy free', 'basics']
@@ -59,6 +61,9 @@ export default function AddRecipeForm(props) {
     const ingredientSectionInput = useRef(null)
     const instructionTextEl = useRef(null)
     const instructionSectionInput = useRef(null)
+
+    // const [finalImageObject, setFinalImageObject] = useState({})
+    // const [isInitialRender, setIsInitialRender] = useState(true)
     // const [currentIngredientSection, setCurrenIngredientSection] = useState([''])
     // add ingredients to current ingredient section array
 
@@ -69,18 +74,27 @@ export default function AddRecipeForm(props) {
     }, [showMoreTags])
 
     useEffect(() => {
-        if (showIngredientsSectionTitle) {
-            ingredientSectionInput.current.focus()
+        if (userInteractedWithIngredients) {
+            if (showIngredientsSectionTitle) {
+                ingredientSectionInput.current.focus()
+            } else {
+                ingredientMeasurementEl.current.focus()
+            }
         } else {
-            ingredientMeasurementEl.current.focus()
+            setUserInteractedWithIngredients(true)
         }
+        
     }, [showIngredientsSectionTitle])
 
     useEffect(() => {
-        if (showInstructionsSectionTitle) {
-            instructionSectionInput.current.focus()
+        if (userInteractedWithInstructions) {
+            if (showInstructionsSectionTitle) {
+                instructionSectionInput.current.focus()
+            } else {
+                instructionTextEl.current.focus()
+            }
         } else {
-            instructionTextEl.current.focus()
+            setUserInteractedWithInstructions(true)
         }
     }, [showInstructionsSectionTitle])
 
@@ -168,8 +182,7 @@ export default function AddRecipeForm(props) {
         setInstructionsPreview(previews)
     }, [formData.instructions])
 
-    const [finalImageObject, setFinalImageObject] = useState({})
-    const [isInitialRender, setIsInitialRender] = useState(true)
+
 
     const handleImageChange = (e) => {
         const selectedImage = e.target.files[0]
@@ -600,6 +613,7 @@ export default function AddRecipeForm(props) {
             }
         })
     }
+    
 
     return (
         <main>
