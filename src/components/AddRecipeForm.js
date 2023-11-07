@@ -126,7 +126,7 @@ export default function AddRecipeForm(props) {
                     {ingredient.ingredientMeasurement && <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>}
                     {ingredient.ingredientName && <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>}
                     {ingredient.ingredientExtraDetail && <span className='ingredient-extra-detail-preview'>{ingredient.ingredientExtraDetail}</span>}
-                    <span className='delete-ingredient-btn hide' onMouseDown={() => deleteIngredient(ingredient)}>delete</span>
+                    <span className='delete-btn hide' onMouseDown={() => deleteIngredient(ingredient)}>delete</span>
                 </div>
             )
         })
@@ -147,14 +147,18 @@ export default function AddRecipeForm(props) {
                 currentStep++
                 return (
                     <div key={index} >
-                        <div className='instruction-step-label'>Step: {currentStep}</div>
+                        <div className='instruction-step-label' onMouseEnter={showDeleteButton} onMouseDown={showDeleteButton} onMouseLeave={hideDeleteButton}>Step: {currentStep}
+                            <span className='delete-btn hide' onMouseDown={() => deleteInstruction(instruction)}>delete</span>
+                        </div>
                         <div className='instruction-text'>{instruction.instructionText}</div>
                         
                     </div>
                 )
             } else {
                 return (
-                    <div key={index} className='instruction-section-header'>{instruction.instructionSection}</div>
+                    <div key={index} className='instruction-section-header' onMouseEnter={showDeleteButton} onMouseDown={showDeleteButton} onMouseLeave={hideDeleteButton}>{instruction.instructionSection}
+                        <span className='delete-btn hide' onMouseDown={() => deleteInstruction(instruction)}>delete</span>
+                    </div>
                 )
             }
 
@@ -215,11 +219,11 @@ export default function AddRecipeForm(props) {
     }
 
     const showDeleteButton = (e) => {
-        e.currentTarget.querySelector(".delete-ingredient-btn").classList.remove("hide")
+        e.currentTarget.querySelector(".delete-btn").classList.remove("hide")
     }
 
     const hideDeleteButton = (e) => {
-        e.currentTarget.querySelector(".delete-ingredient-btn").classList.add("hide")
+        e.currentTarget.querySelector(".delete-btn").classList.add("hide")
     }
 
     const deleteIngredient = (ingredientToDelete) => {
@@ -227,6 +231,15 @@ export default function AddRecipeForm(props) {
             ...prevData,
             ingredients: prevData.ingredients.filter(
                 (ingredient) => ingredient !== ingredientToDelete
+            )
+        }))
+    }
+
+    const deleteInstruction = (instructionToDelete) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            instructions: prevData.instructions.filter(
+                (instruction) => instruction !== instructionToDelete
             )
         }))
     }
