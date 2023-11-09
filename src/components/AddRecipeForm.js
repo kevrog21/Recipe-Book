@@ -95,9 +95,6 @@ export default function AddRecipeForm(props) {
         if (userInteractedWithInstructions) {
             if (showInstructionsSectionTitle) {
                 instructionSectionInput.current.focus()
-            } else {
-                instructionTextEl.current.focus()
-                console.log('why no change')
             }
         } else {
             setUserInteractedWithInstructions(true)
