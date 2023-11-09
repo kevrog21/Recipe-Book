@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react' 
+import React, { useState, useEffect, useRef } from 'react' 
 import { useParams, Link } from 'react-router-dom'
 import { useNavigateToLink } from './ToHomePage'
 import axios from 'axios'
@@ -25,13 +25,33 @@ export default function EditRecipeForm(props) {
     const [tagWords, setTagWords] = useState([defaultTagWords])
     const [selectedTagWords, setSelectedTagWords] = useState([])
     const [showMoreTags, setShowMoreTags] = useState(false)
+    const [showIngredientsSectionTitle, setShowIngredientsSectionTitle] = useState(false)
+    const [userInteractedWithIngredients, setUserInteractedWithIngredients] = useState(false)
+    const [invalidQuantityMessage, setInvalidQuantityMessage] = useState(false)
+    const [currentInstructionsObj, setCurrentInstructionsObj] = useState({
+        instructionText: '',
+        instructionSection: ''
+    })
+    const [showInstructionsSectionTitle, setShowInstructionsSectionTitle] = useState(false)
+    const [userInteractedWithInstructions, setUserInteractedWithInstructions] = useState(false)
+    const [instructionsPreview, setInstructionsPreview] = useState([])
+
+    const ingredientMeasurementEl = useRef(null)
+    const ingredientSectionInput = useRef(null)
+    const instructionTextEl = useRef(null)
+    const instructionSectionInput = useRef(null)
+
+    const [editIngredientMode, setEditIngredientMode] = useState(false)
+    const [editInstructionMode, setEditInstructionMode] = useState(false)
+    const [editedIngredientIndex, setEditedIngredientIndex] = useState(null)
+    const [editedInstructionIndex, setEditedInstructionIndex] = useState(null)
 
     const [editFormData, setEditFormData] = useState({
         recipeName: '',
         recipeSubName: '',
         defaultServings: 0,
         ingredients: [],
-        instructions: '',
+        instructions: [],
         notes: '',
         prepTimeHours: 0,
         prepTimeMins: 0,
@@ -82,34 +102,67 @@ export default function EditRecipeForm(props) {
         }
     }, [currentRecipe])
 
+    useEffect(() => {
+        if (userInteractedWithInstructions) {
+            if (showInstructionsSectionTitle) {
+                instructionSectionInput.current.focus()
+            }
+        } else {
+            setUserInteractedWithInstructions(true)
+        }
+    }, [showInstructionsSectionTitle, editedInstructionIndex])
+
+    
+    useEffect(() => {
+        if (mongoData.length > 0) {
+            const recipe = mongoData.find(recipe => recipe._id === recipeId)
+            setCurrentRecipe(recipe)
+            setIsLoading(false)
+        }
+    }, [mongoData, recipeId])
+
     const [currentIngredientsObj, setCurrentIngredientsObj] = useState({
+        ingredientQuantity: '',
+        ingredientQuantityDecimal: null,
         ingredientMeasurement: '',
         ingredientName: '',
-        ingredientExtraDetail: ''
+        ingredientExtraDetail: '',
+        ingredientSectionName: ''
     })
     const [ingredientPreviews, setIngredientPreviews] = useState([])
     const [duplicateIngredients, setDuplicateIngredients] = useState(false)
 
+
+
     useEffect(() => {
         if (currentRecipe && !isLoading) {
+            const ingredientQuantityPreview = document.getElementById("ingredient-quantity-preview")
             const ingredientMeasurementPreview = document.getElementById("ingredient-measurement-preview")
             const ingredientNamePreview = document.getElementById("ingredient-name-preview")
             const ingredientExtraDetailPreview = document.getElementById("ingredient-extra-detail-preview")
+            const ingredientSectionPreview = document.getElementById("ingredient-section-preview")
+            ingredientQuantityPreview.textContent = currentIngredientsObj.ingredientQuantity
             ingredientMeasurementPreview.textContent = currentIngredientsObj.ingredientMeasurement
             ingredientNamePreview.textContent = currentIngredientsObj.ingredientName
             ingredientExtraDetailPreview.textContent = currentIngredientsObj.ingredientExtraDetail
+            if (ingredientSectionPreview) {
+                ingredientSectionPreview.textContent = currentIngredientsObj.ingredientSectionName
+            }
         }
     }, [currentIngredientsObj, isLoading])
 
     useEffect(() => {
-        const previews = editFormData.ingredients.map((ingredient) => {
+        const previews = editFormData.ingredients.map((ingredient, index) => {
             return (
-                <div key={ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail}
-                     className='ingredient-preview-element'>
-                    <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>
-                    <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>
-                    <span className='ingredient-extra-detail-preview'>{ingredient.ingredientExtraDetail}</span>
-                    <span className='delete-ingredient-btn' onMouseDown={() => deleteIngredient(ingredient)}>delete</span>
+                <div key={ingredient.ingredientQuantity + ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail + ingredient.ingredientSectionName + index}
+                     className='ingredient-preview-element' onMouseEnter={showDeleteButton} onMouseDown={showDeleteButton} onMouseLeave={hideDeleteButton}>
+                    {ingredient.ingredientSectionName && <span className='ingredient-section-preview'>{ingredient.ingredientSectionName}</span>}
+                    {ingredient.ingredientQuantity && <span className='ingredient-quantity-preview'>{ingredient.ingredientQuantity}</span>}
+                    {ingredient.ingredientMeasurement && <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>}
+                    {ingredient.ingredientName && <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>}
+                    {ingredient.ingredientExtraDetail && <span className='ingredient-extra-detail-preview'>{ingredient.ingredientExtraDetail}</span>}
+                    <span className='edit-btn hide' onMouseDown={() => handleEditIngredientClick(index)}>edit</span>
+                    <span className='delete-btn hide' onMouseDown={() => deleteIngredient(ingredient)}>delete</span>
                 </div>
             )
         })
@@ -122,6 +175,152 @@ export default function EditRecipeForm(props) {
         }
     }, [editFormData.ingredients])
 
+    let currentStep = 0
+
+    useEffect(() => {
+        const previews = editFormData.instructions.map((instruction, index) => {
+            if (instruction.instructionSection === '') {
+                currentStep++
+                return (
+                    <div key={index} >
+                        <div className={`instruction-step-label ${index === editedInstructionIndex ? 'now-editing' : ''}`} onMouseEnter={showDeleteButton} onMouseDown={showDeleteButton} onMouseLeave={hideDeleteButton}>Step: {currentStep}
+                            <span className='controls-container'>
+                                <span className='edit-btn hide' onMouseDown={() => handleEditClick(index)}>edit</span>
+                                <span className='delete-btn hide' onMouseDown={() => deleteInstruction(instruction)}>delete</span>
+                                <span>
+                                    <span>
+                                        <span></span>
+                                    </span>
+                                    <span>
+                                        <span></span>
+                                    </span>
+                                </span>
+                            </span>
+                            <div className='instruction-text'>{instruction.instructionText}</div>
+                        </div>
+                    </div>
+                )
+            } else {
+                return (
+                    <div key={index} className={`instruction-section-header ${index === editedInstructionIndex ? 'now-editing' : ''}`} onMouseEnter={showDeleteButton} onMouseDown={showDeleteButton} onMouseLeave={hideDeleteButton}>{instruction.instructionSection}
+                        <span className='controls-container'>
+                            <span className='edit-btn hide' onMouseDown={() => handleEditClick(index)}>edit</span>
+                            <span className='delete-btn hide' onMouseDown={() => deleteInstruction(instruction)}>delete</span>
+                        </span>
+                    </div>
+                )
+            }
+        })
+        setInstructionsPreview(previews)
+    }, [editFormData.instructions, editedInstructionIndex])
+
+    const handleAddIngredientClick = (e) => {
+        console.log(editFormData.ingredients)
+        if (currentIngredientsObj.ingredientQuantity !== '' || 
+            currentIngredientsObj.ingredientMeasurement !== '' || 
+            currentIngredientsObj.ingredientName !== '' || 
+            currentIngredientsObj.ingredientExtraDetail !== '' || 
+            currentIngredientsObj.ingredientSectionName !== '') {
+                console.log('adding now')
+                setEditFormData((prevData) => ({
+                    ...prevData,
+                    ingredients: [...prevData.ingredients, currentIngredientsObj]
+                }))
+                console.log(editFormData.ingredients)
+                setCurrentIngredientsObj(() => ({
+                    ingredientQuantity: '',
+                    ingredientQuantityDecimal: null,
+                    ingredientMeasurement: '',
+                    ingredientName: '',
+                    ingredientExtraDetail: '',
+                    ingredientSectionName: ''
+                }))
+                ingredientMeasurementEl.current.focus()
+                setShowIngredientsSectionTitle(false)
+        }
+    }
+
+    const handleAddIngredientSectionClick = (e) => {
+        if (!showIngredientsSectionTitle) {
+            handleAddIngredientClick()
+            setShowIngredientsSectionTitle(prevState => !prevState)
+        } else {
+            setShowIngredientsSectionTitle(prevState => !prevState)
+            setCurrentIngredientsObj((prevState) => ({
+                ...prevState,
+                ingredientSectionName: ''
+            }))
+        }
+    }
+
+    const handleEditIngredientClick = (index) => {
+        setEditIngredientMode(true)
+        setEditedIngredientIndex(index)
+        setCurrentIngredientsObj({
+            ingredientQuantity: editFormData.ingredients[index].ingredientQuantity,
+            ingredientQuantityDecimal: null,
+            ingredientMeasurement: editFormData.ingredients[index].ingredientMeasurement,
+            ingredientName: editFormData.ingredients[index].ingredientName,
+            ingredientExtraDetail: editFormData.ingredients[index].ingredientExtraDetail,
+            ingredientSectionName: editFormData.ingredients[index].ingredientSectionName
+        })
+    }
+
+    const cancelEditIngredientClick = () => {
+        setEditInstructionMode(false)
+        setEditedInstructionIndex(null)
+        setCurrentIngredientsObj({
+            ingredientQuantity: '',
+            ingredientQuantityDecimal: null,
+            ingredientMeasurement: '',
+            ingredientName: '',
+            ingredientExtraDetail: '',
+            ingredientSectionName: ''
+        })
+    }
+
+    const handleEditIngredientSubmit = () => {
+        setEditFormData((prevData) => {
+            const updatedIngredients = prevData.ingredients.map((ingredient, index) => {
+                if (index === editedIngredientIndex) {
+                    return {
+                        ingredientQuantity: currentIngredientsObj.ingredientQuantity,
+                        ingredientQuantityDecimal: null,
+                        ingredientMeasurement: currentIngredientsObj.ingredientMeasurement,
+                        ingredientName: currentIngredientsObj.ingredientName,
+                        ingredientExtraDetail: currentIngredientsObj.ingredientExtraDetail,
+                        ingredientSectionName: currentIngredientsObj.ingredientSectionName
+                    }
+                }
+                return ingredient
+            })
+            
+            return {
+                ...prevData,
+                ingredients: updatedIngredients
+            }
+        })
+        setEditIngredientMode(false)
+        setEditedIngredientIndex(null)
+        setShowIngredientsSectionTitle(false)
+        setCurrentIngredientsObj({
+            ingredientQuantity: '',
+            ingredientQuantityDecimal: null,
+            ingredientMeasurement: '',
+            ingredientName: '',
+            ingredientExtraDetail: '',
+            ingredientSectionName: ''
+        })
+        ingredientMeasurementEl.current.focus()
+    }
+
+    const handleIngredientsAddSectionKeydown = (e) => {
+        if (e.key === 'Enter') {
+            handleAddIngredientClick()
+            setShowIngredientsSectionTitle(false)
+        }
+    }
+
     const deleteIngredient = (ingredientToDelete) => {
         setEditFormData((prevData) => ({
             ...prevData,
@@ -130,14 +329,6 @@ export default function EditRecipeForm(props) {
             )
         }))
     }
-
-    useEffect(() => {
-        if (mongoData.length > 0) {
-            const recipe = mongoData.find(recipe => recipe._id === recipeId)
-            setCurrentRecipe(recipe)
-            setIsLoading(false)
-        }
-    }, [mongoData, recipeId])
 
     const handleIngredientChange = (e) => {
         const { name, value } = e.target
@@ -164,15 +355,128 @@ export default function EditRecipeForm(props) {
                     ingredients: [...prevData.ingredients, currentIngredientsObj]
                 }))
                 console.log(editFormData.ingredients)
-                setCurrentIngredientsObj(() => ({
+                setCurrentIngredientsObj({
+                    ingredientQuantity: '',
+                    ingredientQuantityDecimal: null,
                     ingredientMeasurement: '',
                     ingredientName: '',
-                    ingredientExtraDetail: ''
-                }))
+                    ingredientExtraDetail: '',
+                    ingredientSectionName: ''
+                })
+                setCurrentInstructionsObj({
+                    instructionText: '',
+                    instructionSection: ''
+                })
         } else {
             console.log('nothing to add. add some stuff yo!')
         }
     }
+
+    const handleInstructionsChange = (e) => {
+        const { name, value } = e.target
+        setCurrentInstructionsObj((prevDate) => ({
+            ...prevDate,
+            [name]: value
+        }))
+    }
+
+    const handleInstructionsAddSectionKeydown = (e) => {
+        if (e.key === 'Enter') {
+            handleAddInstructionClick()
+            setShowInstructionsSectionTitle(false)
+        }
+    }
+
+    const handleAddInstructionClick = (e) => {
+        if (currentInstructionsObj.instructionText !== '' ||
+            currentInstructionsObj.instructionSection !== '') {
+            setEditFormData((prevData) => ({
+                ...prevData,
+                instructions: [...prevData.instructions, currentInstructionsObj]
+            }))
+            setCurrentInstructionsObj({
+                instructionText: '',
+                instructionSection: ''
+            })
+            setShowInstructionsSectionTitle(false)
+            instructionTextEl.current.focus()
+        }
+    }
+
+    const handleAddInstructionSectionClick = (e) => {
+        if (!showInstructionsSectionTitle) {
+            handleAddInstructionClick()
+            setShowInstructionsSectionTitle(prevState => !prevState)
+        } else {
+            setShowInstructionsSectionTitle(prevState => !prevState)
+        }
+    }
+
+    const showDeleteButton = (e) => {
+        e.currentTarget.querySelector(".delete-btn").classList.remove("hide")
+        e.currentTarget.querySelector(".edit-btn").classList.remove("hide")
+    }
+
+    const hideDeleteButton = (e) => {
+        e.currentTarget.querySelector(".delete-btn").classList.add("hide")
+        e.currentTarget.querySelector(".edit-btn").classList.add("hide")
+    }
+
+    const deleteInstruction = (instructionToDelete) => {
+        setEditFormData((prevData) => ({
+            ...prevData,
+            instructions: prevData.instructions.filter(
+                (instruction) => instruction !== instructionToDelete
+            )
+        }))
+    }
+
+    const handleEditClick = (index) => {
+        setEditInstructionMode(true)
+        setEditedInstructionIndex(index)
+        setCurrentInstructionsObj({
+            instructionText: editFormData.instructions[index].instructionText,
+            instructionSection: editFormData.instructions[index].instructionSection
+        })
+    }
+
+    const handleEditSubmit = () => {
+        console.log(editFormData)
+        setEditFormData((prevData) => {
+            const updatedInstructions = prevData.instructions.map((instruction, index) => {
+                if (index === editedInstructionIndex) {
+                    return {
+                        instructionText: currentInstructionsObj.instructionText,
+                        instructionSection: currentInstructionsObj.instructionSection
+                    }
+                }
+                return instruction
+            })
+            
+            return {
+                ...prevData,
+                instructions: updatedInstructions
+            }
+        })
+        setEditInstructionMode(false)
+        setEditedInstructionIndex(null)
+        setShowInstructionsSectionTitle(false)
+        setCurrentInstructionsObj({
+            instructionText: '',
+            instructionSection: ''
+        })
+        instructionTextEl.current.focus()
+    }
+
+    const cancelEditClick = () => {
+        setEditInstructionMode(false)
+        setEditedInstructionIndex(null)
+        setCurrentInstructionsObj({
+            instructionText: '',
+            instructionSection: ''
+        })
+    }
+    
 
     const handleImageChange = (e) => {
         const selectedImage = e.target.files[0]
@@ -209,6 +513,29 @@ export default function EditRecipeForm(props) {
             [name]: value
         }))
     }
+
+    const handleInstructionTextKeydown = (e) => {
+        if (!editInstructionMode) {
+            if (e.key === 'Enter' && !e.ctrlKey) {
+                e.preventDefault()
+                handleAddInstructionClick()
+            } if (e.key === 'Enter' && e.ctrlKey) {
+                const { selectionStart, selectionEnd, value } = e.target
+                const textBeforeCursor = value.slice(0, selectionStart)
+                const textAfterCursor = value.slice(selectionEnd)
+                const newText = textBeforeCursor + '\n' + textAfterCursor
+                e.target.value = newText
+    
+                setCurrentInstructionsObj({
+                    instructionText: newText,
+                    instructionSection: ''
+                })
+                e.preventDefault()
+            }
+        }
+    }
+
+    const numberOfInstructionHeaders = editFormData.instructions.filter(instructionObj => instructionObj.instructionSection !== '').length
 
     useEffect(() => {
         showMoreTags ? 
@@ -421,9 +748,16 @@ export default function EditRecipeForm(props) {
                         setImageObject({})
                         setImgPreview(null)
                         setCurrentIngredientsObj({
+                            ingredientQuantity: '',
+                            ingredientQuantityDecimal: null,
                             ingredientMeasurement: '',
                             ingredientName: '',
-                            ingredientExtraDetail: ''
+                            ingredientExtraDetail: '',
+                            ingredientSectionName: ''
+                        })
+                        setCurrentInstructionsObj({
+                            instructionText: '',
+                            instructionSection: ''
                         })
                         setSelectedTagWords([])
                         props.retrieveRecipes()
@@ -642,22 +976,33 @@ export default function EditRecipeForm(props) {
                         
                         <div className='section-input-container'>
                             {ingredientPreviews}
-                            <div className='current-ingredient-preview'>
+                            <div id='current-ingredient-preview' className='hide'>
+                                <span id='ingredient-quantity-preview'></span>
                                 <span id='ingredient-measurement-preview'></span>
                                 <span id='ingredient-name-preview'></span>
                                 <span id='ingredient-extra-detail-preview'></span>
+                                <span id='ingredient-section-preview'></span>
                             </div>
                             {duplicateIngredients && <div className='duplicate-alert'>You have the same ingredient on there twice. Not judging, but it's just kinda weird to do that.</div>}
-                            <label htmlFor="ingredientMeasurement">Measurement:</label>
-                            <input type="text" id="measurement" name="ingredientMeasurement" className='has-placeholder'
-                            placeholder='1/2 cup' value={currentIngredientsObj.ingredientMeasurement} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
-                            <label htmlFor="ingredientName">Ingredient Name:</label>
-                            <input type="text" id="ingredient-name" name="ingredientName" className='has-placeholder'
+                            <label htmlFor="ingredientQuantity" className={`${showIngredientsSectionTitle ? 'disable-input' : ''}`}>Quantity: {invalidQuantityMessage && <span className='invalid-quantity'>*invalid quantity. Too many spaces</span>}</label>
+                            <input type="text" id="quantity" name="ingredientQuantity" className={`has-placeholder ${showIngredientsSectionTitle ? 'disable-input' : ''}`} disabled={showIngredientsSectionTitle}
+                            ref={ingredientMeasurementEl} placeholder='1/2' value={currentIngredientsObj.ingredientQuantity} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
+                            <label htmlFor="ingredientMeasurement" className={`${showIngredientsSectionTitle ? 'disable-input' : ''}`}>Measurement:</label>
+                            <input type="text" id="measurement" name="ingredientMeasurement" className={`has-placeholder ${showIngredientsSectionTitle ? 'disable-input' : ''}`} disabled={showIngredientsSectionTitle}
+                            placeholder='cup' value={currentIngredientsObj.ingredientMeasurement} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
+                            <label htmlFor="ingredientName" className={`${showIngredientsSectionTitle ? 'disable-input' : ''}`}>Ingredient Name:</label>
+                            <input type="text" id="ingredient-name" name="ingredientName" className={`has-placeholder ${showIngredientsSectionTitle ? 'disable-input' : ''}`} disabled={showIngredientsSectionTitle}
                             placeholder='Diced Carrots' value={currentIngredientsObj.ingredientName} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
-                            <label htmlFor="ingredientExtraDetail">Extra Detail:</label>
-                            <input type="text" id="ingredient-extra-detail" name="ingredientExtraDetail" className='has-placeholder'
+                            <label htmlFor="ingredientExtraDetail" className={`${showIngredientsSectionTitle ? 'disable-input' : ''}`}>Extra Detail:</label>
+                            <input type="text" id="ingredient-extra-detail" name="ingredientExtraDetail" className={`has-placeholder ${showIngredientsSectionTitle ? 'disable-input' : ''}`} disabled={showIngredientsSectionTitle}
                             placeholder='(about 1 large carrot)' value={currentIngredientsObj.ingredientExtraDetail} onChange={handleIngredientChange} onKeyDown={handleIngredientsEnterKeyDown}></input>
-                            <div className="add-button" onClick={handleAddClick}>add</div>
+                            {showIngredientsSectionTitle && <div><label htmlFor="ingredientSectionName">Ingredient Section Name:</label>
+                            <input type="text" id="ingredient-section-name" name="ingredientSectionName" className='has-placeholder'
+                            placeholder='Marinade Ingredients' ref={ingredientSectionInput} value={currentIngredientsObj.ingredientSectionName} onChange={handleIngredientChange} onKeyDown={handleIngredientsAddSectionKeydown}></input></div>}
+                            <div className='ingredients-button-container'>
+                                <div className="add-button" onClick={editIngredientMode ? handleEditIngredientSubmit : handleAddIngredientClick}>{editIngredientMode ? 'Update' : showIngredientsSectionTitle ? 'add section' : 'add ingredient'}</div>
+                                <div className="add-ingredients-header" onClick={editIngredientMode ? cancelEditIngredientClick : handleAddIngredientSectionClick}>{showIngredientsSectionTitle || editIngredientMode ? 'cancel' : '+ ingredient section'}</div>
+                            </div>
                         </div>
                     </section>
 
@@ -668,9 +1013,19 @@ export default function EditRecipeForm(props) {
                         </div>
                         
                         <div className='section-input-container'>
-                            <label htmlFor="instructions">Type all instructions:</label>
-                            <textarea rows="5" type="text" id="instructions" name="instructions" className='has-placeholder'
-                            placeholder='Bring 3 quarts of water to a boil...' value={editFormData.instructions} onChange={handleInputChange}></textarea>
+                            {instructionsPreview}
+                            {showInstructionsSectionTitle && <div>
+                                <label htmlFor="instructionSection">Section Name:</label>
+                                <input type="text" id="instruction-section-name" name="instructionSection" className='has-placeholder'
+                                placeholder='Marinade Ingredients' ref={instructionSectionInput} value={currentInstructionsObj.instructionSection} onChange={handleInstructionsChange} onKeyDown={handleInstructionsAddSectionKeydown}></input>
+                            </div>}
+                            <label htmlFor="instructions" className={`${showInstructionsSectionTitle ? 'disable-input' : ''}`}>{editInstructionMode ? 'Editing ' : ''}Step {(editInstructionMode ? '' : editFormData.instructions.length + 1 - numberOfInstructionHeaders)}:</label>
+                            <textarea rows="4" type="text" id="instructions" name="instructionText" ref={instructionTextEl} className={`has-placeholder ${showInstructionsSectionTitle ? 'disable-input' : ''}`} onKeyDown={handleInstructionTextKeydown}
+                            placeholder='Bring 3 quarts of water to a boil...' value={currentInstructionsObj.instructionText} onChange={handleInstructionsChange} disabled={showInstructionsSectionTitle}></textarea>
+                            <div className='ingredients-button-container'>
+                                <div className="add-button" onClick={editInstructionMode ? handleEditSubmit : handleAddInstructionClick}>{editInstructionMode ? 'Update' : showInstructionsSectionTitle ? 'add section' : 'add step'}</div>
+                                <div className="add-ingredients-header" onClick={editInstructionMode ? cancelEditClick : handleAddInstructionSectionClick}>{showInstructionsSectionTitle || editInstructionMode ? 'cancel' : '+ section header'}</div>
+                            </div>
                         </div>
                     </section>
 

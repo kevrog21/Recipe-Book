@@ -20,6 +20,7 @@ export default function RecipePage(props) {
     const [currentRecipe, setCurrentRecipe] = useState(selectedRecipe)
     const [isLoading, setIsLoading] = useState(true)
     const [ingredients, setIngredients] = useState([])
+    const [instructions, setInstructions] = useState([])
     const [tags, setTags] = useState([])
     const [timeScore, setTimeScore] = useState(null)
     const [overallScore, setOverallScore] = useState(null)
@@ -191,6 +192,26 @@ export default function RecipePage(props) {
                     </div>
                 )
             })
+            let currentInstructionStep = 0
+            const instructions = currentRecipe.instructions.map((instruction, index) => {
+                if (instruction.instructionText) {
+                    currentInstructionStep++
+                    return (
+                        <div key={index} >
+                            <div className='instruction-step'>Step: {currentInstructionStep}
+                                <div className='instruction-text'>{instruction.instructionText}</div>
+                            </div>
+                        </div>
+                    )
+                } else {
+                    return (
+                        <div key={index} >
+                            <div className='instruction-section-header'>{instruction.instructionSection}</div>
+                        </div>
+                    )
+                }
+            })
+
             const tags = currentRecipe.tags.map(tag => {
                 return (
                     <span key={tag}
@@ -199,6 +220,7 @@ export default function RecipePage(props) {
             })
             setIngredients(ingredients)
             setTags(tags)
+            setInstructions(instructions)
 
             setHasBeenCookedToday(() => {
                 const userTimezoneOffset = new Date().getTimezoneOffset() * 60000
@@ -516,7 +538,7 @@ export default function RecipePage(props) {
                     </div>
                     
                     <div className='section-content-container'>
-                        <p className='show-line-breaks'>{currentRecipe.instructions}</p>
+                        {instructions}
                     </div>
     
                 </section>

@@ -62,8 +62,11 @@ export default function AddRecipeForm(props) {
     const instructionTextEl = useRef(null)
     const instructionSectionInput = useRef(null)
 
-    const [editMode, setEditMode] = useState(false)
-    const [editedIndex, setEditedIndex] = useState(null)
+    const [editIngredientMode, setEditIngredientMode] = useState(false)
+    const [editInstructionMode, setEditInstructionMode] = useState(false)
+
+    const [editedIngredientIndex, setEditedIngredientIndex] = useState(null)
+    const [editedInstructionIndex, setEditedInstructionIndex] = useState(null)
 
     // const [finalImageObject, setFinalImageObject] = useState({})
     // const [isInitialRender, setIsInitialRender] = useState(true)
@@ -99,7 +102,7 @@ export default function AddRecipeForm(props) {
         } else {
             setUserInteractedWithInstructions(true)
         }
-    }, [showInstructionsSectionTitle, editedIndex])
+    }, [showInstructionsSectionTitle, editedInstructionIndex])
 
     const handleTagToggle = () => {
         setShowMoreTags(!showMoreTags)
@@ -143,6 +146,7 @@ export default function AddRecipeForm(props) {
                     {ingredient.ingredientMeasurement && <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>}
                     {ingredient.ingredientName && <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>}
                     {ingredient.ingredientExtraDetail && <span className='ingredient-extra-detail-preview'>{ingredient.ingredientExtraDetail}</span>}
+                    <span className='edit-btn hide' onMouseDown={() => handleEditIngredientClick(index)}>edit</span>
                     <span className='delete-btn hide' onMouseDown={() => deleteIngredient(ingredient)}>delete</span>
                 </div>
             )
@@ -164,9 +168,9 @@ export default function AddRecipeForm(props) {
                 currentStep++
                 return (
                     <div key={index} >
-                        <div className={`instruction-step-label ${index === editedIndex ? 'now-editing' : ''}`} onMouseEnter={showDeleteButton} onMouseDown={showDeleteButton} onMouseLeave={hideDeleteButton}>Step: {currentStep}
+                        <div className={`instruction-step-label ${index === editedInstructionIndex ? 'now-editing' : ''}`} onMouseEnter={showDeleteButton} onMouseDown={showDeleteButton} onMouseLeave={hideDeleteButton}>Step: {currentStep}
                             <span className='controls-container'>
-                                <span className='edit-btn hide' onMouseDown={() => handleEditClick(index)}>edit</span>
+                                <span className='edit-btn hide' onMouseDown={() => handleEditInstructionClick(index)}>edit</span>
                                 <span className='delete-btn hide' onMouseDown={() => deleteInstruction(instruction)}>delete</span>
                                 <span>
                                     <span>
@@ -179,26 +183,21 @@ export default function AddRecipeForm(props) {
                             </span>
                             <div className='instruction-text'>{instruction.instructionText}</div>
                         </div>
-                        
-                        
                     </div>
                 )
             } else {
                 return (
-                    <div key={index} className={`instruction-section-header ${index === editedIndex ? 'now-editing' : ''}`} onMouseEnter={showDeleteButton} onMouseDown={showDeleteButton} onMouseLeave={hideDeleteButton}>{instruction.instructionSection}
+                    <div key={index} className={`instruction-section-header ${index === editedInstructionIndex ? 'now-editing' : ''}`} onMouseEnter={showDeleteButton} onMouseDown={showDeleteButton} onMouseLeave={hideDeleteButton}>{instruction.instructionSection}
                         <span className='controls-container'>
-                            <span className='edit-btn hide' onMouseDown={() => handleEditClick(index)}>edit</span>
+                            <span className='edit-btn hide' onMouseDown={() => handleEditInstructionClick(index)}>edit</span>
                             <span className='delete-btn hide' onMouseDown={() => deleteInstruction(instruction)}>delete</span>
                         </span>
                     </div>
                 )
             }
-
-
-            
         })
         setInstructionsPreview(previews)
-    }, [formData.instructions, editedIndex])
+    }, [formData.instructions, editedInstructionIndex])
 
 
 
@@ -285,20 +284,34 @@ export default function AddRecipeForm(props) {
         }
     }, [currentInstructionsObj])
 
-    const handleEditClick = (index) => {
-        setEditMode(true)
-        setEditedIndex(index)
+    const handleEditInstructionClick = (index) => {
+        setEditInstructionMode(true)
+        setEditedInstructionIndex(index)
+        console.log(index)
         setCurrentInstructionsObj({
             instructionText: formData.instructions[index].instructionText,
             instructionSection: formData.instructions[index].instructionSection
         })
     }
 
-    const handleEditSubmit = () => {
+    const handleEditIngredientClick = (index) => {
+        setEditIngredientMode(true)
+        setEditedIngredientIndex(index)
+        setCurrentIngredientsObj({
+            ingredientQuantity: formData.ingredients[index].ingredientQuantity,
+            ingredientQuantityDecimal: null,
+            ingredientMeasurement: formData.ingredients[index].ingredientMeasurement,
+            ingredientName: formData.ingredients[index].ingredientName,
+            ingredientExtraDetail: formData.ingredients[index].ingredientExtraDetail,
+            ingredientSectionName: formData.ingredients[index].ingredientSectionName
+        })
+    }
+
+    const handleEditInstructionSubmit = () => {
         console.log(formData)
         setFormData((prevData) => {
             const updatedInstructions = prevData.instructions.map((instruction, index) => {
-                if (index === editedIndex) {
+                if (index === editedInstructionIndex) {
                     return {
                         instructionText: currentInstructionsObj.instructionText,
                         instructionSection: currentInstructionsObj.instructionSection
@@ -312,8 +325,8 @@ export default function AddRecipeForm(props) {
                 instructions: updatedInstructions
             }
         })
-        setEditMode(false)
-        setEditedIndex(null)
+        setEditInstructionMode(false)
+        setEditedInstructionIndex(null)
         setShowInstructionsSectionTitle(false)
         setCurrentInstructionsObj({
             instructionText: '',
@@ -322,9 +335,58 @@ export default function AddRecipeForm(props) {
         instructionTextEl.current.focus()
     }
 
-    const cancelEditClick = () => {
-        setEditMode(false)
-        setEditedIndex(null)
+    const handleEditIngredientSubmit = () => {
+        console.log(formData)
+        setFormData((prevData) => {
+            const updatedIngredients = prevData.ingredients.map((ingredient, index) => {
+                if (index === editedIngredientIndex) {
+                    return {
+                        ingredientQuantity: currentIngredientsObj.ingredientQuantity,
+                        ingredientQuantityDecimal: null,
+                        ingredientMeasurement: currentIngredientsObj.ingredientMeasurement,
+                        ingredientName: currentIngredientsObj.ingredientName,
+                        ingredientExtraDetail: currentIngredientsObj.ingredientExtraDetail,
+                        ingredientSectionName: currentIngredientsObj.ingredientSectionName
+                    }
+                }
+                return ingredient
+            })
+            
+            return {
+                ...prevData,
+                ingredients: updatedIngredients
+            }
+        })
+        setEditIngredientMode(false)
+        setEditedIngredientIndex(null)
+        setShowIngredientsSectionTitle(false)
+        setCurrentIngredientsObj({
+            ingredientQuantity: '',
+            ingredientQuantityDecimal: null,
+            ingredientMeasurement: '',
+            ingredientName: '',
+            ingredientExtraDetail: '',
+            ingredientSectionName: ''
+        })
+        ingredientMeasurementEl.current.focus()
+    }
+
+    const cancelEditIngredientClick = () => {
+        setEditInstructionMode(false)
+        setEditedInstructionIndex(null)
+        setCurrentIngredientsObj({
+            ingredientQuantity: '',
+            ingredientQuantityDecimal: null,
+            ingredientMeasurement: '',
+            ingredientName: '',
+            ingredientExtraDetail: '',
+            ingredientSectionName: ''
+        })
+    }
+
+    const cancelEditInstructionClick = () => {
+        setEditInstructionMode(false)
+        setEditedInstructionIndex(null)
         setCurrentInstructionsObj({
             instructionText: '',
             instructionSection: ''
@@ -655,7 +717,7 @@ export default function AddRecipeForm(props) {
     }
 
     const handleInstructionTextKeydown = (e) => {
-        if (!editMode) {
+        if (!editInstructionMode) {
             if (e.key === 'Enter' && !e.ctrlKey) {
                 e.preventDefault()
                 handleAddInstructionClick()
@@ -823,8 +885,8 @@ export default function AddRecipeForm(props) {
                             <input type="text" id="ingredient-section-name" name="ingredientSectionName" className='has-placeholder'
                             placeholder='Marinade Ingredients' ref={ingredientSectionInput} value={currentIngredientsObj.ingredientSectionName} onChange={handleIngredientChange} onKeyDown={handleIngredientsAddSectionKeydown}></input></div>}
                             <div className='ingredients-button-container'>
-                                <div className="add-button" onClick={handleAddIngredientClick}>add {showIngredientsSectionTitle ? 'section' : 'ingredient'}</div>
-                                <div className="add-ingredients-header" onClick={handleAddIngredientSectionClick}>{showIngredientsSectionTitle ? 'cancel' : '+ ingredient section'}</div>
+                                <div className="add-button" onClick={editIngredientMode ? handleEditIngredientSubmit : handleAddIngredientClick}>{editIngredientMode ? 'Update' : showIngredientsSectionTitle ? 'add section' : 'add ingredient'}</div>
+                                <div className="add-ingredients-header" onClick={editIngredientMode ? cancelEditIngredientClick : handleAddIngredientSectionClick}>{showIngredientsSectionTitle || editIngredientMode ? 'cancel' : '+ ingredient section'}</div>
                             </div>
                         </div>
 
@@ -844,12 +906,12 @@ export default function AddRecipeForm(props) {
                                 <input type="text" id="instruction-section-name" name="instructionSection" className='has-placeholder'
                                 placeholder='Marinade Ingredients' ref={instructionSectionInput} value={currentInstructionsObj.instructionSection} onChange={handleInstructionsChange} onKeyDown={handleInstructionsAddSectionKeydown}></input>
                             </div>}
-                            <label htmlFor="instructions" className={`${showInstructionsSectionTitle ? 'disable-input' : ''}`}>{editMode ? 'Editing ' : ''}Step {(editMode ? '' : formData.instructions.length + 1 - numberOfInstructionHeaders)}:</label>
+                            <label htmlFor="instructions" className={`${showInstructionsSectionTitle ? 'disable-input' : ''}`}>{editInstructionMode ? 'Editing ' : ''}Step {(editInstructionMode ? '' : formData.instructions.length + 1 - numberOfInstructionHeaders)}:</label>
                             <textarea rows="4" type="text" id="instructions" name="instructionText" ref={instructionTextEl} className={`has-placeholder ${showInstructionsSectionTitle ? 'disable-input' : ''}`} onKeyDown={handleInstructionTextKeydown}
                             placeholder='Bring 3 quarts of water to a boil...' value={currentInstructionsObj.instructionText} onChange={handleInstructionsChange} disabled={showInstructionsSectionTitle}></textarea>
                             <div className='ingredients-button-container'>
-                                <div className="add-button" onClick={editMode ? handleEditSubmit : handleAddInstructionClick}>{editMode ? 'Update' : showInstructionsSectionTitle ? 'add section' : 'add step'}</div>
-                                <div className="add-ingredients-header" onClick={editMode ? cancelEditClick : handleAddInstructionSectionClick}>{showInstructionsSectionTitle || editMode ? 'cancel' : '+ section header'}</div>
+                                <div className="add-button" onClick={editInstructionMode ? handleEditInstructionSubmit : handleAddInstructionClick}>{editInstructionMode ? 'Update' : showInstructionsSectionTitle ? 'add section' : 'add step'}</div>
+                                <div className="add-ingredients-header" onClick={editInstructionMode ? cancelEditInstructionClick : handleAddInstructionSectionClick}>{showInstructionsSectionTitle || editInstructionMode ? 'cancel' : '+ section header'}</div>
                             </div>
                         </div>
                         
