@@ -140,7 +140,7 @@ export default function AddRecipeForm(props) {
         const previews = formData.ingredients.map((ingredient, index) => {
             return (
                 <div key={ingredient.ingredientQuantity + ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail + ingredient.ingredientSectionName + index}
-                     className='ingredient-preview-element' onMouseEnter={showDeleteButton} onMouseDown={showDeleteButton} onMouseLeave={hideDeleteButton}>
+                     className='ingredient-preview-element' onMouseEnter={showControlBtns} onMouseDown={showControlBtns} onMouseLeave={hideControlBtns}>
                     {ingredient.ingredientSectionName && <span className='ingredient-section-preview'>{ingredient.ingredientSectionName}</span>}
                     {ingredient.ingredientQuantity && <span className='ingredient-quantity-preview'>{ingredient.ingredientQuantity}</span>}
                     {ingredient.ingredientMeasurement && <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>}
@@ -163,23 +163,23 @@ export default function AddRecipeForm(props) {
     let currentStep = 0
 
     useEffect(() => {
-        const previews = formData.instructions.map((instruction, index) => {
+        const previews = formData.instructions.map((instruction, index, e) => {
             if (instruction.instructionSection === '') {
                 currentStep++
                 return (
-                    <div key={index} >
-                        <div className={`instruction-step-label ${index === editedInstructionIndex ? 'now-editing' : ''}`} onMouseEnter={showDeleteButton} onMouseDown={showDeleteButton} onMouseLeave={hideDeleteButton}>Step: {currentStep}
+                    <div key={index} className='instruction-text-container'>
+                        <div className={`instruction-step-label ${index === editedInstructionIndex ? 'now-editing' : ''}`} onMouseEnter={showControlBtns} onMouseDown={showControlBtns} onMouseLeave={hideControlBtns}>Step: {currentStep}
                             <span className='controls-container'>
+                                <span className='reorder-btn-container hide'>
+                                    <div className='reorder-btn rotate180'>
+                                        <div className='reorder-arrow' onMouseDown={() => shiftInstructionUp(index, e)}></div>
+                                    </div>
+                                    <div className='reorder-btn'>
+                                        <div className='reorder-arrow '></div>
+                                    </div>
+                                </span>
                                 <span className='edit-btn hide' onMouseDown={() => handleEditInstructionClick(index)}>edit</span>
                                 <span className='delete-btn hide' onMouseDown={() => deleteInstruction(instruction)}>delete</span>
-                                <span>
-                                    <span>
-                                        <span></span>
-                                    </span>
-                                    <span>
-                                        <span></span>
-                                    </span>
-                                </span>
                             </span>
                             <div className='instruction-text'>{instruction.instructionText}</div>
                         </div>
@@ -187,11 +187,21 @@ export default function AddRecipeForm(props) {
                 )
             } else {
                 return (
-                    <div key={index} className={`instruction-section-header ${index === editedInstructionIndex ? 'now-editing' : ''}`} onMouseEnter={showDeleteButton} onMouseDown={showDeleteButton} onMouseLeave={hideDeleteButton}>{instruction.instructionSection}
-                        <span className='controls-container'>
-                            <span className='edit-btn hide' onMouseDown={() => handleEditInstructionClick(index)}>edit</span>
-                            <span className='delete-btn hide' onMouseDown={() => deleteInstruction(instruction)}>delete</span>
-                        </span>
+                    <div key={index} className={`instruction-section-header ${index === editedInstructionIndex ? 'now-editing' : ''}`} onMouseEnter={showControlBtns} onMouseDown={showControlBtns} onMouseLeave={hideControlBtns}>{instruction.instructionSection}
+                        <div className='section-label-container'>
+                            <span className='controls-container'>
+                                <span className='reorder-btn-container hide'>
+                                    <div className='reorder-btn rotate180'>
+                                        <div className='reorder-arrow'  onMouseDown={() => shiftInstructionUp(index, e)}></div>
+                                    </div>
+                                    <div className='reorder-btn'>
+                                        <div className='reorder-arrow '></div>
+                                    </div>
+                                </span>
+                                <span className='edit-btn hide' onMouseDown={() => handleEditInstructionClick(index)}>edit</span>
+                                <span className='delete-btn hide' onMouseDown={() => deleteInstruction(instruction)}>delete</span>
+                            </span>
+                        </div>
                     </div>
                 )
             }
@@ -248,14 +258,16 @@ export default function AddRecipeForm(props) {
         if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') e.preventDefault()
     }
 
-    const showDeleteButton = (e) => {
+    const showControlBtns = (e) => {
         e.currentTarget.querySelector(".delete-btn").classList.remove("hide")
         e.currentTarget.querySelector(".edit-btn").classList.remove("hide")
+        e.currentTarget.querySelector(".reorder-btn-container").classList.remove("hide")
     }
 
-    const hideDeleteButton = (e) => {
+    const hideControlBtns = (e) => {
         e.currentTarget.querySelector(".delete-btn").classList.add("hide")
         e.currentTarget.querySelector(".edit-btn").classList.add("hide")
+        e.currentTarget.querySelector(".reorder-btn-container").classList.add("hide")
     }
 
     const deleteIngredient = (ingredientToDelete) => {
@@ -287,7 +299,6 @@ export default function AddRecipeForm(props) {
     const handleEditInstructionClick = (index) => {
         setEditInstructionMode(true)
         setEditedInstructionIndex(index)
-        console.log(index)
         setCurrentInstructionsObj({
             instructionText: formData.instructions[index].instructionText,
             instructionSection: formData.instructions[index].instructionSection
@@ -391,6 +402,24 @@ export default function AddRecipeForm(props) {
             instructionText: '',
             instructionSection: ''
         })
+    }
+
+    const shiftInstructionUp = (index, e) => {
+        console.log('clicked')
+        if (index > 0) {
+            setFormData((prevData) => {
+                const newFormData = { ...prevData }
+                const instructions = newFormData.instructions.slice()
+
+                const movedInstruction = instructions.splice(index, 1)[0]
+                instructions.splice(index - 1, 0, movedInstruction)
+
+                newFormData.instructions = instructions
+                console.log('new', instructions)
+                return newFormData
+            })
+            console.log('this is e', e.target)
+        }
     }
 
     const additionalDefaultRecipeData = {
