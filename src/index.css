@@ -1127,6 +1127,10 @@ main {
   align-items: center;
 }
 
+.section-label-container > .hide {
+  display: none;
+}
+
 #cooktime-hours,
 #cooktime-mins,
 #preptime-hours,
