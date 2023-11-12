@@ -1077,6 +1077,14 @@ main {
   font-size: 1rem;
 }
 
+.instruction-item-container {
+  margin: 1em 0 0 0;
+}
+
+.instruction-section-header + .instruction-item-container {
+  margin: 0 0 0 0;
+}
+
 .instruction-text-container {
   padding: .5em .25em;
   background: #F5F5F5;

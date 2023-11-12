@@ -197,7 +197,7 @@ export default function RecipePage(props) {
                 if (instruction.instructionText) {
                     currentInstructionStep++
                     return (
-                        <div key={index} >
+                        <div key={index} className='instruction-item-container'>
                             <div className='instruction-step'>Step: {currentInstructionStep}
                                 <div className='instruction-text'>{instruction.instructionText}</div>
                             </div>
@@ -205,8 +205,8 @@ export default function RecipePage(props) {
                     )
                 } else {
                     return (
-                        <div key={index} >
-                            <div className='instruction-section-header'>{instruction.instructionSection}</div>
+                        <div key={index} className='instruction-section-header'>
+                            <div>{instruction.instructionSection}</div>
                         </div>
                     )
                 }

@@ -174,7 +174,7 @@ export default function AddRecipeForm(props) {
                                     <div className='reorder-btn rotate180' onMouseDown={(e) => handleReorderUpBtnClick(index, e)}>
                                         <div className='reorder-arrow'></div>
                                     </div>
-                                    <div className='reorder-btn'>
+                                    <div className='reorder-btn' onMouseDown={(e) => handleReorderDownBtnClick(index, e)}>
                                         <div className='reorder-arrow '></div>
                                     </div>
                                 </span>
@@ -194,7 +194,7 @@ export default function AddRecipeForm(props) {
                                     <div className='reorder-btn rotate180' onMouseDown={(e) => handleReorderUpBtnClick(index, e)}>
                                         <div className='reorder-arrow'></div>
                                     </div>
-                                    <div className='reorder-btn'>
+                                    <div className='reorder-btn' onMouseDown={(e) => handleReorderDownBtnClick(index, e)}>
                                         <div className='reorder-arrow '></div>
                                     </div>
                                 </span>
@@ -259,17 +259,10 @@ export default function AddRecipeForm(props) {
     }
 
     const showControlBtns = (e) => {
-        // e.currentTarget.querySelector(".delete-btn").classList.remove("hide")
-        // e.currentTarget.querySelector(".edit-btn").classList.remove("hide")
-        // e.currentTarget.querySelector(".reorder-btn-container").classList.remove("hide")
         e.currentTarget.querySelector(".controls-container").classList.remove("hide")
     }
 
     const hideControlBtns = (e) => {
-        console.log(e)
-        // e.currentTarget.querySelector(".delete-btn").classList.add("hide")
-        // e.currentTarget.querySelector(".edit-btn").classList.add("hide")
-        // e.currentTarget.querySelector(".reorder-btn-container").classList.add("hide")
         e.currentTarget.querySelector(".controls-container").classList.add("hide")
     }
 
@@ -422,7 +415,6 @@ export default function AddRecipeForm(props) {
     }
 
     const shiftInstructionUp = (index) => {
-        console.log('clicked')
         if (index > 0) {
             setFormData((prevData) => {
                 const newFormData = { ...prevData }
@@ -438,29 +430,33 @@ export default function AddRecipeForm(props) {
         }
     }
 
-    const hideControlsForIndex = (index) => {
-        document.querySelectorAll('.controls-container')[index].classList.add("hide")
-        //  e.currentTarget.querySelector(".delete-btn").classList.add("hide")
-        // e.currentTarget.querySelector(".edit-btn").classList.add("hide")
-        // e.currentTarget.querySelector(".reorder-btn-container").classList.add("hide")
+    const shifInstructionDown = (index) => {
+        setFormData((prevData) => {
+            if (index < prevData.instructions.length - 1) {
+                const newFormData = { ...prevData }
+                const instructions = newFormData.instructions.slice()
+
+                const movedInstruction = instructions.splice(index, 1)[0]
+                instructions.splice(index + 1, 0, movedInstruction)
+
+                newFormData.instructions = instructions
+                
+                return newFormData
+            }
+            return prevData
+        })
     }
 
     const handleReorderUpBtnClick = (index, e) => {
-        shiftInstructionUp(index)
-        console.log(e)
+        setEditInstructionMode(false)
+        setEditedInstructionIndex(null)
+        shiftInstructionUp(index) 
+    }
 
-        // document.querySelectorAll('.controls-container')[index].classList.add("hide")
-
-        // const clickedElement = document.querySelector('.instructions-section').querySelectorAll('.delete-btn')[index]
-
-        // if (clickedElement) {
-        //     clickedElement.classList.add('hide');
-        //   }
-
-        // console.log(clickedElement)
-
-        
-        
+    const handleReorderDownBtnClick = (index, e) => {
+        setEditInstructionMode(false)
+        setEditedInstructionIndex(null)
+        shifInstructionDown(index)
     }
 
     const additionalDefaultRecipeData = {
