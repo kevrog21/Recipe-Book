@@ -61,8 +61,8 @@ export default function RecipePage(props) {
     const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(15, 4)
     const mixedNumber = toMixedNumber(simplifiedNumerator, simplifiedDenominator)
 
-    console.log(`${simplifiedNumerator}/${simplifiedDenominator}`)
-    console.log(mixedNumber)
+    // console.log(`${simplifiedNumerator}/${simplifiedDenominator}`)
+    // console.log(mixedNumber)
 
     function formattedFraction(fraction) {
        const [numerator, denominator] = fraction.split('/')

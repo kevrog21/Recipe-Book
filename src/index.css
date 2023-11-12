@@ -1089,6 +1089,7 @@ main {
   padding: .5em .25em;
   background: #F5F5F5;
   margin: 1em 0;
+
 }
 
 .instruction-step-label {
@@ -1096,6 +1097,26 @@ main {
   font-size: .9em;
   cursor: pointer;
   position: relative;
+}
+
+.controls-container-parent {
+  background: orange;
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  
+}
+
+.ingredient-controls-container {
+
+  
+ 
+  padding: 0 1em;
+  display: flex;
+  font-size: .8rem;
+  align-items: center;
+  margin: 0 0 0 auto;
+  
 }
 
 .instruction-step {
@@ -1121,6 +1142,9 @@ main {
 }
 
 .controls-container {
+}
+
+.instruction-controls-container {
   position: absolute;
   right: 0;
   top: 0;

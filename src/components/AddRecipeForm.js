@@ -139,15 +139,30 @@ export default function AddRecipeForm(props) {
     useEffect(() => {
         const previews = formData.ingredients.map((ingredient, index) => {
             return (
-                <div key={ingredient.ingredientQuantity + ingredient.ingredientMeasurement + ingredient.ingredientName + ingredient.ingredientExtraDetail + ingredient.ingredientSectionName + index}
+                <div key={index}
                      className='ingredient-preview-element' onMouseEnter={showControlBtns} onMouseDown={showControlBtns} onMouseLeave={hideControlBtns}>
-                    {ingredient.ingredientSectionName && <span className='ingredient-section-preview'>{ingredient.ingredientSectionName}</span>}
-                    {ingredient.ingredientQuantity && <span className='ingredient-quantity-preview'>{ingredient.ingredientQuantity}</span>}
-                    {ingredient.ingredientMeasurement && <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>}
-                    {ingredient.ingredientName && <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>}
-                    {ingredient.ingredientExtraDetail && <span className='ingredient-extra-detail-preview'>{ingredient.ingredientExtraDetail}</span>}
-                    <span className='edit-btn hide' onMouseDown={() => handleEditIngredientClick(index)}>edit</span>
-                    <span className='delete-btn hide' onMouseDown={() => deleteIngredient(ingredient)}>delete</span>
+                    {!ingredient.ingredientSectionName && <span><div className='bullet-point'></div></span>}
+                    <div className='ingredient-txt-wrapper'>
+                        
+                        {ingredient.ingredientSectionName && <span className='ingredient-section-preview'>{ingredient.ingredientSectionName}</span>}
+                        {ingredient.ingredientQuantity && <span className='ingredient-quantity-preview'>{ingredient.ingredientQuantity}</span>}
+                        {ingredient.ingredientMeasurement && <span className='ingredient-measurement-preview'>{ingredient.ingredientMeasurement}</span>}
+                        {ingredient.ingredientName && <span className='ingredient-name-preview'>{ingredient.ingredientName}</span>}
+                        {ingredient.ingredientExtraDetail && <span className='ingredient-extra-detail-preview'>{ingredient.ingredientExtraDetail}</span>}
+                    </div> 
+                    <span className='ingredient-controls-container controls-container hide'>
+                        <span className='reorder-btn-container'>
+                            <div className='reorder-btn rotate180' onMouseDown={(e) => handleReorderIngredientUp(index, e)}>
+                                <div className='reorder-arrow'></div>
+                            </div>
+                            <div className='reorder-btn' onMouseDown={(e) => handleReorderIngredientDown(index, e)}>
+                                <div className='reorder-arrow '></div>
+                            </div>
+                        </span>
+                        <span className='edit-btn' onMouseDown={() => handleEditIngredientClick(index)}>edit</span>
+                        <span className='delete-btn' onMouseDown={() => deleteIngredient(ingredient)}>delete</span>
+                    </span>
+                    
                 </div>
             )
         })
@@ -169,12 +184,12 @@ export default function AddRecipeForm(props) {
                 return (
                     <div key={index} className='instruction-text-container'>
                         <div className={`instruction-step-label ${index === editedInstructionIndex ? 'now-editing' : ''}`} onMouseEnter={showControlBtns} onMouseDown={showControlBtns} onMouseLeave={hideControlBtns}>Step: {currentStep}
-                            <span className='controls-container hide'>
+                            <span className='instruction-controls-container controls-container hide'>
                                 <span className='reorder-btn-container'>
-                                    <div className='reorder-btn rotate180' onMouseDown={(e) => handleReorderUpBtnClick(index, e)}>
+                                    <div className='reorder-btn rotate180' onMouseDown={(e) => handleReorderInstructionUp(index, e)}>
                                         <div className='reorder-arrow'></div>
                                     </div>
-                                    <div className='reorder-btn' onMouseDown={(e) => handleReorderDownBtnClick(index, e)}>
+                                    <div className='reorder-btn' onMouseDown={(e) => handleReorderInstructionDown(index, e)}>
                                         <div className='reorder-arrow '></div>
                                     </div>
                                 </span>
@@ -189,12 +204,12 @@ export default function AddRecipeForm(props) {
                 return (
                     <div key={index} className={`instruction-section-header ${index === editedInstructionIndex ? 'now-editing' : ''}`} onMouseEnter={showControlBtns} onMouseDown={showControlBtns} onMouseLeave={hideControlBtns}>{instruction.instructionSection}
                         <div className='section-label-container'>
-                            <span className='controls-container hide'>
+                            <span className='instruction-controls-container controls-container hide'>
                                 <span className='reorder-btn-container '>
-                                    <div className='reorder-btn rotate180' onMouseDown={(e) => handleReorderUpBtnClick(index, e)}>
+                                    <div className='reorder-btn rotate180' onMouseDown={(e) => handleReorderInstructionUp(index, e)}>
                                         <div className='reorder-arrow'></div>
                                     </div>
-                                    <div className='reorder-btn' onMouseDown={(e) => handleReorderDownBtnClick(index, e)}>
+                                    <div className='reorder-btn' onMouseDown={(e) => handleReorderInstructionDown(index, e)}>
                                         <div className='reorder-arrow '></div>
                                     </div>
                                 </span>
@@ -414,6 +429,55 @@ export default function AddRecipeForm(props) {
         })
     }
 
+    const shiftIngredientUp = (index) => {
+        if (index > 0) {
+            setFormData((prevData) => {
+                const newFormData = { ...prevData }
+                const ingredients = newFormData.ingredients.slice()
+
+                const movedIngredient = ingredients.splice(index, 1)[0]
+                ingredients.splice(index - 1, 0, movedIngredient)
+
+                newFormData.ingredients = ingredients
+                
+                return newFormData
+            })
+        }
+    }
+
+    const shifIngredientDown = (index) => {
+        setFormData((prevData) => {
+            if (index < prevData.ingredients.length - 1) {
+                
+                const newFormData = { ...prevData }
+                const ingredients = newFormData.ingredients.slice()
+
+                const movedIngredient = ingredients.splice(index, 1)[0]
+                ingredients.splice(index + 1, 0, movedIngredient)
+
+                newFormData.ingredients = ingredients
+                
+                return newFormData
+                
+            }
+            return prevData
+        })
+    }
+
+    const handleReorderIngredientUp = (index, e) => {
+        setEditIngredientMode(false)
+        setEditedIngredientIndex(null)
+        cancelEditIngredientClick()
+        shiftIngredientUp(index) 
+    }
+
+    const handleReorderIngredientDown = (index, e) => {
+        setEditIngredientMode(false)
+        setEditedIngredientIndex(null)
+        cancelEditIngredientClick()
+        shifIngredientDown(index)
+    }
+
     const shiftInstructionUp = (index) => {
         if (index > 0) {
             setFormData((prevData) => {
@@ -447,15 +511,17 @@ export default function AddRecipeForm(props) {
         })
     }
 
-    const handleReorderUpBtnClick = (index, e) => {
+    const handleReorderInstructionUp = (index, e) => {
         setEditInstructionMode(false)
         setEditedInstructionIndex(null)
+        cancelEditInstructionClick()
         shiftInstructionUp(index) 
     }
 
-    const handleReorderDownBtnClick = (index, e) => {
+    const handleReorderInstructionDown = (index, e) => {
         setEditInstructionMode(false)
         setEditedInstructionIndex(null)
+        cancelEditInstructionClick()
         shifInstructionDown(index)
     }
 
