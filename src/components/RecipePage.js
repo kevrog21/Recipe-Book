@@ -476,13 +476,14 @@ export default function RecipePage(props) {
                                 <div className='time-overview-subtext'>cook: {displayCookTime}</div>
                             </div>
                         </div>
-                        <div className='time-disclaimer hide'>*This cook time is based on a serving size of {currentRecipe.defaultServings}.</div>
+                        
                     </div>
                     <div className='serving-overview'>
                         <div className='grey-text'>serving{servingSelection > 1 ? 's' : ''}:</div>
                         <div className='weight600'>{servingSelection}</div>
                     </div>
                 </div>
+                <div className='time-disclaimer hide'>*This cook time is based on a serving size of {currentRecipe.defaultServings}.</div>
     
                 <section className='ingredients-section'>
                     <div className='ingredients-section-title-container' onClick={handleServingSizeClick}>

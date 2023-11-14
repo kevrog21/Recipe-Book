@@ -483,6 +483,8 @@ main {
   align-items: center;
   font-size: .75em;
   margin: 0 auto;
+  background: #F5F5F5;
+  padding: 1em .5em;
 }
 
 .dificulty-overview {
@@ -507,11 +509,9 @@ main {
 .time-disclaimer {
   position: absolute;
   color: green;
-  width: 84.5%;
+  width: 100%;
   margin: auto;
   font-size: .75em;
-  padding: 0 3vw;
-  margin: -1.75vw 0 0 0;
   text-align: center;
 }
 
@@ -692,6 +692,10 @@ main {
   grid-template-rows: auto auto auto;
   gap: 5px;
   font-size: .9em;
+}
+
+.recipe-page .ingredients-section {
+  margin: 2em 0 0 0;
 }
 
 .ingredients-section-title-container {
@@ -1078,7 +1082,9 @@ main {
 }
 
 .instruction-item-container {
-  margin: 1em 0 0 0;
+  margin: 1.5em 0 0 0;
+  background: #F5F5F5;
+  padding: 1em .5em;
 }
 
 .instruction-section-header + .instruction-item-container {
@@ -1141,8 +1147,7 @@ main {
   position: relative;
 }
 
-.controls-container {
-}
+
 
 .instruction-controls-container {
   position: absolute;
@@ -1402,7 +1407,9 @@ main {
   margin: 1.5em auto 3.5em auto;
 }
 
-
+.recipe-page section.ingredients-section {
+  margin: 3em auto 3.5em auto;
+}
 
 #back-text  {
   margin: 0 0 0 3.5em;
