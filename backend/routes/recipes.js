@@ -104,6 +104,16 @@ router.route('/add').post((req, res) => {
     const isFavorited = req.body.isFavorited
     const isRequested = req.body.isRequested
     const cookingHistoryArray = req.body.cookingHistoryArray
+    const createdBy = req.body.createdBy
+    const versionOwner = req.body.versionOwner
+    const recipeYield = req.body.yield
+    const recipeVisibilty = req.body.recipeVisibilty
+    const comments = Array.isArray(req.body.comments) ? req.body.comments : []
+    const reviews = Array.isArray(req.body.reviews) ? req.body.reviews : []
+    const bastebookApproved = req.body.bastebookApproved
+    const hasVideo = req.body.hasVideo
+    const nutritionFacts = req.body.nutritionFacts
+    const photoCreds = req.body.photoCreds
 
     const timeScore = 
         req.body.totalCooktime <= 30 ? 10 : 
@@ -141,6 +151,16 @@ router.route('/add').post((req, res) => {
             isFavorited,
             isRequested,
             cookingHistoryArray,
+            createdBy,
+            versionOwner,
+            recipeYield,
+            recipeVisibilty,
+            comments,
+            reviews,
+            bastebookApproved,
+            hasVideo,
+            nutritionFacts,
+            photoCreds,
         })
         newRecipe.save()
         .then(() => res.json('Recipe Added!'))
@@ -243,6 +263,16 @@ router.route('/update/:id').post((req, res) => {
             recipe.isFavorited = req.body.isFavorited
             recipe.isRequested = req.body.isRequested
             recipe.cookingHistoryArray = req.body.cookingHistoryArray
+            recipe.createdBy = req.body.createdBy
+            recipe.versionOwner = req.body.versionOwner
+            recipe.recipeYield = req.body.recipeYield
+            recipe.recipeVisibilty = req.body.recipeVisibilty
+            recipe.comments = Array.isArray(req.body.comments) ? req.body.comments : []
+            recipe.reviews = Array.isArray(req.body.reviews) ? req.body.reviews : []
+            recipe.bastebookApproved = req.body.bastebookApproved
+            recipe.hasVideo = req.body.hasVideo
+            recipe.nutritionFacts = req.body.nutritionFacts
+            recipe.photoCreds = req.body.photoCreds
 
             recipe.timeScore = 
                 req.body.totalCooktime <= 30 ? 10 : 

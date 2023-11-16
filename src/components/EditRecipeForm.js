@@ -94,6 +94,17 @@ export default function EditRecipeForm(props) {
                 difficultyRating: currentRecipe.difficultyRating ? currentRecipe.difficultyRating : 'easy',
                 cookingHistoryArray: currentRecipe.cookingHistoryArray,
 
+                createdBy: currentRecipe.createdBy,
+                versionOwner: currentRecipe.versionOwner,
+                recipeYield: currentRecipe.recipeYield,
+                recipeVisibilty: currentRecipe.recipeVisibilty,
+                comments: currentRecipe.comments,
+                reviews: currentRecipe.reviews,
+                bastebookApproved: currentRecipe.bastebookApproved,
+                hasVideo: currentRecipe.hasVideo,
+                nutritionFacts: currentRecipe.nutritionFacts,
+                photoCreds: currentRecipe.photoCreds,
+
                 password: '',
                 honeyp: ''
             })
@@ -101,6 +112,19 @@ export default function EditRecipeForm(props) {
             setSelectedTagWords(currentRecipe.tags)
         }
     }, [currentRecipe])
+
+    useEffect(() => {
+        if (userInteractedWithIngredients) {
+            if (showIngredientsSectionTitle) {
+                ingredientSectionInput.current.focus()
+            } else {
+                ingredientMeasurementEl.current.focus()
+            }
+        } else {
+            setUserInteractedWithIngredients(true)
+        }
+        
+    }, [showIngredientsSectionTitle])
 
     useEffect(() => {
         if (userInteractedWithInstructions) {
@@ -264,6 +288,22 @@ export default function EditRecipeForm(props) {
                 setShowIngredientsSectionTitle(false)
         }
     }
+
+    useEffect(() => {
+        if (currentIngredientsObj.ingredientSectionName) {
+            setShowIngredientsSectionTitle(true)
+        } else {
+            setShowIngredientsSectionTitle(false)
+        }
+    }, [currentIngredientsObj])
+
+    useEffect(() => {
+        if (currentInstructionsObj.instructionSection) {
+            setShowInstructionsSectionTitle(true)
+        } else {
+            setShowInstructionsSectionTitle(false)
+        }
+    }, [currentInstructionsObj])
 
     const handleAddIngredientSectionClick = (e) => {
         if (!showIngredientsSectionTitle) {
@@ -482,16 +522,6 @@ export default function EditRecipeForm(props) {
         })
     }
 
-    const showDeleteButton = (e) => {
-        e.currentTarget.querySelector(".delete-btn").classList.remove("hide")
-        e.currentTarget.querySelector(".edit-btn").classList.remove("hide")
-    }
-
-    const hideDeleteButton = (e) => {
-        e.currentTarget.querySelector(".delete-btn").classList.add("hide")
-        e.currentTarget.querySelector(".edit-btn").classList.add("hide")
-    }
-
     const deleteInstruction = (instructionToDelete) => {
         setEditFormData((prevData) => ({
             ...prevData,
@@ -537,16 +567,6 @@ export default function EditRecipeForm(props) {
         })
         instructionTextEl.current.focus()
     }
-
-    const cancelEditClick = () => {
-        setEditInstructionMode(false)
-        setEditedInstructionIndex(null)
-        setCurrentInstructionsObj({
-            instructionText: '',
-            instructionSection: ''
-        })
-    }
-    
 
     const handleImageChange = (e) => {
         const selectedImage = e.target.files[0]
@@ -811,21 +831,44 @@ export default function EditRecipeForm(props) {
                 console.log(editFormData)
 
                 setFinalDataObject(() => {
-                    if (currentIngredientsObj.ingredientMeasurement == '' && 
+                    if (currentIngredientsObj.ingredientQuantity == '' &&
+                    currentIngredientsObj.ingredientMeasurement == '' && 
                     currentIngredientsObj.ingredientName == '' && 
-                    currentIngredientsObj.ingredientExtraDetail == '') {
+                    currentIngredientsObj.ingredientExtraDetail == '' && 
+                    currentIngredientsObj.ingredientSectionName == '' &&
+                    currentInstructionsObj.instructionText == '' &&
+                    currentInstructionsObj.instructionSection == '') {
                         return {
                             ...editFormData,
-                            imageId: cloudinaryResponse.data.public_id,
                             imgUrl: cloudinaryResponse.data.secure_url,
                             signature: cloudinaryResponse.data.signature
                         }
-                    } else {
+                    } else if (currentInstructionsObj.instructionText !== '' ||
+                            currentInstructionsObj.instructionSection !== '') {
                         return {
                             ...editFormData,
                             imageId: cloudinaryResponse.data.public_id,
                             imgUrl: cloudinaryResponse.data.secure_url,
                             signature: cloudinaryResponse.data.signature,
+                            instructions: [...editFormData.instructions, currentInstructionsObj]
+                        }
+                    } else if (currentInstructionsObj.instructionText == '' &&
+                            currentInstructionsObj.instructionSection == '') {
+                        return {
+                            ...editFormData,
+                            imageId: cloudinaryResponse.data.public_id,
+                            imgUrl: cloudinaryResponse.data.secure_url,
+                            signature: cloudinaryResponse.data.signature,
+                            ingredients: [...editFormData.ingredients, currentIngredientsObj]
+                        }
+                    }
+                    else {
+                        return {
+                            ...editFormData,
+                            imageId: cloudinaryResponse.data.public_id,
+                            imgUrl: cloudinaryResponse.data.secure_url,
+                            signature: cloudinaryResponse.data.signature,
+                            instructions: [...editFormData.instructions, currentInstructionsObj],
                             ingredients: [...editFormData.ingredients, currentIngredientsObj]
                         }
                     }
@@ -837,21 +880,45 @@ export default function EditRecipeForm(props) {
             console.log("image code ran")
         } else {
             setFinalDataObject(() => {
-                console.log('running this code')
-                if (currentIngredientsObj.ingredientMeasurement == '' && 
+                if (currentIngredientsObj.ingredientQuantity == '' &&
+                currentIngredientsObj.ingredientMeasurement == '' && 
                 currentIngredientsObj.ingredientName == '' && 
-                currentIngredientsObj.ingredientExtraDetail == '') {
-                    console.log('shouldnt add this code to data object')
+                currentIngredientsObj.ingredientExtraDetail == '' &&
+                currentIngredientsObj.ingredientSectionName == '' &&
+                currentInstructionsObj.instructionText == '' &&
+                currentInstructionsObj.instructionSection == '') {
                     return {
                         ...editFormData,
-                        imgUrl: currentRecipe.imgUrl
+                        imageId: 'no image added',
+                        imgUrl: 'no image added',
+                        signature: 'no image added'
+                    }
+                } else if (currentInstructionsObj.instructionText !== '' ||
+                    currentInstructionsObj.instructionSection !== '') {
+                    return {
+                        ...editFormData,
+                        imageId: 'no image added',
+                        imgUrl: 'no image added',
+                        signature: 'no image added',
+                        instructions: [...editFormData.instructions, currentInstructionsObj]
+                    }
+                } else if (currentInstructionsObj.instructionText == '' &&
+                    currentInstructionsObj.instructionSection == '') {
+                    return {
+                        ...editFormData,
+                        imageId: 'no image added',
+                        imgUrl: 'no image added',
+                        signature: 'no image added',
+                        ingredients: [...editFormData.ingredients, currentIngredientsObj]
                     }
                 } else {
-                    console.log('should add this code to data object')
                     return {
                         ...editFormData,
-                        imgUrl: currentRecipe.imgUrl,
-                        ingredients: [...editFormData.ingredients, currentIngredientsObj]
+                        imageId: 'no image added',
+                        imgUrl: 'no image added',
+                        signature: 'no image added',
+                        ingredients: [...editFormData.ingredients, currentIngredientsObj],
+                        instructions: [...editFormData.instructions, currentInstructionsObj]
                     }
                 }
             })
@@ -917,6 +984,17 @@ export default function EditRecipeForm(props) {
                             totalCooktime: currentRecipe.totalCooktime,
                             difficultyRating: currentRecipe.difficultyRating ? currentRecipe.difficultyRating : 'easy',
                             cookingHistoryArray: currentRecipe.cookingHistoryArray,
+
+                            createdBy: currentRecipe.createdBy,
+                            versionOwner: currentRecipe.versionOwner,
+                            recipeYield: currentRecipe.recipeYield,
+                            recipeVisibilty: currentRecipe.recipeVisibilty,
+                            comments: currentRecipe.comments,
+                            reviews: currentRecipe.reviews,
+                            bastebookApproved: currentRecipe.bastebookApproved,
+                            hasVideo: currentRecipe.hasVideo,
+                            nutritionFacts: currentRecipe.nutritionFacts,
+                            photoCreds: currentRecipe.photoCreds,
 
                             password: '',
                             honeyp: ''

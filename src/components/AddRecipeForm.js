@@ -314,6 +314,14 @@ export default function AddRecipeForm(props) {
     }
 
     useEffect(() => {
+        if (currentIngredientsObj.ingredientSectionName) {
+            setShowIngredientsSectionTitle(true)
+        } else {
+            setShowIngredientsSectionTitle(false)
+        }
+    }, [currentIngredientsObj])
+
+    useEffect(() => {
         if (currentInstructionsObj.instructionSection) {
             setShowInstructionsSectionTitle(true)
         } else {
@@ -537,6 +545,16 @@ export default function AddRecipeForm(props) {
         costScore: formData.costScore ? parseInt(formData.costScore) : 0,
         tastinessScore: formData.tastinessScore ? parseInt(formData.tastinessScore) : 0,
         cookingHistoryArray: [],
+        createdBy: '',
+        versionOwner: '',
+        recipeYield: '',
+        recipeVisibilty: '',
+        comments: [],
+        reviews: [],
+        bastebookApproved: false,
+        hasVideo: false,
+        nutritionFacts: {},
+        photoCreds: '',
     }
 
     function mountThenRemoveSuccessMessage() {
@@ -615,15 +633,36 @@ export default function AddRecipeForm(props) {
                             imgUrl: cloudinaryResponse.data.secure_url,
                             signature: cloudinaryResponse.data.signature
                         }
-                    } else {
+                    } else if (currentInstructionsObj.instructionText !== '' ||
+                            currentInstructionsObj.instructionSection !== '') {
                         return {
                             ...formData,
                             ...additionalDefaultRecipeData,
                             imageId: cloudinaryResponse.data.public_id,
                             imgUrl: cloudinaryResponse.data.secure_url,
                             signature: cloudinaryResponse.data.signature,
-                            ingredients: [...formData.ingredients, currentIngredientsObj],
                             instructions: [...formData.instructions, currentInstructionsObj]
+                        }
+                    } else if (currentInstructionsObj.instructionText == '' &&
+                            currentInstructionsObj.instructionSection == '') {
+                        return {
+                            ...formData,
+                            ...additionalDefaultRecipeData,
+                            imageId: cloudinaryResponse.data.public_id,
+                            imgUrl: cloudinaryResponse.data.secure_url,
+                            signature: cloudinaryResponse.data.signature,
+                            ingredients: [...formData.ingredients, currentIngredientsObj]
+                        }
+                    }
+                    else {
+                        return {
+                            ...formData,
+                            ...additionalDefaultRecipeData,
+                            imageId: cloudinaryResponse.data.public_id,
+                            imgUrl: cloudinaryResponse.data.secure_url,
+                            signature: cloudinaryResponse.data.signature,
+                            instructions: [...formData.instructions, currentInstructionsObj],
+                            ingredients: [...formData.ingredients, currentIngredientsObj]
                         }
                     }
                 })
@@ -634,7 +673,6 @@ export default function AddRecipeForm(props) {
             console.log("image code ran")
         } else {
             setFinalDataObject(() => {
-                console.log('running this code')
                 if (currentIngredientsObj.ingredientQuantity == '' &&
                 currentIngredientsObj.ingredientMeasurement == '' && 
                 currentIngredientsObj.ingredientName == '' && 
@@ -642,7 +680,6 @@ export default function AddRecipeForm(props) {
                 currentIngredientsObj.ingredientSectionName == '' &&
                 currentInstructionsObj.instructionText == '' &&
                 currentInstructionsObj.instructionSection == '') {
-                    console.log('shouldnt add this code to data object')
                     return {
                         ...formData,
                         ...additionalDefaultRecipeData,
@@ -650,8 +687,27 @@ export default function AddRecipeForm(props) {
                         imgUrl: 'no image added',
                         signature: 'no image added'
                     }
+                } else if (currentInstructionsObj.instructionText !== '' ||
+                    currentInstructionsObj.instructionSection !== '') {
+                    return {
+                        ...formData,
+                        ...additionalDefaultRecipeData,
+                        imageId: 'no image added',
+                        imgUrl: 'no image added',
+                        signature: 'no image added',
+                        instructions: [...formData.instructions, currentInstructionsObj]
+                    }
+                } else if (currentInstructionsObj.instructionText == '' &&
+                    currentInstructionsObj.instructionSection == '') {
+                    return {
+                        ...formData,
+                        ...additionalDefaultRecipeData,
+                        imageId: 'no image added',
+                        imgUrl: 'no image added',
+                        signature: 'no image added',
+                        ingredients: [...formData.ingredients, currentIngredientsObj]
+                    }
                 } else {
-                    console.log('should add this code to data object')
                     return {
                         ...formData,
                         ...additionalDefaultRecipeData,

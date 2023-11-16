@@ -23,7 +23,17 @@ const recipeSchema = new mongoose.Schema({
     imgUrl: { type: String, required: false },
     isFavorited: { type: Boolean, default: false },
     isRequested: { type: Boolean, default: false },
-    cookingHistoryArray: { type: Array, required: false }
+    cookingHistoryArray: { type: Array, required: false },
+    createdBy: { type: String, required: false },
+    versionOwner: { type: String, required: false },
+    recipeYield: { type: String, required: false },
+    recipeVisibilty: { type: String, required: false },
+    comments: { type: Array, required: false },
+    reviews: { type: Array, required: false },
+    bastebookApproved: { type: Boolean, required: false },
+    hasVideo: { type: Boolean, required: false },
+    nutritionFacts: { type: Object, required: false },
+     photoCreds: { type: String, required: false }
 }, {
     timestamps: true,
 })
