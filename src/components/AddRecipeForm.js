@@ -140,7 +140,7 @@ export default function AddRecipeForm(props) {
         const previews = formData.ingredients.map((ingredient, index) => {
             return (
                 <div key={index}
-                     className='ingredient-preview-element' onMouseEnter={showControlBtns} onMouseDown={showControlBtns} onMouseLeave={hideControlBtns}>
+                     className={`ingredient-preview-element ${index === editedIngredientIndex ? 'now-editing' : ''}`} onMouseEnter={showControlBtns} onMouseDown={showControlBtns} onMouseLeave={hideControlBtns}>
                     {!ingredient.ingredientSectionName && <span><div className='bullet-point'></div></span>}
                     <div className='ingredient-txt-wrapper'>
                         
@@ -173,7 +173,7 @@ export default function AddRecipeForm(props) {
         } else {
             setDuplicateIngredients(false)
         }
-    }, [formData.ingredients])
+    }, [formData.ingredients, editedIngredientIndex])
 
     let currentStep = 0
 
@@ -251,7 +251,7 @@ export default function AddRecipeForm(props) {
             setCurrentIngredientsObj((prevData) => ({
                 ...prevData,
                 [name]: value,
-                ingredientQuantityDecimal: parseFraction(value, setInvalidQuantityMessage)
+                ingredientQuantityDecimal: value > 0 ? parseFraction(value, setInvalidQuantityMessage) : ''
             }))
         } else {
             setCurrentIngredientsObj((prevData) => ({
@@ -343,7 +343,7 @@ export default function AddRecipeForm(props) {
         setEditedIngredientIndex(index)
         setCurrentIngredientsObj({
             ingredientQuantity: formData.ingredients[index].ingredientQuantity,
-            ingredientQuantityDecimal: null,
+            ingredientQuantityDecimal: parseFraction(formData.ingredients[index].ingredientQuantity, setInvalidQuantityMessage),
             ingredientMeasurement: formData.ingredients[index].ingredientMeasurement,
             ingredientName: formData.ingredients[index].ingredientName,
             ingredientExtraDetail: formData.ingredients[index].ingredientExtraDetail,
@@ -385,8 +385,8 @@ export default function AddRecipeForm(props) {
             const updatedIngredients = prevData.ingredients.map((ingredient, index) => {
                 if (index === editedIngredientIndex) {
                     return {
-                        ingredientQuantity: currentIngredientsObj.ingredientQuantity,
-                        ingredientQuantityDecimal: null,
+                        ingredientQuantity: currentIngredientsObj.ingredientQuantity > 0 ? currentIngredientsObj.ingredientQuantity : '',
+                        ingredientQuantityDecimal: currentIngredientsObj.ingredientQuantity ? parseFraction(currentIngredientsObj.ingredientQuantity, setInvalidQuantityMessage) : null,
                         ingredientMeasurement: currentIngredientsObj.ingredientMeasurement,
                         ingredientName: currentIngredientsObj.ingredientName,
                         ingredientExtraDetail: currentIngredientsObj.ingredientExtraDetail,
@@ -620,7 +620,7 @@ export default function AddRecipeForm(props) {
                 console.log(formData)
 
                 setFinalDataObject(() => {
-                    if (currentIngredientsObj.ingredientQuantity == '' &&
+                    if (editInstructionMode || editIngredientMode || currentIngredientsObj.ingredientQuantity == '' &&
                     currentIngredientsObj.ingredientMeasurement == '' && 
                     currentIngredientsObj.ingredientName == '' && 
                     currentIngredientsObj.ingredientExtraDetail == '' && 
@@ -673,7 +673,7 @@ export default function AddRecipeForm(props) {
             console.log("image code ran")
         } else {
             setFinalDataObject(() => {
-                if (currentIngredientsObj.ingredientQuantity == '' &&
+                if (editInstructionMode || editIngredientMode || currentIngredientsObj.ingredientQuantity == '' &&
                 currentIngredientsObj.ingredientMeasurement == '' && 
                 currentIngredientsObj.ingredientName == '' && 
                 currentIngredientsObj.ingredientExtraDetail == '' &&

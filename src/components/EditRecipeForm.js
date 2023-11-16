@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react' 
 import { useParams, Link } from 'react-router-dom'
 import { useNavigateToLink } from './ToHomePage'
+import { parseFraction } from './utilityFunctions.js'
 import axios from 'axios'
 import arrow from '../assets/arrow.svg'
 import arrowLight from '../assets/arrow-grey.svg'
@@ -179,7 +180,7 @@ export default function EditRecipeForm(props) {
         const previews = editFormData.ingredients.map((ingredient, index) => {
             return (
                 <div key={index}
-                     className='ingredient-preview-element' onMouseEnter={showControlBtns} onMouseDown={showControlBtns} onMouseLeave={hideControlBtns}>
+                     className={`ingredient-preview-element ${index === editedIngredientIndex ? 'now-editing' : ''}`} onMouseEnter={showControlBtns} onMouseDown={showControlBtns} onMouseLeave={hideControlBtns}>
                     {!ingredient.ingredientSectionName && <span><div className='bullet-point'></div></span>}
                     <div className='ingredient-txt-wrapper'>
                         
@@ -212,7 +213,7 @@ export default function EditRecipeForm(props) {
         } else {
             setDuplicateIngredients(false)
         }
-    }, [editFormData.ingredients])
+    }, [editFormData.ingredients, editedIngredientIndex])
 
     let currentStep = 0
 
@@ -323,7 +324,7 @@ export default function EditRecipeForm(props) {
         setEditedIngredientIndex(index)
         setCurrentIngredientsObj({
             ingredientQuantity: editFormData.ingredients[index].ingredientQuantity,
-            ingredientQuantityDecimal: null,
+            ingredientQuantityDecimal: editFormData.ingredients[index].ingredientQuantityDecimal,
             ingredientMeasurement: editFormData.ingredients[index].ingredientMeasurement,
             ingredientName: editFormData.ingredients[index].ingredientName,
             ingredientExtraDetail: editFormData.ingredients[index].ingredientExtraDetail,
@@ -349,8 +350,8 @@ export default function EditRecipeForm(props) {
             const updatedIngredients = prevData.ingredients.map((ingredient, index) => {
                 if (index === editedIngredientIndex) {
                     return {
-                        ingredientQuantity: currentIngredientsObj.ingredientQuantity,
-                        ingredientQuantityDecimal: null,
+                        ingredientQuantity: currentIngredientsObj.ingredientQuantity > 0 ? currentIngredientsObj.ingredientQuantity : '',
+                        ingredientQuantityDecimal: currentIngredientsObj.ingredientQuantity ? parseFraction(currentIngredientsObj.ingredientQuantity, setInvalidQuantityMessage) : null,
                         ingredientMeasurement: currentIngredientsObj.ingredientMeasurement,
                         ingredientName: currentIngredientsObj.ingredientName,
                         ingredientExtraDetail: currentIngredientsObj.ingredientExtraDetail,
@@ -396,11 +397,22 @@ export default function EditRecipeForm(props) {
     }
 
     const handleIngredientChange = (e) => {
+        const currentIngredientContainerEl = document.getElementById('current-ingredient-preview')
+        currentIngredientContainerEl.classList.remove('hide')
         const { name, value } = e.target
-        setCurrentIngredientsObj((prevData) => ({
-            ...prevData,
-            [name]: value
-        }))
+        console.log(e.target)
+        if (name === 'ingredientQuantity') {
+            setCurrentIngredientsObj((prevData) => ({
+                ...prevData,
+                [name]: value,
+                ingredientQuantityDecimal: parseFraction(value, setInvalidQuantityMessage)
+            }))
+        } else {
+            setCurrentIngredientsObj((prevData) => ({
+                ...prevData,
+                [name]: value
+            }))
+        }
     }
 
     const handleIngredientsEnterKeyDown = (e) => {
@@ -831,7 +843,7 @@ export default function EditRecipeForm(props) {
                 console.log(editFormData)
 
                 setFinalDataObject(() => {
-                    if (currentIngredientsObj.ingredientQuantity == '' &&
+                    if (editInstructionMode || editIngredientMode || currentIngredientsObj.ingredientQuantity == '' &&
                     currentIngredientsObj.ingredientMeasurement == '' && 
                     currentIngredientsObj.ingredientName == '' && 
                     currentIngredientsObj.ingredientExtraDetail == '' && 
@@ -840,6 +852,7 @@ export default function EditRecipeForm(props) {
                     currentInstructionsObj.instructionSection == '') {
                         return {
                             ...editFormData,
+                            imageId: cloudinaryResponse.data.public_id,
                             imgUrl: cloudinaryResponse.data.secure_url,
                             signature: cloudinaryResponse.data.signature
                         }
@@ -880,7 +893,7 @@ export default function EditRecipeForm(props) {
             console.log("image code ran")
         } else {
             setFinalDataObject(() => {
-                if (currentIngredientsObj.ingredientQuantity == '' &&
+                if (editInstructionMode || editIngredientMode || currentIngredientsObj.ingredientQuantity == '' &&
                 currentIngredientsObj.ingredientMeasurement == '' && 
                 currentIngredientsObj.ingredientName == '' && 
                 currentIngredientsObj.ingredientExtraDetail == '' &&
@@ -889,34 +902,26 @@ export default function EditRecipeForm(props) {
                 currentInstructionsObj.instructionSection == '') {
                     return {
                         ...editFormData,
-                        imageId: 'no image added',
-                        imgUrl: 'no image added',
-                        signature: 'no image added'
+                        imgUrl: currentRecipe.imgUrl
                     }
                 } else if (currentInstructionsObj.instructionText !== '' ||
                     currentInstructionsObj.instructionSection !== '') {
                     return {
                         ...editFormData,
-                        imageId: 'no image added',
-                        imgUrl: 'no image added',
-                        signature: 'no image added',
+                        imgUrl: currentRecipe.imgUrl,
                         instructions: [...editFormData.instructions, currentInstructionsObj]
                     }
                 } else if (currentInstructionsObj.instructionText == '' &&
                     currentInstructionsObj.instructionSection == '') {
                     return {
                         ...editFormData,
-                        imageId: 'no image added',
-                        imgUrl: 'no image added',
-                        signature: 'no image added',
+                        imgUrl: currentRecipe.imgUrl,
                         ingredients: [...editFormData.ingredients, currentIngredientsObj]
                     }
                 } else {
                     return {
                         ...editFormData,
-                        imageId: 'no image added',
-                        imgUrl: 'no image added',
-                        signature: 'no image added',
+                        imgUrl: currentRecipe.imgUrl,
                         ingredients: [...editFormData.ingredients, currentIngredientsObj],
                         instructions: [...editFormData.instructions, currentInstructionsObj]
                     }
