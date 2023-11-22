@@ -1,8 +1,13 @@
 import { Link } from 'react-router-dom'
 
 export default function NavMenu(props) {
+
+function closeNavMenu() {
+    props.setIsNavMenuOpen(false)
+}
+
     return (
-        <div className='nav-menu-container'>
+        <div className='nav-menu-container' onClick={closeNavMenu}>
             <div id='nav-menu' className=''>
                 <div id='nav-search-bar'>search...</div>
                 <Link to='/' className='nav-menu-item'><div onClick={props.handleNavItemClick}>Home</div></Link>

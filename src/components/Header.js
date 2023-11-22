@@ -44,7 +44,9 @@ export default function Header() {
                     <div className={`hamburger-line2 ${isNavMenuOpen ? 'rotate-hamburger-line2' : ''}`}></div>
                 </div>
             </header>
-            <NavMenu handleNavItemClick={handleNavItemClick}/>
+            <NavMenu 
+                handleNavItemClick={handleNavItemClick}
+                setIsNavMenuOpen={setIsNavMenuOpen}/>
         </div>
     )
 }
