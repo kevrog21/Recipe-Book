@@ -553,7 +553,14 @@ export default function AddRecipeForm(props) {
         reviews: [],
         bastebookApproved: false,
         hasVideo: false,
-        nutritionFacts: {},
+        nutritionFacts: {
+            nutritionTitle: '',
+            value: ''
+        },
+        equipment: {
+            itemName: '',
+            link: ''
+        },
         photoCreds: '',
     }
 

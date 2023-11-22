@@ -448,17 +448,17 @@ export default function RecipePage(props) {
                     <img className='recipe-page-star star-outline' src={currentRecipe.isFavorited ? filledYellowStar : greyStar} onClick={handleStarClick} />
                 </div>
     
-                {/* <div className='recipe-page-hero' style={{backgroundImage: `linear-gradient(12deg, rgba(0, 0, 0, .95), rgba(0, 0, 0, 0) 45%), url(${currentRecipe.imgUrl})`}}>
+                <div className='recipe-page-hero' style={{backgroundImage: `linear-gradient(12deg, rgba(0, 0, 0, .95), rgba(0, 0, 0, 0) 45%), url(${currentRecipe.imgUrl})`}}>
                     <div>
-                        <div id='recipe-title-overlay'>{currentRecipe.recipeName}</div>
+                        <h1 id='recipe-title-overlay'>{currentRecipe.recipeName}</h1>
                         <div id='recipe-subtitle-overlay'>{currentRecipe.recipeSubName}</div>
                     </div>
-                </div> */}
+                </div>
 
-                <h1 id='recipe-page-title'>{currentRecipe.recipeName}</h1>
-                <h2 id='recipe-page-subtitle'>{currentRecipe.recipeSubName}</h2>
+                {/* <h1 id='recipe-page-title'>{currentRecipe.recipeName}</h1>
+                <h2 id='recipe-page-subtitle'>{currentRecipe.recipeSubName}</h2> 
 
-                <div className='recipe-page-hero' style={{backgroundImage: `url(${currentRecipe.imgUrl})`}}></div>
+                <div className='recipe-page-hero' style={{backgroundImage: `url(${currentRecipe.imgUrl})`}}></div>*/}
 
                 
 
@@ -559,7 +559,7 @@ export default function RecipePage(props) {
     
                 <section className='stats-section'>
                             
-                    <h4 className='section-title'>Stats</h4>
+                    <h4 className='section-title'>Community Ratings</h4>
                     <div className='section-arrow-container'>
                         <img src={arrow} className="arrowHead section-arrowhead"/>
                     </div>

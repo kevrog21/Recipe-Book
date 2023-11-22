@@ -104,6 +104,7 @@ export default function EditRecipeForm(props) {
                 bastebookApproved: currentRecipe.bastebookApproved,
                 hasVideo: currentRecipe.hasVideo,
                 nutritionFacts: currentRecipe.nutritionFacts,
+                equipment: currentRecipe.equipment,
                 photoCreds: currentRecipe.photoCreds,
 
                 password: '',
@@ -999,6 +1000,7 @@ export default function EditRecipeForm(props) {
                             bastebookApproved: currentRecipe.bastebookApproved,
                             hasVideo: currentRecipe.hasVideo,
                             nutritionFacts: currentRecipe.nutritionFacts,
+                            equipemnt: currentRecipe.equipemnt,
                             photoCreds: currentRecipe.photoCreds,
 
                             password: '',

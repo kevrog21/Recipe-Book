@@ -33,7 +33,8 @@ const recipeSchema = new mongoose.Schema({
     bastebookApproved: { type: Boolean, required: false },
     hasVideo: { type: Boolean, required: false },
     nutritionFacts: { type: Object, required: false },
-     photoCreds: { type: String, required: false }
+    equipment: { type: Object, required: false }, 
+    photoCreds: { type: String, required: false }
 }, {
     timestamps: true,
 })

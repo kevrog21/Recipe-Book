@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.34528d19.css",
-    "main.js": "/static/js/main.9eb39ad9.js",
+    "main.js": "/static/js/main.0952125a.js",
     "static/js/787.98bc6f0b.chunk.js": "/static/js/787.98bc6f0b.chunk.js",
     "static/media/grilled-cheese-tomato-soup.jpg": "/static/media/grilled-cheese-tomato-soup.ac62f87bb3b002616916.jpg",
     "static/media/poppins-all-400-normal.woff": "/static/media/poppins-all-400-normal.6fbfdac99c274b77fe96.woff",
@@ -45,11 +45,11 @@
     "static/media/star.svg": "/static/media/star.62704794fa44dab5c6d7a9f23cf5e785.svg",
     "static/media/arrow-grey.svg": "/static/media/arrow-grey.7e87b36810e8984be38388bbee14feca.svg",
     "main.34528d19.css.map": "/static/css/main.34528d19.css.map",
-    "main.9eb39ad9.js.map": "/static/js/main.9eb39ad9.js.map",
+    "main.0952125a.js.map": "/static/js/main.0952125a.js.map",
     "787.98bc6f0b.chunk.js.map": "/static/js/787.98bc6f0b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.34528d19.css",
-    "static/js/main.9eb39ad9.js"
+    "static/js/main.0952125a.js"
   ]
 }

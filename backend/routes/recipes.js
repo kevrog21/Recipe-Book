@@ -113,6 +113,7 @@ router.route('/add').post((req, res) => {
     const bastebookApproved = req.body.bastebookApproved
     const hasVideo = req.body.hasVideo
     const nutritionFacts = req.body.nutritionFacts
+    const equipment = req.body.equipment
     const photoCreds = req.body.photoCreds
 
     const timeScore = 
@@ -160,6 +161,7 @@ router.route('/add').post((req, res) => {
             bastebookApproved,
             hasVideo,
             nutritionFacts,
+            equipment,
             photoCreds,
         })
         newRecipe.save()
@@ -272,6 +274,7 @@ router.route('/update/:id').post((req, res) => {
             recipe.bastebookApproved = req.body.bastebookApproved
             recipe.hasVideo = req.body.hasVideo
             recipe.nutritionFacts = req.body.nutritionFacts
+            recipe.equipment = req.body.equipment
             recipe.photoCreds = req.body.photoCreds
 
             recipe.timeScore = 
