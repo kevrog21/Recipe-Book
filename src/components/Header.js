@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 export default function Header() {
     const [isNavMenuOpen, setIsNavMenuOpen] = useState(false)
 
-    useEffect(() => {
+    function showAndDisableNavMenu() {
         const container = document.querySelector('.nav-menu-container')
         const navMenu = document.querySelector('#nav-menu')
         const mainEl = document.querySelector('main')
@@ -17,6 +17,7 @@ export default function Header() {
                 mainEl.classList.add('disable-pointer-events')
                 document.documentElement.style.overflow = 'hidden'
                 document.body.style.overflow = 'hidden'
+                console.log('pointer events disabled')
             } else {
                 container.classList.remove('show')
                 navMenu.classList.remove('show')
@@ -25,6 +26,10 @@ export default function Header() {
                 document.body.style.overflow = ''
             }
         }
+    }
+
+    useEffect(() => {
+        showAndDisableNavMenu()
     }, [isNavMenuOpen])
 
     const handleMenuToggle = () => {
@@ -46,7 +51,9 @@ export default function Header() {
             </header>
             <NavMenu 
                 handleNavItemClick={handleNavItemClick}
-                setIsNavMenuOpen={setIsNavMenuOpen}/>
+                isNavMenuOpen={isNavMenuOpen}
+                setIsNavMenuOpen={setIsNavMenuOpen}
+                showAndDisableNavMenu={showAndDisableNavMenu}/>
         </div>
     )
 }
