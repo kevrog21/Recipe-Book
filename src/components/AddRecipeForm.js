@@ -24,6 +24,7 @@ export default function AddRecipeForm(props) {
         costScore: 0,
         tastinessScore: 0,
         tags: [],
+        recipeVisibility: 'public',
         password: '',
         honeyp: ''
     })
@@ -67,6 +68,8 @@ export default function AddRecipeForm(props) {
 
     const [editedIngredientIndex, setEditedIngredientIndex] = useState(null)
     const [editedInstructionIndex, setEditedInstructionIndex] = useState(null)
+
+    const [recipeVisibility, setRecipeVisibility] = useState('public')
 
     // const [finalImageObject, setFinalImageObject] = useState({})
     // const [isInitialRender, setIsInitialRender] = useState(true)
@@ -502,7 +505,7 @@ export default function AddRecipeForm(props) {
         }
     }
 
-    const shifInstructionDown = (index) => {
+    const shiftInstructionDown = (index) => {
         setFormData((prevData) => {
             if (index < prevData.instructions.length - 1) {
                 const newFormData = { ...prevData }
@@ -530,7 +533,7 @@ export default function AddRecipeForm(props) {
         setEditInstructionMode(false)
         setEditedInstructionIndex(null)
         cancelEditInstructionClick()
-        shifInstructionDown(index)
+        shiftInstructionDown(index)
     }
 
     const additionalDefaultRecipeData = {
@@ -548,7 +551,6 @@ export default function AddRecipeForm(props) {
         createdBy: '',
         versionOwner: '',
         recipeYield: '',
-        recipeVisibilty: '',
         comments: [],
         reviews: [],
         bastebookApproved: false,
@@ -570,6 +572,15 @@ export default function AddRecipeForm(props) {
         setTimeout(() => {
             successMessageEl.classList.add('hide')
         }, 5000)
+    }
+
+    const handleVisibilityChange = (event) => {
+        const { name, value } = event.target
+        setRecipeVisibility(value)
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }))
     }
 
     const handleSubmit = async (e) => {
@@ -776,6 +787,7 @@ export default function AddRecipeForm(props) {
                             costScore: 0,
                             tastinessScore: 0,
                             tags: [],
+                            recipeVisibility: 'public',
                             password: '',
                             honeyp: ''
                         })
@@ -1136,6 +1148,28 @@ export default function AddRecipeForm(props) {
                         </div>
                         
                         <div className='section-input-container'>
+                            <div>
+                                <div>visibility</div>
+                                <div className='visibility-btn-container'>
+                                    <label className='radio-btn-c'>
+                                        <input className='radio-btn' type='radio' name='recipeVisibility' value='public' 
+                                        checked={recipeVisibility === 'public'} onChange={handleVisibilityChange}></input>
+                                        public
+                                        <div className='visibility-sub-text'>everyone can see it</div>
+                                    </label>
+                                    <label className='radio-btn-c'>
+                                        <input className='radio-btn' type='radio' name='recipeVisibility' value='private' 
+                                        checked={recipeVisibility === 'private'} onChange={handleVisibilityChange}></input>
+                                    private<div className='visibility-sub-text'>only your friends can see it</div>
+                                    </label>
+                                    <label className='radio-btn-c'>
+                                        <input className='radio-btn' type='radio' name='recipeVisibility' value='secret' 
+                                        checked={recipeVisibility === 'secret'} onChange={handleVisibilityChange}></input>
+                                    secret<div className='visibility-sub-text'>only you can see it</div>
+                                    </label>
+                                </div>
+                            </div>
+                            
                             <label htmlFor="nutrition-score">Nutrition Score:</label>
                             <input className="nutrition-score" type="number" min={0} max={10} id="nutrition-score" name="nutritionScore" 
                             value={formData.nutritionScore} onChange={handleInputChange}></input>
