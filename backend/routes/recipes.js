@@ -107,7 +107,7 @@ router.route('/add').post((req, res) => {
     const createdBy = req.body.createdBy
     const versionOwner = req.body.versionOwner
     const recipeYield = req.body.yield
-    const recipeVisibilty = req.body.recipeVisibilty
+    const recipeVisibility = req.body.recipeVisibility
     const comments = Array.isArray(req.body.comments) ? req.body.comments : []
     const reviews = Array.isArray(req.body.reviews) ? req.body.reviews : []
     const bastebookApproved = req.body.bastebookApproved
@@ -115,6 +115,8 @@ router.route('/add').post((req, res) => {
     const nutritionFacts = req.body.nutritionFacts
     const equipment = req.body.equipment
     const photoCreds = req.body.photoCreds
+
+    console.log(recipeVisibility)
 
     const timeScore = 
         req.body.totalCooktime <= 30 ? 10 : 
@@ -155,7 +157,7 @@ router.route('/add').post((req, res) => {
             createdBy,
             versionOwner,
             recipeYield,
-            recipeVisibilty,
+            recipeVisibility,
             comments,
             reviews,
             bastebookApproved,
@@ -268,7 +270,7 @@ router.route('/update/:id').post((req, res) => {
             recipe.createdBy = req.body.createdBy
             recipe.versionOwner = req.body.versionOwner
             recipe.recipeYield = req.body.recipeYield
-            recipe.recipeVisibilty = req.body.recipeVisibilty
+            recipe.recipeVisibility = req.body.recipeVisibility
             recipe.comments = Array.isArray(req.body.comments) ? req.body.comments : []
             recipe.reviews = Array.isArray(req.body.reviews) ? req.body.reviews : []
             recipe.bastebookApproved = req.body.bastebookApproved

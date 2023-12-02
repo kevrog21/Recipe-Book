@@ -791,6 +791,7 @@ export default function AddRecipeForm(props) {
                             password: '',
                             honeyp: ''
                         })
+                        setRecipeVisibility('public')
                         setImageObject({})
                         setImgPreview(null)
                         uploadImagePrompt.classList.remove("hide")

@@ -27,7 +27,7 @@ const recipeSchema = new mongoose.Schema({
     createdBy: { type: String, required: false },
     versionOwner: { type: String, required: false },
     recipeYield: { type: String, required: false },
-    recipeVisibilty: { type: String, required: false },
+    recipeVisibility: { type: String, required: false },
     comments: { type: Array, required: false },
     reviews: { type: Array, required: false },
     bastebookApproved: { type: Boolean, required: false },
