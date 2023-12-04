@@ -1149,27 +1149,7 @@ export default function AddRecipeForm(props) {
                         </div>
                         
                         <div className='section-input-container'>
-                            <div>
-                                <div>visibility</div>
-                                <div className='visibility-btn-container'>
-                                    <label className='radio-btn-c'>
-                                        <input className='radio-btn' type='radio' name='recipeVisibility' value='public' 
-                                        checked={recipeVisibility === 'public'} onChange={handleVisibilityChange}></input>
-                                        public
-                                        <div className='visibility-sub-text'>everyone can see it</div>
-                                    </label>
-                                    <label className='radio-btn-c'>
-                                        <input className='radio-btn' type='radio' name='recipeVisibility' value='private' 
-                                        checked={recipeVisibility === 'private'} onChange={handleVisibilityChange}></input>
-                                    private<div className='visibility-sub-text'>only your friends can see it</div>
-                                    </label>
-                                    <label className='radio-btn-c'>
-                                        <input className='radio-btn' type='radio' name='recipeVisibility' value='secret' 
-                                        checked={recipeVisibility === 'secret'} onChange={handleVisibilityChange}></input>
-                                    secret<div className='visibility-sub-text'>only you can see it</div>
-                                    </label>
-                                </div>
-                            </div>
+                            
                             
                             <label htmlFor="nutrition-score">Nutrition Score:</label>
                             <input className="nutrition-score" type="number" min={0} max={10} id="nutrition-score" name="nutritionScore" 
@@ -1219,6 +1199,28 @@ export default function AddRecipeForm(props) {
                         </div>
                     </div>
                 </section>
+
+                <div>
+                    <div className='visibility-label'>Recipe Visibility:</div>
+                    <div className='visibility-btn-container'>
+                        <label className='radio-btn-container'>
+                            <input className='radio-btn' type='radio' name='recipeVisibility' value='public' 
+                            checked={recipeVisibility === 'public'} onChange={handleVisibilityChange}></input>
+                            public
+                            <div className='visibility-sub-text'>everyone can see it</div>
+                        </label>
+                        <label className='radio-btn-container'>
+                            <input className='radio-btn' type='radio' name='recipeVisibility' value='private' 
+                            checked={recipeVisibility === 'private'} onChange={handleVisibilityChange}></input>
+                        private<div className='visibility-sub-text'>only you and your friends can see it</div>
+                        </label>
+                        <label className='radio-btn-container'>
+                            <input className='radio-btn' type='radio' name='recipeVisibility' value='secret' 
+                            checked={recipeVisibility === 'secret'} onChange={handleVisibilityChange}></input>
+                        secret<div className='visibility-sub-text'>only you can see it</div>
+                        </label>
+                    </div>
+                </div>
 
                 <label htmlFor="password">Secret Password:</label>
                 <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange}></input>

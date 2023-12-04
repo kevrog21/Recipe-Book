@@ -47,6 +47,8 @@ export default function EditRecipeForm(props) {
     const [editedIngredientIndex, setEditedIngredientIndex] = useState(null)
     const [editedInstructionIndex, setEditedInstructionIndex] = useState(null)
 
+    const [recipeVisibility, setRecipeVisibility] = useState('public')
+
     const [editFormData, setEditFormData] = useState({
         recipeName: '',
         recipeSubName: '',
@@ -98,7 +100,7 @@ export default function EditRecipeForm(props) {
                 createdBy: currentRecipe.createdBy,
                 versionOwner: currentRecipe.versionOwner,
                 recipeYield: currentRecipe.recipeYield,
-                recipeVisibilty: currentRecipe.recipeVisibilty,
+                recipeVisibility: currentRecipe.recipeVisibility,
                 comments: currentRecipe.comments,
                 reviews: currentRecipe.reviews,
                 bastebookApproved: currentRecipe.bastebookApproved,
@@ -112,6 +114,7 @@ export default function EditRecipeForm(props) {
             })
 
             setSelectedTagWords(currentRecipe.tags)
+            setRecipeVisibility(currentRecipe.recipeVisibility)
         }
     }, [currentRecipe])
 
@@ -788,6 +791,15 @@ export default function EditRecipeForm(props) {
         setShowMoreTags(!showMoreTags)
     }
 
+    const handleVisibilityChange = (event) => {
+        const { name, value } = event.target
+        setRecipeVisibility(value)
+        setEditFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }))
+    }
+
     const api_key = "124659146613462"
     const cloud_name = "dot31xj56"
 
@@ -994,7 +1006,7 @@ export default function EditRecipeForm(props) {
                             createdBy: currentRecipe.createdBy,
                             versionOwner: currentRecipe.versionOwner,
                             recipeYield: currentRecipe.recipeYield,
-                            recipeVisibilty: currentRecipe.recipeVisibilty,
+                            recipeVisibility: currentRecipe.recipeVisibility,
                             comments: currentRecipe.comments,
                             reviews: currentRecipe.reviews,
                             bastebookApproved: currentRecipe.bastebookApproved,
@@ -1357,6 +1369,28 @@ export default function EditRecipeForm(props) {
                             </div>
                         </div>
                     </section>
+
+                    <div>
+                        <div className='visibility-label'>Recipe Visibility:</div>
+                        <div className='visibility-btn-container'>
+                            <label className='radio-btn-container'>
+                                <input className='radio-btn' type='radio' name='recipeVisibility' value='public' 
+                                checked={recipeVisibility === 'public'} onChange={handleVisibilityChange}></input>
+                                public
+                                <div className='visibility-sub-text'>everyone can see it</div>
+                            </label>
+                            <label className='radio-btn-container'>
+                                <input className='radio-btn' type='radio' name='recipeVisibility' value='private' 
+                                checked={recipeVisibility === 'private'} onChange={handleVisibilityChange}></input>
+                            private<div className='visibility-sub-text'>only your friends can see it</div>
+                            </label>
+                            <label className='radio-btn-container'>
+                                <input className='radio-btn' type='radio' name='recipeVisibility' value='secret' 
+                                checked={recipeVisibility === 'secret'} onChange={handleVisibilityChange}></input>
+                            secret<div className='visibility-sub-text'>only you can see it</div>
+                            </label>
+                        </div>
+                    </div>
 
                     <label htmlFor="password">Secret Password:</label>
                     <input type="password" id="password" name="password" className='has-placeholder'

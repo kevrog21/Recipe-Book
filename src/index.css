@@ -676,15 +676,21 @@ main {
   color: white;
 }
 
-.radio-btn-c {
+.visibility-label {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.radio-btn-container {
   background: #F5F5F5;
   display: flex;
   justify-content: left;
   align-items: flex-start;
 }
 
-.radio-btn {
-  background: green;
+.add-recipe-form .radio-btn,
+.edit-recipe-form .radio-btn {
+  margin: .5em 0 .25em 0;
 }
 
 .visibility-btn-container {
@@ -693,6 +699,7 @@ main {
   width: 100%;
   justify-content: space-between;
   text-align: center;
+  margin: 0 0 3em 0;
 }
 
 .visibility-btn-container * {
@@ -702,6 +709,7 @@ main {
 .visibility-sub-text {
   font-size: .75em;
   color: #7E7E7E;
+  padding: 0 .5em;
 }
 
 .title-section,
