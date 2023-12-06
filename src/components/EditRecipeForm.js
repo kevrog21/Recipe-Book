@@ -1214,7 +1214,7 @@ export default function EditRecipeForm(props) {
                             </div>
                             
                             <div className='section-input-container'>
-                                <label htmlFor="cooktime-hours">Prep Time:</label>
+                                <label htmlFor="preptime-hours">Prep Time:</label>
                                 <input className="cooktime-hours" type="number" min={0} id="preptime-hours" name="prepTimeHours" 
                                 value={editFormData.prepTimeHours} onChange={handleInputChange}></input>
                                 <span className="post-input-inline-text">hour(s)</span>
@@ -1235,9 +1235,12 @@ export default function EditRecipeForm(props) {
                                     <option value='medium'>Medium</option>
                                     <option value='hard'>Hard</option>
                                 </select>
-                                <label htmlFor="cooktime-hours">Servings:</label>
+                                <label htmlFor="serving-size-input">Servings:</label>
                                 <input className="default-servings" id="serving-size-input" type="number" min={0} name="defaultServings" 
                                 value={editFormData.defaultServings} onChange={handleInputChange}></input>
+                                <label htmlFor="recipe-yield">Yield</label>
+                                <input type="text" className='has-placeholder' name="recipeYield"
+                                placeholder='about 24 cookies' value={editFormData.recipeYield} onChange={handleInputChange}></input>
                             </div>
                     </section>
 

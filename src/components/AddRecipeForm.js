@@ -11,6 +11,7 @@ export default function AddRecipeForm(props) {
         recipeName: '',
         recipeSubName: '',
         defaultServings: 0,
+        recipeYield: '',
         ingredients: [],
         instructions: [],
         notes: '',
@@ -550,7 +551,6 @@ export default function AddRecipeForm(props) {
         cookingHistoryArray: [],
         createdBy: '',
         versionOwner: '',
-        recipeYield: '',
         comments: [],
         reviews: [],
         bastebookApproved: false,
@@ -1032,7 +1032,7 @@ export default function AddRecipeForm(props) {
                         </div>
                         
                         <div className='section-input-container'>
-                            <label htmlFor="cooktime-hours">Prep Time:</label>
+                            <label htmlFor="preptime-hours">Prep Time:</label>
                             <input className="cooktime-hours" type="number" min={0} id="preptime-hours" name="prepTimeHours" 
                             value={formData.prepTimeHours} onChange={handleInputChange}></input>
                             <span className="post-input-inline-text">hour{formData.prepTimeHours == 1 ? <span className='opacity0'>s</span> : 's'}</span>
@@ -1053,9 +1053,12 @@ export default function AddRecipeForm(props) {
                                 <option value='medium'>Medium</option>
                                 <option value='hard'>Hard</option>
                             </select>
-                            <label htmlFor="cooktime-hours">Servings:</label>
+                            <label htmlFor="serving-size-input">Servings:</label>
                             <input className="default-servings" id="serving-size-input" type="number" min={0} name="defaultServings" 
                             value={formData.defaultServings} onChange={handleInputChange}></input>
+                            <label htmlFor="recipe-yield">Yield</label>
+                            <input type="text" className='has-placeholder' name="recipeYield"
+                            placeholder='about 24 cookies' value={formData.recipeYield} onChange={handleInputChange}></input>
                         </div>
 
                 </section>
