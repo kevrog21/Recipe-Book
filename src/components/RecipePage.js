@@ -431,7 +431,7 @@ export default function RecipePage(props) {
 
     if (isLoading) {
         return (
-            <main>
+            <main className='loading-message'>
                 Loading...
             </main>
         )

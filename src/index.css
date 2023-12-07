@@ -1615,6 +1615,14 @@ color: green;
   font-weight: 600;
 }
 
+.loading-message {
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  font-size: 1.5em;
+  margin: 35vh 0 0 0;
+}
+
 /* utility classes */
 .white-text {
   color: white;
