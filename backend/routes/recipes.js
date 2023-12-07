@@ -106,7 +106,7 @@ router.route('/add').post((req, res) => {
     const cookingHistoryArray = req.body.cookingHistoryArray
     const createdBy = req.body.createdBy
     const versionOwner = req.body.versionOwner
-    const recipeYield = req.body.yield
+    const recipeYield = req.body.recipeYield
     const recipeVisibility = req.body.recipeVisibility
     const comments = Array.isArray(req.body.comments) ? req.body.comments : []
     const reviews = Array.isArray(req.body.reviews) ? req.body.reviews : []
@@ -115,8 +115,6 @@ router.route('/add').post((req, res) => {
     const nutritionFacts = req.body.nutritionFacts
     const equipment = req.body.equipment
     const photoCreds = req.body.photoCreds
-
-    console.log(recipeVisibility)
 
     const timeScore = 
         req.body.totalCooktime <= 30 ? 10 : 
