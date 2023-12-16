@@ -4,7 +4,10 @@ export default function Settings() {
     return (
         <div>
             <main>
-                Settings Page
+                <div>Settings Page</div>
+                <div className='customize-homescreen-container'>
+                    <div>customize homescreen</div>
+                </div>
             </main>
         </div>
     )

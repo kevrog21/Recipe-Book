@@ -476,7 +476,7 @@ export default function RecipePage(props) {
                         <div className='time-overview'>
                             <div className='time-overview-img'><img className='overview-timer-icon' src={timerIcon}></img></div>
                             <div>
-                                {/* <div className='time-overview-text'>{displayTotalTime}</div> */}
+                                <div className='time-overview-text'>{displayTotalTime}</div>
                                 <div className='time-overview-subtext'>prep: {displayPrepTime}</div>
                                 <div className='time-overview-subtext'>cook: {displayCookTime}</div>
                             </div>
