@@ -559,10 +559,7 @@ export default function AddRecipeForm(props) {
             nutritionTitle: '',
             value: ''
         },
-        equipment: {
-            itemName: '',
-            link: ''
-        },
+        equipment: [],
         photoCreds: '',
     }
 
@@ -774,6 +771,7 @@ export default function AddRecipeForm(props) {
                             recipeName: '',
                             recipeSubName: '',
                             defaultServings: 0,
+                            recipeYield: '',
                             ingredients: [],
                             instructions: [],
                             notes: '',
