@@ -22,6 +22,7 @@ useEffect(() => {
                 <Link to='/blog' className='nav-menu-item'><div onClick={props.handleNavItemClick}>Blog</div></Link>
                 <Link to='/settings' className='nav-menu-item'><div onClick={props.handleNavItemClick}>Settings</div></Link>
                 <Link to='/' className='nav-menu-item'><div onClick={props.handleNavItemClick}>Account</div></Link>
+                <Link to='/' className='nav-menu-item'><div onClick={props.handleNavItemClick}>About</div></Link>
                 <Link to='/' className='nav-menu-item'><div onClick={props.handleNavItemClick}>Shop</div></Link>
             </div>
         </div>
