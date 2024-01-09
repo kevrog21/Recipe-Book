@@ -28,6 +28,11 @@ const handleStarClick = (e) => {
 const handleBellClick = (e) => {
     e.stopPropagation()
     props.handleBellClick(props.recipeData._id, props.recipeData.recipeName, props.recipeData.isRequested)
+    document.querySelector('.bell-icon').classList.add('ringing')
+    setTimeout(() => {
+        document.querySelector('.bell-icon').classList.remove('ringing')
+    }, 1000)
+    console.log('bell clicked')
 }
 
     return (
