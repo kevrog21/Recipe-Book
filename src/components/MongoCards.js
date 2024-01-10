@@ -9,6 +9,7 @@ import filledBell from '../assets/filled-bell.svg'
 export default function MongoCards(props) {
 
 const [isRotating, setIsRotating] = useState(false)
+const [isRinging, setIsRinging] = useState(false)
 const [rotationDirection, setRotationDirection] = useState()
 
 const styles = {
@@ -28,11 +29,10 @@ const handleStarClick = (e) => {
 const handleBellClick = (e) => {
     e.stopPropagation()
     props.handleBellClick(props.recipeData._id, props.recipeData.recipeName, props.recipeData.isRequested)
-    document.querySelector('.bell-icon').classList.add('ringing')
+    setIsRinging(true)
     setTimeout(() => {
-        document.querySelector('.bell-icon').classList.remove('ringing')
+        setIsRinging(false)
     }, 1000)
-    console.log('bell clicked')
 }
 
     return (
@@ -46,7 +46,7 @@ const handleBellClick = (e) => {
             <div className='star-icon-container'>
                 <img className={`star-icon icon-drop-shadow ${isRotating ? rotationDirection : ''}`} src={props.isFavorited ? filledStar : star} onClick={handleStarClick} />
             </div>
-            <img className='bell-icon' src={props.recipeData.isRequested ? filledBell : bell} alt='request icon' onClick={handleBellClick} />
+            <img className={`bell-icon ${isRinging ? 'ringing' : ''}`} src={props.recipeData.isRequested ? filledBell : bell} alt='request icon' onClick={handleBellClick} />
         </div>
     )
 }
