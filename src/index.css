@@ -752,6 +752,7 @@ main {
 .extra-info-section,
 .tags-section,
 .stats-section,
+.equipment-section,
 .original-link-section {
   margin: 0 0 3em 0;
   display: grid;
@@ -982,7 +983,9 @@ main {
   color: #7E7E7E;
 }
 
-
+.equipmentPreview {
+  margin: 0 0 1em 0;
+}
 
 .section-input-container > .instruction-section-header:first-child {
   margin: 0 0 1em 0;

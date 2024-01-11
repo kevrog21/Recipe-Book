@@ -41,11 +41,18 @@ export default function EditRecipeForm(props) {
     const ingredientSectionInput = useRef(null)
     const instructionTextEl = useRef(null)
     const instructionSectionInput = useRef(null)
+    const equipmentNameEl = useRef(null)
 
     const [editIngredientMode, setEditIngredientMode] = useState(false)
     const [editInstructionMode, setEditInstructionMode] = useState(false)
     const [editedIngredientIndex, setEditedIngredientIndex] = useState(null)
     const [editedInstructionIndex, setEditedInstructionIndex] = useState(null)
+
+    const [currentEquipmentObj, setCurrentEquipmentObj] = useState({
+        equipmentName: '',
+        equipmentLink: ''
+    })
+    const [equipmentPreview, setEquipmentPreview] = useState([])
 
     const [recipeVisibility, setRecipeVisibility] = useState('public')
 
@@ -53,6 +60,7 @@ export default function EditRecipeForm(props) {
         recipeName: '',
         recipeSubName: '',
         defaultServings: 0,
+        recipeYield: '',
         ingredients: [],
         instructions: [],
         notes: '',
@@ -66,6 +74,7 @@ export default function EditRecipeForm(props) {
         costScore: 0,
         tastinessScore: 0,
         tags: [],
+        equipment: [],
         password: '',
         honeyp: ''
     })
@@ -267,6 +276,18 @@ export default function EditRecipeForm(props) {
         })
         setInstructionsPreview(previews)
     }, [editFormData.instructions, editedInstructionIndex])
+
+    useEffect(() => {
+        const previews = editFormData.equipment.map((equipment, index) => {
+            return (
+                <div key={index}>
+                    <span className='weight600'>{equipment.equipmentName}</span> - <span>{equipment.equipmentLink}</span>
+                </div>
+            )
+        })
+        setEquipmentPreview(previews)
+        console.log(editFormData.equipment)
+    }, [editFormData.equipment])
 
     const handleAddIngredientClick = (e) => {
         console.log(editFormData.ingredients)
@@ -582,6 +603,32 @@ export default function EditRecipeForm(props) {
             instructionSection: ''
         })
         instructionTextEl.current.focus()
+    }
+
+    const handleEquipmentChange = (e) => {
+        const { name, value } = e.target
+        setCurrentEquipmentObj((prevData) => ({
+            ...prevData,
+            [name]: value
+        }))
+    }
+
+    const handleAddEquipmentClick = (e) => {
+        setEditFormData((prevData) => ({
+            ...prevData,
+            equipment: [...prevData.equipment, currentEquipmentObj]
+        }))
+        setCurrentEquipmentObj(() => ({
+            equipmentName: '',
+            equipmentLink: ''
+        }))
+        equipmentNameEl.current.focus()
+    }
+
+    const handleEquipmentEnterKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleAddEquipmentClick() 
+        }
     }
 
     const handleImageChange = (e) => {
@@ -1371,6 +1418,26 @@ export default function EditRecipeForm(props) {
                                 <img src={arrowLight} className={`arrowHead show-more-arrow ${showMoreTags ? 'rotate270' : ''}`}/>
                             </div>
                         </div>
+                    </section>
+
+                    <section> 
+                        <div className='equipment-section'>
+                            <h4 className='section-title'>Equipment</h4>
+                            <div className='section-arrow-container'>
+                                <img src={arrow} className="arrowHead section-arrowhead"/>
+                            </div>
+                            
+                            <div className='section-input-container'>
+                                <div className='equipmentPreview'>{equipmentPreview}</div>
+                                <label htmlFor="equipment-name">Equipment Name:</label>
+                                <input type="text" id="equipment-name" name="equipmentName" className='has-placeholder' ref={equipmentNameEl}
+                                placeholder='Blender' value={currentEquipmentObj.equipmentName} onChange={handleEquipmentChange}></input>
+                                <label htmlFor="equipment-link">Equipment Link:</label>
+                                <input type="text" id="equipment-link" name="equipmentLink" className='has-placeholder'
+                                placeholder='www.example.com' value={currentEquipmentObj.equipmentLink} onChange={handleEquipmentChange} onKeyDown={handleEquipmentEnterKeyDown}></input>
+                                <div className="add-button" onClick={handleAddEquipmentClick}>add equipment</div>
+                            </div>
+                        </div>  
                     </section>
 
                     <div>

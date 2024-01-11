@@ -25,6 +25,7 @@ export default function AddRecipeForm(props) {
         costScore: 0,
         tastinessScore: 0,
         tags: [],
+        equipment:[],
         recipeVisibility: 'public',
         password: '',
         honeyp: ''
@@ -52,6 +53,11 @@ export default function AddRecipeForm(props) {
     const [showInstructionsSectionTitle, setShowInstructionsSectionTitle] = useState(false)
     const [userInteractedWithInstructions, setUserInteractedWithInstructions] = useState(false)
     const [instructionsPreview, setInstructionsPreview] = useState([])
+    const [currentEquipmentObj, setCurrentEquipmentObj] = useState({
+        equipmentName: '',
+        equipmentLink: ''
+    })
+    const [equipmentPreview, setEquipmentPreview] = useState([])
     const defaultTagWords = ['main', 'starter', 'dessert', 'breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 
     'winter meals', 'summer meals', 'sides', 'quick', 'vegetarian', 'vegan', 'gluten free', 'dairy free', 'basics']
     const moreTagWords = ['BBQ', 'seafood', 'holiday', 'halloween', 'thanksgiving', 'christmas', 'hanukkah', '4th of july', 
@@ -63,6 +69,7 @@ export default function AddRecipeForm(props) {
     const ingredientSectionInput = useRef(null)
     const instructionTextEl = useRef(null)
     const instructionSectionInput = useRef(null)
+    const equipmentNameEl = useRef(null)
 
     const [editIngredientMode, setEditIngredientMode] = useState(false)
     const [editInstructionMode, setEditInstructionMode] = useState(false)
@@ -228,7 +235,17 @@ export default function AddRecipeForm(props) {
         setInstructionsPreview(previews)
     }, [formData.instructions, editedInstructionIndex])
 
-
+    useEffect(() => {
+        const previews = formData.equipment.map((equipment, index) => {
+            return (
+                <div key={index}>
+                    <span className='weight600'>{equipment.equipmentName}</span> - <span>{equipment.equipmentLink}</span>
+                </div>
+            )
+        })
+        setEquipmentPreview(previews)
+        console.log(formData.equipment)
+    }, [formData.equipment])
 
     const handleImageChange = (e) => {
         const selectedImage = e.target.files[0]
@@ -263,6 +280,14 @@ export default function AddRecipeForm(props) {
                 [name]: value
             }))
         }
+    }
+
+    const handleEquipmentChange = (e) => {
+        const { name, value } = e.target
+        setCurrentEquipmentObj((prevData) => ({
+            ...prevData,
+            [name]: value
+        }))
     }
 
     const handleInstructionsChange = (e) => {
@@ -559,7 +584,6 @@ export default function AddRecipeForm(props) {
             nutritionTitle: '',
             value: ''
         },
-        equipment: [],
         photoCreds: '',
     }
 
@@ -785,6 +809,7 @@ export default function AddRecipeForm(props) {
                             costScore: 0,
                             tastinessScore: 0,
                             tags: [],
+                            equipment: [],
                             recipeVisibility: 'public',
                             password: '',
                             honeyp: ''
@@ -940,6 +965,24 @@ export default function AddRecipeForm(props) {
                 })
                 e.preventDefault()
             }
+        }
+    }
+
+    const handleAddEquipmentClick = (e) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            equipment: [...prevData.equipment, currentEquipmentObj]
+        }))
+        setCurrentEquipmentObj(() => ({
+            equipmentName: '',
+            equipmentLink: ''
+        }))
+        equipmentNameEl.current.focus()
+    }
+
+    const handleEquipmentEnterKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleAddEquipmentClick() 
         }
     }
 
@@ -1199,6 +1242,26 @@ export default function AddRecipeForm(props) {
                             <img src={arrowLight} className={`arrowHead show-more-arrow ${showMoreTags ? 'rotate270' : ''}`}/>
                         </div>
                     </div>
+                </section>
+
+                <section> 
+                    <div className='equipment-section'>
+                        <h4 className='section-title'>Equipment</h4>
+                        <div className='section-arrow-container'>
+                            <img src={arrow} className="arrowHead section-arrowhead"/>
+                        </div>
+                        
+                        <div className='section-input-container'>
+                            <div className='equipmentPreview'>{equipmentPreview}</div>
+                            <label htmlFor="equipment-name">Equipment Name:</label>
+                            <input type="text" id="equipment-name" name="equipmentName" className='has-placeholder' ref={equipmentNameEl}
+                            placeholder='Blender' value={currentEquipmentObj.equipmentName} onChange={handleEquipmentChange}></input>
+                            <label htmlFor="equipment-link">Equipment Link:</label>
+                            <input type="text" id="equipment-link" name="equipmentLink" className='has-placeholder'
+                            placeholder='www.example.com' value={currentEquipmentObj.equipmentLink} onChange={handleEquipmentChange} onKeyDown={handleEquipmentEnterKeyDown}></input>
+                            <div className="add-button" onClick={handleAddEquipmentClick}>add equipment</div>
+                        </div>
+                    </div>  
                 </section>
 
                 <div>

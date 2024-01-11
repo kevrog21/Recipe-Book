@@ -164,16 +164,16 @@ export default function RecipePage(props) {
             })
 
             const timeDisclaimerEl = document.querySelector('.time-disclaimer')
-            const yieldEl = document.querySelector('.yield-el')
+            // const yieldEl = document.querySelector('.yield-el')
 
             if (servingSelection !== currentRecipe.defaultServings) {
                 timeDisclaimerEl.classList.remove('hide')
                 
-                yieldEl.classList.add('hide')
+                // yieldEl.classList.add('hide')
             } else {
                 timeDisclaimerEl.classList.add('hide')
                 
-                yieldEl.classList.remove('hide')
+                // yieldEl.classList.remove('hide')
             }
         }
     }, [servingSelection])
@@ -486,7 +486,7 @@ export default function RecipePage(props) {
                     <div className='serving-overview'>
                         <div className='grey-text'>serving{servingSelection > 1 ? 's' : ''}:</div>
                         <div className='weight600'>{servingSelection}</div>
-                        <div className='yield-el'>{currentRecipe.recipeYield && <div>{currentRecipe.recipeYield}</div>}</div>
+                        {/* <div className='yield-el'>{currentRecipe.recipeYield && <div>{currentRecipe.recipeYield}</div>}</div> */}
                     </div>
                 </div>
                 <div className='time-disclaimer hide'>*This cook time is based on a serving size of {currentRecipe.defaultServings}.</div>
