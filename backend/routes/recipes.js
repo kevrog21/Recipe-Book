@@ -113,7 +113,7 @@ router.route('/add').post((req, res) => {
     const bastebookApproved = req.body.bastebookApproved
     const hasVideo = req.body.hasVideo
     const nutritionFacts = req.body.nutritionFacts
-    const equipment = Array.isArray(req.body.equipment)
+    const equipment = Array.isArray(req.body.equipment) ? req.body.equipment : []
     const photoCreds = req.body.photoCreds
 
     const timeScore = 
@@ -274,7 +274,7 @@ router.route('/update/:id').post((req, res) => {
             recipe.bastebookApproved = req.body.bastebookApproved
             recipe.hasVideo = req.body.hasVideo
             recipe.nutritionFacts = req.body.nutritionFacts
-            recipe.equipment = Array.isArray(req.body.equipment)
+            recipe.equipment = Array.isArray(req.body.equipment) ? req.body.equipment : []
             recipe.photoCreds = req.body.photoCreds
 
             recipe.timeScore = 
