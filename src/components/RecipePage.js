@@ -22,6 +22,7 @@ export default function RecipePage(props) {
     const [ingredients, setIngredients] = useState([])
     const [instructions, setInstructions] = useState([])
     const [tags, setTags] = useState([])
+    const [equipment, setEquipment] = useState([])
     const [timeScore, setTimeScore] = useState(null)
     const [overallScore, setOverallScore] = useState(null)
     const [nutritionScore, setNutritionScore] = useState(null)
@@ -223,9 +224,16 @@ export default function RecipePage(props) {
                     className='taglist'> #{tag} </span>
                 )
             })
+
+            const equipment = currentRecipe.equipment.map((item, index) => {
+                return (
+                    <div key={index}>{item.equipmentName}</div>
+                )
+            })
             setIngredients(ingredients)
             setTags(tags)
             setInstructions(instructions)
+            setEquipment(equipment)
 
             setHasBeenCookedToday(() => {
                 const userTimezoneOffset = new Date().getTimezoneOffset() * 60000
@@ -559,6 +567,19 @@ export default function RecipePage(props) {
                     
                     <div className='section-content-container'>
                         <p className='show-line-breaks'>{currentRecipe.notes}</p>
+                    </div>
+    
+                </section>}
+
+                {currentRecipe.equipment.length > 0 && <section className='notes-section'>
+                            
+                    <h4 className='section-title'>Equipment Needed</h4>
+                    <div className='section-arrow-container'>
+                        <img src={arrow} className="arrowHead section-arrowhead"/>
+                    </div>
+                    
+                    <div className='section-content-container'>
+                        {equipment}
                     </div>
     
                 </section>}
