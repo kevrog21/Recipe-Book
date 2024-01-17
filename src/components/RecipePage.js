@@ -227,7 +227,7 @@ export default function RecipePage(props) {
 
             const equipment = currentRecipe.equipment.map((item, index) => {
                 return (
-                    <div key={index}>{item.equipmentName}</div>
+                    <div key={index}><a href={`${item.equipmentLink}`} target='_blank'>{item.equipmentName}</a></div>
                 )
             })
             setIngredients(ingredients)
