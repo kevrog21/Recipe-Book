@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 
 export default function Header() {
     const [isNavMenuOpen, setIsNavMenuOpen] = useState(false)
+    const [navMenuInteractedWith, setNavMenuInteractedWith] = useState(false)
 
     function showAndDisableNavMenu() {
         const container = document.querySelector('.nav-menu-container')
@@ -34,6 +35,7 @@ export default function Header() {
 
     const handleMenuToggle = () => {
         setIsNavMenuOpen((prevIsNavMenuOpen) => !prevIsNavMenuOpen)
+        setNavMenuInteractedWith(true)
     }
 
     const handleNavItemClick = () => {
@@ -45,8 +47,8 @@ export default function Header() {
             <header>
                 <Link to='/' className='app_title'><h1>bastebook</h1></Link>
                 <div className='hamburger_wrapper' onClick={handleMenuToggle}>
-                    <div className={`hamburger-line1 ${isNavMenuOpen ? 'rotate-hamburger-line1' : ''}`}></div>
-                    <div className={`hamburger-line2 ${isNavMenuOpen ? 'rotate-hamburger-line2' : ''}`}></div>
+                    <div className={`hamburger-line1 ${isNavMenuOpen ? 'rotate-hamburger-line1' : navMenuInteractedWith ? 'unrotate-hamburger-line1' : ''}`}></div>
+                    <div className={`hamburger-line2 ${isNavMenuOpen ? 'rotate-hamburger-line2' : navMenuInteractedWith ? 'unrotate-hamburger-line2' : ''}`}></div>
                 </div>
             </header>
             <NavMenu 
