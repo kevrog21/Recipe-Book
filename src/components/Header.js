@@ -17,7 +17,7 @@ export default function Header() {
                 mainEl.classList.add('disable-pointer-events')
                 document.documentElement.style.overflow = 'hidden'
                 document.body.style.overflow = 'hidden'
-                console.log('pointer events disabled')
+                
             } else {
                 container.classList.remove('show')
                 navMenu.classList.remove('show')
