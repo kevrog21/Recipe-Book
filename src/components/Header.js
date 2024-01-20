@@ -45,10 +45,12 @@ export default function Header() {
     return (
         <div>
             <header>
-                <Link to='/' className='app_title'><h1>bastebook</h1></Link>
+                <Link to='/' className='app_title' onClick={handleNavItemClick}><h1>bastebook</h1></Link>
                 <div className='hamburger_wrapper' onClick={handleMenuToggle}>
                     <div className={`hamburger-line1 ${isNavMenuOpen ? 'rotate-hamburger-line1' : navMenuInteractedWith ? 'unrotate-hamburger-line1' : ''}`}></div>
-                    <div className={`hamburger-line2 ${isNavMenuOpen ? 'rotate-hamburger-line2' : navMenuInteractedWith ? 'unrotate-hamburger-line2' : ''}`}></div>
+                    <div className={`hamburger-line2 ${isNavMenuOpen ? 'rotate-hamburger-line2' : navMenuInteractedWith ? 'unrotate-hamburger-line2' : ''}`}>
+                        <div className={`pan-handle ${isNavMenuOpen ? 'show-handle-animation' : ''}`}></div>
+                    </div>
                 </div>
             </header>
             <NavMenu 
