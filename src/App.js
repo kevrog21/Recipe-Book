@@ -10,6 +10,7 @@ import EditRecipeForm from './components/EditRecipeForm'
 import RecipeDataService from './services/recipeList'
 import ScrollToTop from './components/ScrollToTop'
 import Settings from './components/Settings'
+import HomeAppearance from './components/HomeAppearance';
 import Blog from './components/Blog'
 import DeletionMessage from './components/DeletionMessage'
 
@@ -196,6 +197,9 @@ export default function App() {
           <Route path="/settings" element={
             <Settings 
             />} />
+          <Route path="/settings/appearance" element={
+            <HomeAppearance 
+            />} />  
           <Route path="/blog" element={
             <Blog 
             />} />
