@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.c2d8e6d8.css",
-    "main.js": "/static/js/main.1fa1e985.js",
+    "main.css": "/static/css/main.ebbb5ec7.css",
+    "main.js": "/static/js/main.21d62df4.js",
     "static/js/787.98bc6f0b.chunk.js": "/static/js/787.98bc6f0b.chunk.js",
     "static/media/grilled-cheese-tomato-soup.jpg": "/static/media/grilled-cheese-tomato-soup.ac62f87bb3b002616916.jpg",
     "static/media/poppins-all-400-normal.woff": "/static/media/poppins-all-400-normal.6fbfdac99c274b77fe96.woff",
@@ -34,6 +34,7 @@
     "static/media/thick-timer.svg": "/static/media/thick-timer.bed0ee8d04b76ff9f8443f7be423504d.svg",
     "index.html": "/index.html",
     "static/media/filled-bell.svg": "/static/media/filled-bell.57b03c8baf5469ff4f2ba9d4092b9c24.svg",
+    "static/media/grey-bell.svg": "/static/media/grey-bell.4c6c44fe5baa20142db15c3871f10479.svg",
     "static/media/bell.svg": "/static/media/bell.235654a8ab90d9086c055d5e1bc78a33.svg",
     "static/media/checkmark.svg": "/static/media/checkmark.d080b7cbd4a3a0a5245bee4d2f504b54.svg",
     "static/media/close-x.svg": "/static/media/close-x.9ddbb96d6d4b11aa3fad78f0a640da9e.svg",
@@ -44,12 +45,12 @@
     "static/media/grey-star.svg": "/static/media/grey-star.ee80aa311668f0ef6452e5c383e40c1c.svg",
     "static/media/star.svg": "/static/media/star.62704794fa44dab5c6d7a9f23cf5e785.svg",
     "static/media/arrow-grey.svg": "/static/media/arrow-grey.7e87b36810e8984be38388bbee14feca.svg",
-    "main.c2d8e6d8.css.map": "/static/css/main.c2d8e6d8.css.map",
-    "main.1fa1e985.js.map": "/static/js/main.1fa1e985.js.map",
+    "main.ebbb5ec7.css.map": "/static/css/main.ebbb5ec7.css.map",
+    "main.21d62df4.js.map": "/static/js/main.21d62df4.js.map",
     "787.98bc6f0b.chunk.js.map": "/static/js/787.98bc6f0b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c2d8e6d8.css",
-    "static/js/main.1fa1e985.js"
+    "static/css/main.ebbb5ec7.css",
+    "static/js/main.21d62df4.js"
   ]
 }

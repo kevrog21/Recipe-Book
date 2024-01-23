@@ -349,9 +349,9 @@ main {
   position: relative;
   height: 43vw;
   width: 33vw;
-  border: 3px solid black;
+  /* border: 2px solid black; */
   box-shadow: -4px 5px 4px rgb(0 0 0 / 0.25);
-  border-radius: 12%;
+  border-radius: 5%;
   margin: 0 0 0 2em;
   cursor: pointer;
   background-size: cover;
@@ -377,19 +377,18 @@ main {
   width: 100%;
   color: white;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1em;
   grid-column: 1;
   grid-row: 3;
-  font-size: 3.5vw;
+  font-size: 3.25vw;
 }
 
 .recipe-subheader {
   color: white;
-  font-size: .65em;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1em;
-  font-size: 2vw;
+  font-size: 1.75vw;
 }
 
 .star-icon-container {
@@ -536,11 +535,21 @@ main {
   display: flex;
   margin: 0 2rem 1rem 2rem;
   justify-content: space-between;
+  align-items: center;
 }
 
+.recipe-page-icon-buttons {
+  display: flex;
+  align-items: center;
+}
 
 .recipe-page-star {
-  width: 2rem;
+  width: 6vw;
+}
+
+.recipe-page-bell {
+  margin: 0 2vw 0 0;
+  width: 5.5vw;
 }
 
 .delete-icon-container {
