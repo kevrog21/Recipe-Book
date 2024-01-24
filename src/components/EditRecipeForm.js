@@ -278,16 +278,16 @@ export default function EditRecipeForm(props) {
     }, [editFormData.instructions, editedInstructionIndex])
 
     useEffect(() => {
-        const previews = editFormData.equipment.map((equipment, index) => {
+        const previews = editFormData.equipment ? editFormData.equipment.map((equipment, index) => {
             return (
                 <div key={index}>
                     <span className='weight600'>{equipment.equipmentName}</span> - <span>{equipment.equipmentLink}</span>
                 </div>
             )
-        })
+        }) : ''
         setEquipmentPreview(previews)
-        console.log(editFormData.equipment)
-    }, [editFormData.equipment])
+        console.log(editFormData.equipment, "howdy")
+    }, [editFormData.equipment, currentRecipe])
 
     const handleAddIngredientClick = (e) => {
         console.log(editFormData.ingredients)

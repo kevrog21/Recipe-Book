@@ -65,7 +65,7 @@ export default function AllBBQRecipes(props) {
 
 
     return (
-        <div className="cardSecionContainer">
+        <div className="cardSectionContainer">
             <div className="cardSectionHeading">
                 <h3 className='homescreen-section-title'>{props.title}</h3>
                 <div className="scrollArrowContainer">

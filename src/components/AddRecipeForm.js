@@ -58,10 +58,7 @@ export default function AddRecipeForm(props) {
         equipmentLink: ''
     })
     const [equipmentPreview, setEquipmentPreview] = useState([])
-    const defaultTagWords = ['main', 'starter', 'dessert', 'breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 
-    'winter meals', 'summer meals', 'sides', 'quick', 'vegetarian', 'vegan', 'gluten free', 'dairy free', 'basics']
-    const moreTagWords = ['BBQ', 'seafood', 'holiday', 'halloween', 'thanksgiving', 'christmas', 'hanukkah', '4th of july', 
-'cost friendly', 'something light', 'pasta', 'healthy', "dad's recipe" , 'the balcony', 'snacks', 'salads', 'sauce', 'instapot', 'slow cooker', 'air fryer', 'baking']
+    const { defaultTagWords, moreTagWords } = props
     const [tagWords, setTagWords] = useState([defaultTagWords])
     const [selectedTagWords, setSelectedTagWords] = useState([])
     const [showMoreTags, setShowMoreTags] = useState(false)

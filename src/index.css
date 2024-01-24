@@ -282,6 +282,10 @@ main {
   padding: 20vw 0 3em 0;
 }
 
+.cardSectionContainer {
+  margin: 2em 0 0 0;
+}
+
 .cardSectionHeading {
   margin: 1em 2em 0;
   display: flex;
@@ -291,6 +295,7 @@ main {
 
 .homescreen-section-title {
   font-weight: 800;
+  text-transform: capitalize;
   white-space: nowrap;
 }
 

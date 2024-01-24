@@ -3,13 +3,28 @@ import plusIcon from '../assets/plus-icon.svg'
 import AllMongoRecipes from './AllMongoRecipes'
 import MongoFavorites from './MongoFavorites'
 import MongoRequests from './MongoRequests'
-import AllVegetarian from './AllVegetarian'
-import AllDesserts from './AllDesserts'
-import Basics from './Basics'
-import AllBBQRecipes from './BBQ'
+import HomeSectionTemplate from './HomeSectionTemplate'
 
 export default function Homescreen(props) {
-    const { data, mongoData, handleFavoriteToggle, handleRequestToggle, handleSelectedRecipe, handleMongoFavoriteToggle, handleMongoRequestToggle } = props
+    const { data, mongoData, handleFavoriteToggle, handleRequestToggle, handleSelectedRecipe, handleMongoFavoriteToggle, handleMongoRequestToggle, defaultTagWords, moreTagWords } = props
+
+    const allTagWords = [...defaultTagWords, ...moreTagWords]
+
+    
+
+    const homescreenSectionElements = allTagWords.map((tag, index) => {
+        return (
+            <HomeSectionTemplate
+                key={tag+index}
+                title={tag}
+                index={index}
+                data={mongoData}
+                handleCardClick={handleSelectedRecipe}
+                handleMongoFavoriteToggle={handleMongoFavoriteToggle}
+                handleMongoRequestToggle={handleMongoRequestToggle}
+            />
+        )
+    })
 
     return (
         <main>
@@ -88,49 +103,7 @@ export default function Homescreen(props) {
                 handleMongoRequestToggle={handleMongoRequestToggle}
             />
 
-            <AllVegetarian
-                title="Vegetarian"
-                index={3}
-                data={mongoData}
-                handleStarClick={handleFavoriteToggle}
-                handleBellClick={handleRequestToggle}
-                handleCardClick={handleSelectedRecipe}
-                handleMongoFavoriteToggle={handleMongoFavoriteToggle}
-                handleMongoRequestToggle={handleMongoRequestToggle}
-            />
-
-            <AllDesserts
-                title="Desserts"
-                index={4}
-                data={mongoData}
-                handleStarClick={handleFavoriteToggle}
-                handleBellClick={handleRequestToggle}
-                handleCardClick={handleSelectedRecipe}
-                handleMongoFavoriteToggle={handleMongoFavoriteToggle}
-                handleMongoRequestToggle={handleMongoRequestToggle}
-            />
-
-            <Basics 
-                title="Basics"
-                index={5}
-                data={mongoData}
-                handleStarClick={handleFavoriteToggle}
-                handleBellClick={handleRequestToggle}
-                handleCardClick={handleSelectedRecipe}
-                handleMongoFavoriteToggle={handleMongoFavoriteToggle}
-                handleMongoRequestToggle={handleMongoRequestToggle}
-            />
-
-            <AllBBQRecipes 
-                title="BBQ"
-                index={6}
-                data={mongoData}
-                handleStarClick={handleFavoriteToggle}
-                handleBellClick={handleRequestToggle}
-                handleCardClick={handleSelectedRecipe}
-                handleMongoFavoriteToggle={handleMongoFavoriteToggle}
-                handleMongoRequestToggle={handleMongoRequestToggle}
-            />
+            {homescreenSectionElements}
 
             <div className='add-recipes-section'>
                 <Link to='/add-recipe'><div className='plus-icon'><img src={plusIcon} ></img></div></Link>

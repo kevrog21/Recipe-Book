@@ -331,7 +331,8 @@ export default function RecipePage(props) {
 
     const handleBellClick = (e) => {
         e.stopPropagation()
-        props.handleBellClick(currentRecipe._id, currentRecipe.recipeName, currentRecipe.isRequested)
+        console.log("running")
+        handleMongoRequestToggle(currentRecipe._id, currentRecipe.recipeName, currentRecipe.isRequested)
     }
 
     const handleCheckboxClick = (e) => {

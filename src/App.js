@@ -58,6 +58,11 @@ export default function App() {
 //     } 
 // }, [recipeData])
 
+    const defaultTagWords = ['main', 'starter', 'dessert', 'breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 
+    'winter meals', 'summer meals', 'sides', 'quick', 'vegetarian', 'vegan', 'gluten free', 'dairy free', 'basics']
+    const moreTagWords = ['BBQ', 'seafood', 'holiday', 'halloween', 'thanksgiving', 'christmas', 'hanukkah', '4th of july', 
+    'cost friendly', 'something light', 'pasta', 'healthy', "dad's recipe" , 'the balcony', 'snacks', 'salads', 'sauce', 'instapot', 'slow cooker', 'air fryer', 'baking']
+
     const [selectedRecipe, setSelectedRecipe] = useState()
 
     const handleSelectedRecipe = (clickedRecipe) => {
@@ -166,6 +171,8 @@ export default function App() {
               handleSelectedRecipe={handleSelectedRecipe}
               handleMongoFavoriteToggle={handleMongoFavoriteToggle}
               handleMongoRequestToggle={handleMongoRequestToggle}
+              defaultTagWords={defaultTagWords}
+              moreTagWords={moreTagWords}
             />} />
 
           <Route path="/:recipeId" element={
@@ -177,11 +184,14 @@ export default function App() {
               // handleRequestToggle={handleRequestToggle}
               handleSelectedRecipe={handleSelectedRecipe}
               handleMongoFavoriteToggle={handleMongoFavoriteToggle}
+              handleMongoRequestToggle={handleMongoRequestToggle}
               addNewCookedDate={addNewCookedDate}
             />} />
           <Route path="/add-recipe" element={
             <AddRecipeForm 
               retrieveRecipes={retrieveRecipes}
+              defaultTagWords={defaultTagWords}
+              moreTagWords={moreTagWords}
             />
           } />
           <Route path="/:recipeId/edit" element={
