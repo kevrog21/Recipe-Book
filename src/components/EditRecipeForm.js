@@ -286,7 +286,6 @@ export default function EditRecipeForm(props) {
             )
         }) : ''
         setEquipmentPreview(previews)
-        console.log(editFormData.equipment, "howdy")
     }, [editFormData.equipment, currentRecipe])
 
     const handleAddIngredientClick = (e) => {

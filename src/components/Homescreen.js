@@ -1,4 +1,5 @@
 import { Routes, Route, useParams, Link} from 'react-router-dom'
+import { useEffect, useState, } from 'react'
 import plusIcon from '../assets/plus-icon.svg'
 import AllMongoRecipes from './AllMongoRecipes'
 import MongoFavorites from './MongoFavorites'
@@ -10,7 +11,25 @@ export default function Homescreen(props) {
 
     const allTagWords = [...defaultTagWords, ...moreTagWords]
 
-    
+
+    const handleScroll = () => {
+        props.setScrollPositionY(window.scrollY)
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll)
+        console.log('adding event lister')
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+            console.log('removed event lister')
+        }
+    }, [])
+
+    useEffect(() => {
+        window.scrollTo(0, props.homeScreenScrollPositionY)
+        
+    }, [props.homeScreenScrollPositionY])
 
     const homescreenSectionElements = allTagWords.map((tag, index) => {
         return (

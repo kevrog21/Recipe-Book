@@ -21,6 +21,9 @@ export default function App() {
   const [recipeData, setRecipeData] = useState([])
   const [itemCount, setItemCount] = useState(recipeData.length)
 
+  
+  const [homeScreenScrollPositionY, setScrollPositionY] = useState(0)
+
   const retrieveRecipes = () => {
     RecipeDataService.getAll()
     .then(response => {
@@ -37,6 +40,8 @@ export default function App() {
   useEffect(() => {
       retrieveRecipes()
   }, [])
+
+  
 
 //   useEffect(() => {
 //     if (recipeData.length > 0) {
@@ -159,7 +164,9 @@ export default function App() {
   return (
     <Router>
         <Header />
-        <ScrollToTop />
+        <ScrollToTop 
+          homeScreenScrollPositionY={homeScreenScrollPositionY}
+        />
         <DeletionMessage />
         <Routes>
           <Route exact path="/" element={
@@ -173,6 +180,8 @@ export default function App() {
               handleMongoRequestToggle={handleMongoRequestToggle}
               defaultTagWords={defaultTagWords}
               moreTagWords={moreTagWords}
+              homeScreenScrollPositionY={homeScreenScrollPositionY}
+              setScrollPositionY={setScrollPositionY}
             />} />
 
           <Route path="/:recipeId" element={

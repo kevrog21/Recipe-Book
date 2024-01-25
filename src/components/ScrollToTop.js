@@ -1,11 +1,17 @@
 import { useEffect } from "react";
 import { useLocation } from 'react-router-dom'
 
-function ScrollToTop({ history }) {
+function ScrollToTop(props, { history }) {
     const location = useLocation()
 
     useEffect(() => {
-        window.scrollTo(0, 0)
+        const isHomeScreen = location.pathname === '/'
+
+        if (!isHomeScreen) {
+            window.scrollTo(0, 0)
+        } else {
+            window.scrollTo(0, props.homeScreenScrollPositionY)
+        }
     }, [location])
 
     return (null)
