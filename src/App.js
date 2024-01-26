@@ -24,6 +24,8 @@ export default function App() {
   
   const [homeScreenScrollPositionY, setScrollPositionY] = useState(0)
 
+  const [homeScreenSectionScrollX, setHomeScreenSectionScrollX] = useState()
+
   const retrieveRecipes = () => {
     RecipeDataService.getAll()
     .then(response => {
@@ -70,9 +72,10 @@ export default function App() {
 
     const [selectedRecipe, setSelectedRecipe] = useState()
 
-    const handleSelectedRecipe = (clickedRecipe) => {
-        setSelectedRecipe(clickedRecipe)
+    const updateScrollOnClick = () => {
+      setScrollPositionY(window.scrollY)
     }
+
 
     const addNewCookedDate = async (recipeID, recipeName, prevCookingHistoryArray) => {
       console.log(prevCookingHistoryArray)
@@ -166,6 +169,7 @@ export default function App() {
         <Header />
         <ScrollToTop 
           homeScreenScrollPositionY={homeScreenScrollPositionY}
+          setScrollPositionY={setScrollPositionY}
         />
         <DeletionMessage />
         <Routes>
@@ -175,7 +179,7 @@ export default function App() {
               mongoData={recipeData}
               // handleFavoriteToggle={handleFavoriteToggle}
               // handleRequestToggle={handleRequestToggle}
-              handleSelectedRecipe={handleSelectedRecipe}
+              updateScrollOnClick={updateScrollOnClick}
               handleMongoFavoriteToggle={handleMongoFavoriteToggle}
               handleMongoRequestToggle={handleMongoRequestToggle}
               defaultTagWords={defaultTagWords}
@@ -186,12 +190,8 @@ export default function App() {
 
           <Route path="/:recipeId" element={
             <RecipePage 
-              // data={recipes}
               mongoData={recipeData}
-              selectedRecipe={selectedRecipe}
-              // handleFavoriteToggle={handleFavoriteToggle}
-              // handleRequestToggle={handleRequestToggle}
-              handleSelectedRecipe={handleSelectedRecipe}
+              updateScrollOnClick={updateScrollOnClick}
               handleMongoFavoriteToggle={handleMongoFavoriteToggle}
               handleMongoRequestToggle={handleMongoRequestToggle}
               addNewCookedDate={addNewCookedDate}
@@ -209,7 +209,7 @@ export default function App() {
               selectedRecipe={selectedRecipe}
               // handleFavoriteToggle={handleFavoriteToggle}
               // handleRequestToggle={handleRequestToggle}
-              handleSelectedRecipe={handleSelectedRecipe}
+              updateScrollOnClick={updateScrollOnClick}
               retrieveRecipes={retrieveRecipes}
               mountThenRemoveDeletionMessage={mountThenRemoveDeletionMessage}
             />} />

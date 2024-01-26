@@ -18,8 +18,8 @@ import closeIcon from '../assets/close-x.svg'
 
 export default function RecipePage(props) {
     const {recipeId} = useParams()
-    const { mongoData, handleMongoFavoriteToggle, handleMongoRequestToggle, selectedRecipe, addNewCookedDate } = props
-    const [currentRecipe, setCurrentRecipe] = useState(selectedRecipe)
+    const { mongoData, handleMongoFavoriteToggle, handleMongoRequestToggle, addNewCookedDate } = props
+    const [currentRecipe, setCurrentRecipe] = useState()
     const [isLoading, setIsLoading] = useState(true)
     const [ingredients, setIngredients] = useState([])
     const [instructions, setInstructions] = useState([])

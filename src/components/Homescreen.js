@@ -7,24 +7,24 @@ import MongoRequests from './MongoRequests'
 import HomeSectionTemplate from './HomeSectionTemplate'
 
 export default function Homescreen(props) {
-    const { data, mongoData, handleFavoriteToggle, handleRequestToggle, handleSelectedRecipe, handleMongoFavoriteToggle, handleMongoRequestToggle, defaultTagWords, moreTagWords } = props
+    const { data, mongoData, handleFavoriteToggle, handleRequestToggle, updateScrollOnClick, handleMongoFavoriteToggle, handleMongoRequestToggle, defaultTagWords, moreTagWords } = props
 
     const allTagWords = [...defaultTagWords, ...moreTagWords]
 
 
-    const handleScroll = () => {
-        props.setScrollPositionY(window.scrollY)
-    }
+    // const handleScroll = () => {
+    //     props.setScrollPositionY(window.scrollY)
+    // }
 
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll)
-        console.log('adding event lister')
+    // useEffect(() => {
+    //     window.addEventListener('scroll', handleScroll)
+    //     console.log('adding event lister')
 
-        return () => {
-            window.removeEventListener('scroll', handleScroll)
-            console.log('removed event lister')
-        }
-    }, [])
+    //     return () => {
+    //         window.removeEventListener('scroll', handleScroll)
+    //         console.log('removed event lister')
+    //     }
+    // }, [])
 
     useEffect(() => {
         window.scrollTo(0, props.homeScreenScrollPositionY)
@@ -38,7 +38,7 @@ export default function Homescreen(props) {
                 title={tag}
                 index={index}
                 data={mongoData}
-                handleCardClick={handleSelectedRecipe}
+                handleCardClick={updateScrollOnClick}
                 handleMongoFavoriteToggle={handleMongoFavoriteToggle}
                 handleMongoRequestToggle={handleMongoRequestToggle}
             />
@@ -94,7 +94,7 @@ export default function Homescreen(props) {
                 data={mongoData}
                 handleStarClick={handleFavoriteToggle}
                 handleBellClick={handleRequestToggle}
-                handleCardClick={handleSelectedRecipe}
+                handleCardClick={updateScrollOnClick}
                 handleMongoFavoriteToggle={handleMongoFavoriteToggle}
                 handleMongoRequestToggle={handleMongoRequestToggle}
                 
@@ -106,7 +106,7 @@ export default function Homescreen(props) {
                 data={mongoData}
                 handleStarClick={handleFavoriteToggle}
                 handleBellClick={handleRequestToggle}
-                handleCardClick={handleSelectedRecipe}
+                handleCardClick={updateScrollOnClick}
                 handleMongoFavoriteToggle={handleMongoFavoriteToggle}
                 handleMongoRequestToggle={handleMongoRequestToggle}
             />
@@ -117,7 +117,7 @@ export default function Homescreen(props) {
                 data={mongoData}
                 handleStarClick={handleFavoriteToggle}
                 handleBellClick={handleRequestToggle}
-                handleCardClick={handleSelectedRecipe}
+                handleCardClick={updateScrollOnClick}
                 handleMongoFavoriteToggle={handleMongoFavoriteToggle}
                 handleMongoRequestToggle={handleMongoRequestToggle}
             />
