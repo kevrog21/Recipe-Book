@@ -8,7 +8,7 @@ import RecipePage from './components/RecipePage'
 import AddRecipeForm from './components/AddRecipeForm'
 import EditRecipeForm from './components/EditRecipeForm'
 import RecipeDataService from './services/recipeList'
-import ScrollToTop from './components/ScrollToTop'
+import ScrollToPosition from './components/ScrollToPosition'
 import Settings from './components/Settings'
 import HomeAppearance from './components/HomeAppearance';
 import Blog from './components/Blog'
@@ -20,11 +20,8 @@ export default function App() {
 
   const [recipeData, setRecipeData] = useState([])
   const [itemCount, setItemCount] = useState(recipeData.length)
-
   
-  const [homeScreenScrollPositionY, setScrollPositionY] = useState(0)
-
-  const [homeScreenSectionScrollX, setHomeScreenSectionScrollX] = useState()
+  const [selectedRecipe, setSelectedRecipe] = useState()
 
   const retrieveRecipes = () => {
     RecipeDataService.getAll()
@@ -65,16 +62,73 @@ export default function App() {
 //     } 
 // }, [recipeData])
 
+    
+
     const defaultTagWords = ['main', 'starter', 'dessert', 'breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 
     'winter meals', 'summer meals', 'sides', 'quick', 'vegetarian', 'vegan', 'gluten free', 'dairy free', 'basics']
     const moreTagWords = ['BBQ', 'seafood', 'holiday', 'halloween', 'thanksgiving', 'christmas', 'hanukkah', '4th of july', 
     'cost friendly', 'something light', 'pasta', 'healthy', "dad's recipe" , 'the balcony', 'snacks', 'salads', 'sauce', 'instapot', 'slow cooker', 'air fryer', 'baking']
 
-    const [selectedRecipe, setSelectedRecipe] = useState()
+    const [homeScreenScrollPositionY, setScrollPositionY] = useState(0)
+
+    const [homeScreenSectionScrollX, setHomeScreenSectionScrollX] = useState() 
+
+    const [scrollPositionsX, setScrollPositionsX] = useState()
+
+    // useEffect(() => {
+    //   const allHomeSCreenCardSectionContainers = Array.from(document.querySelectorAll(".cardSectionContainer"))
+
+    //   const initialScrollPositions = allHomeSCreenCardSectionContainers.reduce((acc, sectionContainer) => {
+    //     acc[sectionContainer.id] = 0
+    //     return acc
+    //   }, {})
+      
+    //   setScrollPositionsX(initialScrollPositions)
+    //   console.log("running this code", scrollPositionsX)
+
+    // }, [recipeData, location])
+
+    function getXScrollDistances(containerArray) {
+      
+    }
 
     const updateScrollOnClick = () => {
-      setScrollPositionY(window.scrollY)
+      // setScrollPositionY(window.scrollY)
+
+      
+      // updated each scroll position x
+
+      console.log("scrollPositionsX", scrollPositionsX)
+
+      // const getScrollPositions = scrollPositionsX.map(scrollContainer => {
+      //   return scrollContainer
+      // })
+      // console.log("scrollPositions", getScrollPositions)
+
+
     }
+
+    // const [homeScreenSectionScrollX, setHomeScreenSectionScrollX] = useState()
+
+    // const [allSCrollContainers, setAllScrollContainers] = useState()
+
+    // useEffect(() => {
+    //   setAllScrollContainers(document.querySelectorAll(".cardSectionContainer"))
+    // }, [])
+
+    // useEffect(() => {
+    //   if (Array.isArray(allSCrollContainers)) {
+    //     // const initialScrollPositions = allSCrollContainers.reduce((acc, container) => {
+    //     //   acc[container] = 0
+    //     //   return acc
+    //     // }, {})
+    //     console.log(allSCrollContainers)
+    //   }
+    //   else {
+    //     console.log(allSCrollContainers)
+    //   }
+      
+    // }, [allSCrollContainers])
 
 
     const addNewCookedDate = async (recipeID, recipeName, prevCookingHistoryArray) => {
@@ -167,8 +221,10 @@ export default function App() {
   return (
     <Router>
         <Header />
-        <ScrollToTop 
+        <ScrollToPosition 
           homeScreenScrollPositionY={homeScreenScrollPositionY}
+          scrollPositionsX={scrollPositionsX}
+          setScrollPositionsX={setScrollPositionsX}
           setScrollPositionY={setScrollPositionY}
         />
         <DeletionMessage />
@@ -186,6 +242,7 @@ export default function App() {
               moreTagWords={moreTagWords}
               homeScreenScrollPositionY={homeScreenScrollPositionY}
               setScrollPositionY={setScrollPositionY}
+              setScrollPositionsX={setScrollPositionsX}
             />} />
 
           <Route path="/:recipeId" element={

@@ -78,8 +78,10 @@ export default function Favorited(props) {
         console.log('rendered the favorites section yo')
     }, [data])
 
+    const sectionTitleWithoutSpaces = props.title.replace(/\s/g, '')
+
     return (
-        <div className="cardSectionContainer">
+        <div className="cardSectionContainer" id={props.index + sectionTitleWithoutSpaces}>
             <div className="cardSectionHeading">
                 <h3 className='homescreen-section-title'>{props.title}</h3>
                 <div className="scrollArrowContainer">

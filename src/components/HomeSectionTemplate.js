@@ -61,11 +61,10 @@ export default function HomeSectionTemplate(props) {
         console.log(`rendered ${props.title} section`)
     }, [data])
 
-
-
+    const sectionTitleWithoutSpaces = props.title.replace(/\s/g, '')
 
     return (
-        <div className="cardSectionContainer">
+        <div className="cardSectionContainer" id={(props.index + 3) + sectionTitleWithoutSpaces}>
             <div className="cardSectionHeading">
                 <h3 className='homescreen-section-title'>{props.title}</h3>
                 <div className="scrollArrowContainer">

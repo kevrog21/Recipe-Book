@@ -1,4 +1,4 @@
-import { Routes, Route, useParams, Link} from 'react-router-dom'
+import { Routes, Route, useParams, Link, useLocation} from 'react-router-dom'
 import { useEffect, useState, } from 'react'
 import plusIcon from '../assets/plus-icon.svg'
 import AllMongoRecipes from './AllMongoRecipes'
@@ -11,20 +11,21 @@ export default function Homescreen(props) {
 
     const allTagWords = [...defaultTagWords, ...moreTagWords]
 
+    const location = useLocation()
 
-    // const handleScroll = () => {
-    //     props.setScrollPositionY(window.scrollY)
-    // }
+    useEffect(() => {
 
-    // useEffect(() => {
-    //     window.addEventListener('scroll', handleScroll)
-    //     console.log('adding event lister')
 
-    //     return () => {
-    //         window.removeEventListener('scroll', handleScroll)
-    //         console.log('removed event lister')
-    //     }
-    // }, [])
+
+        return () => {
+           
+        }
+      }, [mongoData])
+
+
+    //   useEffect(() => {
+    //     console.log("should log this on location path change")
+    //   }, [location.pathname])
 
     useEffect(() => {
         window.scrollTo(0, props.homeScreenScrollPositionY)
