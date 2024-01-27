@@ -75,7 +75,7 @@ export default function AllMongoRecipes(props) {
     const sectionTitleWithoutSpaces = props.title.replace(/\s/g, '')
 
     return (
-        <div className="cardSectionContainer" id={props.index + sectionTitleWithoutSpaces}>
+        <div className="cardSectionContainer">
             <div className="cardSectionHeading">
                 <h3 className='homescreen-section-title'>{props.title}</h3>
                 <div className="scrollArrowContainer">
@@ -85,7 +85,7 @@ export default function AllMongoRecipes(props) {
                     </div>
                 </div>
             </div>
-            <div className="cardsScrollContainer" onScroll={getScrollPercentage}>
+            <div className="cardsScrollContainer" onScroll={getScrollPercentage} id={props.index + sectionTitleWithoutSpaces}>
                 <div className="cardsContainer">
                     {allRecipes}
                     <div className='end-line'></div>

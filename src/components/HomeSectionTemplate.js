@@ -64,7 +64,7 @@ export default function HomeSectionTemplate(props) {
     const sectionTitleWithoutSpaces = props.title.replace(/\s/g, '')
 
     return (
-        <div className="cardSectionContainer" id={(props.index + 3) + sectionTitleWithoutSpaces}>
+        <div className="cardSectionContainer">
             <div className="cardSectionHeading">
                 <h3 className='homescreen-section-title'>{props.title}</h3>
                 <div className="scrollArrowContainer">
@@ -74,7 +74,7 @@ export default function HomeSectionTemplate(props) {
                     </div>
                 </div>
             </div>
-            <div className="cardsScrollContainer" onScroll={getScrollPercentage}>
+            <div className="cardsScrollContainer" onScroll={getScrollPercentage} id={(props.index + 3) + sectionTitleWithoutSpaces}>
                 <div className="cardsContainer">
                     {sectionCardElements}
                     <div className='end-line'></div>

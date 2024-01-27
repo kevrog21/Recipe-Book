@@ -75,38 +75,73 @@ export default function App() {
 
     const [scrollPositionsX, setScrollPositionsX] = useState()
 
+    // const allHomeScreenCardSectionContainers = Array.from(document.querySelectorAll(".cardsScrollContainer"))
+
+    useEffect(() => {
+
+      console.log("on mount the scrollPositionX is ", scrollPositionsX)
+      // const initialScrollPositions = allHomeScreenCardSectionContainers.reduce((acc, sectionContainer) => {
+      //   const distanceScrolled = sectionContainer.scrollLeft
+
+      //   acc[sectionContainer.id] = distanceScrolled
+      //   return acc
+      // }, {})
+      
+      // setScrollPositionsX(initialScrollPositions)
+
+    }, [])
+
+    
+
     // useEffect(() => {
-    //   const allHomeSCreenCardSectionContainers = Array.from(document.querySelectorAll(".cardSectionContainer"))
+    //   console.log("allHomeScreenCardSectionContainers", allHomeScreenCardSectionContainers)
 
-    //   const initialScrollPositions = allHomeSCreenCardSectionContainers.reduce((acc, sectionContainer) => {
-    //     acc[sectionContainer.id] = 0
-    //     return acc
-    //   }, {})
-      
-    //   setScrollPositionsX(initialScrollPositions)
-    //   console.log("running this code", scrollPositionsX)
+    //   if (allHomeScreenCardSectionContainers.length > 0) {
+    //     const targetElement = allHomeScreenCardSectionContainers[1]
 
-    // }, [recipeData, location])
+    //     allHomeScreenCardSectionContainers[1].addEventListener('scroll', () => {
+    //       console.log('scrolled')
+    //     })
+    //     console.log(allHomeScreenCardSectionContainers[1])
+    //   }
+    // }, [allHomeScreenCardSectionContainers])
 
-    function getXScrollDistances(containerArray) {
-      
+    const [updatedScrollPositions, setUpdatedScrolPositions] = useState()
+
+    function getUpdatedScrollPosition() {
+      const allHomeScreenCardSectionContainers = Array.from(document.querySelectorAll(".cardsScrollContainer"))
+
+      setUpdatedScrolPositions(() => {
+        return allHomeScreenCardSectionContainers.reduce((acc, sectionContainer) => {
+          const distanceScrolled = sectionContainer.scrollLeft
+
+          acc[sectionContainer.id] = distanceScrolled
+          return acc
+        }, {})
+      })
     }
+
+    useEffect(() => {
+      getUpdatedScrollPosition()
+    }, [])
 
     const updateScrollOnClick = () => {
-      // setScrollPositionY(window.scrollY)
 
-      
-      // updated each scroll position x
+      console.log("running updateScroll function")
+      setScrollPositionY(window.scrollY)
 
-      console.log("scrollPositionsX", scrollPositionsX)
-
-      // const getScrollPositions = scrollPositionsX.map(scrollContainer => {
-      //   return scrollContainer
-      // })
-      // console.log("scrollPositions", getScrollPositions)
-
+      getUpdatedScrollPosition()
 
     }
+
+    useEffect(() => {
+      console.log("updated Scroll positions to", updatedScrollPositions)
+      setScrollPositionsX(updatedScrollPositions)
+    }, [updatedScrollPositions])
+
+    useEffect(() => {
+      console.log("scrollPositionsX", scrollPositionsX)
+    }, [scrollPositionsX])
 
     // const [homeScreenSectionScrollX, setHomeScreenSectionScrollX] = useState()
 
