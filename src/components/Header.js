@@ -1,10 +1,12 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import NavMenu from './NavMenu'
 import { useState, useEffect } from 'react'
 
-export default function Header() {
+export default function Header(props) {
     const [isNavMenuOpen, setIsNavMenuOpen] = useState(false)
     const [navMenuInteractedWith, setNavMenuInteractedWith] = useState(false)
+
+    const location = useLocation()
 
     function showAndDisableNavMenu() {
         const container = document.querySelector('.nav-menu-container')
@@ -40,6 +42,10 @@ export default function Header() {
 
     const handleNavItemClick = () => {
         setIsNavMenuOpen(false)
+        if (location.pathname === '/') {
+            window.scrollTo(0, 0)
+            props.setScrollPositionY(0)
+        }
     }
 
     return (

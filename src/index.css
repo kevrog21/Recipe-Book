@@ -340,6 +340,7 @@ main {
 
 .cardsScrollContainer {
   overflow-x: auto;
+  /* scroll-behavior: smooth; */
 }
 
 .cardsContainer {

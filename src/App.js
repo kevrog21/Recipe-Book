@@ -255,7 +255,9 @@ export default function App() {
 
   return (
     <Router>
-        <Header />
+        <Header 
+          setScrollPositionY={setScrollPositionY}
+        />
         <ScrollToPosition 
           homeScreenScrollPositionY={homeScreenScrollPositionY}
           scrollPositionsX={scrollPositionsX}
