@@ -14,22 +14,7 @@ export default function Homescreen(props) {
     const location = useLocation()
 
     useEffect(() => {
-
-
-
-        return () => {
-           
-        }
-      }, [mongoData])
-
-
-    //   useEffect(() => {
-    //     console.log("should log this on location path change")
-    //   }, [location.pathname])
-
-    useEffect(() => {
         window.scrollTo(0, props.homeScreenScrollPositionY)
-        
     }, [props.homeScreenScrollPositionY])
 
     const homescreenSectionElements = allTagWords.map((tag, index) => {
@@ -48,40 +33,6 @@ export default function Homescreen(props) {
 
     return (
         <main>
-            {/* nav menu */}
-            {/* Howdy, Kevin || welcome stranger */}
-            {/* <AllRecipes 
-                title="All Recipes"
-                index={0}
-                data={data}
-                handleStarClick={handleFavoriteToggle}
-                handleBellClick={handleRequestToggle}
-                handleCardClick={handleSelectedRecipe}
-            />
-            <Requested
-                title="Requested"
-                index={1}
-                data={data}
-                handleStarClick={handleFavoriteToggle}
-                handleBellClick={handleRequestToggle}
-                handleCardClick={handleSelectedRecipe}
-            />
-            <Favorited 
-                title="Favorites"
-                index={2}
-                data={data}
-                handleStarClick={handleFavoriteToggle}
-                handleBellClick={handleRequestToggle}
-                handleCardClick={handleSelectedRecipe}
-            /> */}
-            {/* {selectedRecipe && <RecipePage
-                index={3}
-                data={data}
-                handleStarClick={handleFavoriteToggle}
-                handleBellClick={handleRequestToggle}
-                handleCardClick={handleSelectedRecipe}
-                currentRecipe={selectedRecipe}
-            />} */}
 
             <div id='successful-delete-msg' className='hide'>
                 <div className='deletion-container'>

@@ -16,8 +16,6 @@ import DeletionMessage from './components/DeletionMessage'
 
 export default function App() {
 
-  // const [recipes, setRecipes] = useState(data)
-
   const [recipeData, setRecipeData] = useState([])
   const [itemCount, setItemCount] = useState(recipeData.length)
   
@@ -40,28 +38,6 @@ export default function App() {
       retrieveRecipes()
   }, [])
 
-  
-
-//   useEffect(() => {
-//     if (recipeData.length > 0) {
-//         const urls =[]
-//         recipeData.forEach((recipe) => {
-//             if (recipe.imgUrl) {
-//                 urls.push({
-//                     id: recipe._id,
-//                     url: recipe.imgUrl
-//                 })
-//             }
-//         })
-//         setImageUrls(urls)
-//         console.log('image urls', urls)
-//         urls.forEach((imageUrl) => {
-//             const img = new Image()
-//             img.src = imageUrl.url
-//         })
-//     } 
-// }, [recipeData])
-
     
 
     const defaultTagWords = ['main', 'starter', 'dessert', 'breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 
@@ -70,48 +46,13 @@ export default function App() {
     'cost friendly', 'something light', 'pasta', 'healthy', "dad's recipe" , 'the balcony', 'snacks', 'salads', 'sauce', 'instapot', 'slow cooker', 'air fryer', 'baking']
 
     const [homeScreenScrollPositionY, setScrollPositionY] = useState(0)
-
-    const [homeScreenSectionScrollX, setHomeScreenSectionScrollX] = useState() 
-
     const [scrollPositionsX, setScrollPositionsX] = useState()
-
-    // const allHomeScreenCardSectionContainers = Array.from(document.querySelectorAll(".cardsScrollContainer"))
-
-    useEffect(() => {
-
-      console.log("on mount the scrollPositionX is ", scrollPositionsX)
-      // const initialScrollPositions = allHomeScreenCardSectionContainers.reduce((acc, sectionContainer) => {
-      //   const distanceScrolled = sectionContainer.scrollLeft
-
-      //   acc[sectionContainer.id] = distanceScrolled
-      //   return acc
-      // }, {})
-      
-      // setScrollPositionsX(initialScrollPositions)
-
-    }, [])
-
-    
-
-    // useEffect(() => {
-    //   console.log("allHomeScreenCardSectionContainers", allHomeScreenCardSectionContainers)
-
-    //   if (allHomeScreenCardSectionContainers.length > 0) {
-    //     const targetElement = allHomeScreenCardSectionContainers[1]
-
-    //     allHomeScreenCardSectionContainers[1].addEventListener('scroll', () => {
-    //       console.log('scrolled')
-    //     })
-    //     console.log(allHomeScreenCardSectionContainers[1])
-    //   }
-    // }, [allHomeScreenCardSectionContainers])
-
-    const [updatedScrollPositions, setUpdatedScrolPositions] = useState()
+    const [updatedScrollPositions, setUpdatedScrollPositions] = useState()
 
     function getUpdatedScrollPosition() {
       const allHomeScreenCardSectionContainers = Array.from(document.querySelectorAll(".cardsScrollContainer"))
 
-      setUpdatedScrolPositions(() => {
+      setUpdatedScrollPositions(() => {
         return allHomeScreenCardSectionContainers.reduce((acc, sectionContainer) => {
           const distanceScrolled = sectionContainer.scrollLeft
 
@@ -131,7 +72,6 @@ export default function App() {
       setScrollPositionY(window.scrollY)
 
       getUpdatedScrollPosition()
-
     }
 
     useEffect(() => {
@@ -142,28 +82,6 @@ export default function App() {
     useEffect(() => {
       console.log("scrollPositionsX", scrollPositionsX)
     }, [scrollPositionsX])
-
-    // const [homeScreenSectionScrollX, setHomeScreenSectionScrollX] = useState()
-
-    // const [allSCrollContainers, setAllScrollContainers] = useState()
-
-    // useEffect(() => {
-    //   setAllScrollContainers(document.querySelectorAll(".cardSectionContainer"))
-    // }, [])
-
-    // useEffect(() => {
-    //   if (Array.isArray(allSCrollContainers)) {
-    //     // const initialScrollPositions = allSCrollContainers.reduce((acc, container) => {
-    //     //   acc[container] = 0
-    //     //   return acc
-    //     // }, {})
-    //     console.log(allSCrollContainers)
-    //   }
-    //   else {
-    //     console.log(allSCrollContainers)
-    //   }
-      
-    // }, [allSCrollContainers])
 
 
     const addNewCookedDate = async (recipeID, recipeName, prevCookingHistoryArray) => {
@@ -268,10 +186,7 @@ export default function App() {
         <Routes>
           <Route exact path="/" element={
             <Homescreen 
-              // data={recipes}
               mongoData={recipeData}
-              // handleFavoriteToggle={handleFavoriteToggle}
-              // handleRequestToggle={handleRequestToggle}
               updateScrollOnClick={updateScrollOnClick}
               handleMongoFavoriteToggle={handleMongoFavoriteToggle}
               handleMongoRequestToggle={handleMongoRequestToggle}
@@ -301,8 +216,6 @@ export default function App() {
             <EditRecipeForm 
               mongoData={recipeData}
               selectedRecipe={selectedRecipe}
-              // handleFavoriteToggle={handleFavoriteToggle}
-              // handleRequestToggle={handleRequestToggle}
               updateScrollOnClick={updateScrollOnClick}
               retrieveRecipes={retrieveRecipes}
               mountThenRemoveDeletionMessage={mountThenRemoveDeletionMessage}
@@ -319,15 +232,5 @@ export default function App() {
         </Routes>
         <Footer />
     </Router>
-
-    // <div>
-    //   <Header />
-
-    //   <Routes>
-    //     <Route exact path='/' element={<Homescreen />}/>
-    //     <Route path={`/:recipeId`} element={<RecipePage />}/>
-    //   </Routes>
-
-    // </div>
   )
 }
