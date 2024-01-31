@@ -5,6 +5,7 @@ import AllMongoRecipes from './AllMongoRecipes'
 import MongoFavorites from './MongoFavorites'
 import MongoRequests from './MongoRequests'
 import HomeSectionTemplate from './HomeSectionTemplate'
+import HomeAnimation from './HomeAnimation'
 
 export default function Homescreen(props) {
     const { data, mongoData, handleFavoriteToggle, handleRequestToggle, updateScrollOnClick, handleMongoFavoriteToggle, handleMongoRequestToggle, defaultTagWords, moreTagWords } = props
@@ -39,6 +40,14 @@ export default function Homescreen(props) {
                     successfully deleted
                 </div>
             </div>
+
+            <div className='home-animation'></div>
+
+            <div className='home-btn-container'>
+                <button className='recipes-button' >Find Recipes</button>
+                <button className='upload-btn'>Upload your favorite recipes</button>
+            </div>
+            
 
             <AllMongoRecipes 
                 title="All Recipes"

@@ -1,6 +1,8 @@
 import { Link, useLocation } from 'react-router-dom'
 import NavMenu from './NavMenu'
 import { useState, useEffect } from 'react'
+import logo from '../assets/bastebook-logo.svg'
+import plusIcon from '../assets/plus-icon.svg'
 
 export default function Header(props) {
     const [isNavMenuOpen, setIsNavMenuOpen] = useState(false)
@@ -50,7 +52,8 @@ export default function Header(props) {
 
     return (
         <div>
-            <header>
+            <header className={isNavMenuOpen ? 'header-shadow' : ''}>
+                <Link to='/' className='logo-container' onClick={handleNavItemClick}><img className='header-logo' src={logo}></img></Link>
                 <Link to='/' className='app_title' onClick={handleNavItemClick}><h1>bastebook</h1></Link>
                 <div className='hamburger_wrapper' onClick={handleMenuToggle}>
                     <div className={`hamburger-line1 ${isNavMenuOpen ? 'rotate-hamburger-line1' : navMenuInteractedWith ? 'unrotate-hamburger-line1' : ''}`}></div>

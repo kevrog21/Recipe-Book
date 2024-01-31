@@ -5,14 +5,10 @@
   font-style: normal;
 }
 
-.new-font-style {
-  font-family: "ff-providence-sans-web-pro", sans-serif;
-  color: red;
-}
-
 html, body {
   box-sizing: content-box;
   overflow-x: hidden;
+  background: #F5EFDF;
 }
 
 body {
@@ -37,11 +33,10 @@ code {
 }
 
 header {
-  background: black;
+  background: #FCF8F2;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 0 .5em 0;
   position: fixed;
   top: 0;
   left: 0;
@@ -51,14 +46,26 @@ header {
   padding: 3vw 3vw 3vw 2em;
 }
 
+.header-shadow {
+  /* box-shadow: 0 0 0.5em 0 #231F20; */
+  border-bottom: 2px solid #231F20;
+}
+
+.logo-container {
+  width: 8vw;
+  height: 8vw;
+  display: flex;
+}
+
 .app_title {
   font-family: "ff-providence-sans-web-pro", sans-serif;
   font-size: 2.75vw;
   font-weight: 800;
   line-height: 2em;
-  color: white;
+  color: #231F20;
   margin: 0;
   text-decoration: none;
+  margin: .5em 0 0 0;
 }
 
 .hamburger_wrapper {
@@ -70,9 +77,9 @@ header {
 
 .hamburger-line1,
 .hamburger-line2 {
-  background: white;
-  height: 10%;
-  margin: 30% 0 0 auto;
+  background: #231F20;
+  height: 8%;
+  margin: 40% 0 0 auto;
   width: 100%;
   border-radius: .5vw;
   transition: all .3s ease;
@@ -168,7 +175,7 @@ header {
     width: 70%;
   }
   100% {
-    transform: translate(0%, .55vw) rotate(-495deg);
+    transform: translate(0%, .25vw) rotate(-495deg);
     width: 100%;
   } 
 }
@@ -242,7 +249,7 @@ header {
   position: absolute;
   top: 0;
   right: 0;
-  background: white;
+  background: #F5EFDF;
   width: 70%;
   height: 100%;
   margin: 0 0 0 auto;
@@ -262,9 +269,9 @@ header {
   width: 75%;
   margin: 1rem 0 1rem auto;
   text-decoration: none;
-  font-size: 3.5vh;
-  font-weight: 600;
-  color: black;
+  font-size: 3vh;
+  font-weight: 500;
+  color: #231F20;
 }
 
 #nav-search-bar {
@@ -274,7 +281,7 @@ header {
   padding: 1vw 5vw;
   font-size: 2vh;
   font-weight: 400;
-  border: 3px solid black;
+  border: 2px solid black;
   border-radius: 2em;
 }
 
@@ -293,6 +300,40 @@ main {
   height: 100%;
   min-height: 100vh;
   padding: 20vw 0 3em 0;
+}
+
+.home-animation {
+  height: 65vh;
+}
+
+.home-btn-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.recipes-button,
+.upload-btn {
+  font-family: 'poppins', sans-serif;
+  font-weight: 300;
+  margin: 0 auto;
+  border: none;
+  cursor: pointer;
+}
+
+.recipes-button {
+  font-size: 1em;
+  background: #231F20;
+  color: #F5EFDF;
+  padding: .25em 1em;
+  border-radius: 1.5em;
+}
+
+.upload-btn {
+  text-align: center;
+  margin: .25em 0;
+  border: none;
+  background: none;
 }
 
 .cardSectionContainer {
@@ -671,7 +712,7 @@ main {
   align-items: center;
   font-size: .75em;
   margin: 0 auto;
-  background: #F5F5F5;
+  background: #FCF8F2;
   padding: 1em .5em;
 }
 
@@ -795,6 +836,7 @@ main {
   margin: 0 auto;
   cursor: pointer;
   border: 3px solid black;
+  text-decoration: none;
 }
 
 .small-img-btn:hover {
@@ -1310,7 +1352,7 @@ main {
 
 .instruction-item-container {
   margin: 1.5em 0 0 0;
-  background: #F5F5F5;
+  background: #EDE4CE;
   padding: 1em .5em;
 }
 
