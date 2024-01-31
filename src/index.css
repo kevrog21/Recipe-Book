@@ -1,3 +1,15 @@
+@font-face {
+  font-family: "ff-providence-sans-web-pro";
+  src: url(./providence-sans.otf) format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+.new-font-style {
+  font-family: "ff-providence-sans-web-pro", sans-serif;
+  color: red;
+}
+
 html, body {
   box-sizing: content-box;
   overflow-x: hidden;
@@ -40,6 +52,7 @@ header {
 }
 
 .app_title {
+  font-family: "ff-providence-sans-web-pro", sans-serif;
   font-size: 2.75vw;
   font-weight: 800;
   line-height: 2em;
