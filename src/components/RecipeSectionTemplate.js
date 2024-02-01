@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import arrow from '../assets/arrow.svg'
 import MongoCards from './MongoCards'
 
-export default function HomeSectionTemplate(props) {
+export default function RecipeSectionTemplate(props) {
 
     const cardsScrollContainer = document.getElementsByClassName('cardsScrollContainer')
 

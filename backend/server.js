@@ -32,7 +32,7 @@ app.use(express.json())
      console.log('MongoDB database connection established succesfully!')
  })
 
-app.use('/recipes', recipeRouter)
+app.use('/recipe-data', recipeRouter)
 
 app.get("/*", function(req, res) {
     res.sendFile(

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Homescreen from './components/Homescreen'
+import Recipes from './components/Recipes'
 import RecipePage from './components/RecipePage'
 import AddRecipeForm from './components/AddRecipeForm'
 import EditRecipeForm from './components/EditRecipeForm'
@@ -196,7 +197,18 @@ export default function App() {
               setScrollPositionY={setScrollPositionY}
               setScrollPositionsX={setScrollPositionsX}
             />} />
-
+          <Route path="/recipes" element={
+            <Recipes 
+            mongoData={recipeData}
+              updateScrollOnClick={updateScrollOnClick}
+              handleMongoFavoriteToggle={handleMongoFavoriteToggle}
+              handleMongoRequestToggle={handleMongoRequestToggle}
+              defaultTagWords={defaultTagWords}
+              moreTagWords={moreTagWords}
+              homeScreenScrollPositionY={homeScreenScrollPositionY}
+              setScrollPositionY={setScrollPositionY}
+              setScrollPositionsX={setScrollPositionsX}
+            />} />
           <Route path="/:recipeId" element={
             <RecipePage 
               mongoData={recipeData}

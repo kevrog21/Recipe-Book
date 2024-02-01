@@ -303,13 +303,26 @@ main {
 }
 
 .home-animation {
-  height: 65vh;
+  height: 55vh;
 }
 
 .home-btn-container {
   width: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.home-btn-container a {
+  text-decoration: none;
+}
+
+.recipes-button-container {
+  width: 100%;
+  display: flex;
+}
+
+.recipes-button-container:focus {
+  text-decoration: none;
 }
 
 .recipes-button,
@@ -319,13 +332,14 @@ main {
   margin: 0 auto;
   border: none;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .recipes-button {
   font-size: 1em;
   background: #231F20;
   color: #F5EFDF;
-  padding: .25em 1em;
+  padding: .5em 2em;
   border-radius: 1.5em;
 }
 
@@ -334,6 +348,13 @@ main {
   margin: .25em 0;
   border: none;
   background: none;
+}
+
+.no-ads-text {
+  font-family: "ff-providence-sans-web-pro", sans-serif;
+  text-align: center;
+  font-size: 1.5em;
+  margin: 20vh 0;
 }
 
 .cardSectionContainer {

@@ -37,7 +37,7 @@ const handleBellClick = (e) => {
 
     return (
         <div className='card' style={styles}>   
-            <Link to={`/${props.recipeData._id}`} className='card-link-container' onClick={props.handleCardClick}>
+            <Link to={`/${props.recipeData._id}`} className='card-link-container' onClick={props.handleCardClick} aria-label={`View recipe for ${props.recipeData.recipeName} ${props.recipeData.recipeSubName}`}>
                 <div className='card-text-container'>
                     <h3 className='recipe-card-name icon-drop-shadow' >{props.recipeData.recipeName}</h3>
                     {props.recipeData.recipeSubName && <h4 className='recipe-subheader'>{props.recipeData.recipeSubName}</h4>}
