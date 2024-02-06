@@ -4,14 +4,26 @@ import cloudinary from 'cloudinary'
 import cors from 'cors'
 import express from "express"
 import dotenv from 'dotenv'
+import favicon from 'serve-favicon'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 dotenv.config()
 
 const router = Router()
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
 router.use(express.static("public"))
 router.use(express.json())
 router.use(cors())
+
+// router.use('/favicon.svg', express.static('/favicon.svg'))
+
+// router.use(favicon.default(__dirname + './public/favicon.svg'))
+// console.log(favicon.default)
+router.use(favicon(path.join(__dirname, '..', '..', 'public', 'favicon.svg')))
+console.log(path.join(__dirname, '..', '..', 'public', 'favicon.svg'))
 
 const cloudinaryConfig = cloudinary.config({
     cloud_name: process.env.CLOUDNAME,
@@ -62,23 +74,6 @@ router.get("/get-signature", (req, res) => {
             res.status(500).json({error: "Upload Failed" })
     })
   })
-
-
-// router.post("/do-something-with-photo", async (req, res) => {
-//     // based on the public_id and the version that the (potentially malicious) user is submitting...
-//     // we can combine those values along with our SECRET key to see what we would expect the signature to be if it was innocent / valid / actually coming from Cloudinary
-//     const expectedSignature = cloudinary.utils.api_sign_request({ public_id: req.body.public_id, version: req.body.version }, cloudinaryConfig.api_secret)
-  
-//     // We can trust the visitor's data if their signature is what we'd expect it to be...
-//     // Because without the SECRET key there's no way for someone to know what the signature should be...
-//     if (expectedSignature === req.body.signature) {
-//       // Do whatever you need to do with the public_id for the photo
-//       // Store it in a database or pass it to another service etc...
-//       await fse.ensureFile("./data.txt")
-//       const existingData = await fse.readFile("./data.txt", "utf8")
-//       await fse.outputFile("./data.txt", existingData + req.body.public_id + "\n")
-//     }
-//   })
 
 router.route('/add').post((req, res) => {
     const recipeName = req.body.recipeName

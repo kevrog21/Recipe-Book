@@ -3,7 +3,7 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import recipeRouter from './routes/recipes.js'
-
+import favicon from 'serve-favicon'
 import { fileURLToPath } from 'url'
 
 const app = express()
@@ -16,6 +16,11 @@ const buildPath = path.resolve(__dirname, '../build')
 app.use(express.static(buildPath))
 
 dotenv.config()
+
+// app.use('/favicon.svg', express.static(path.join(__dirname, '..', 'public', 'favicon.svg')))
+app.use(favicon(path.join(__dirname, '..', 'public', 'favicon.svg')))
+// console.log(favicon)
+console.log(path.join(__dirname, '..', 'public', 'favicon.svg'))
 
 app.use(cors({
     origin: 'https://bastebook.com',
