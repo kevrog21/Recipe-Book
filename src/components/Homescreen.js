@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import AllMongoRecipes from './AllMongoRecipes'
+import PopularRecipes from './PopularRecipes'
 
 
 export default function Homescreen(props) {
@@ -23,8 +23,8 @@ export default function Homescreen(props) {
             </div>
             
 
-            <AllMongoRecipes
-                title="All Recipes"
+            <PopularRecipes
+                title="Popular Recipes"
                 index={0}
                 data={mongoData}
                 handleStarClick={handleFavoriteToggle}

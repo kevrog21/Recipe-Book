@@ -33,7 +33,7 @@ code {
 }
 
 header {
-  background: #F5EFDF;
+  background: #FCF8F2;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -350,6 +350,11 @@ main {
   background: none;
 }
 
+.home-screen-recipes {
+  background: #FCF8F2;
+  padding: 1em 0 1.5em 0;
+}
+
 .no-ads-text {
   font-family: "ff-providence-sans-web-pro", sans-serif;
   text-align: center;
@@ -369,7 +374,7 @@ main {
 }
 
 .homescreen-section-title {
-  font-weight: 800;
+  font-weight: 500;
   text-transform: capitalize;
   white-space: nowrap;
 }
@@ -428,8 +433,8 @@ main {
 .card {
   display: flex;
   position: relative;
-  height: 43vw;
-  width: 33vw;
+  height: 33vw;
+  width: 34vw;
   /* border: 2px solid black; */
   box-shadow: -4px 5px 4px rgb(0 0 0 / 0.25);
   border-radius: 5%;
