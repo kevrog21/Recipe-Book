@@ -1,7 +1,7 @@
 export default function HomeAppearance() {
     return (
-        <main>
+        <div>
             Home Appearance Page
-        </main>
+        </div>
     )
 }

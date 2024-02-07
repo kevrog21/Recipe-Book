@@ -23,7 +23,7 @@ export default function Homescreen(props) {
             </div>
             
 
-            <AllMongoRecipes 
+            <AllMongoRecipes
                 title="All Recipes"
                 index={0}
                 data={mongoData}

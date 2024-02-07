@@ -82,6 +82,7 @@ export function decimalToFraction(decimal) {
     const fraction = new Fraction(decimal)
     const simplifiedFraction = fraction.simplify()
     const fractionString = simplifiedFraction.toFraction()
+    const wholeNumber = Math.floor
 
     return `${fractionString}`
 }

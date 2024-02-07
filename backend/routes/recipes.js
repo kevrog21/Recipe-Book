@@ -4,26 +4,14 @@ import cloudinary from 'cloudinary'
 import cors from 'cors'
 import express from "express"
 import dotenv from 'dotenv'
-import favicon from 'serve-favicon'
-import path from 'path'
-import { fileURLToPath } from 'url'
 
 dotenv.config()
 
 const router = Router()
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-
 router.use(express.static("public"))
 router.use(express.json())
 router.use(cors())
-
-// router.use('/favicon.svg', express.static('/favicon.svg'))
-
-// router.use(favicon.default(__dirname + './public/favicon.svg'))
-// console.log(favicon.default)
-router.use(favicon(path.join(__dirname, '..', '..', 'public', 'favicon.svg')))
-console.log(path.join(__dirname, '..', '..', 'public', 'favicon.svg'))
 
 const cloudinaryConfig = cloudinary.config({
     cloud_name: process.env.CLOUDNAME,
@@ -166,56 +154,6 @@ router.route('/add').post((req, res) => {
         res.status(401).json({ error: 'Incorrect password' })
     }
 })
-
-// if (password === secretPassword && honeyp === '') {
-//     const newRecipe = new Recipe({
-//         recipeName,
-//         recipeSubName,
-//         ingredients,
-//         instructions,
-//         notes,
-//         cooktime,
-//         imageId,
-//         imageUrl
-//     })
-//     newRecipe.save()
-//         .then(() => res.json('Recipe Added!'))
-//         .catch(err => res.status(400).json('Error: ' + err))
-// } else {
-//     res.status(401).json({ error: 'Incorrect password' })
-// }
-
-
-// router.route('/add').post((req, res) => {
-//     const recipeName = req.body.recipeName
-//     const recipeSubName = req.body.recipeSubName
-//     const ingredients = req.body.ingredients
-//     const instructions = req.body.instructions
-//     const notes = req.body.notes
-//     const cooktime = Number(req.body.cooktime)
-//     const imageUrl = req.body.imageUrl
-//     const password = req.body.password
-//     const honeyp = req.body.honeyp
-
-//     if (password === secretPassword && honeyp === '') {
-//         const newRecipe = new Recipe({
-//             recipeName,
-//             recipeSubName,
-//             ingredients,
-//             instructions,
-//             notes,
-//             cooktime,
-//             imageId,
-//             imageUrl
-//         })
-    
-//         newRecipe.save()
-//             .then(() => res.json('Recipe Added!'))
-//             .catch(err => res.status(400).json('Error: ' + err))
-//     } else {
-//         res.status(401).json({ error: 'Incorrect password' })
-//     }
-// })
 
 router.route('/:id').get((req, res) => {
     Recipe.findById(req.params.id)

@@ -91,7 +91,7 @@ export default function App() {
       const currentDate = new Date()
       const currentUTCDate = currentDate.toISOString()
         try {
-          const response = await fetch(`https://bastebook.com/recipes/addCookedDate/${recipeID}`, {
+          const response = await fetch(`https://bastebook.com/recipe-data/addCookedDate/${recipeID}`, {
             method: "POST",
             headers: {
               'Content-Type': 'application/json',
@@ -117,7 +117,7 @@ export default function App() {
       // database fetch request
 
       try {
-        const response = await fetch(`https://bastebook.com/recipes/toggleFavorite/${recipeID}`, {
+        const response = await fetch(`https://bastebook.com/recipe-data/toggleFavorite/${recipeID}`, {
           method: "POST",
           headers: {
             'Content-Type': 'application/json',
@@ -143,7 +143,7 @@ export default function App() {
       // database fetch request
 
       try {
-        const response = await fetch(`https://bastebook.com/recipes/toggleRequest/${recipeID}`, {
+        const response = await fetch(`https://bastebook.com/recipe-data/toggleRequest/${recipeID}`, {
           method: "POST",
           headers: {
             'Content-Type': 'application/json',

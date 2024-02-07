@@ -6,11 +6,15 @@ function ScrollToPosition(props) {
 
     useEffect(() => {
 
+        const isRecipesScreen = location.pathname === '/recipes'
         const isHomeScreen = location.pathname === '/'
 
-        if (!isHomeScreen) {
+        if (!isRecipesScreen) {
             window.scrollTo(0, 0)
-
+            if (isHomeScreen) {
+                props.setScrollPositionsX({})
+                props.setScrollPositionY()
+            }
         } else {
             window.scrollTo(0, props.homeScreenScrollPositionY)
 

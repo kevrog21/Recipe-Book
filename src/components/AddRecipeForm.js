@@ -614,7 +614,7 @@ export default function AddRecipeForm(props) {
 
         try {
             console.log('Checking to see if password is Valid')
-            const response = await fetch("https://bastebook.com/recipes/check-passwords", options)
+            const response = await fetch("https://bastebook.com/recipe-data/check-passwords", options)
             const data = await response.json()
 
             if (data.valid === false) {
@@ -632,7 +632,7 @@ export default function AddRecipeForm(props) {
 
         if (imageObject.file) {
             try {
-                const signatureResponse = await axios.get("https://bastebook.com/recipes/get-signature")
+                const signatureResponse = await axios.get("https://bastebook.com/recipe-data/get-signature")
                 const data = new FormData()
                 data.append("file", imageObject.file)
                 data.append("api_key", api_key)
@@ -776,7 +776,7 @@ export default function AddRecipeForm(props) {
     useEffect(() => {
         if (Object.keys(finalDataObject).length !== 0) {
             console.log(finalDataObject)
-        fetch("https://bastebook.com/recipes/add", {
+        fetch("https://bastebook.com/recipe-data/add", {
                 method: "POST",
                 body: JSON.stringify(finalDataObject), 
                 headers: {
