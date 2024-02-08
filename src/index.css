@@ -1409,15 +1409,11 @@ main {
 }
 
 .ingredient-controls-container {
-
-  
- 
   padding: 0 1em;
   display: flex;
   font-size: .8rem;
   align-items: center;
   margin: 0 0 0 auto;
-  
 }
 
 .instruction-step {
@@ -1451,6 +1447,10 @@ main {
   padding: 0 1em;
   display: flex;
   font-size: .8rem;
+}
+
+#notes {
+  font-size: 1rem;
 }
 
 .section-label-container > .controls-container {

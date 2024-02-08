@@ -1176,7 +1176,7 @@ export default function AddRecipeForm(props) {
                         
                         <div className='section-input-container'>
                             <label htmlFor="notes">Type any notes here:</label>
-                            <textarea rows="2" type="text" id="notes" name="notes" className='has-placeholder'
+                            <textarea rows="3" type="text" id="notes" name="notes" className='has-placeholder'
                             placeholder='Lizzie prefers the low sodium soy sauce...' value={formData.notes} onChange={handleInputChange}></textarea>
                         </div>
 
