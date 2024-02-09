@@ -1094,9 +1094,9 @@ export default function AddRecipeForm(props) {
                             <label htmlFor="serving-size-input">Servings:</label>
                             <input className="default-servings" id="serving-size-input" type="number" min={0} name="defaultServings" 
                             value={formData.defaultServings} onChange={handleInputChange}></input>
-                            <label htmlFor="recipe-yield">Yield</label>
+                            {/* <label htmlFor="recipe-yield">Yield</label>
                             <input type="text" className='has-placeholder' name="recipeYield"
-                            placeholder='about 24 cookies' value={formData.recipeYield} onChange={handleInputChange}></input>
+                            placeholder='about 24 cookies' value={formData.recipeYield} onChange={handleInputChange}></input> */}
                         </div>
 
                 </section>

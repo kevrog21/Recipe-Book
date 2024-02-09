@@ -24,7 +24,7 @@ h1, h2, h3, h4 {
 }
 
 .icon-drop-shadow {
-  filter: drop-shadow(0 0 .35rem rgb(0, 0, 0, 1));
+  filter: drop-shadow(0 0 .3rem rgb(0, 0, 0, 1));
 }
 
 code {
@@ -337,10 +337,18 @@ main {
 
 .recipes-button {
   font-size: 1em;
-  background: #231F20;
+  background: #016435;
   color: #F5EFDF;
   padding: .5em 2em;
   border-radius: 1.5em;
+}
+
+.upload-button-container {
+  margin: .5em auto;
+}
+
+.upload-button-container:focus {
+  text-decoration: none;
 }
 
 .upload-btn {
@@ -437,7 +445,7 @@ main {
   width: 34vw;
   /* border: 2px solid black; */
   box-shadow: -4px 5px 4px rgb(0 0 0 / 0.25);
-  border-radius: 5%;
+  border-radius: 12%;
   margin: 0 0 0 2em;
   cursor: pointer;
   background-size: cover;
@@ -452,6 +460,11 @@ main {
   align-items: flex-start;
   flex-direction: column;
   text-decoration: none;
+}
+
+.recipe-name {
+  margin: .75em 0 0 2em;
+  font-size: .9rem;
 }
 
 .card-text-container {
@@ -630,12 +643,12 @@ main {
 }
 
 .recipe-page-star {
-  width: 6vw;
+  width: 5vw;
 }
 
 .recipe-page-bell {
-  margin: 0 2vw 0 0;
-  width: 5.5vw;
+  margin: .01vw 2vw 0 0;
+  width: 5vw;
 }
 
 .delete-icon-container {
@@ -995,7 +1008,7 @@ main {
   grid-column: 1 / span 3;
   display: flex;
   position: relative;
-  align-items: end;
+  align-items: flex-end;
 }
 
 .dynamic-servings-current-selection {
@@ -1803,7 +1816,7 @@ main {
   font-size: 2vw;
   line-height: 2vw;
   color: #A0A0A0;
-  align-items: end;
+  align-items: flex-end;
 }
 
 .timer-icon-container {

@@ -8,8 +8,8 @@ import thickTimer from '../assets/thick-timer.svg'
 import thumbIcon from '../assets/thumb-icon.svg'
 import bell from '../assets/bell.svg'
 import greyBell from '../assets/grey-bell.svg'
-import filledBell from '../assets/filled-bell.svg'
-import filledYellowStar from '../assets/light-grey-outline.svg'
+import filledBell from '../assets/bell-filled.svg'
+import filledYellowStar from '../assets/star-filled.svg'
 import checkmark from '../assets/checkmark.svg'
 import { checkForVulgarFraction, decimalToFraction } from './utilityFunctions.js'
 import closeIcon from '../assets/close-x.svg'
@@ -467,8 +467,8 @@ export default function RecipePage(props) {
                         </div>
                     </Link>
                     <div className='recipe-page-icon-buttons'>
-                        <img className='recipe-page-bell star-outline' src={currentRecipe.isRequested ? filledBell : greyBell} onClick={handleBellClick} />
-                        <img className='recipe-page-star star-outline' src={currentRecipe.isFavorited ? filledYellowStar : greyStar} onClick={handleStarClick} />
+                        <img className='recipe-page-bell' src={currentRecipe.isRequested ? filledBell : greyBell} onClick={handleBellClick} />
+                        <img className='recipe-page-star' src={currentRecipe.isFavorited ? filledYellowStar : greyStar} onClick={handleStarClick} />
                     </div>
                 </div>
     

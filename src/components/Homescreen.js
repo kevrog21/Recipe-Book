@@ -19,7 +19,7 @@ export default function Homescreen(props) {
 
             <div className='home-btn-container'>
                 <Link to='/recipes' className='recipes-button-container'><button className='recipes-button'>Find Recipes</button></Link>
-                <button className='upload-btn'>Upload your favorite recipes</button>
+                <Link to='/add-recipe' className='upload-button-container'><button className='upload-btn'>Upload your favorite recipes</button></Link>
             </div>
             
 
