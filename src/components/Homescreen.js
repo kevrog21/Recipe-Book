@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PopularRecipes from './PopularRecipes'
 
@@ -5,6 +6,10 @@ import PopularRecipes from './PopularRecipes'
 export default function Homescreen(props) {
     const { data, mongoData, handleFavoriteToggle, handleRequestToggle, updateScrollOnClick, handleMongoFavoriteToggle, handleMongoRequestToggle, defaultTagWords, moreTagWords } = props
 
+    useEffect(() => {
+        props.setPrevPathHome(true)
+    }, [])
+    
 
     return (
         <main>
@@ -18,7 +23,7 @@ export default function Homescreen(props) {
             <div className='home-animation'></div>
 
             <div className='home-btn-container'>
-                <Link to='/recipes' className='recipes-button-container'><button className='recipes-button'>Find Recipes</button></Link>
+                <Link to='/recipes' className='recipes-button-container'><button className='recipes-button' onClick={props.handleFindRecipesClick}>Find Recipes</button></Link>
                 <Link to='/add-recipe' className='upload-button-container'><button className='upload-btn'>Upload your favorite recipes</button></Link>
             </div>
             

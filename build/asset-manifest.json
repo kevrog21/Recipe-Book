@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.8a83fd25.css",
-    "main.js": "/static/js/main.8f46f7a2.js",
+    "main.css": "/static/css/main.7001a44b.css",
+    "main.js": "/static/js/main.6f034c4e.js",
     "static/js/787.98bc6f0b.chunk.js": "/static/js/787.98bc6f0b.chunk.js",
     "static/media/grilled-cheese-tomato-soup.jpg": "/static/media/grilled-cheese-tomato-soup.ac62f87bb3b002616916.jpg",
     "static/media/providence-sans.otf": "/static/media/providence-sans.b9c44c2d2ee4b42c71d2.otf",
@@ -35,24 +35,23 @@
     "static/media/timer-icon.svg": "/static/media/timer-icon.06c5ecaa09a4a27f8e722f2ba143ad28.svg",
     "static/media/thick-timer.svg": "/static/media/thick-timer.bed0ee8d04b76ff9f8443f7be423504d.svg",
     "index.html": "/index.html",
-    "static/media/filled-bell.svg": "/static/media/filled-bell.57b03c8baf5469ff4f2ba9d4092b9c24.svg",
+    "static/media/bell-filled.svg": "/static/media/bell-filled.13b6b516a608dc6408fbb0712ec705cf.svg",
     "static/media/grey-bell.svg": "/static/media/grey-bell.4c6c44fe5baa20142db15c3871f10479.svg",
     "static/media/bell.svg": "/static/media/bell.235654a8ab90d9086c055d5e1bc78a33.svg",
     "static/media/checkmark.svg": "/static/media/checkmark.d080b7cbd4a3a0a5245bee4d2f504b54.svg",
     "static/media/close-x.svg": "/static/media/close-x.9ddbb96d6d4b11aa3fad78f0a640da9e.svg",
     "static/media/plus-icon.svg": "/static/media/plus-icon.16280075c56029f8ffaa6fb207ad01d7.svg",
-    "static/media/light-grey-outline.svg": "/static/media/light-grey-outline.e17d0dea6a81a4d2bc766c93e3430a4e.svg",
     "static/media/arrow.svg": "/static/media/arrow.76fa801d78ea3630ccbc8b020e6a0d42.svg",
-    "static/media/filled-star.svg": "/static/media/filled-star.3b674be81732f0112b16a8783993f91f.svg",
     "static/media/grey-star.svg": "/static/media/grey-star.ee80aa311668f0ef6452e5c383e40c1c.svg",
     "static/media/star.svg": "/static/media/star.62704794fa44dab5c6d7a9f23cf5e785.svg",
+    "static/media/star-filled.svg": "/static/media/star-filled.3e1f70303ed6415f82251712760d662e.svg",
     "static/media/arrow-grey.svg": "/static/media/arrow-grey.7e87b36810e8984be38388bbee14feca.svg",
-    "main.8a83fd25.css.map": "/static/css/main.8a83fd25.css.map",
-    "main.8f46f7a2.js.map": "/static/js/main.8f46f7a2.js.map",
+    "main.7001a44b.css.map": "/static/css/main.7001a44b.css.map",
+    "main.6f034c4e.js.map": "/static/js/main.6f034c4e.js.map",
     "787.98bc6f0b.chunk.js.map": "/static/js/787.98bc6f0b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8a83fd25.css",
-    "static/js/main.8f46f7a2.js"
+    "static/css/main.7001a44b.css",
+    "static/js/main.6f034c4e.js"
   ]
 }

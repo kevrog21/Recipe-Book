@@ -18,7 +18,7 @@ import closeIcon from '../assets/close-x.svg'
 
 export default function RecipePage(props) {
     const {recipeId} = useParams()
-    const { mongoData, handleMongoFavoriteToggle, handleMongoRequestToggle, addNewCookedDate } = props
+    const { mongoData, handleMongoFavoriteToggle, handleMongoRequestToggle, addNewCookedDate, prevPathHome } = props
     const [currentRecipe, setCurrentRecipe] = useState()
     const [isLoading, setIsLoading] = useState(true)
     const [ingredients, setIngredients] = useState([])
@@ -460,7 +460,7 @@ export default function RecipePage(props) {
         return (
             <main className='recipe-page'>
                 <div className='recipe-page-icon-container'>
-                    <Link to='/recipes'>
+                    <Link to={prevPathHome ? '/' : '/recipes'}>
                         <div className='recipe-page-back-arrow-container no-margin'>
                             <img src={arrow} className="arrowHead back-arrowhead"/>
                             <div className='back-arrow'></div>

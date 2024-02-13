@@ -68,7 +68,6 @@ export default function App() {
     }, [])
 
     const updateScrollOnClick = () => {
-
       console.log("running updateScroll function")
       setScrollPositionY(window.scrollY)
 
@@ -83,6 +82,12 @@ export default function App() {
     useEffect(() => {
       console.log("scrollPositionsX", scrollPositionsX)
     }, [scrollPositionsX])
+
+    const [prevPathHome, setPrevPathHome] = useState(true)
+
+    function handleFindRecipesClick() {
+      setPrevPathHome(false)
+    }
 
 
     const addNewCookedDate = async (recipeID, recipeName, prevCookingHistoryArray) => {
@@ -196,10 +201,12 @@ export default function App() {
               homeScreenScrollPositionY={homeScreenScrollPositionY}
               setScrollPositionY={setScrollPositionY}
               setScrollPositionsX={setScrollPositionsX}
+              handleFindRecipesClick={handleFindRecipesClick}
+              setPrevPathHome={setPrevPathHome}
             />} />
           <Route path="/recipes" element={
             <Recipes 
-            mongoData={recipeData}
+              mongoData={recipeData}
               updateScrollOnClick={updateScrollOnClick}
               handleMongoFavoriteToggle={handleMongoFavoriteToggle}
               handleMongoRequestToggle={handleMongoRequestToggle}
@@ -216,6 +223,7 @@ export default function App() {
               handleMongoFavoriteToggle={handleMongoFavoriteToggle}
               handleMongoRequestToggle={handleMongoRequestToggle}
               addNewCookedDate={addNewCookedDate}
+              prevPathHome={prevPathHome}
             />} />
           <Route path="/add-recipe" element={
             <AddRecipeForm 
