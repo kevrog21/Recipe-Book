@@ -1078,6 +1078,10 @@ export default function EditRecipeForm(props) {
                             instructionText: '',
                             instructionSection: ''
                         })
+                        setCurrentEquipmentObj({
+                            equipmentName: '',
+                            equipmentLink: ''
+                        })
                         setSelectedTagWords([])
                         props.retrieveRecipes()
                     }
