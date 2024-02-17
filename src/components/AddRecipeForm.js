@@ -82,6 +82,10 @@ export default function AddRecipeForm(props) {
     // add ingredients to current ingredient section array
 
     useEffect(() => {
+        console.log('current ingredient object: ', currentIngredientsObj)
+    }, [currentIngredientsObj])
+
+    useEffect(() => {
         showMoreTags ? 
         setTagWords([...defaultTagWords ,...moreTagWords]) : 
         setTagWords(defaultTagWords)
@@ -410,8 +414,9 @@ export default function AddRecipeForm(props) {
         setFormData((prevData) => {
             const updatedIngredients = prevData.ingredients.map((ingredient, index) => {
                 if (index === editedIngredientIndex) {
+                    const parsedQuantity = currentIngredientsObj.ingredientQuantity ? parseFraction(currentIngredientsObj.ingredientQuantity, setInvalidQuantityMessage) : null
                     return {
-                        ingredientQuantity: currentIngredientsObj.ingredientQuantity > 0 ? currentIngredientsObj.ingredientQuantity : '',
+                        ingredientQuantity: parsedQuantity > 0 ? currentIngredientsObj.ingredientQuantity : '',
                         ingredientQuantityDecimal: currentIngredientsObj.ingredientQuantity ? parseFraction(currentIngredientsObj.ingredientQuantity, setInvalidQuantityMessage) : null,
                         ingredientMeasurement: currentIngredientsObj.ingredientMeasurement,
                         ingredientName: currentIngredientsObj.ingredientName,

@@ -11,7 +11,7 @@ import closeIcon from '../assets/close-x.svg'
 export default function EditRecipeForm(props) {
 
     const {recipeId} = useParams()
-    const { mongoData, selectedRecipe } = props
+    const { mongoData, selectedRecipe, defaultTagWords, moreTagWords } = props
     const [currentRecipe, setCurrentRecipe] = useState(selectedRecipe)
     const [imageObject, setImageObject] = useState({})
     const [imgPreview, setImgPreview] = useState(null)
@@ -19,10 +19,6 @@ export default function EditRecipeForm(props) {
     const [finalDataObject, setFinalDataObject] = useState({})
     const navigate = useNavigateToLink()
 
-    const defaultTagWords = ['main', 'starter', 'dessert', 'breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 
-    'winter meals', 'summer meals', 'sides', 'quick', 'vegetarian', 'vegan', 'gluten free', 'dairy free', 'basics']
-    const moreTagWords = ['BBQ', 'seafood', 'holiday', 'halloween', 'thanksgiving', 'christmas', 'hanukkah', '4th of july', 
-'cost friendly', 'something light', 'pasta', 'healthy', "dad's recipe" , 'the balcony', 'snacks']
     const [tagWords, setTagWords] = useState([defaultTagWords])
     const [selectedTagWords, setSelectedTagWords] = useState([])
     const [showMoreTags, setShowMoreTags] = useState(false)
@@ -373,8 +369,9 @@ export default function EditRecipeForm(props) {
         setEditFormData((prevData) => {
             const updatedIngredients = prevData.ingredients.map((ingredient, index) => {
                 if (index === editedIngredientIndex) {
+                    const parsedQuantity = currentIngredientsObj.ingredientQuantity ? parseFraction(currentIngredientsObj.ingredientQuantity, setInvalidQuantityMessage) : null
                     return {
-                        ingredientQuantity: currentIngredientsObj.ingredientQuantity > 0 ? currentIngredientsObj.ingredientQuantity : '',
+                        ingredientQuantity: parsedQuantity > 0 ? currentIngredientsObj.ingredientQuantity : '',
                         ingredientQuantityDecimal: currentIngredientsObj.ingredientQuantity ? parseFraction(currentIngredientsObj.ingredientQuantity, setInvalidQuantityMessage) : null,
                         ingredientMeasurement: currentIngredientsObj.ingredientMeasurement,
                         ingredientName: currentIngredientsObj.ingredientName,
@@ -836,6 +833,18 @@ export default function EditRecipeForm(props) {
     const handleTagToggle = () => {
         setShowMoreTags(!showMoreTags)
     }
+
+    const tagWordElements = tagWords && tagWords.map((word, index) => (
+        <span key={index} onClick={() => handleTagClick(word)}
+        className={
+            word.length > 10
+            ? selectedTagWords.includes(word) ? 'form-tag  two-column-tag selected' : 'form-tag  two-column-tag'
+            : selectedTagWords.includes(word) ? 'form-tag  selected' : 'form-tag '
+        }
+        >
+            {word}
+        </span>
+    ))
 
     const handleVisibilityChange = (event) => {
         const { name, value } = event.target
@@ -1401,18 +1410,7 @@ export default function EditRecipeForm(props) {
                             </div>
                             
                             <div className='section-input-container' id='tags-container'>
-                                {tagWords.map((word, index) => (
-                                    <span key={index} onClick={() => handleTagClick(word)}
-                                    className={
-                                        word.length > 10
-                                        ? selectedTagWords.includes(word) ? 'form-tag  two-column-tag selected' : 'form-tag  two-column-tag'
-                                        : selectedTagWords.includes(word) ? 'form-tag  selected' : 'form-tag '
-                                    }
-                                    >
-                                        {word}
-                                    </span>
-                                ))
-                                }
+                                {tagWordElements}
                             </div>
                         </div>
                         <div className='show-more-tags-container' onClick={handleTagToggle}>

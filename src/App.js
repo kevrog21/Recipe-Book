@@ -236,6 +236,8 @@ export default function App() {
             <EditRecipeForm 
               mongoData={recipeData}
               selectedRecipe={selectedRecipe}
+              defaultTagWords={defaultTagWords}
+              moreTagWords={moreTagWords}
               updateScrollOnClick={updateScrollOnClick}
               retrieveRecipes={retrieveRecipes}
               mountThenRemoveDeletionMessage={mountThenRemoveDeletionMessage}
