@@ -295,12 +295,22 @@ header {
 
 .footer-wrapper {
   bottom: 0;
-  background: #3F3F3F;
+  background: #231F20;
   padding: 3em 0;
 }
 
+.footer-logo-container {
+  width: 100%;
+  display: flex;
+}
+
+.footer-logo {
+  width: 15%;
+  margin: 0 auto;
+}
+
 .footer-content {
-  color: white;
+  color: #FCF8F2;
   text-align: center;
 }
 
@@ -373,16 +383,21 @@ main {
   padding: 1em 0 1.5em 0;
 }
 
-.no-ads-text {
+.no-ads-text-conainer {
   font-family: "ff-providence-sans-web-pro", sans-serif;
   text-align: center;
   font-size: 1.5em;
-  margin: 20vh 0;
+  margin: 25vh 0;
+  color: #B2B2B2;
+}
+
+.dark-grey {
+  color: #231F20;
 }
 
 .cardSectionContainer {
   margin: .5em 0 0 0;
-  padding: .5em 0 0 0;
+  padding: .5em 0 1em 0;
   background: #FCF8F2;
 }
 
@@ -460,7 +475,7 @@ main {
   height: 33vw;
   width: 34vw;
   /* border: 2px solid black; */
-  box-shadow: -4px 5px 4px rgb(0 0 0 / 0.25);
+  /* box-shadow: 0px 3px 7px rgb(0 0 0 / 0.5); */
   border-radius: 12%;
   margin: 0 0 0 2em;
   cursor: pointer;

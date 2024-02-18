@@ -38,9 +38,12 @@ export default function Homescreen(props) {
                 handleMongoFavoriteToggle={handleMongoFavoriteToggle}
                 handleMongoRequestToggle={handleMongoRequestToggle}
             />
-
-            <div className='no-ads-text'>
-                no ads. just food.
+            <div className='no-ads-text-conainer'>
+                <div className='no-ads-text'>no ads. just food.</div>
+                <div className='no-ads-text'>no ads. just food.</div>
+                <div className='no-ads-text dark-grey'>no ads. just food.</div>
+                <div className='no-ads-text'>no ads. just food.</div>
+                <div className='no-ads-text'>no ads. just food.</div>
             </div>
         </main>
     )

@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.7001a44b.css",
-    "main.js": "/static/js/main.1e2d60a6.js",
+    "main.css": "/static/css/main.b661c973.css",
+    "main.js": "/static/js/main.4a597ff1.js",
     "static/js/787.98bc6f0b.chunk.js": "/static/js/787.98bc6f0b.chunk.js",
     "static/media/grilled-cheese-tomato-soup.jpg": "/static/media/grilled-cheese-tomato-soup.ac62f87bb3b002616916.jpg",
     "static/media/providence-sans.otf": "/static/media/providence-sans.b9c44c2d2ee4b42c71d2.otf",
@@ -46,12 +46,12 @@
     "static/media/star.svg": "/static/media/star.62704794fa44dab5c6d7a9f23cf5e785.svg",
     "static/media/star-filled.svg": "/static/media/star-filled.3e1f70303ed6415f82251712760d662e.svg",
     "static/media/arrow-grey.svg": "/static/media/arrow-grey.7e87b36810e8984be38388bbee14feca.svg",
-    "main.7001a44b.css.map": "/static/css/main.7001a44b.css.map",
-    "main.1e2d60a6.js.map": "/static/js/main.1e2d60a6.js.map",
+    "main.b661c973.css.map": "/static/css/main.b661c973.css.map",
+    "main.4a597ff1.js.map": "/static/js/main.4a597ff1.js.map",
     "787.98bc6f0b.chunk.js.map": "/static/js/787.98bc6f0b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7001a44b.css",
-    "static/js/main.1e2d60a6.js"
+    "static/css/main.b661c973.css",
+    "static/js/main.4a597ff1.js"
   ]
 }
