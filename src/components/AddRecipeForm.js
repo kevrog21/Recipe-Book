@@ -1160,7 +1160,7 @@ export default function AddRecipeForm(props) {
                         <div className='section-input-container'>
                             {instructionsPreview}
                             {showInstructionsSectionTitle && <div>
-                                <label htmlFor="instructionSection">Section Name:</label>
+                                <label htmlFor="instructionSection">Section Header:</label>
                                 <input type="text" id="instruction-section-name" name="instructionSection" className='has-placeholder'
                                 placeholder='Marinade Ingredients' ref={instructionSectionInput} value={currentInstructionsObj.instructionSection} onChange={handleInstructionsChange} onKeyDown={handleInstructionsAddSectionKeydown}></input>
                             </div>}

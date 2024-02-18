@@ -274,7 +274,8 @@ header {
   color: #231F20;
 }
 
-#nav-search-bar {
+#nav-search-bar,
+.recipe-search-bar {
   width: 55%;
   color: gray;
   margin: 0 auto 5vw auto;
@@ -283,6 +284,13 @@ header {
   font-weight: 400;
   border: 2px solid black;
   border-radius: 2em;
+}
+
+.recipe-search-bar {
+  width: 40%;
+  font-size: 1em;
+  padding: .2em 5vw;
+  background: #FCF8F2;
 }
 
 .footer-wrapper {
@@ -333,6 +341,7 @@ main {
   border: none;
   cursor: pointer;
   text-decoration: none;
+  color: white;
 }
 
 .recipes-button {
@@ -372,11 +381,13 @@ main {
 }
 
 .cardSectionContainer {
-  margin: 2em 0 0 0;
+  margin: .5em 0 0 0;
+  padding: .5em 0 0 0;
+  background: #FCF8F2;
 }
 
 .cardSectionHeading {
-  margin: 1em 2em 0;
+  margin: 2em 2em .5em;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -430,6 +441,10 @@ main {
 .cardsScrollContainer {
   overflow-x: auto;
   /* scroll-behavior: smooth; */
+}
+
+.cardsScrollContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .cardsContainer {

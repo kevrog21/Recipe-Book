@@ -31,6 +31,12 @@ export default function Recipes(props) {
 
     return (
         <main>
+            <div className='recipe-search-bar-container'>
+                <div className='recipe-search-bar'>
+                    search...
+                </div>
+            </div>
+
             <AllMongoRecipes 
                 title="All Recipes"
                 index={0}
