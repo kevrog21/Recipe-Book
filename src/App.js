@@ -44,7 +44,7 @@ export default function App() {
     const defaultTagWords = ['main', 'starter', 'dessert', 'breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 
     'winter meals', 'summer meals', 'sides', 'quick', 'vegetarian', 'vegan', 'gluten free', 'dairy free', 'basics']
     const moreTagWords = ['BBQ', 'seafood', 'holiday', 'halloween', 'thanksgiving', 'christmas', 'hanukkah', '4th of july', 
-    'cost friendly', 'oven', 'crockpot', 'mexican', 'asian', 'something light', 'pasta', 'healthy', "dad's recipe" , 'the balcony', 'snacks', 'salads', 'sauce', 'instapot', 'slow cooker', 'air fryer', 'baking']
+    'cost friendly', 'oven', 'crockpot', 'mexican', 'asian', 'something light', 'pasta', 'healthy', "dad's recipe" , 'the balcony', 'snacks', 'salads', 'sauce', 'instapot', 'slow cooker', 'air fryer', 'baking', 'popular']
 
     const [homeScreenScrollPositionY, setScrollPositionY] = useState(0)
     const [scrollPositionsX, setScrollPositionsX] = useState()

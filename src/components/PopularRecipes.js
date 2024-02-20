@@ -30,7 +30,9 @@ export default function PopularRecipes(props) {
 
     const data = props.data
 
-    const [allRecipes, setallRecipes] = useState(data.map(recipe => (
+    const popularRecipes = data.filter(recipe => recipe.tags.includes(`popular`))
+
+    const [allPopularRecipes, setAllPopularRecipes] = useState(popularRecipes.map(recipe => (
             <MongoCards 
                 key={recipe._id}
                 recipeData={recipe}
@@ -51,7 +53,7 @@ export default function PopularRecipes(props) {
     )
 
     useEffect(() => {
-        setallRecipes(data.map(recipe => (
+        setAllPopularRecipes(popularRecipes.map(recipe => (
             <MongoCards 
                 key={recipe._id}
                 recipeData={recipe}
@@ -69,7 +71,6 @@ export default function PopularRecipes(props) {
                 // uniqueID={card.uniqueIdentifier}
             /> 
         )))
-        console.log('rendered All Recipes section')
     }, [data])
 
     const sectionTitleWithoutSpaces = props.title.replace(/\s/g, '')
@@ -87,9 +88,9 @@ export default function PopularRecipes(props) {
             </div>
             <div className="cardsScrollContainer" onScroll={getScrollPercentage} id={props.index + sectionTitleWithoutSpaces}>
                 <div className="cardsContainer">
-                    {allRecipes}
+                    {allPopularRecipes}
                     <div className='end-line'></div>
-                    {!allRecipes.length > 0 && <div className='nothing-here-text'>No Recipes Yet</div>}
+                    {!allPopularRecipes.length > 0 && <div className='nothing-here-text'>No Recipes Yet</div>}
                 </div>
             </div>
         </div>
