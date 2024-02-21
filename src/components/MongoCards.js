@@ -50,7 +50,7 @@ const handleBellClick = (e) => {
                 </div>
                 <img className={`bell-icon icon-drop-shadow ${isRinging ? 'ringing' : ''}`} src={props.recipeData.isRequested ? filledBell : bell} alt='request icon' onClick={handleBellClick} />
             </div>
-            <div className='recipe-name'>{props.recipeData.recipeName}</div>
+            <Link to={`/${props.recipeData._id}`} className='recipe-card-name-link'><div className='recipe-name' onClick={props.handleCardClick}>{props.recipeData.recipeName}</div></Link>
         </div>
         
     )
