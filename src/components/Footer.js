@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import logoWhite from '../assets/bastebook-logo-white.svg'
 
 export default function Footer() {
@@ -7,7 +8,7 @@ export default function Footer() {
     return (
         <div className='footer-wrapper'>
             <div className='footer-logo-container'>
-                <img className='footer-logo' src={logoWhite}></img>
+                <Link to='/' className='footer-logo'><img  src={logoWhite}></img></Link>
             </div>
             <p className="footer-content">&copy; {`${currentYear}`} Kevin Rogers</p>
         </div>
