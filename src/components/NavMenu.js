@@ -3,13 +3,13 @@ import { useEffect } from 'react'
 
 export default function NavMenu(props) {
 
-function closeNavMenu() {
-    props.setIsNavMenuOpen(false)
-}
+    function closeNavMenu() {
+        props.setIsNavMenuOpen(false)
+    }
 
-useEffect(() => {
-    props.showAndDisableNavMenu()
-}, [props.isNavMenuOpen])
+    useEffect(() => {
+        props.showAndDisableNavMenu()
+    }, [props.isNavMenuOpen])
 
     return (
         <div className='nav-menu-container' onClick={closeNavMenu} style={props.isNavMenuOpen ? {} : {pointerEvents: 'none'}}>

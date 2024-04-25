@@ -273,7 +273,7 @@ export default function AddRecipeForm(props) {
             setCurrentIngredientsObj((prevData) => ({
                 ...prevData,
                 [name]: value,
-                ingredientQuantityDecimal: value > 0 ? parseFraction(value, setInvalidQuantityMessage) : ''
+                ingredientQuantityDecimal: value ? parseFraction(value, setInvalidQuantityMessage) : ''
             }))
         } else {
             setCurrentIngredientsObj((prevData) => ({
@@ -1295,7 +1295,7 @@ export default function AddRecipeForm(props) {
                 <label htmlFor="password">Secret Password:</label>
                 <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange}></input>
                 <div id="error-message" className="error"></div>
-                <input type="text" id="honeyp" name="honeyp" value={formData.honeyp} onChange={handleInputChange}></input>
+                <input type="text" id="honeyp" name="honeyp" value={formData.honeyp} onChange={handleInputChange} tabIndex="-1" autoComplete='off'></input>
                 <button type="submit" className="submit-recipe-btn" id="submit" >Submit Recipe</button>
             </form>
 
