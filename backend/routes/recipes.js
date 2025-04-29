@@ -66,6 +66,7 @@ router.get("/get-signature", (req, res) => {
 router.route('/add').post((req, res) => {
     const recipeName = req.body.recipeName
     const recipeSubName = req.body.recipeSubName
+    const slug = req.body.slug
     const defaultServings = Number(req.body.defaultServings)
     const ingredients = Array.isArray(req.body.ingredients) ? req.body.ingredients : []
     const instructions = Array.isArray(req.body.instructions) ? req.body.instructions : []
@@ -115,6 +116,7 @@ router.route('/add').post((req, res) => {
         const newRecipe = new Recipe({
             recipeName,
             recipeSubName,
+            slug,
             defaultServings,
             ingredients,
             instructions,
@@ -155,10 +157,18 @@ router.route('/add').post((req, res) => {
     }
 })
 
-router.route('/:id').get((req, res) => {
-    Recipe.findById(req.params.id)
-        .then(recipe => res.json(recipe))
-        .catch(err => res.status(400).json('Error: ' + err))
+router.route('/:slug').get(async (req, res) => {
+    console.log('runnin the get recipe block')
+    try {
+        console.log('trying to find via slug')
+        const recipe = await Recipe.findOne({ slug: req.params.slug })
+        if (!recipe) {
+          return res.status(404).json({ error: 'Recipe not found' })
+        }
+        res.json(recipe);
+      } catch (err) {
+        res.status(500).json({ error: 'Server error' })
+      }
 })
 
 router.route('/:id').delete((req, res) => {
@@ -179,6 +189,7 @@ router.route('/update/:id').post((req, res) => {
 
             recipe.recipeName = req.body.recipeName
             recipe.recipeSubName = req.body.recipeSubName
+            recipe.slug = req.body.slug
             recipe.defaultServings =  Number(req.body.defaultServings)
             recipe.ingredients = Array.isArray(req.body.ingredients) ? req.body.ingredients : []
             recipe.instructions = Array.isArray(req.body.instructions) ? req.body.instructions : []
@@ -269,7 +280,3 @@ router.route('/addCookedDate/:id').post((req, res) => {
 })
 
 export default router
-
-
-
-

@@ -39,7 +39,7 @@ const handleBellClick = (e) => {
     return (
         <div className='recipe-listing-container'>
             <div className='card' style={styles}>   
-                <Link to={`/${props.recipeData._id}`} className='card-link-container' onClick={props.handleCardClick} aria-label={`View recipe for ${props.recipeData.recipeName} ${props.recipeData.recipeSubName}`}>
+                <Link to={`/${props.recipeData.slug}`} className='card-link-container' onClick={props.handleCardClick} aria-label={`View recipe for ${props.recipeData.recipeName} ${props.recipeData.recipeSubName}`}>
                     {/* <div className='card-text-container'>
                         <h3 className='recipe-card-name icon-drop-shadow' >{props.recipeData.recipeName}</h3>
                         {props.recipeData.recipeSubName && <h4 className='recipe-subheader'>{props.recipeData.recipeSubName}</h4>}
@@ -50,7 +50,7 @@ const handleBellClick = (e) => {
                 </div>
                 <img className={`bell-icon icon-drop-shadow ${isRinging ? 'ringing' : ''}`} src={props.recipeData.isRequested ? filledBell : bell} alt='request icon' onClick={handleBellClick} />
             </div>
-            <Link to={`/${props.recipeData._id}`} className='recipe-card-name-link'><div className='recipe-name' onClick={props.handleCardClick}>{props.recipeData.recipeName}</div></Link>
+            <Link to={`/${props.recipeData.slug}`} className='recipe-card-name-link'><div className='recipe-name' onClick={props.handleCardClick}>{props.recipeData.recipeName}</div></Link>
         </div>
         
     )

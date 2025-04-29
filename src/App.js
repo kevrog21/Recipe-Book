@@ -216,7 +216,7 @@ export default function App() {
               setScrollPositionY={setScrollPositionY}
               setScrollPositionsX={setScrollPositionsX}
             />} />
-          <Route path="/:recipeId" element={
+          <Route path="/:slug" element={
             <RecipePage 
               mongoData={recipeData}
               updateScrollOnClick={updateScrollOnClick}
@@ -227,12 +227,13 @@ export default function App() {
             />} />
           <Route path="/add-recipe" element={
             <AddRecipeForm 
+              recipeData={recipeData}
               retrieveRecipes={retrieveRecipes}
               defaultTagWords={defaultTagWords}
               moreTagWords={moreTagWords}
             />
           } />
-          <Route path="/:recipeId/edit" element={
+          <Route path="/:slug/edit" element={
             <EditRecipeForm 
               mongoData={recipeData}
               selectedRecipe={selectedRecipe}

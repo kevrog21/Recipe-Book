@@ -10,7 +10,7 @@ import closeIcon from '../assets/close-x.svg'
 
 export default function EditRecipeForm(props) {
 
-    const {recipeId} = useParams()
+    const { slug } = useParams()
     const { mongoData, selectedRecipe, defaultTagWords, moreTagWords } = props
     const [currentRecipe, setCurrentRecipe] = useState(selectedRecipe)
     const [imageObject, setImageObject] = useState({})
@@ -55,6 +55,7 @@ export default function EditRecipeForm(props) {
     const [editFormData, setEditFormData] = useState({
         recipeName: '',
         recipeSubName: '',
+        slug: '',
         defaultServings: 0,
         recipeYield: '',
         ingredients: [],
@@ -80,6 +81,7 @@ export default function EditRecipeForm(props) {
             setEditFormData({
                 recipeName: currentRecipe.recipeName,
                 recipeSubName: currentRecipe.recipeSubName,
+                slug: currentRecipe.slug,
                 defaultServings: currentRecipe.defaultServings,
                 ingredients: currentRecipe.ingredients,
                 instructions: currentRecipe.instructions,
@@ -149,11 +151,11 @@ export default function EditRecipeForm(props) {
     
     useEffect(() => {
         if (mongoData.length > 0) {
-            const recipe = mongoData.find(recipe => recipe._id === recipeId)
+            const recipe = mongoData.find(recipe => recipe.slug === slug)
             setCurrentRecipe(recipe)
             setIsLoading(false)
         }
-    }, [mongoData, recipeId])
+    }, [mongoData, slug])
 
     const [currentIngredientsObj, setCurrentIngredientsObj] = useState({
         ingredientQuantity: '',
@@ -1036,6 +1038,7 @@ export default function EditRecipeForm(props) {
                         setEditFormData({
                             recipeName: currentRecipe.recipeName,
                             recipeSubName: currentRecipe.recipeSubName,
+                            slug: currentRecipe.slug,
                             defaultServings: currentRecipe.defaultServings,
                             ingredients: currentRecipe.ingredients,
                             instructions: currentRecipe.instructions,
@@ -1194,7 +1197,7 @@ export default function EditRecipeForm(props) {
             <main>
 
                 <div className='recipe-page-icon-container'>
-                    <Link to={`/${currentRecipe._id}`}>
+                    <Link to={`/${currentRecipe.slug}`}>
                         <div className='recipe-page-back-arrow-container no-margin'>
                             <img src={arrow} className="arrowHead back-arrowhead"/>
                             <div className='back-arrow'></div>
@@ -1480,7 +1483,7 @@ export default function EditRecipeForm(props) {
                         Changes Saved!
                     </div>
                 </div>
-                <Link to={`/${currentRecipe._id}`}>
+                <Link to={`/${currentRecipe.slug}`}>
                     <div className='back-arrow-container'>
                         <img src={arrow} className="arrowHead back-arrowhead"/>
                         <div className='back-arrow'></div>

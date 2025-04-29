@@ -17,7 +17,7 @@ import closeIcon from '../assets/close-x.svg'
 
 
 export default function RecipePage(props) {
-    const {recipeId} = useParams()
+    const {slug} = useParams()
     const { mongoData, handleMongoFavoriteToggle, handleMongoRequestToggle, addNewCookedDate, prevPathHome } = props
     const [currentRecipe, setCurrentRecipe] = useState()
     const [isLoading, setIsLoading] = useState(true)
@@ -40,11 +40,11 @@ export default function RecipePage(props) {
 
     useEffect(() => {
         if (mongoData.length > 0) {
-            const recipe = mongoData.find(recipe => recipe._id === recipeId)
+            const recipe = mongoData.find(recipe => recipe.slug === slug)
             setCurrentRecipe(recipe)
             setIsLoading(false)
         }
-    }, [mongoData, recipeId])
+    }, [mongoData, slug])
 
     function simplifyFraction(numerator, denominator) {
         const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b))
@@ -708,7 +708,7 @@ export default function RecipePage(props) {
                 </div>
 
                 <div className='edit-text-container'>
-                    <Link to={`/${currentRecipe._id}/edit`} className='edit-recipe-link'>
+                    <Link to={`/${currentRecipe.slug}/edit`} className='edit-recipe-link'>
                         <div className='edit-text'>Edit this recipe</div>
                     </Link>
                 </div>

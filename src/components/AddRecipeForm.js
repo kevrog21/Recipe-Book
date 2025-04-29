@@ -58,7 +58,7 @@ export default function AddRecipeForm(props) {
         equipmentLink: ''
     })
     const [equipmentPreview, setEquipmentPreview] = useState([])
-    const { defaultTagWords, moreTagWords } = props
+    const { defaultTagWords, moreTagWords, recipeData } = props
     const [tagWords, setTagWords] = useState([defaultTagWords])
     const [selectedTagWords, setSelectedTagWords] = useState([])
     const [showMoreTags, setShowMoreTags] = useState(false)
@@ -105,6 +105,29 @@ export default function AddRecipeForm(props) {
     }, [showIngredientsSectionTitle])
 
     
+    async function slugExistsInDatabase(slug) {
+        return recipeData.some(recipe => recipe.slug === slug)
+        // const existing = await recipeData.findOne({ slug })
+        // return !!existing
+    }
+
+    async function generateUniqueSlug(title) {
+        let slug = createSlug(title)
+        let uniqueSlug = slug
+        let counter = 1
+
+        while (await slugExistsInDatabase(uniqueSlug)) {
+            uniqueSlug = `${slug}-${counter}`
+            counter++
+        }
+
+        console.log('completed generating this slug: ', uniqueSlug)
+        return uniqueSlug
+    }
+
+    function createSlug(title) {
+        return title.toLowerCase().trim().replace(/\s+/g, '-').replace(/-+/g, '-')
+    }
 
     useEffect(() => {
         if (userInteractedWithInstructions) {
@@ -484,7 +507,7 @@ export default function AddRecipeForm(props) {
         }
     }
 
-    const shifIngredientDown = (index) => {
+    const shiftIngredientDown = (index) => {
         setFormData((prevData) => {
             if (index < prevData.ingredients.length - 1) {
                 
@@ -514,7 +537,7 @@ export default function AddRecipeForm(props) {
         setEditIngredientMode(false)
         setEditedIngredientIndex(null)
         cancelEditIngredientClick()
-        shifIngredientDown(index)
+        shiftIngredientDown(index)
     }
 
     const shiftInstructionUp = (index) => {
@@ -633,7 +656,8 @@ export default function AddRecipeForm(props) {
             return
         }
 
-             console.log('only log this if password is valid')
+        console.log('only log this if password is valid: ')
+        const finalSlug = await generateUniqueSlug(formData.recipeName)
 
         if (imageObject.file) {
             try {
@@ -671,14 +695,16 @@ export default function AddRecipeForm(props) {
                         return {
                             ...formData,
                             ...additionalDefaultRecipeData,
+                            slug: finalSlug,
                             imgUrl: cloudinaryResponse.data.secure_url,
-                            signature: cloudinaryResponse.data.signature
+                            signature: cloudinaryResponse.data.signature,
                         }
                     } else if (currentInstructionsObj.instructionText !== '' ||
                             currentInstructionsObj.instructionSection !== '') {
                         return {
                             ...formData,
                             ...additionalDefaultRecipeData,
+                            slug: finalSlug,
                             imageId: cloudinaryResponse.data.public_id,
                             imgUrl: cloudinaryResponse.data.secure_url,
                             signature: cloudinaryResponse.data.signature,
@@ -689,6 +715,7 @@ export default function AddRecipeForm(props) {
                         return {
                             ...formData,
                             ...additionalDefaultRecipeData,
+                            slug: finalSlug,
                             imageId: cloudinaryResponse.data.public_id,
                             imgUrl: cloudinaryResponse.data.secure_url,
                             signature: cloudinaryResponse.data.signature,
@@ -699,6 +726,7 @@ export default function AddRecipeForm(props) {
                         return {
                             ...formData,
                             ...additionalDefaultRecipeData,
+                            slug: finalSlug,
                             imageId: cloudinaryResponse.data.public_id,
                             imgUrl: cloudinaryResponse.data.secure_url,
                             signature: cloudinaryResponse.data.signature,
@@ -724,6 +752,7 @@ export default function AddRecipeForm(props) {
                     return {
                         ...formData,
                         ...additionalDefaultRecipeData,
+                        slug: finalSlug,
                         imageId: 'no image added',
                         imgUrl: 'no image added',
                         signature: 'no image added'
@@ -733,6 +762,7 @@ export default function AddRecipeForm(props) {
                     return {
                         ...formData,
                         ...additionalDefaultRecipeData,
+                        slug: finalSlug,
                         imageId: 'no image added',
                         imgUrl: 'no image added',
                         signature: 'no image added',
@@ -743,6 +773,7 @@ export default function AddRecipeForm(props) {
                     return {
                         ...formData,
                         ...additionalDefaultRecipeData,
+                        slug: finalSlug,
                         imageId: 'no image added',
                         imgUrl: 'no image added',
                         signature: 'no image added',
@@ -752,6 +783,7 @@ export default function AddRecipeForm(props) {
                     return {
                         ...formData,
                         ...additionalDefaultRecipeData,
+                        slug: finalSlug,
                         imageId: 'no image added',
                         imgUrl: 'no image added',
                         signature: 'no image added',
@@ -1048,6 +1080,8 @@ export default function AddRecipeForm(props) {
                 </div>
             </button>
             <input type="file" id="imageInput" name="image" onChange={handleImageChange}/>
+
+            
             
 
             <form className="add-recipe-form" onSubmit={handleSubmit} onKeyDown={(e) => checkKeyDown(e)}>
@@ -1107,7 +1141,6 @@ export default function AddRecipeForm(props) {
                             <input type="text" className='has-placeholder' name="recipeYield"
                             placeholder='about 24 cookies' value={formData.recipeYield} onChange={handleInputChange}></input> */}
                         </div>
-
                 </section>
 
                 <section className='ingredients-section'>

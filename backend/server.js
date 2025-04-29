@@ -28,21 +28,37 @@ app.use(express.json())
 
  const connection = mongoose.connection
  connection.once('open', () => {
-     console.log('MongoDB database connection established succesfully!')
+     console.log('MongoDB database connection established succesfully! 12345')
  })
 
 app.use('/recipe-data', recipeRouter)
 
+// app.get("/*", function(req, res) {
+//     res.sendFile(
+//         path.join(buildPath, "index.html"),
+//         function (err) {
+//             if (err) {
+//                 console.log(err)
+//                 res.status(500).send(err)
+//             }
+//         }
+//     )
+// })
+
 app.get("/*", function(req, res) {
-    res.sendFile(
-        path.join(buildPath, "index.html"),
-        function (err) {
-            if (err) {
-                console.log(err)
-                res.status(500).send(err)
+    if (req.accepts('html')) {
+        res.sendFile(
+            path.join(buildPath, "index.html"),
+            function (err) {
+                if (err) {
+                    console.log(err)
+                    res.status(500).send(err)
+                }
             }
-        }
-    )
+        )
+    } else {
+        res.status(404).json({ error: 'Not Found' })
+    }
 })
 
 app.use('*', (req, res) => res.status(404).json({error: "not found"}))
