@@ -45,22 +45,33 @@ app.use('/recipe-data', recipeRouter)
 //     )
 // })
 
-app.get("/*", function(req, res) {
-    if (req.accepts('html')) {
+const validRoutes = [
+    '/',
+    '/recipes',
+    '/settings',
+    '/blog',
+    /^\/[a-zA-Z0-9-_]+$/,
+]
+
+function isValidRoute(url) {
+    return validRoutes.some(route => {
+        if (route instanceof RegExp) {
+            return route.test(url)
+        }
+        return route === url
+    })
+}
+
+app.get("*", (req, res) => {
+    if (req.accepts('html') && isValidRoute(req.path)) {
         res.sendFile(
-            path.join(buildPath, "index.html"),
-            function (err) {
-                if (err) {
-                    console.log(err)
-                    res.status(500).send(err)
-                }
-            }
+            path.join(buildPath, "index.html")
         )
     } else {
         res.status(404).json({ error: 'Not Found' })
     }
 })
 
-app.use('*', (req, res) => res.status(404).json({error: "not found"}))
+// app.use('*', (req, res) => res.status(404).json({error: "not found"}))
 
 export default app

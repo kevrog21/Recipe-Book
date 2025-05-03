@@ -21,6 +21,7 @@ export default function RecipePage(props) {
     const { mongoData, handleMongoFavoriteToggle, handleMongoRequestToggle, addNewCookedDate, prevPathHome } = props
     const [currentRecipe, setCurrentRecipe] = useState()
     const [isLoading, setIsLoading] = useState(true)
+    const [notFound, setNotFound] = useState(false)
     const [ingredients, setIngredients] = useState([])
     const [instructions, setInstructions] = useState([])
     const [tags, setTags] = useState([])
@@ -41,7 +42,11 @@ export default function RecipePage(props) {
     useEffect(() => {
         if (mongoData.length > 0) {
             const recipe = mongoData.find(recipe => recipe.slug === slug)
-            setCurrentRecipe(recipe)
+            if (recipe) {
+                setCurrentRecipe(recipe)
+            } else {
+                setNotFound(true)
+            }
             setIsLoading(false)
         }
     }, [mongoData, slug])
@@ -455,6 +460,10 @@ export default function RecipePage(props) {
             <main className='loading-message'>
                 Loading...
             </main>
+        )
+    } else if (notFound) {
+        return (
+            <main className='loading-message'>404 not found</main>
         )
     } else {
         return (
