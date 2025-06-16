@@ -24,7 +24,7 @@ app.use(express.json())
 
  const uri = process.env.ATLAS_URI
  mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
- console.log('testing 123')
+ console.log('testing 123456')
 
  const connection = mongoose.connection
  connection.once('open', () => {
@@ -33,24 +33,12 @@ app.use(express.json())
 
 app.use('/recipe-data', recipeRouter)
 
-// app.get("/*", function(req, res) {
-//     res.sendFile(
-//         path.join(buildPath, "index.html"),
-//         function (err) {
-//             if (err) {
-//                 console.log(err)
-//                 res.status(500).send(err)
-//             }
-//         }
-//     )
-// })
-
 const validRoutes = [
     '/',
     '/recipes',
     '/settings',
     '/blog',
-    /^\/[a-zA-Z0-9-_]+$/,
+    /^\/[a-zA-Z0-9-_]+(\/edit)?$/,
 ]
 
 function isValidRoute(url) {

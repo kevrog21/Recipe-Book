@@ -18,7 +18,7 @@ export default function EditRecipeForm(props) {
     const [isLoading, setIsLoading] = useState(true)
     const [finalDataObject, setFinalDataObject] = useState({})
     const navigate = useNavigateToLink()
-
+    const [notFound, setNotFound] = useState(false)
     const [tagWords, setTagWords] = useState([defaultTagWords])
     const [selectedTagWords, setSelectedTagWords] = useState([])
     const [showMoreTags, setShowMoreTags] = useState(false)
@@ -152,10 +152,16 @@ export default function EditRecipeForm(props) {
     useEffect(() => {
         if (mongoData.length > 0) {
             const recipe = mongoData.find(recipe => recipe.slug === slug)
-            setCurrentRecipe(recipe)
+            if (recipe) {
+                setCurrentRecipe(recipe)
+                console.log('found current recipe its:' , recipe)
+            } else {
+                console.log('cant find slug called: ', slug)
+                setNotFound(true)
+            }
             setIsLoading(false)
-        }
-    }, [mongoData, slug])
+        } 
+    }, [mongoData, slug]) 
 
     const [currentIngredientsObj, setCurrentIngredientsObj] = useState({
         ingredientQuantity: '',
@@ -1188,9 +1194,13 @@ export default function EditRecipeForm(props) {
 
     if (isLoading) {
         return (
-            <main>
+            <main className='loading-message'>
                 Loading...
             </main>
+        )
+    } else if (notFound) {
+        return (
+            <main className='loading-message'>404 not found</main>
         )
     } else {
         return (
@@ -1231,7 +1241,7 @@ export default function EditRecipeForm(props) {
                 </div>}
 
                 <h2 className='edit-form-title'>Edit Recipe</h2>
-                <h4 className='edit-form-subtitle'>make changes and then click save</h4>
+                <h4 className='edit-form-subtitle'>make changes and then click save!</h4>
 
                 {!Object.keys(imageObject).length > 0 && (<div className='recipe-page-hero' style={{backgroundImage: `linear-gradient(12deg, rgba(0, 0, 0, .95), rgba(0, 0, 0, 0) 45%), url(${editFormData.imgUrl})`}}>
                     <div>
@@ -1240,7 +1250,7 @@ export default function EditRecipeForm(props) {
                     </div>
                 </div>)}
 
-                <button className={!Object.keys(imageObject).length > 0 ? 'small-img-btn' : 'image-upload-btn'} onClick={handleImageButtonClick} style={{backgroundImage: `url(${imgPreview})`}}>
+                <button className={!Object.keys(imageObject).length > 0 ? 'small-img-btn' : 'image-upload-btn'} onClick={handleImageButtonClick} style={{backgroundImage: imgPreview ? `url(${imgPreview})` : "none"}}>
                     <div id="edit-image-prompt">change recipe image</div>
                     <div id='preview-gradient' className='hide'></div>
                     {Object.keys(imageObject).length > 0 && (<div className="preview-text-container">
@@ -1274,6 +1284,9 @@ export default function EditRecipeForm(props) {
                             <div className='section-arrow-container'>
                                 <img src={arrow} className="arrowHead section-arrowhead"/>
                             </div>
+
+
+                            
                             
                             <div className='section-input-container'>
                                 <label htmlFor="preptime-hours">Prep Time:</label>
@@ -1302,9 +1315,12 @@ export default function EditRecipeForm(props) {
                                 value={editFormData.defaultServings} onChange={handleInputChange}></input>
                                 <label htmlFor="recipe-yield">Yield</label>
                                 <input type="text" className='has-placeholder' name="recipeYield"
-                                placeholder='about 24 cookies' value={editFormData.recipeYield} onChange={handleInputChange}></input>
+                                placeholder='about 24 cookies' value={editFormData.recipeYield ?? ''} onChange={handleInputChange}></input>
                             </div>
                     </section>
+
+
+
 
                     <section className='ingredients-section'>
                         <h4 className='section-title'>Ingredients</h4>

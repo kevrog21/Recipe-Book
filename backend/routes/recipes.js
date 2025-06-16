@@ -158,9 +158,7 @@ router.route('/add').post((req, res) => {
 })
 
 router.route('/:slug').get(async (req, res) => {
-    console.log('runnin the get recipe block')
     try {
-        console.log('trying to find via slug')
         const recipe = await Recipe.findOne({ slug: req.params.slug })
         if (!recipe) {
           return res.status(404).json({ error: 'Recipe not found' })

@@ -51,6 +51,14 @@ export default function RecipePage(props) {
         }
     }, [mongoData, slug])
 
+    useEffect(() => {
+            if (mongoData.length > 0) {
+                const recipe = mongoData.find(recipe => recipe.slug === slug)
+                setCurrentRecipe(recipe)
+                setIsLoading(false)
+            }
+        }, [mongoData, slug])
+
     function simplifyFraction(numerator, denominator) {
         const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b))
         const commonDevisor = gcd(numerator, denominator)
